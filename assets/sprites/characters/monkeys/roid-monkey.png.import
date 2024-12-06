@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bodwmlsthyj68"
-path="res://.godot/imported/scientist.png-292ffdc461310b894c4160557245f859.ctex"
+uid="uid://24vuoclcgt7s"
+path="res://.godot/imported/roid-monkey.png-a88ecfb8202bb522f57e08abaa404b10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/scientist.png"
-dest_files=["res://.godot/imported/scientist.png-292ffdc461310b894c4160557245f859.ctex"]
+source_file="res://assets/sprites/characters/monkeys/roid-monkey.png"
+dest_files=["res://.godot/imported/roid-monkey.png-a88ecfb8202bb522f57e08abaa404b10.ctex"]
 
 [params]
 

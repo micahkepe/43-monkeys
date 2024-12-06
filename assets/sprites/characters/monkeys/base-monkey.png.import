@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0c563soaoi5m"
-path="res://.godot/imported/base-monkey.png-96f6cf20cf5cefe60a2fe3f3b2f9920c.ctex"
+path="res://.godot/imported/base-monkey.png-36a6eb5ec6e4db22ae3d7a31085f1436.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/base-monkey.png"
-dest_files=["res://.godot/imported/base-monkey.png-96f6cf20cf5cefe60a2fe3f3b2f9920c.ctex"]
+source_file="res://assets/sprites/characters/monkeys/base-monkey.png"
+dest_files=["res://.godot/imported/base-monkey.png-36a6eb5ec6e4db22ae3d7a31085f1436.ctex"]
 
 [params]
 

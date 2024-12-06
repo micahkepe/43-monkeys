@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://24vuoclcgt7s"
-path="res://.godot/imported/roid-monkey.png-391b3a03c436c5874044b682c4222ff1.ctex"
+uid="uid://dkutugit6rrcq"
+path="res://.godot/imported/santa-monkey.png-80a733a6f4deca83583b1b1c99537fa2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/roid-monkey.png"
-dest_files=["res://.godot/imported/roid-monkey.png-391b3a03c436c5874044b682c4222ff1.ctex"]
+source_file="res://assets/sprites/characters/monkeys/santa-monkey.png"
+dest_files=["res://.godot/imported/santa-monkey.png-80a733a6f4deca83583b1b1c99537fa2.ctex"]
 
 [params]
 
