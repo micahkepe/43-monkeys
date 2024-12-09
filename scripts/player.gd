@@ -1,14 +1,12 @@
 extends CharacterBody2D
-## Represents the player character in the game.
+## Represents a 2D player character in the game.
 ##
 ## The player character is controlled by the player and can move in four 
 ## directions (up, down, left, right). The player's movement is controlled by
 ## input mappings defined in the project settings for the following actions: 
-## - ui_right: Move right 
-## - ui_left: Move left 
-## - ui_up: Move up 
-## - ui_down: Move down 
+## "ui_right" "ui_left" "ui_up" "ui_down"
 ##
+## @tutorial: https://docs.godotengine.org/en/stable/tutorials/2d/2d_sprite_animation.html
 
 ## The AnimatedSprite2D node that displays the player's sprite.
 @onready var _animated_sprite = $AnimatedSprite2D 
@@ -24,8 +22,9 @@ func _ready() -> void:
 
 ## Called every frame. 
 ## Handles input and updates the player's position and animation.
-## @param delta: float - The elapsed time since the previous frame.
+## @param delta: float - The elapsed time since the previous frame in seconds.
 func _process(delta: float) -> void:
+  ## The player's current velocity
 	var velocity = Vector2.ZERO
 	
 	# Movement input
