@@ -24,11 +24,24 @@ func _ready() -> void:
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _process(delta: float) -> void:
-  ## The player's current velocity
+	## The player's current velocity
 	var velocity = Vector2.ZERO
-	
+
 	# Movement input
-	if Input.is_action_pressed("ui_right"):
+	# Diagonal first 
+	if Input.is_action_pressed("ui_up") and Input.is_action_pressed("ui_right"): 
+		velocity = Vector2(1, -1)
+		_animated_sprite.play("walk_up")
+	elif Input.is_action_pressed("ui_up") and Input.is_action_pressed("ui_left"): 
+		velocity = Vector2(-1, -1)
+		_animated_sprite.play("walk_up")
+	elif Input.is_action_pressed("ui_down") and Input.is_action_pressed("ui_right"): 
+		velocity = Vector2(1, 1)
+		_animated_sprite.play("walk_down")
+	elif Input.is_action_pressed("ui_down") and Input.is_action_pressed("ui_left"): 
+		velocity = Vector2(-1, 1)
+		_animated_sprite.play("walk_down")
+	elif Input.is_action_pressed("ui_right"):
 		velocity.x += 1
 		_animated_sprite.play("walk_right")
 	elif Input.is_action_pressed("ui_left"):
@@ -42,10 +55,10 @@ func _process(delta: float) -> void:
 		_animated_sprite.play("walk_down")
 	else:
 		_animated_sprite.stop()
-	
-	# Normalize diagonal movement
+
+	## Normalize diagonal movement
 	if velocity != Vector2.ZERO:
-			velocity = velocity.normalized()
-	
-	# Apply movement
+		velocity = velocity.normalized()
+
+	## Apply movement
 	position += velocity * speed * delta
