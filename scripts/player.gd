@@ -1,19 +1,30 @@
 extends CharacterBody2D
+## Represents the player character in the game.
+##
+## The player character is controlled by the player and can move in four 
+## directions (up, down, left, right). The player's movement is controlled by
+## input mappings defined in the project settings for the following actions: 
+## - ui_right: Move right 
+## - ui_left: Move left 
+## - ui_up: Move up 
+## - ui_down: Move down 
+##
 
-@onready var _animated_sprite = $AnimatedSprite2D
+## The AnimatedSprite2D node that displays the player's sprite.
+@onready var _animated_sprite = $AnimatedSprite2D 
 
-var speed: float = 200.0
+## The speed at which the player moves
+@export 
+var speed: float = 250.0
 
-# TODO: dynamically set these from the viewport size
-var bounds_min = Vector2(-1024, -1024)  # Top-left corner of the allowed area
-var bounds_max = Vector2(1024, 1024)  # Bottom-right corner of the allowed area
-
-
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
+## Initializes any setup required for the player character.
 func _ready() -> void:
 	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 
+## Handles input and updates the player's position and animation.
+## @param delta: float - The elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var velocity = Vector2.ZERO
 	
@@ -39,6 +50,3 @@ func _process(delta: float) -> void:
 	
 	# Apply movement
 	position += velocity * speed * delta
-
-	# Clamp position to bounds
-	position = position.clamp(bounds_min, bounds_max)

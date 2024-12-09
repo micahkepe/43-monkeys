@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=41 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_00tqt"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_b3421"]
@@ -278,23 +278,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_007hl"]
+
 [node name="Node2D" type="Node2D"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-123, -93)
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -303.0
-offset_top = -256.0
-offset_right = 303.0
-offset_bottom = 256.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("1_00tqt")
@@ -304,6 +290,6 @@ position = Vector2(0, 0.999999)
 scale = Vector2(2.54091, 2.54091)
 sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
-frame_progress = 0.681039
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_007hl")
