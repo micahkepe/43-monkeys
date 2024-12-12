@@ -13,7 +13,7 @@ extends CharacterBody2D
 
 ## The speed at which the player moves
 @export 
-var speed: float = 250.0
+var speed: float = 225.0
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.

@@ -33,6 +33,8 @@ Game Design at Rice University.
 - [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light):
   a tool to generate spritesheets for characters
 - [itch.io](https://itch.io/): indie game assets and resources
+- [Kenney](https://kenney.nl/): more free game assets
+- [OpenGameArt](https://opengameart.org/): yet more free game assets
 - [Pixel It Conversion Tool](https://giventofly.github.io/pixelit/): tool for
   converting images to pixel art with parameters like pixel size, dithering, and
   color palette

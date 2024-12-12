@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://boedyvpuwvusk"
+path="res://.godot/imported/Music_Loop_3_Arp.ogg-ce8269b55349f793da6aa51aada7ceff.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/Music Loop 3/Ogg/Music_Loop_3_Arp.ogg"
+dest_files=["res://.godot/imported/Music_Loop_3_Arp.ogg-ce8269b55349f793da6aa51aada7ceff.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
