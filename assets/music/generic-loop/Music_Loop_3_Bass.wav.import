@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cmk6pmv7wj58k"
-path="res://.godot/imported/Music_Loop_3_Bass.wav-bb238fc81e0998b4150515c102491d4d.sample"
+path="res://.godot/imported/Music_Loop_3_Bass.wav-ac00c093bdce3be0f352fb5094acf0a4.sample"
 
 [deps]
 
-source_file="res://assets/music/Music Loop 3/Music_Loop_3_Bass.wav"
-dest_files=["res://.godot/imported/Music_Loop_3_Bass.wav-bb238fc81e0998b4150515c102491d4d.sample"]
+source_file="res://assets/music/generic-loop/Music_Loop_3_Bass.wav"
+dest_files=["res://.godot/imported/Music_Loop_3_Bass.wav-ac00c093bdce3be0f352fb5094acf0a4.sample"]
 
 [params]
 

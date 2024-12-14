@@ -127,3 +127,4 @@ Game Design at Rice University.
 - [Godot in 100 Seconds](https://www.youtube.com/watch?v=QKgTZWbwD1U)
 - [Every 2D Node Explained in 9 Minutes !](https://www.youtube.com/watch?v=22VYNOtrcgM)
 - [How to make a Video Game - Godot Beginner Tutorial](https://www.youtube.com/watch?v=LOhfqjmasi0&t=62s)
+- [Godot 4 Crash Course for Beginners - GameDev 2D Top Down Tutorial](https://youtu.be/Luf2Kr5s3BM)
