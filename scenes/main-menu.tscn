@@ -1,7 +1,44 @@
-[gd_scene format=3 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=5 format=3 uid="uid://8cuycqhvypgw"]
 
-[node name="MarginContainer" type="MarginContainer"]
-offset_left = -462.0
-offset_top = -308.0
-offset_right = 469.0
-offset_bottom = 334.0
+[ext_resource type="Texture2D" uid="uid://dcxfyxdacf7tj" path="res://assets/sprites/ui/ui-btns-icons.png" id="1_r36bs"]
+[ext_resource type="Script" path="res://scripts/texture_button.gd" id="2_8euuc"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hy5og"]
+atlas = ExtResource("1_r36bs")
+region = Rect2(-6, 8, 1356, 664)
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 931.0
+offset_bottom = 642.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = -668.0
+offset_top = -329.0
+offset_right = 688.0
+offset_bottom = 335.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hy5og")
+script = ExtResource("2_8euuc")
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/TextureButton"]
+layout_mode = 0
+offset_left = 559.0
+offset_top = 268.0
+offset_right = 759.0
+offset_bottom = 368.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rsk68")
+theme_override_font_sizes/font_size = 100
+text = "Start"
+
+[node name="TextureButton2" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2

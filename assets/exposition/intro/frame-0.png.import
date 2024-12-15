@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsecv0bnj4dvx"
-path="res://.godot/imported/rixner.png-d9df44f2172bd7d379bb56891a6d4d2f.ctex"
+uid="uid://dlphcluqde3wh"
+path="res://.godot/imported/frame-0.png-9adac5a3dcb80325e360ef31c97a19b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/enemies/rixner.png"
-dest_files=["res://.godot/imported/rixner.png-d9df44f2172bd7d379bb56891a6d4d2f.ctex"]
+source_file="res://assets/exposition/intro/frame-0.png"
+dest_files=["res://.godot/imported/frame-0.png-9adac5a3dcb80325e360ef31c97a19b2.ctex"]
 
 [params]
 

@@ -57,6 +57,7 @@ func _process(delta: float) -> void:
 		_animated_sprite.stop()
 
 	## Normalize diagonal movement
+  ## This ensures that the player moves at the same speed in all directions 
 	if velocity != Vector2.ZERO:
 		velocity = velocity.normalized()
 
