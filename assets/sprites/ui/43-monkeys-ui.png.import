@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcxfyxdacf7tj"
-path="res://.godot/imported/ui-btns-icons.png-80c98739c492926f03104120b96da8fa.ctex"
+uid="uid://bhi5ppi2njyq2"
+path="res://.godot/imported/43-monkeys-ui.png-04df98f49d0abdfaebe4e31925b75bdb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/ui-btns-icons.png"
-dest_files=["res://.godot/imported/ui-btns-icons.png-80c98739c492926f03104120b96da8fa.ctex"]
+source_file="res://assets/sprites/ui/43-monkeys-ui.png"
+dest_files=["res://.godot/imported/43-monkeys-ui.png-04df98f49d0abdfaebe4e31925b75bdb.ctex"]
 
 [params]
 
