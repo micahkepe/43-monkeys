@@ -1,18 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyqoorbgsu6jq"]
+[gd_scene load_steps=2 format=3 uid="uid://cyqoorbgsu6jq"]
 
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://scenes/player.tscn" id="1_mprrg"]
-[ext_resource type="PackedScene" uid="uid://b1d23xln4e4ei" path="res://scenes/level.tscn" id="2_7nw0j"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Characters" type="Node" parent="."]
 
 [node name="Player" parent="Characters" instance=ExtResource("1_mprrg")]
-position = Vector2(-7, -20)
+position = Vector2(-7, -2)
 
 [node name="Camera2D" type="Camera2D" parent="Characters/Player"]
-position = Vector2(9, 2)
+position = Vector2(5, -2)
 position_smoothing_enabled = true
-
-[node name="Sprite2D" parent="." instance=ExtResource("2_7nw0j")]
-position = Vector2(4, -14)
