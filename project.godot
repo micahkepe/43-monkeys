@@ -20,7 +20,8 @@ Music="*res://scenes/music.tscn"
 
 [display]
 
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [editor]
 
