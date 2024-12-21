@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhi5ppi2njyq2"
-path="res://.godot/imported/43-monkeys-ui.png-04df98f49d0abdfaebe4e31925b75bdb.ctex"
+uid="uid://dr5ls2neoigrx"
+path="res://.godot/imported/blank-testing-tileset.png-ae36b529c2b692ff3ff75ab268102858.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/43-monkeys-ui.png"
-dest_files=["res://.godot/imported/43-monkeys-ui.png-04df98f49d0abdfaebe4e31925b75bdb.ctex"]
+source_file="res://assets/sprites/tilesets/blank-testing-tileset.png"
+dest_files=["res://.godot/imported/blank-testing-tileset.png-ae36b529c2b692ff3ff75ab268102858.ctex"]
 
 [params]
 

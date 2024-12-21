@@ -284,14 +284,12 @@ radius = 32.1403
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-10, -13)
 script = ExtResource("1_0q78t")
-speed = 225.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)
 scale = Vector2(2.54091, 2.54091)
 sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
-frame_progress = 0.00034323
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(6, 19)
