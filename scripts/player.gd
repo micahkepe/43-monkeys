@@ -1,18 +1,18 @@
 extends CharacterBody2D
 ## Represents a 2D player character in the game.
 ##
-## The player character is controlled by the player and can move in four 
+## The player character is controlled by the player and can move in four
 ## directions (up, down, left, right). The player's movement is controlled by
-## input mappings defined in the project settings for the following actions: 
+## input mappings defined in the project settings for the following actions:
 ## "ui_right" "ui_left" "ui_up" "ui_down"
 ##
 ## @tutorial: https://docs.godotengine.org/en/stable/tutorials/2d/2d_sprite_animation.html
 
 ## The AnimatedSprite2D node that displays the player's sprite.
-@onready var _animated_sprite = $AnimatedSprite2D 
+@onready var _animated_sprite = $AnimatedSprite2D
 
 ## The base speed at which the player moves
-@export 
+@export
 var speed: float = 300.0
 
 ## The multiplier applied to speed when sprinting
@@ -24,50 +24,42 @@ var sprint_multiplier: float = 2
 func _ready() -> void:
 	pass
 
-## Called every frame. 
+## Called every frame.
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _physics_process(delta: float) -> void:
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
-	
+
 	# Get current movement speed (base or sprint)
 	var current_speed = speed * sprint_multiplier if Input.is_key_pressed(KEY_SHIFT) else speed
-	
+
 	# Movement input
-	# Diagonal first 
-	if Input.is_action_pressed("ui_up") and Input.is_action_pressed("ui_right"): 
-		input_velocity = Vector2(1, -1)
-		_animated_sprite.play("walk_up")
-	elif Input.is_action_pressed("ui_up") and Input.is_action_pressed("ui_left"): 
-		input_velocity = Vector2(-1, -1)
-		_animated_sprite.play("walk_up")
-	elif Input.is_action_pressed("ui_down") and Input.is_action_pressed("ui_right"): 
-		input_velocity = Vector2(1, 1)
-		_animated_sprite.play("walk_down")
-	elif Input.is_action_pressed("ui_down") and Input.is_action_pressed("ui_left"): 
-		input_velocity = Vector2(-1, 1)
-		_animated_sprite.play("walk_down")
-	elif Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("ui_right"):
 		input_velocity.x += 1
-		_animated_sprite.play("walk_right")
-	elif Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left"):
 		input_velocity.x -= 1
-		_animated_sprite.play("walk_left")
-	elif Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up"):
 		input_velocity.y -= 1
-		_animated_sprite.play("walk_up")
-	elif Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down"):
 		input_velocity.y += 1
+
+	# Normalize diagonal movement
+	if input_velocity != Vector2.ZERO:
+		input_velocity = input_velocity.normalized()
+
+	## Set animation based on movement direction
+	if input_velocity.y < 0:
+		_animated_sprite.play("walk_up")
+	elif input_velocity.y > 0:
 		_animated_sprite.play("walk_down")
+	elif input_velocity.x > 0:
+		_animated_sprite.play("walk_right")
+	elif input_velocity.x < 0:
+		_animated_sprite.play("walk_left")
 	else:
 		_animated_sprite.stop()
 
-	## Normalize diagonal movement
-	## This ensures that the player moves at the same speed in all directions 
-	if input_velocity != Vector2.ZERO:
-		input_velocity = input_velocity.normalized()
-	
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
 	move_and_slide()

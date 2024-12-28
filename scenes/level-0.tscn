@@ -11,4 +11,3 @@ position = Vector2(-7, -2)
 
 [node name="Camera2D" type="Camera2D" parent="Characters/Player"]
 position = Vector2(5, -2)
-position_smoothing_enabled = true
