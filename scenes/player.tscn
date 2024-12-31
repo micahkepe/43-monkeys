@@ -292,5 +292,6 @@ sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(6, 19)
+position = Vector2(5, 23)
+scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_007hl")
