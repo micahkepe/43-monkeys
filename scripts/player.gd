@@ -15,19 +15,24 @@ extends CharacterBody2D
 @export
 var speed: float = 300.0
 
+## The player's current health
+@export
+var health: int = 100
+
 ## The multiplier applied to speed when sprinting
 @export
-var sprint_multiplier: float = 2
+var sprint_multiplier: float = 1.5
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
 func _ready() -> void:
-	pass
+	## Set the player's initial animation
+	_animated_sprite.play("walk_down")
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
 
