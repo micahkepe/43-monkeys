@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6n1otllaac03"
-path="res://.godot/imported/background_tileset.png-00edaf09ac299d8e613983eb2e3a97e6.ctex"
+uid="uid://d37qvmn7src22"
+path="res://.godot/imported/keyboard.png-a6c360ef5b97b27c0ef209604a674474.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/tilesets/background_tileset.png"
-dest_files=["res://.godot/imported/background_tileset.png-00edaf09ac299d8e613983eb2e3a97e6.ctex"]
+source_file="res://assets/sprites/ui/keyboard.png"
+dest_files=["res://.godot/imported/keyboard.png-a6c360ef5b97b27c0ef209604a674474.ctex"]
 
 [params]
 

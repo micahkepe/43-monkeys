@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn1bxdkn1d2at"
-path="res://.godot/imported/fg-sprites.png-95d526146fb9949d6bc9cb9d0f775a5f.ctex"
+uid="uid://bpt11cqamus4k"
+path="res://.godot/imported/foreground.png-ff144e04691faf1a7c89f56bbb58e57e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/tilesets/fg-sprites.png"
-dest_files=["res://.godot/imported/fg-sprites.png-95d526146fb9949d6bc9cb9d0f775a5f.ctex"]
+source_file="res://assets/sprites/tilesets/foreground.png"
+dest_files=["res://.godot/imported/foreground.png-ff144e04691faf1a7c89f56bbb58e57e.ctex"]
 
 [params]
 
