@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://scenes/player.tscn" id="1_mprrg"]
 
-[node name="Game" type="Node2D"]
+[node name="Level 0" type="Node2D"]
 
 [node name="Characters" type="Node" parent="."]
 

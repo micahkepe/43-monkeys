@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=7 format=3 uid="uid://8cuycqhvypgw"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_nqkcn"]
+[ext_resource type="Texture2D" uid="uid://ym588une8kds" path="res://assets/images/43m-main-menu.png" id="2_k61vy"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7w1jv"]
@@ -11,32 +12,45 @@
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_nqkcn")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_k61vy")
+expand_mode = 5
+stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = -174.0
-offset_right = 251.0
-offset_bottom = -16.0
+offset_left = 40.0
+offset_top = -270.0
+offset_right = 322.0
+offset_bottom = -15.0
 grow_vertical = 0
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../SettingsButton")
 focus_neighbor_top = NodePath("../QuitButton")
-theme_override_colors/font_hover_color = Color(0.976471, 0.729412, 0, 1)
-theme_override_colors/font_focus_color = Color(0.976471, 0.729412, 0, 1)
+theme_override_colors/font_hover_color = Color(0.624822, 0.175097, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.857103, 0.253716, 1.92523e-07, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_rsk68")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7w1jv")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7w1jv")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_7w1jv")
@@ -54,10 +68,12 @@ alignment = 0
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../StartButton")
-theme_override_colors/font_hover_color = Color(0.976471, 0.729412, 0, 1)
-theme_override_colors/font_focus_color = Color(0.976471, 0.729412, 0, 1)
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_rsk68")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_k85yc")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_k85yc")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_k85yc")
@@ -75,10 +91,12 @@ alignment = 0
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../StartButton")
-theme_override_colors/font_hover_color = Color(0.976471, 0.729412, 0, 1)
-theme_override_colors/font_focus_color = Color(0.976471, 0.729412, 0, 1)
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_rsk68")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_p6trc")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_p6trc")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_p6trc")

@@ -15,13 +15,13 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
 ## Handles the press event for the start button. Navigates to scene "level-0".
 func _on_start_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/level-0.tscn")
+	get_tree().change_scene_to_file("res://scenes/tutorial.tscn")
 
 
 ## Handle the press event on the quit button. Quits the node tree to exit the
