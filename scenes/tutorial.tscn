@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dbero2oem2fq4"]
+[gd_scene load_steps=16 format=4 uid="uid://dbero2oem2fq4"]
 
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://scenes/player.tscn" id="1_xv66j"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_d2eqg"]
@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="3_la0n3"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="3_no05e"]
 [ext_resource type="Texture2D" uid="uid://bpt11cqamus4k" path="res://assets/sprites/tilesets/foreground.png" id="4_vtn5k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l3nvw"]
+font = ExtResource("2_xh1gg")
+font_size = 42
+font_color = Color(0, 0, 0, 1)
+outline_size = 12
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eu0t1"]
 texture = ExtResource("3_no05e")
@@ -271,6 +277,8 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_xh1gg")
 theme_override_font_sizes/font_size = 50
 text = "Use WASD to move"
+label_settings = SubResource("LabelSettings_l3nvw")
+horizontal_alignment = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Player/Camera2D/Label"]
 position = Vector2(185, 55)

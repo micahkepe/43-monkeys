@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 	pass
 
 
-## Handles the press event for the start button. Navigates to scene "level-0".
+## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/tutorial.tscn")
 
