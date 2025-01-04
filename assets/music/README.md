@@ -1,0 +1,12 @@
+# Music for 43 Monkeys
+
+## Tools Used
+
+- [BeepBox](https://www.beepbox.co/): For creating chiptune music in the browser
+  for easy sharing and workflow. All song data is stored in the URL, so you can
+  bookmark and share your songs with others.
+
+## Songs
+
+- [Main Menu Loop](https://www.beepbox.co/#9n31s0k4l00e03t22a7g03j07r1i0o432T0v1u12f10s4q00d03w2h2E0T1v1ub6f10p7q011d23A5F4BbQ0001Peec8E362363479T0v1u14f10r7q801d19w5h2E0T4v1u04f0q011z6666ji8k8k3jSBKSJJAArriiiiii07JCABrzrrrrrrr00YrkqHrsrrrrjr005zrAqzrjzrrqr1jRjrqGGrrzsrsA099ijrABJJJIAzrrtirqrqjqixzsrAjrqjiqaqqysttAJqjikikrizrHtBJJAzArzrIsRCITKSS099ijrAJS____Qg99habbCAYrDzh00E0b4h4h4h4h4h4p21OFE-2rhMho4ldBYOqqfKnP0ps3inQ4td9u1jh_2eVdvFozjjnAVdlll02hFInaiddjN9yIRf6yFE-2ddvQbN82hFEN1Cz8Bd6ihQQ4t47jlAjAQpd00)
+- [rando piece of garbage](https://www.beepbox.co/#9n31s2k0l00e03t2ma7g0aj07r1i0o432T1v5u01f10o5q83133d82AbFhB2Q2ae1Pa514E172T1v1u01f0qo1321d33A0F0B2Q2010Pf770E261278T8v2u08f10s2q013d27x670W7E0T3v1ugef0q0x10l51d08S9aiiqjriHSDSSKIE1bab4h800002d500000x4g00004h400000p22Aj5lSzUZPvy1u0DjGrnWW59J7yCTt4CUDgjq_pvdtCQupVBdyYCbbZQclPqexf2Krz-dImqfmUVEY2gYCkQv6NdW7SXlIpCpJTJluTkhLqfKqLAecXbPyjyqSXZPOhFRO_3FcSbwQkFH-XM9uVEPcERSqcg-P2_0dURM0)
