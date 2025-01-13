@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=8 format=3 uid="uid://8cuycqhvypgw"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_nqkcn"]
 [ext_resource type="Texture2D" uid="uid://ym588une8kds" path="res://assets/images/43m-main-menu.png" id="2_k61vy"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
+[ext_resource type="AudioStream" uid="uid://bh2exmrosr56w" path="res://assets/music/main-menu-theme.wav" id="4_ckkmp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7w1jv"]
 
@@ -119,6 +120,11 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_p6trc")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_p6trc")
 text = "Quit"
 alignment = 0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ckkmp")
+autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
