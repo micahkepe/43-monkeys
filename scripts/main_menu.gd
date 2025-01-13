@@ -8,6 +8,8 @@ extends Control
 ##
 ## @tutorial: https://docs.godotengine.org/en/3.0/getting_started/step_by_step/ui_main_menu.html#prepare-the-main-menu-scene
 
+# The AudioStreamPlayer node that plays sound effects.
+@onready var sfx_player: AudioStreamPlayer = get_node("SFXPlayer")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,10 +23,17 @@ func _process(_delta: float) -> void:
 
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
+	sfx_player.play()
 	get_tree().change_scene_to_file("res://scenes/tutorial.tscn")
+
+
+## Handle the press event on the settings button. Currently does nothing.
+func _on_settings_button_pressed() -> void:
+	sfx_player.play()
 
 
 ## Handle the press event on the quit button. Quits the node tree to exit the
 ## game.
 func _on_quit_button_pressed() -> void:
+	sfx_player.play()
 	get_tree().quit()
