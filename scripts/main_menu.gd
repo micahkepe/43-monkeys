@@ -30,6 +30,7 @@ func _on_start_button_pressed() -> void:
 ## Handle the press event on the settings button. Currently does nothing.
 func _on_settings_button_pressed() -> void:
 	sfx_player.play()
+	pass
 
 
 ## Handle the press event on the quit button. Quits the node tree to exit the

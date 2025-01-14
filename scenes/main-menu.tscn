@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_nqkcn"]
 [ext_resource type="Texture2D" uid="uid://ym588une8kds" path="res://assets/images/43m-main-menu.png" id="2_k61vy"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
-[ext_resource type="AudioStream" uid="uid://bh2exmrosr56w" path="res://assets/music/main-menu-theme.wav" id="4_ckkmp"]
+[ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme.ogg" id="4_p6sc7"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="5_11l5k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7w1jv"]
@@ -123,12 +123,15 @@ text = "Quit"
 alignment = 0
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_ckkmp")
+stream = ExtResource("4_p6sc7")
 autoplay = true
 bus = &"Music"
+parameters/looping = true
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_11l5k")
+bus = &"SFX"
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
