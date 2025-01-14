@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2rxu7wx60uqv"
-path="res://.godot/imported/foreground.png-ff144e04691faf1a7c89f56bbb58e57e.ctex"
+uid="uid://dfnpqv5xe7w0i"
+path="res://.godot/imported/banana.png-3216591ecd68929f23ca02ab8c30523a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/tilesets/foreground.png"
-dest_files=["res://.godot/imported/foreground.png-ff144e04691faf1a7c89f56bbb58e57e.ctex"]
+source_file="res://assets/sprites/items/banana.png"
+dest_files=["res://.godot/imported/banana.png-3216591ecd68929f23ca02ab8c30523a.ctex"]
 
 [params]
 
