@@ -32,6 +32,8 @@ Game Design at Rice University.
 
 - [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light):
   a tool to generate spritesheets for characters
+- [LCP Character Generator](https://pflat.itch.io/lpc-character-generator):
+  another option for generating character spritesheets
 - [itch.io](https://itch.io/): indie game assets and resources
 - [Kenney](https://kenney.nl/): more free game assets
 - [OpenGameArt](https://opengameart.org/): yet more free game assets
@@ -128,3 +130,4 @@ Game Design at Rice University.
 - [Every 2D Node Explained in 9 Minutes !](https://www.youtube.com/watch?v=22VYNOtrcgM)
 - [How to make a Video Game - Godot Beginner Tutorial](https://www.youtube.com/watch?v=LOhfqjmasi0&t=62s)
 - [Godot 4 Crash Course for Beginners - GameDev 2D Top Down Tutorial](https://youtu.be/Luf2Kr5s3BM)
+- [Flocking - AI for Game Development](https://www.oreilly.com/library/view/ai-for-game/0596005555/ch04.html)
