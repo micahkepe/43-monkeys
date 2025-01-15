@@ -14,10 +14,6 @@ config/name="43 Monkeys"
 run/main_scene="res://scenes/main-menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
-[autoload]
-
-Music="*res://scenes/music.tscn"
-
 [display]
 
 window/stretch/mode="viewport"

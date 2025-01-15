@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://dbero2oem2fq4"]
+[gd_scene load_steps=18 format=4 uid="uid://dbero2oem2fq4"]
 
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://scenes/player.tscn" id="1_xv66j"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_d2eqg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="3_no05e"]
 [ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="4_vtn5k"]
 [ext_resource type="AudioStream" uid="uid://bwgg4vkkp4k0q" path="res://assets/music/fonky-loop.ogg" id="7_w6ywq"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://scenes/boid.tscn" id="8_g0ogw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bu8l"]
 resource_name = "blank-tiles"
@@ -368,7 +369,7 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_eu0t1")
 
-[node name="Tutorial" type="Node2D"]
+[node name="Tutorial" type="Node2D" groups=["boids"]]
 position = Vector2(580, 274)
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
@@ -420,3 +421,15 @@ position = Vector2(185, 55)
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAD//wAAAAABAAAAAAD+/wEAAAAAAAEAAAD//wEAAAABAAEAAAAAAAEAAAACAAEAAAA=")
 tile_set = SubResource("TileSet_d82gh")
+
+[node name="Boid" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-322, 161)
+
+[node name="Boid2" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-242, 196)
+
+[node name="Boid3" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-164, 108)
+
+[node name="Boid4" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-146, 186)

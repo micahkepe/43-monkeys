@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://chsvjhv0uagub"]
 
-[ext_resource type="Script" path="res://scripts/entity.gd" id="1_sjrpt"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
@@ -283,7 +283,7 @@ radius = 32.1403
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-10, -13)
-script = ExtResource("1_sjrpt")
+script = ExtResource("1_ieec4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)
