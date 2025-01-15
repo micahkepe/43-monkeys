@@ -279,7 +279,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_007hl"]
-radius = 32.1403
+radius = 22.5154
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-10, -13)
@@ -292,6 +292,6 @@ sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, 23)
+position = Vector2(7, 35)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_007hl")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://dbero2oem2fq4"]
+[gd_scene load_steps=20 format=4 uid="uid://dbero2oem2fq4"]
 
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://scenes/player.tscn" id="1_xv66j"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_d2eqg"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="4_vtn5k"]
 [ext_resource type="AudioStream" uid="uid://bwgg4vkkp4k0q" path="res://assets/music/fonky-loop.ogg" id="7_w6ywq"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://scenes/boid.tscn" id="8_g0ogw"]
+[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://scenes/boid_joe.tscn" id="9_fkl5k"]
+[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://scenes/boid_rixner.tscn" id="10_ecvnp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bu8l"]
 resource_name = "blank-tiles"
@@ -272,16 +274,16 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-29.8753, 35.3553, 30.2288, 35.7089, 27.7539, 45.6084, -30.2288, 50.2046)
 2:2/size_in_atlas = Vector2i(2, 2)
 2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-19.125, 14.5, 19.125, 17, 19.125, 26.25, -19.125, 27.75)
+2:2/0/physics_layer_0/polygon_1/points = PackedVector2Array(-14.375, 28.5, -1.125, 32.25, 15.125, 27)
 4:0/size_in_atlas = Vector2i(2, 3)
 4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.4402, 37.1231, -27.0468, 45.6084, 22.4506, 46.3155, 15.7331, 36.0624)
 6:1/size_in_atlas = Vector2i(2, 2)
 6:1/0 = 0
-6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10.625, 18.25, -17.625, 30.25, 17.625, 30.75, 10.625, 19.5)
 4:3/size_in_atlas = Vector2i(2, 2)
 4:3/0 = 0
-4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:3/size_in_atlas = Vector2i(2, 2)
 6:3/0 = 0
 6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -395,7 +397,7 @@ tile_set = SubResource("TileSet_h060g")
 [node name="Player" parent="ForegroundTilles" instance=ExtResource("1_xv66j")]
 y_sort_enabled = true
 position = Vector2(-44, 102.667)
-scale = Vector2(0.666667, 0.666667)
+scale = Vector2(0.66, 0.66)
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTilles/Player"]
 
@@ -422,14 +424,37 @@ scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAD//wAAAAABAAAAAAD+/wEAAAAAAAEAAAD//wEAAAABAAEAAAAAAAEAAAACAAEAAAA=")
 tile_set = SubResource("TileSet_d82gh")
 
-[node name="Boid" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
-position = Vector2(-322, 161)
+[node name="Boid" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-339.333, 409.333)
+scale = Vector2(1.66667, 1.66667)
 
-[node name="Boid2" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
-position = Vector2(-242, 196)
+[node name="Boid2" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-240, 504)
+scale = Vector2(1.66667, 1.66667)
 
-[node name="Boid3" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
-position = Vector2(-164, 108)
+[node name="Boid3" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-101.333, 408)
+scale = Vector2(1.66667, 1.66667)
 
-[node name="Boid4" parent="." groups=["boids"] instance=ExtResource("8_g0ogw")]
-position = Vector2(-146, 186)
+[node name="Boid4" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_g0ogw")]
+position = Vector2(-148, 506.667)
+scale = Vector2(1.66667, 1.66667)
+
+[node name="Boid5" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_g0ogw")]
+y_sort_enabled = true
+position = Vector2(-318.667, 586.667)
+scale = Vector2(1.66667, 1.66667)
+
+[node name="Boid6" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_g0ogw")]
+y_sort_enabled = true
+position = Vector2(-228.667, 418)
+scale = Vector2(1.66667, 1.66667)
+
+[node name="Boid7" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("9_fkl5k")]
+y_sort_enabled = true
+position = Vector2(-158, 624)
+scale = Vector2(1.66667, 1.66667)
+
+[node name="Boid8" parent="ForegroundTilles" instance=ExtResource("10_ecvnp")]
+position = Vector2(-50.6667, 528)
+scale = Vector2(1.8, 1.8)
