@@ -283,17 +283,6 @@ radius = 9.05539
 
 [node name="Boid" type="CharacterBody2D"]
 script = ExtResource("1_xktke")
-max_speed = null
-max_force = null
-view_radius = null
-view_angle_degrees = null
-separation_distance = null
-weight_separation = null
-weight_alignment = null
-weight_cohesion = null
-weight_avoidance = null
-raycast_length = null
-minimum_speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5pjvm")
