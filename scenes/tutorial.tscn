@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://dbero2oem2fq4"]
+[gd_scene load_steps=21 format=4 uid="uid://ctkmi8iqugdrd"]
 
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://scenes/player.tscn" id="1_xv66j"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_d2eqg"]
@@ -7,9 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="3_no05e"]
 [ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="4_vtn5k"]
 [ext_resource type="AudioStream" uid="uid://bwgg4vkkp4k0q" path="res://assets/music/fonky-loop.ogg" id="7_w6ywq"]
-[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://scenes/boid.tscn" id="8_g0ogw"]
-[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://scenes/boid_joe.tscn" id="9_fkl5k"]
-[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://scenes/boid_rixner.tscn" id="10_ecvnp"]
+[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://scenes/ProjectileScenes/taser_projectile.tscn" id="8_c8ti3"]
+[ext_resource type="PackedScene" path="res://scenes/boid.tscn" id="8_g0ogw"]
+[ext_resource type="PackedScene" path="res://scenes/boid_joe.tscn" id="9_fkl5k"]
+[ext_resource type="PackedScene" path="res://scenes/boid_rixner.tscn" id="10_ecvnp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bu8l"]
 resource_name = "blank-tiles"
@@ -458,3 +459,9 @@ scale = Vector2(1.66667, 1.66667)
 [node name="Boid8" parent="ForegroundTilles" instance=ExtResource("10_ecvnp")]
 position = Vector2(-50.6667, 528)
 scale = Vector2(1.8, 1.8)
+
+[node name="TaserProjectile" parent="." instance=ExtResource("8_c8ti3")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-124, 133)
+scale = Vector2(5, 5)
