@@ -8,10 +8,6 @@ extends CharacterBody2D
 ## cohesion, this script also includes wall avoidance behavior and a minimum
 ## speed to keep the boids in constant motion.
 
-#####################################
-## TUNEABLE HYPERPARAMETERS
-#####################################
-
 ## The maximum speed of the boid.
 @export var max_speed: float = 200.0
 
@@ -45,11 +41,6 @@ extends CharacterBody2D
 ## The minimum speed of the boid.
 @export var minimum_speed: float = 50.0
 
-
-#####################################
-## INTERNAL VARIABLES
-#####################################
-
 ## The animated sprite node for the boid.
 @onready var _anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -65,10 +56,6 @@ extends CharacterBody2D
 ## The downward raycast node for wall avoidance.
 @onready var _ray_down: RayCast2D = $RayDown
 
-
-#####################################
-## METHODS
-#####################################
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
