@@ -16,7 +16,7 @@ func _ready():
 	# Play the animation
 	if $AnimationPlayer.has_animation("taser_spin"):
 		$AnimationPlayer.play("taser_spin")
-	
+
 	# Connect collision detection
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
 

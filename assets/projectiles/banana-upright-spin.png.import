@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cadqpbmqswcco"
-path="res://.godot/imported/Sprite-0001.png-06440eab4eb4bdfbcb756607f6b76aa4.ctex"
+uid="uid://cmnrnqyc0lkn5"
+path="res://.godot/imported/banana-upright-spin.png-ffa50ae02d29a30a94279f01b38ca6ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/projectiles/Sprite-0001.png"
-dest_files=["res://.godot/imported/Sprite-0001.png-06440eab4eb4bdfbcb756607f6b76aa4.ctex"]
+source_file="res://assets/projectiles/banana-upright-spin.png"
+dest_files=["res://.godot/imported/banana-upright-spin.png-ffa50ae02d29a30a94279f01b38ca6ec.ctex"]
 
 [params]
 
