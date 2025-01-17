@@ -1,5 +1,7 @@
 extends Control
 
+@onready var sfx_player: AudioStreamPlayer = get_node("SFXPlayer")
+
 # Paths to scenes (update these with the actual paths in your project)
 const MAIN_MENU_SCENE = "res://scenes/main-menu.tscn"
 
@@ -37,14 +39,18 @@ func resume_game():
 	get_tree().paused = false # Unpause the game
 
 func _on_resume_pressed():
+	sfx_player.play()
 	resume_game()
 
 func _on_main_menu_pressed():
+	sfx_player.play()
 	get_tree().paused = false # Ensure the game is unpaused
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 func _on_settings_pressed() -> void:
+	sfx_player.play()
 	pass # Replace with function body.
 
 func _on_quit_pressed() -> void:
-	pass # Replace with function body.
+	sfx_player.play()
+	get_tree().quit()

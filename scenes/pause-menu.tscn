@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://cecitnikxipo4"]
 
-[ext_resource type="Texture2D" uid="uid://by5t6bjrf40s8" path="res://assets/sprites/ui/PauseMenu.png" id="1_55p7h"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_kdcwm"]
+[ext_resource type="Texture2D" uid="uid://dnlovm20fjgrv" path="res://assets/sprites/ui/NewPauseMenu.png" id="2_qcyvp"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_u857e"]
 [ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme.ogg" id="3_jsnhp"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="4_rx3am"]
@@ -40,13 +40,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kdcwm")
 
-[node name="PauseArt" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 163.0
-offset_top = -44.0
-offset_right = 1006.0
-offset_bottom = 799.0
-texture = ExtResource("1_55p7h")
+offset_left = -91.0
+offset_top = -25.0
+offset_right = 1167.0
+offset_bottom = 709.0
+texture = ExtResource("2_qcyvp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
