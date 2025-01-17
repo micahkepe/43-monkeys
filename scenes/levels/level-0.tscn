@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://ctkmi8iqugdrd"]
+[gd_scene load_steps=27 format=4 uid="uid://ctkmi8iqugdrd"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_b3m8a"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="2_xfvvh"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://scenes/boids/boid.tscn" id="8_og1yv"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://scenes/boids/boid_joe.tscn" id="9_c0esd"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://scenes/boids/boid_rixner.tscn" id="10_afd26"]
+[ext_resource type="PackedScene" uid="uid://cecitnikxipo4" path="res://scenes/pause-menu.tscn" id="11_u756s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3nvw"]
 font = ExtResource("1_b3m8a")
@@ -660,6 +661,12 @@ position = Vector2(-44, 102.667)
 scale = Vector2(0.66, 0.66)
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTilles/Player"]
+
+[node name="Pause-menu" parent="ForegroundTilles/Player/Camera2D" instance=ExtResource("11_u756s")]
+offset_left = -551.515
+offset_top = -321.213
+offset_right = -550.515
+offset_bottom = -321.213
 
 [node name="Boid1" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_og1yv")]
 position = Vector2(-339.333, 409.333)

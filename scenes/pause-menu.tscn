@@ -1,0 +1,162 @@
+[gd_scene load_steps=17 format=3 uid="uid://cecitnikxipo4"]
+
+[ext_resource type="Texture2D" uid="uid://by5t6bjrf40s8" path="res://assets/sprites/ui/PauseMenu.png" id="1_55p7h"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_kdcwm"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_u857e"]
+[ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme.ogg" id="3_jsnhp"]
+[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="4_rx3am"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cugpv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nha6d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dgg68"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v80np"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ypwr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arasu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tp5pd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e8hty"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_avt21"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o0u14"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uh1nk"]
+
+[node name="Pause-menu" type="Control"]
+process_mode = 3
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kdcwm")
+
+[node name="PauseArt" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 163.0
+offset_top = -44.0
+offset_right = 1006.0
+offset_bottom = 799.0
+texture = ExtResource("1_55p7h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 345.0
+offset_right = 849.0
+offset_bottom = 640.0
+
+[node name="Resume" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_u857e")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cugpv")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_nha6d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dgg68")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_v80np")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5ypwr")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_arasu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tp5pd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e8hty")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_avt21")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o0u14")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uh1nk")
+text = "Resume"
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_u857e")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cugpv")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_nha6d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dgg68")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_v80np")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5ypwr")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_arasu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tp5pd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e8hty")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_avt21")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o0u14")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uh1nk")
+text = "Settings"
+
+[node name="MainMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_u857e")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cugpv")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_nha6d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dgg68")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_v80np")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5ypwr")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_arasu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tp5pd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e8hty")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_avt21")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o0u14")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uh1nk")
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_u857e")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cugpv")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_nha6d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dgg68")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_v80np")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5ypwr")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_arasu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tp5pd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e8hty")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_avt21")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o0u14")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uh1nk")
+text = "Quit"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jsnhp")
+autoplay = true
+bus = &"Music"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rx3am")
+bus = &"SFX"
+
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
