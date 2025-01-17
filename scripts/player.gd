@@ -23,6 +23,12 @@ var health: int = 100
 @export
 var sprint_multiplier: float = 1.5
 
+# Path to the banana_boomerang scene
+@export var banana_boomerang_scene: PackedScene
+
+var shoot_cooldown = 0.0 
+var shoot_cooldown_duration = 0.55
+
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
 func _ready() -> void:
@@ -68,3 +74,79 @@ func _physics_process(_delta: float) -> void:
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
 	move_and_slide()
+	
+	# Decrement the shoot cooldown
+	if shoot_cooldown > 0.0:
+		shoot_cooldown -= _delta
+		if shoot_cooldown < 0.0:
+			shoot_cooldown = 0.0
+	
+	#Handle banana shooting
+	handle_shooting()
+
+func handle_shooting() -> void:
+# Depending on which button is pressed, pass a direction vector
+# If we are still in the cooldown, do nothing
+	if shoot_cooldown > 0.0:
+		return
+	if Input.is_action_pressed("shoot_up"):
+		print()
+		spawn_projectile(Vector2.UP)
+		shoot_cooldown = shoot_cooldown_duration
+	elif Input.is_action_pressed("shoot_down"):
+		spawn_projectile(Vector2.DOWN)
+		shoot_cooldown = shoot_cooldown_duration
+	elif Input.is_action_pressed("shoot_left"):
+		spawn_projectile(Vector2.LEFT)
+		shoot_cooldown = shoot_cooldown_duration
+	elif Input.is_action_pressed("shoot_right"):
+		spawn_projectile(Vector2.RIGHT)
+		shoot_cooldown = shoot_cooldown_duration
+
+func spawn_projectile(shoot_direction: Vector2) -> void:
+	if banana_boomerang_scene == null:
+		print("banana_boomerang_scene is not assigned!")
+		return
+
+	if not banana_boomerang_scene.can_instantiate():
+		print("banana_boomerang_scene cannot be instantiated!")
+		return
+
+	var projectile = banana_boomerang_scene.instantiate()
+	if projectile == null:
+		print("Failed to instantiate projectile!")
+		return
+		
+	var offset_distance = 90.0
+	var spawn_offset = shoot_direction.normalized() * offset_distance
+	var spawn_global_position = global_position + spawn_offset
+	
+	#calculating velocity
+	var bullet_speed = 375.0
+	var shot_dir = shoot_direction.normalized()
+	var main_vel = shot_dir * bullet_speed
+
+	# only add perpindicular portion of players velocity onto shot velocity
+	#    so if you're walking up while shooting up, it won't slow or speed up the bullet.
+	#    But if you're walking right while shooting up, the bullet goes diagonal.
+	var orth_factor = 0.75
+
+	#shoutout chatgpt for the math
+	var parallel = (velocity.dot(shot_dir)) * shot_dir
+	var orth_vel = velocity - parallel
+
+	var final_vel = main_vel + (orth_vel * orth_factor)
+
+	projectile.velocity = final_vel
+
+	projectile.scale = Vector2(1.5, 1.5)
+	
+	
+	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
+
+	var local_spawn_pos = projectiles_node.to_local(spawn_global_position)
+	projectile.position = local_spawn_pos
+
+	projectiles_node.call_deferred("add_child", projectile)
+	print("Parent name:", get_parent().name)
+	
