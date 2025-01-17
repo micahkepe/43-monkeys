@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://scenes/boids/boid.tscn" id="8_og1yv"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://scenes/boids/boid_joe.tscn" id="9_c0esd"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://scenes/boids/boid_rixner.tscn" id="10_afd26"]
-[ext_resource type="PackedScene" uid="uid://cecitnikxipo4" path="res://scenes/pause-menu.tscn" id="11_u756s"]
+[ext_resource type="PackedScene" uid="uid://bxme3w4p6k6d" path="res://scenes/pause-menu.tscn" id="11_u756s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3nvw"]
 font = ExtResource("1_b3m8a")

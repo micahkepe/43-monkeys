@@ -200,7 +200,6 @@ alignment = 0
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-focus_neighbor_left = NodePath("../StartButton")
 theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)

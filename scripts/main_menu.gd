@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
 	sfx_player.play()
-	get_tree().change_scene_to_file("res://scenes/levels/level-0.tscn")
+	get_tree().change_scene_to_file("res://scenes/cutscenes/intro_cutscene.tscn")
 
 
 ## Handle the press event on the settings button. Currently does nothing.
