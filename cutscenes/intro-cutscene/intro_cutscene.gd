@@ -1,88 +1,124 @@
 extends Node2D
-## A cutscene that plays at the start of the game.
+
+## A cutscene that plays at the start of the game with typewriter text effect.
 ##
 ## The cutscene displays a series of frames with images and text. The player can
-## advance through the cutscene by pressing the "ui_select" action. Once the
-## cutscene is complete, the game will transition to the first level.
+## advance through the cutscene by pressing the "ui_select" action. The text appears
+## with a typewriter effect. Once complete, transitions to the first level.
 
-## The frames of the cutscene. Each frame contains an image and text.
-## Original story: https://www.cbsnews.com/news/south-carolina-escaped-monkeys-what-we-know/
+# Story frames data
 var _frames = [
 	{
-		"image": "res://assets/exposition/intro/exposition-1.png", # farm scene
+		"image": "res://assets/exposition/intro/exposition-1.png",
 		"text": "South Carolina\nNovember 2024"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-1.png", # lab scene
+		"image": "res://assets/exposition/intro/frame-1.png",
 		"text": "Deep beneath a rural farm...\nAlpha Genesis conducts their experiments"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-2.png", # terrified monkey
+		"image": "res://assets/exposition/intro/frame-2.png",
 		"text": "Their secret research pushes ethical boundaries\nNo one knows what they're really doing to us"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-3.png", # monkey alone
+		"image": "res://assets/exposition/intro/frame-3.png",
 		"text": "Days pass slowly in isolation\nWatching, waiting for a chance..."
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-4.png", # door left open
+		"image": "res://assets/exposition/intro/frame-4.png",
 		"text": "Until one day...\nA careless mistake changes everything"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-5.png", # monkey running away
+		"image": "res://assets/exposition/intro/frame-5.png",
 		"text": "Now is our chance for freedom\nBut the outside world holds its own dangers..."
 	},
 ]
 
-## The current frame index.
+# Current state variables
 var _current_frame = 0
-
-## Flag to indicate if the cutscene is active.
 var _is_cutscene_active: bool = true
+var _is_typing: bool = false
+var _current_text: String = ""
+var _target_text: String = ""
+var _char_index: int = 0
+var _can_advance: bool = false
 
-## The background sprite node.
+# Node references
 @onready var background: Sprite2D = get_node("Background")
-
-## The label node for displaying text.
 @onready var label: Label = get_node("Label")
+@onready var type_timer: Timer = Timer.new()
 
-## Called when the node enters the scene tree for the first time.
-## Initializes any setup required.
+# Typewriter effect settings
+const TYPING_SPEED: float = 0.05  # Seconds between each character
+const PUNCTUATION_PAUSE: float = 0.2  # Extra pause for punctuation
+
 func _ready() -> void:
+	# Setup typing timer
+	type_timer.one_shot = false
+	type_timer.connect("timeout", _on_type_timer_timeout)
+	add_child(type_timer)
+	
+	# Start first frame if available
 	if _frames.size() > 0:
-			_show_frame(_current_frame)
+		show_frame(_current_frame)
 
-
-## Input event listeners
-## @param event: InputEvent - The input event that occurred.
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_select") and _is_cutscene_active:
-		_current_frame += 1
-		_show_frame(_current_frame)
+		if _is_typing:
+			# Skip typing and show full text
+			_complete_typing()
+		elif _can_advance:
+			_current_frame += 1
+			show_frame(_current_frame)
 
-
-## Show the next frame in the cutscene.
-## If there are no more frames, end the cutscene.
-func _show_frame(index):
+func show_frame(index: int) -> void:
 	if index >= _frames.size():
 		_end_cutscene()
 		return
-
-	var _frame = _frames[index]
-
-	# Load and display the background image
-	var texture = load(_frame["image"])
-	background.texture = texture
-
+		
+	var frame = _frames[index]
+	
+	# Load and display background
+	var texture = load(frame["image"])
 	if texture == null:
-		print("Failed to load image: ", _frame["image"])
+		print("Failed to load image: ", frame["image"])
 	else:
 		background.texture = texture
+	
+	# Start typewriter effect
+	_start_typing(frame["text"])
 
-	label.text = _frame["text"]
+func _start_typing(text: String) -> void:
+	_is_typing = true
+	_can_advance = false
+	_target_text = text
+	_current_text = ""
+	_char_index = 0
+	label.text = ""
+	type_timer.start(TYPING_SPEED)
 
+func _on_type_timer_timeout() -> void:
+	if _char_index >= _target_text.length():
+		_complete_typing()
+		return
+		
+	var next_char = _target_text[_char_index]
+	_current_text += next_char
+	label.text = _current_text
+	_char_index += 1
+	
+	# Add extra pause for punctuation
+	if next_char in ['.', '?', '!', ',']:
+		type_timer.start(PUNCTUATION_PAUSE)
+	else:
+		type_timer.start(TYPING_SPEED)
 
-## Handles the end of cutscene slides and advances to the fist level.
-func _end_cutscene():
+func _complete_typing() -> void:
+	_is_typing = false
+	_can_advance = true
+	type_timer.stop()
+	label.text = _target_text
+
+func _end_cutscene() -> void:
 	_is_cutscene_active = false
 	get_tree().change_scene_to_file("res://levels/level-0/level-0.tscn")
