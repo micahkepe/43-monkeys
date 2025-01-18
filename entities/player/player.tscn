@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=42 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -285,6 +286,7 @@ radius = 22.5154
 position = Vector2(-10, -13)
 motion_mode = 1
 script = ExtResource("1_ieec4")
+banana_boomerang_scene = ExtResource("2_yc2po")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)

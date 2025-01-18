@@ -29,8 +29,8 @@ var _frames = [
 		"text": "Until one day...\nA careless mistake changes everything"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-5.png",
-		"text": "Now is our chance for freedom\nBut the outside world holds its own dangers..."
+		"image": "res://assets/exposition/intro/frame-5.png", # monkey running away
+		"text": "Now is our chance for freedom\nLet's save my brethen..."
 	},
 ]
 
@@ -52,16 +52,22 @@ var _can_advance: bool = false
 const TYPING_SPEED: float = 0.05  # Seconds between each character
 const PUNCTUATION_PAUSE: float = 0.2  # Extra pause for punctuation
 
+
+## Called when the node enters the scene tree for the first time.
+## Initializes any setup required.
 func _ready() -> void:
 	# Setup typing timer
 	type_timer.one_shot = false
 	type_timer.connect("timeout", _on_type_timer_timeout)
 	add_child(type_timer)
-	
+
 	# Start first frame if available
 	if _frames.size() > 0:
 		show_frame(_current_frame)
 
+
+## Input event listeners
+## @param event: InputEvent - The input event that occurred.
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_select") and _is_cutscene_active:
 		if _is_typing:
@@ -71,20 +77,22 @@ func _input(event: InputEvent) -> void:
 			_current_frame += 1
 			show_frame(_current_frame)
 
+
+## Displays the frame at the given index.
 func show_frame(index: int) -> void:
 	if index >= _frames.size():
 		_end_cutscene()
 		return
-		
+
 	var frame = _frames[index]
-	
+
 	# Load and display background
 	var texture = load(frame["image"])
 	if texture == null:
 		print("Failed to load image: ", frame["image"])
 	else:
 		background.texture = texture
-	
+
 	# Start typewriter effect
 	_start_typing(frame["text"])
 
@@ -97,28 +105,34 @@ func _start_typing(text: String) -> void:
 	label.text = ""
 	type_timer.start(TYPING_SPEED)
 
+
+## Timer callback for the typewriter effect.
 func _on_type_timer_timeout() -> void:
 	if _char_index >= _target_text.length():
 		_complete_typing()
 		return
-		
+
 	var next_char = _target_text[_char_index]
 	_current_text += next_char
 	label.text = _current_text
 	_char_index += 1
-	
+
 	# Add extra pause for punctuation
 	if next_char in ['.', '?', '!', ',']:
 		type_timer.start(PUNCTUATION_PAUSE)
 	else:
 		type_timer.start(TYPING_SPEED)
 
+
+## Completes the typing effect and shows the full text.
 func _complete_typing() -> void:
 	_is_typing = false
 	_can_advance = true
 	type_timer.stop()
 	label.text = _target_text
 
+
+## Ends the cutscene and transitions to the first level.
 func _end_cutscene() -> void:
 	_is_cutscene_active = false
 	get_tree().change_scene_to_file("res://levels/level-0/level-0.tscn")

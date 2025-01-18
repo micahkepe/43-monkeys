@@ -31,7 +31,8 @@ var _current_shoot_cooldown: float
 var shoot_cooldown_duration: float = 0.25
 
 ## Bannana boomerang scene
-var banana_boomerang = preload("res://projectiles/banana-boomerang/banana_boomerang.tscn")
+@export
+var banana_boomerang_scene: PackedScene
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
@@ -114,13 +115,13 @@ func handle_shooting() -> void:
 ## @param shoot_direction: Vector2 - The direction in which to shoot the
 ## projectile.
 func spawn_projectile(shoot_direction: Vector2) -> void:
-	if banana_boomerang == null:
+	if banana_boomerang_scene == null:
 		return
 
-	if not banana_boomerang.can_instantiate():
+	if not banana_boomerang_scene.can_instantiate():
 		return
 
-	var projectile = banana_boomerang.instantiate()
+	var projectile = banana_boomerang_scene.instantiate()
 
 	if projectile == null:
 		return
