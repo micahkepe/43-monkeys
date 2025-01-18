@@ -23,6 +23,10 @@ window/stretch/scale_mode="integer"
 
 enabled=PackedStringArray()
 
+[global_group]
+
+boids="NPC-like characters that flock together"
+
 [input]
 
 ui_select={
