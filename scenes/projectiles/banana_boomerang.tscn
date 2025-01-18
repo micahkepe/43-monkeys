@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cvte4grcknv8n"]
 
-[ext_resource type="Script" path="res://scenes/projectiles/banana_boomerang.gd" id="1_g21ix"]
+[ext_resource type="Script" path="res://scripts/banana_boomerang.gd" id="1_g21ix"]
 [ext_resource type="Texture2D" uid="uid://db8jtvki4pwdd" path="res://assets/projectiles/banana_boomerang.png" id="1_q0566"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqhhy"]
