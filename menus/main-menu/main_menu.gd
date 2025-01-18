@@ -34,7 +34,7 @@ func _on_start_button_pressed() -> void:
 ## Handle the press event on the settings button. Currently does nothing.
 func _on_settings_button_pressed() -> void:
 	sfx_player.play()
-	pass
+	get_tree().change_scene_to_file("res://menus/settings-menu/settings-menu.tscn")
 
 
 ## Handle the press event on the quit button. Quits the node tree to exit the

@@ -62,7 +62,7 @@ func _on_main_menu_pressed() -> void:
 
 func _on_settings_pressed() -> void:
 	sfx_player.play()
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://menus/settings-menu/settings-menu.tscn")
 
 
 func _on_quit_pressed() -> void:

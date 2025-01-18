@@ -1,6 +1,7 @@
-[gd_scene load_steps=25 format=4 uid="uid://by1ydwv3oxie0"]
+[gd_scene load_steps=26 format=4 uid="uid://by1ydwv3oxie0"]
 
-[ext_resource type="Texture2D" uid="uid://drmtu2erd8dmo" path="res://assets/sprites/ui/SettingsTitle.png" id="1_8gg7j"]
+[ext_resource type="Texture2D" uid="uid://b2r77g38aossh" path="res://assets/sprites/ui/SettingsTitle.png" id="1_8gg7j"]
+[ext_resource type="Script" path="res://menus/settings-menu/settings_menu.gd" id="1_f2gom"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="2_o4el6"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="3_a5leq"]
 [ext_resource type="Texture2D" uid="uid://b7eoijde168st" path="res://assets/sprites/ui/ui-pressed.png" id="4_o288i"]
@@ -229,6 +230,49 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_f2gom")
+
+[node name="SFXLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 422.0
+offset_top = 438.0
+offset_right = 782.0
+offset_bottom = 513.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 75
+text = "SFX Volume"
+
+[node name="MusicLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 393.0
+offset_top = 311.0
+offset_right = 753.0
+offset_bottom = 386.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 75
+text = "Music Volume"
+
+[node name="MusicVolume" type="HSlider" parent="."]
+layout_mode = 2
+offset_left = 802.0
+offset_top = 345.0
+offset_right = 1002.0
+offset_bottom = 361.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="SFXVolume" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 806.0
+offset_top = 476.0
+offset_right = 1006.0
+offset_bottom = 492.0
+tick_count = 10
+ticks_on_borders = true
 
 [node name="SettingsTitle" type="TextureRect" parent="."]
 layout_mode = 0
@@ -270,7 +314,7 @@ offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
@@ -302,3 +346,7 @@ parameters/looping = true
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_2r4mj")
 bus = &"SFX"
+
+[connection signal="changed" from="MusicVolume" to="." method="_on_music_volume_changed"]
+[connection signal="changed" from="SFXVolume" to="." method="_on_sfx_volume_changed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
