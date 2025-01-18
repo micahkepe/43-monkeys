@@ -19,10 +19,6 @@ extends Area2D
 var velocity: Vector2 = Vector2.ZERO
 
 
-## Path to the banana_boomerang scene
-@export var banana_boomerang_scene: PackedScene
-
-
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print("banana at:", global_position)
