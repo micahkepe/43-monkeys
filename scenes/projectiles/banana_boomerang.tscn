@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cvte4grcknv8n"]
+[gd_scene load_steps=7 format=3 uid="uid://c6hqssagt75up"]
 
 [ext_resource type="Script" path="res://scripts/banana_boomerang.gd" id="1_g21ix"]
 [ext_resource type="Texture2D" uid="uid://db8jtvki4pwdd" path="res://assets/projectiles/banana_boomerang.png" id="1_q0566"]
@@ -50,7 +50,9 @@ z_as_relative = false
 y_sort_enabled = true
 collision_layer = 2
 collision_mask = 3
+collision_priority = 2.0
 script = ExtResource("1_g21ix")
+speed = 600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_eqhhy")
