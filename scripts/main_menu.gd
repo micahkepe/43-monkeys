@@ -11,6 +11,9 @@ extends Control
 # The AudioStreamPlayer node that plays sound effects.
 @onready var sfx_player: AudioStreamPlayer = get_node("SFXPlayer")
 
+# The background music player for the theme
+@onready var theme_player: AudioStreamPlayer = get_node("BackgroundMusic")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$VBoxContainer/StartButton.grab_focus()
@@ -23,6 +26,7 @@ func _process(_delta: float) -> void:
 
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
+	theme_player.stop()
 	sfx_player.play()
 	get_tree().change_scene_to_file("res://scenes/cutscenes/intro_cutscene.tscn")
 

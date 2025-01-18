@@ -6,31 +6,31 @@ extends Node2D
 ## cutscene is complete, the game will transition to the first level.
 
 ## The frames of the cutscene. Each frame contains an image and text.
-## TODO: make the formatting and layout nice and have more options
+## Original story: https://www.cbsnews.com/news/south-carolina-escaped-monkeys-what-we-know/
 var _frames = [
 	{
-		"image": "res://assets/exposition/intro/exposition-1.png",
-		"text": "South Carolina \n2024"
+		"image": "res://assets/exposition/intro/exposition-1.png", # farm scene
+		"text": "South Carolina\nNovember 2024"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-1.png",
-		"text": "Placeholder"
+		"image": "res://assets/exposition/intro/frame-1.png", # lab scene
+		"text": "Deep beneath a rural farm...\nAlpha Genesis conducts their experiments"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-2.png",
-		"text": "Placeholder"
+		"image": "res://assets/exposition/intro/frame-2.png", # terrified monkey
+		"text": "Their secret research pushes ethical boundaries\nNo one knows what they're really doing to us"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-3.png",
-		"text": "Placeholder"
+		"image": "res://assets/exposition/intro/frame-3.png", # monkey alone
+		"text": "Days pass slowly in isolation\nWatching, waiting for a chance..."
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-4.png",
-		"text": "Placeholder"
+		"image": "res://assets/exposition/intro/frame-4.png", # door left open
+		"text": "Until one day...\nA careless mistake changes everything"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-5.png",
-		"text": "Placeholder"
+		"image": "res://assets/exposition/intro/frame-5.png", # monkey running away
+		"text": "Now is our chance for freedom\nBut the outside world holds its own dangers..."
 	},
 ]
 

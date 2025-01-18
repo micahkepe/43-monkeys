@@ -662,11 +662,18 @@ scale = Vector2(0.66, 0.66)
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTilles/Player"]
 
-[node name="Pause-menu" parent="ForegroundTilles/Player/Camera2D" instance=ExtResource("11_u756s")]
-offset_left = -551.515
-offset_top = -321.213
-offset_right = -550.515
-offset_bottom = -321.213
+[node name="PauseMenu" parent="ForegroundTilles/Player/Camera2D" instance=ExtResource("11_u756s")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -545.455
+offset_top = -313.132
+offset_right = -545.455
+offset_bottom = -313.132
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 4
 
 [node name="Boid1" parent="ForegroundTilles" groups=["boids"] instance=ExtResource("8_og1yv")]
 position = Vector2(-339.333, 409.333)

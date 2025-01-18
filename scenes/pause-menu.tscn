@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://bxme3w4p6k6d"]
+[gd_scene load_steps=16 format=3 uid="uid://bxme3w4p6k6d"]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_kdcwm"]
 [ext_resource type="Texture2D" uid="uid://dnlovm20fjgrv" path="res://assets/sprites/ui/NewPauseMenu.png" id="2_qcyvp"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_u857e"]
-[ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme.ogg" id="3_jsnhp"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="4_rx3am"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cugpv"]
@@ -28,7 +27,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uh1nk"]
 
-[node name="Pause-menu" type="Control"]
+[node name="PauseMenu" type="Control"]
 process_mode = 3
 z_index = 100
 layout_mode = 3
@@ -148,11 +147,6 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_avt21")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o0u14")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_uh1nk")
 text = "Quit"
-
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_jsnhp")
-autoplay = true
-bus = &"Music"
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_rx3am")
