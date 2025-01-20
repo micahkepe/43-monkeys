@@ -19,14 +19,27 @@ Game Design at Rice University.
 - Ascend through themed floors, face the mastermind scientist, and lead your
   monkey squad to freedom!
 
+## TODOs
+
+- [ ] Settings menu fixes:
+
+  - [ ] Volume and SFX sliders work properly with dragging behavior
+
+- [ ] Player health and damage
+- [ ] Monkey troop controls
+- [ ] More music (background/menu music, different level music)
+- [ ] Auto timer on cutscenes so user doesn't have to give input
+
 ## Project Structure
 
-| Directory  | Description                                |
-| ---------- | ------------------------------------------ |
-| `assets/`  | Contains all the assets used in the game.  |
-| `scenes/`  | Contains all the scenes used in the game.  |
-| `scripts/` | Contains all the scripts used in the game. |
-| `addons/`  | Extermnal Godot plugins used in the game.  |
+| Directory     | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| `assets/`     | Contains all the assets used in the game.            |
+| `cutscenes/`  | Contains all the cutscenes used in the game.         |
+| `entities/`   | Contains all the entity scenes used in the game.     |
+| `levels/`     | Contains all the scripts used in the game.           |
+| `menus/`      | Extermnal Godot plugins used in the game.            |
+| `projectiles` | Contains all the projectile scenes used in the game. |
 
 ## Helpful Tools for Development
 
