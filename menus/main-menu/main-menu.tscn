@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=4 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=14 format=4 uid="uid://8cuycqhvypgw"]
 
 [ext_resource type="Script" path="res://menus/main-menu/main_menu.gd" id="1_lroqc"]
+[ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="2_rao6y"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
 [ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme.ogg" id="4_p6sc7"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="5_11l5k"]
@@ -247,16 +248,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_p6trc")
 text = "Quit"
 alignment = 0
 
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_p6sc7")
-autoplay = true
-bus = &"Music"
-parameters/looping = true
-
-[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_11l5k")
-bus = &"SFX"
-
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -1
 scale = Vector2(2, 2)
@@ -289,6 +280,25 @@ grow_vertical = 2
 texture = ExtResource("7_3kvuq")
 expand_mode = 2
 
+[node name="Sound" type="Node" parent="."]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("4_p6sc7")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="NavigateSFXPlayer" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("2_rao6y")
+bus = &"SFX"
+
+[node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("5_11l5k")
+bus = &"SFX"
+
+[connection signal="focus_entered" from="VBoxContainer/StartButton" to="." method="_on_start_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

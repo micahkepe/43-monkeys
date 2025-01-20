@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://bpeefxov26jc1"]
+[gd_scene load_steps=17 format=3 uid="uid://bpeefxov26jc1"]
 
 [ext_resource type="Script" path="res://menus/pause-menu/pause_menu.gd" id="1_kdcwm"]
 [ext_resource type="Texture2D" uid="uid://dnlovm20fjgrv" path="res://assets/sprites/ui/NewPauseMenu.png" id="2_qcyvp"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_u857e"]
+[ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="4_epxt5"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="4_rx3am"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cugpv"]
@@ -148,11 +149,21 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o0u14")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_uh1nk")
 text = "Quit"
 
-[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Sound" type="Node" parent="."]
+
+[node name="NavigateSFXPlayer" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("4_epxt5")
+bus = &"SFX"
+
+[node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("4_rx3am")
 bus = &"SFX"
 
+[connection signal="focus_entered" from="VBoxContainer/Resume" to="." method="_on_resume_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/Settings" to="." method="_on_settings_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/MainMenu" to="." method="_on_main_menu_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/Quit" to="." method="_on_quit_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
