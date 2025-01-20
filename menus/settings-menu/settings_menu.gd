@@ -1,6 +1,6 @@
 extends Control
 
-@onready var sfx_player: AudioStreamPlayer = get_node("SFXPlayer")
+@onready var select_sfx_player: AudioStreamPlayer = get_node("SelectSFXPlayer")
 @onready var music_player: AudioStreamPlayer = get_node("BackgroundMusic")
 @onready var music_volume = $VBoxContainer/MusicVolume
 @onready var sfx_volume = $VBoxContainer/SFXVolume
@@ -14,12 +14,13 @@ const SFX_BUS = 2
 const PAUSE_MENU_SCENE = "res://menus/pause-menu/pause-menu.tscn"
 const MAIN_MENU_SCENE = "res://menus/main-menu/main-menu.tscn"
 
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# First verify the nodes exist before setting values
 	if music_volume and sfx_volume:
 		music_volume.value = db_to_linear(AudioServer.get_bus_volume_db(MUSIC_BUS))
 		sfx_volume.value = db_to_linear(AudioServer.get_bus_volume_db(SFX_BUS))
-	
+
 	# Connect signals
 	var back_button = $VBoxContainer/Back
 	if back_button:
@@ -30,13 +31,13 @@ func _ready() -> void:
 		sfx_volume.value_changed.connect(_on_sfx_volume_changed)
 
 func _on_back_pressed() -> void:
-	if sfx_player:
-		sfx_player.play()
-	
+	if select_sfx_player:
+		select_sfx_player.play()
+
 	var tree = get_tree()
 	if tree == null:
 		return
-	
+
 	if tree.paused:
 		# We came from pause menu, go back there
 		var error = tree.change_scene_to_file(PAUSE_MENU_SCENE)
@@ -47,22 +48,20 @@ func _on_back_pressed() -> void:
 		# We came from main menu
 		tree.change_scene_to_file(MAIN_MENU_SCENE)
 
+
 func _on_music_volume_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(MUSIC_BUS, linear_to_db(value))
 	if music_player and not music_player.playing:
 		music_player.play()
 
+
 func _on_sfx_volume_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(SFX_BUS, linear_to_db(value))
-	if sfx_player:
-		sfx_player.play()
+	if select_sfx_player:
+		select_sfx_player.play()
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		_on_back_pressed()
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_W or event.keycode == KEY_A or event.keycode == KEY_S or event.keycode == KEY_D:
-			if sfx_player:
-				sfx_player.play()

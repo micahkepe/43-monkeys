@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://clr2v3sn4tvxl"
-path="res://.godot/imported/walk-slow.wav-fe9d35854201f4bd57e368a361493c89.sample"
+uid="uid://b6ghp4krn0kss"
+path="res://.godot/imported/adjust.wav-6cfeaf2ebca478f493f314393817ef04.sample"
 
 [deps]
 
-source_file="res://assets/sfx/walk-slow.wav"
-dest_files=["res://.godot/imported/walk-slow.wav-fe9d35854201f4bd57e368a361493c89.sample"]
+source_file="res://assets/sfx/adjust.wav"
+dest_files=["res://.godot/imported/adjust.wav-6cfeaf2ebca478f493f314393817ef04.sample"]
 
 [params]
 
