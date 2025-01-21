@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_qxfbq"]
 [ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="5_3nb2r"]
 [ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="6_y0wcx"]
-[ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger.ogg" id="7_jb3yk"]
+[ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="7_dtitf"]
 [ext_resource type="Texture2D" uid="uid://gn0w57pjrxwq" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
@@ -643,7 +643,7 @@ tile_map_data = PackedByteArray("AADu/wgAAAAAAAQAAADv/wgAAAAAAAQAAADw/wgAAAAAAAQ
 tile_set = SubResource("TileSet_6tb6n")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_jb3yk")
+stream = ExtResource("7_dtitf")
 autoplay = true
 bus = &"Music"
 parameters/looping = true

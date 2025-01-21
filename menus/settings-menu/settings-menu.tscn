@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://by1ydwv3oxie0"]
+[gd_scene load_steps=33 format=4 uid="uid://by1ydwv3oxie0"]
 
 [ext_resource type="Texture2D" uid="uid://b2r77g38aossh" path="res://assets/sprites/ui/SettingsTitle.png" id="1_8gg7j"]
 [ext_resource type="Script" path="res://menus/settings-menu/settings_menu.gd" id="1_f2gom"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://b7eoijde168st" path="res://assets/sprites/ui/ui-pressed.png" id="4_o288i"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="5_ovtxt"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="6_c1yfi"]
-[ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme.ogg" id="7_f2ir8"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="8_2r4mj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tuqm5"]
@@ -405,6 +404,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAACAAEAAAAAAAEAAAACAAEAAAAAAAIAAAACAAE
 tile_set = SubResource("TileSet_cftpx")
 
 [node name="MoveLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 665.0
 offset_top = 212.0
 offset_right = 785.0
@@ -416,6 +416,7 @@ theme_override_font_sizes/font_size = 75
 text = "Move"
 
 [node name="AKeyButton" type="TextureButton" parent="MoveLabel"]
+layout_mode = 0
 offset_left = -223.0
 offset_top = 6.0
 offset_right = -191.0
@@ -437,6 +438,7 @@ texture_pressed = SubResource("AtlasTexture_6hqai")
 stretch_mode = 0
 
 [node name="SKeyButton" type="TextureButton" parent="MoveLabel"]
+layout_mode = 0
 offset_left = -154.0
 offset_top = 6.0
 offset_right = -122.0
@@ -447,6 +449,7 @@ texture_pressed = SubResource("AtlasTexture_j3nq6")
 stretch_mode = 0
 
 [node name="DKeyButton" type="TextureButton" parent="MoveLabel"]
+layout_mode = 0
 offset_left = -83.0
 offset_top = 6.0
 offset_right = -51.0
@@ -463,10 +466,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -101.0
-offset_top = -79.0
-offset_right = 99.0
-offset_bottom = 21.0
+offset_left = -102.0
+offset_top = -112.0
+offset_right = 98.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -498,10 +501,8 @@ stream = ExtResource("8_2r4mj")
 bus = &"SFX"
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_f2ir8")
 autoplay = true
 bus = &"Music"
-parameters/looping = true
 
 [connection signal="changed" from="MusicVolume" to="." method="_on_music_volume_changed"]
 [connection signal="changed" from="SFXVolume" to="." method="_on_sfx_volume_changed"]
