@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="5_3nb2r"]
 [ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="6_y0wcx"]
 [ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="7_dtitf"]
-[ext_resource type="Texture2D" uid="uid://gn0w57pjrxwq" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
+[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="11_in3d4"]
@@ -424,63 +424,6 @@ texture_region_size = Vector2i(32, 32)
 5:5/0 = 0
 5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-46.4923, 1.41421, 46.4923, 0, 47.5529, 28.9914, -45.7852, 29.6985)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6uooh"]
-texture = ExtResource("8_5y8y1")
-texture_region_size = Vector2i(32, 32)
-0:13/0 = 0
-1:13/0 = 0
-2:13/0 = 0
-3:13/0 = 0
-0:14/0 = 0
-1:14/0 = 0
-2:14/0 = 0
-3:14/0 = 0
-0:15/0 = 0
-1:15/0 = 0
-2:15/0 = 0
-3:15/0 = 0
-0:16/0 = 0
-1:16/0 = 0
-2:16/0 = 0
-3:16/0 = 0
-0:17/0 = 0
-1:17/0 = 0
-2:17/0 = 0
-3:17/0 = 0
-0:18/0 = 0
-1:18/0 = 0
-2:18/0 = 0
-3:18/0 = 0
-0:19/0 = 0
-1:19/0 = 0
-2:19/0 = 0
-3:19/0 = 0
-0:20/0 = 0
-1:20/0 = 0
-2:20/0 = 0
-3:20/0 = 0
-0:21/0 = 0
-1:21/0 = 0
-2:21/0 = 0
-3:21/0 = 0
-0:22/0 = 0
-1:22/0 = 0
-2:22/0 = 0
-3:22/0 = 0
-0:23/0 = 0
-1:23/0 = 0
-2:23/0 = 0
-3:23/0 = 0
-0:8/size_in_atlas = Vector2i(2, 4)
-0:8/0 = 0
-0:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-29.8753, -35.3553, 28.4611, -35.3553, 28.8146, -2.47488, 30.5824, 62.579, -29.8753, 60.8112)
-0:4/size_in_atlas = Vector2i(2, 4)
-0:4/0 = 0
-0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-29.5217, -61.5183, 29.5217, -60.8112, 28.8146, -2.47488, 30.5824, 62.579, -29.8753, 60.8112)
-0:0/size_in_atlas = Vector2i(2, 4)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-29.5217, -61.5183, 29.5217, -60.8112, 28.8146, -2.47488, 30.5824, 62.579, -29.8753, 60.8112)
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m2v1e"]
 texture = ExtResource("9_0vf7p")
 texture_region_size = Vector2i(32, 32)
@@ -605,11 +548,44 @@ texture_region_size = Vector2i(32, 32)
 13:0/0 = 0
 13:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-29.5217, -61.5183, 29.5217, -60.8112, 28.8146, -2.47488, 30.5824, 62.579, -29.8753, 60.8112)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vhjgw"]
+texture = ExtResource("8_5y8y1")
+5:0/size_in_atlas = Vector2i(6, 5)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48.25, 6.5, 44.25, 8, 44.25, 39, -47.75, 39.5)
+12:2/size_in_atlas = Vector2i(4, 3)
+12:2/0 = 0
+12:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.5546, -1.94455, 30.8475, -2.47488, 31.9082, 23.1577, -30.494, 23.1577)
+0:0/size_in_atlas = Vector2i(4, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+0:8/size_in_atlas = Vector2i(4, 8)
+0:8/0 = 0
+0:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+4:8/size_in_atlas = Vector2i(4, 8)
+4:8/0 = 0
+4:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+0:16/size_in_atlas = Vector2i(4, 8)
+0:16/0 = 0
+0:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+20:0/size_in_atlas = Vector2i(4, 8)
+20:0/0 = 0
+20:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+16:8/size_in_atlas = Vector2i(4, 8)
+16:8/0 = 0
+16:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+20:8/size_in_atlas = Vector2i(4, 8)
+20:8/0 = 0
+20:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+20:16/size_in_atlas = Vector2i(4, 8)
+20:16/0 = 0
+20:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.25, -59, 31.25, -62.5, 30.75, 32.5, 28.25, 63.5, -27.75, 66)
+
 [sub_resource type="TileSet" id="TileSet_h060g"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_d2i4d")
-sources/1 = SubResource("TileSetAtlasSource_6uooh")
 sources/2 = SubResource("TileSetAtlasSource_m2v1e")
+sources/3 = SubResource("TileSetAtlasSource_vhjgw")
 
 [node name="level-0" type="Node2D" groups=["boids"]]
 position = Vector2(580, 274)
@@ -653,7 +629,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(50, -110)
 scale = Vector2(1.5, 1.5)
-tile_map_data = PackedByteArray("AADp/xIAAAAAAAUAAADu/xIAAAADAAUAAADy/xIAAAADAAUAAAD2/xIAAAADAAUAAAD7/xIAAAAFAAUAAAABABIAAAAAAAUAAAAHABIAAAAAAAUAAAAPABMAAAAAAAAAAAAOAPv/AAACAAIAAAAQAP3/AAACAAIAAAAOAP7/AAACAAIAAAAQAAIAAAACAAIAAAAZAAkAAAACAAIAAAALACUAAAACAAIAAAANACYAAAACAAIAAAAaACQAAAAEAAAAAAAFACYAAAAEAAAAAAAFAC8AAAADAAUAAAABAC8AAAADAAUAAAD8/y8AAAACAAIAAADw/wcAAAAAAAAAAADu/woAAAAAAAAAAADy/wsAAAACAAIAAAAgADQAAAAAAAUAAAAlADQAAAADAAUAAAApADQAAAADAAUAAAAuADQAAAAFAAUAAADo/wsAAQAAAAgAAADo/yAAAQAAAAgAAAAbAEoAAQAAAAgAAAAbADcAAQAAAAgAAAA=")
+tile_map_data = PackedByteArray("AADp/xIAAAAAAAUAAADu/xIAAAADAAUAAADy/xIAAAADAAUAAAD2/xIAAAADAAUAAAD7/xIAAAAFAAUAAAABABIAAAAAAAUAAAAHABIAAAAAAAUAAAAPABMAAAAAAAAAAAAOAPv/AAACAAIAAAAQAP3/AAACAAIAAAAOAP7/AAACAAIAAAAQAAIAAAACAAIAAAAZAAkAAAACAAIAAAALACUAAAACAAIAAAANACYAAAACAAIAAAAaACQAAAAEAAAAAAAFACYAAAAEAAAAAAAFAC8AAAADAAUAAAABAC8AAAADAAUAAAD8/y8AAAACAAIAAADw/wcAAAAAAAAAAADu/woAAAAAAAAAAADy/wsAAAACAAIAAAAgADQAAAAAAAUAAAAlADQAAAADAAUAAAApADQAAAADAAUAAAAuADQAAAAFAAUAAADo/wsAAQAAAAgAAADo/yAAAwAAABAAAAAbAEoAAQAAAAgAAAAbADcAAQAAAAgAAAAbAEwAAwAFAAAAAAAhAEwAAwAFAAAAAAAaAEoAAwAEAAgAAAAaADcAAwAEAAgAAADn/0IAAwAAABAAAADo/xgAAwAAAAAAAABEADgAAwAAABAAAABEAD4AAwAAAAAAAABEAEUAAwAAABAAAAB6ADwAAwAFAAAAAAA5AFgAAwAMAAIAAAA9AFgAAwAMAAIAAABBAFgAAwAMAAIAAABFAFgAAwAMAAIAAAA5AFIAAwAAAAAAAAB1AFQAAwAUABAAAACaADgAAwAUABAAAAA=")
 tile_set = SubResource("TileSet_h060g")
 
 [node name="Player" parent="ForegroundTilles" instance=ExtResource("10_i5f2g")]
@@ -679,15 +655,15 @@ grow_vertical = 1
 size_flags_horizontal = 4
 
 [node name="Boid1" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
-position = Vector2(-339.333, 409.333)
+position = Vector2(-303.333, 427.333)
 scale = Vector2(1.66667, 1.66667)
 
 [node name="Boid2" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
-position = Vector2(-240, 504)
+position = Vector2(650.667, 1032)
 scale = Vector2(1.66667, 1.66667)
 
 [node name="Boid3" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
-position = Vector2(-101.333, 408)
+position = Vector2(927.333, 1162)
 scale = Vector2(1.66667, 1.66667)
 
 [node name="Boid4" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
@@ -696,21 +672,25 @@ scale = Vector2(1.66667, 1.66667)
 
 [node name="Boid5" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
 y_sort_enabled = true
-position = Vector2(-318.667, 586.667)
+position = Vector2(-340.667, 875.333)
 scale = Vector2(1.66667, 1.66667)
 
 [node name="Boid6" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
 y_sort_enabled = true
-position = Vector2(-228.667, 418)
+position = Vector2(-346.667, 97.3334)
 scale = Vector2(1.66667, 1.66667)
 
 [node name="Boid7" parent="ForegroundTilles" instance=ExtResource("13_yg254")]
 y_sort_enabled = true
-position = Vector2(-178.667, 546)
+position = Vector2(868, 920.667)
 scale = Vector2(1.66667, 1.66667)
 
+[node name="Boid9" parent="ForegroundTilles" instance=ExtResource("12_44r5b")]
+position = Vector2(1365.33, 1188)
+scale = Vector2(1.67, 1.67)
+
 [node name="Boid8" parent="ForegroundTilles" instance=ExtResource("15_xoarp")]
-position = Vector2(-50.6667, 528)
+position = Vector2(291.333, 543.333)
 scale = Vector2(1.8, 1.8)
 
 [node name="Projectiles" type="Node2D" parent="."]
