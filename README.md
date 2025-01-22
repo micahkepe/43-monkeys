@@ -21,9 +21,9 @@ Game Design at Rice University.
 
 ## TODOs
 
-- [ ] Settings menu fixes:
+- [x] Settings menu fixes:
 
-  - [ ] Volume and SFX sliders work properly with dragging behavior
+  - [x] Volume and SFX sliders work properly with dragging behavior
 
 - [ ] Player health and damage
 - [ ] Monkey troop controls
