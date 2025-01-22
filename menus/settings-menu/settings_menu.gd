@@ -10,32 +10,59 @@ const MASTER_BUS = 0
 const MUSIC_BUS = 1
 const SFX_BUS = 2
 
+# Slider control constants
+const SLIDER_STEP = 0.1  # Amount to change when using keys
+
 func _ready() -> void:
 	if music_volume and sfx_volume:
+		# Initialize slider values
 		music_volume.value = db_to_linear(AudioServer.get_bus_volume_db(MUSIC_BUS))
 		sfx_volume.value = db_to_linear(AudioServer.get_bus_volume_db(SFX_BUS))
+		
+		# Connect slider signals
+		music_volume.value_changed.connect(_on_music_volume_value_changed)
+		sfx_volume.value_changed.connect(_on_sfx_volume_value_changed)
+		
+		# Set up keyboard focus handling
+		music_volume.focus_mode = Control.FOCUS_ALL
+		sfx_volume.focus_mode = Control.FOCUS_ALL
 	
-	# Connect signals
+	# Connect back button
 	var back_button = $VBoxContainer/Back
 	if back_button:
 		back_button.pressed.connect(_on_back_pressed)
-	if music_volume:
-		music_volume.value_changed.connect(_on_music_volume_changed)
-	if sfx_volume:
-		sfx_volume.value_changed.connect(_on_sfx_volume_changed)
-
+	
 	# Set up as popup behavior
-	visible = false  # Start hidden
-	custom_minimum_size = Vector2(400, 300)  # Set appropriate size
+	visible = false
+	custom_minimum_size = Vector2(400, 300)
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not visible:
+		return
+		
+	if event.is_pressed():
+		var focused_slider = get_viewport().gui_get_focus_owner()
+		if focused_slider is HSlider:
+			if event.is_action_pressed("ui_left") or event.is_action_pressed("a"):
+				focused_slider.value -= SLIDER_STEP
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_right") or event.is_action_pressed("d"):
+				focused_slider.value += SLIDER_STEP
+				get_viewport().set_input_as_handled()
 
 func show_settings() -> void:
 	# Reset position and ensure full size
 	position = Vector2.ZERO
 	size = get_viewport_rect().size
+	
 	# Ensure proper anchoring
 	anchor_right = 1.0
 	anchor_bottom = 1.0
 	visible = true
+	
+	# Set initial focus to music slider
+	if music_volume:
+		music_volume.grab_focus()
 
 func hide_settings() -> void:
 	visible = false
@@ -45,12 +72,12 @@ func _on_back_pressed() -> void:
 		select_sfx_player.play()
 	hide_settings()
 
-func _on_music_volume_changed(value: float) -> void:
+func _on_music_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(MUSIC_BUS, linear_to_db(value))
 	if music_player and not music_player.playing:
 		music_player.play()
 
-func _on_sfx_volume_changed(value: float) -> void:
+func _on_sfx_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(SFX_BUS, linear_to_db(value))
 	if select_sfx_player:
 		select_sfx_player.play()
