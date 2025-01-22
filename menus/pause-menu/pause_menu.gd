@@ -46,14 +46,15 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"): # Escape key is "ui_cancel" by default
 		toggle_pause_menu()
 
-
+## Called when the user presses 'esc'. If the user is in the pause menu, then 'esc' closes the
+## pause scene; otherwise, it opens.
 func toggle_pause_menu() -> void:
 	if _pause_menu_visible:
 		resume_game()
 	else:
 		pause_game()
 
-
+## Show the pause menu.
 func pause_game() -> void:
 	_pause_menu_visible = true
 	show()
@@ -68,26 +69,26 @@ func pause_game() -> void:
 	await get_tree().process_frame
 	_is_first_focus = false
 
-
+## Close the pause menu and resume the game.
 func resume_game() -> void:
 	_pause_menu_visible = false
 	hide()
 	get_tree().paused = false # Unpause the game
 	_is_first_focus = true # Reset first focus flag
 
-
+## If the resume button is pressed, resume the game.
 func _on_resume_pressed() -> void:
 	sfx_player.play()
 	resume_game()
 
-
+## Take the user to the main menu if they press the Main Menu button.
 func _on_main_menu_pressed() -> void:
 	sfx_player.play()
 	get_tree().paused = false # Ensure the game is unpaused
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 
-
+## Open the settings menu if the Settings button is pressed.
 func _on_settings_pressed() -> void:
 	sfx_player.play()
 	if settings_menu:
@@ -95,27 +96,27 @@ func _on_settings_pressed() -> void:
 		settings_menu.position = Vector2.ZERO
 		settings_menu.show_settings()
 
-
+## Quit the game if the Quit button is pressed. 
 func _on_quit_pressed() -> void:
 	sfx_player.play()
 	get_tree().quit()
 
-
+## Play a sound on focus for the Resume button.
 func _on_resume_focus_entered() -> void:
 	if not _is_first_focus:
 		navigate_sfx_player.play()
 
-
+## Play a sound on focus for the Main Menu button.
 func _on_main_menu_focus_entered() -> void:
 	if not _is_first_focus:
 		navigate_sfx_player.play()
 
-
+## Play a sound on focus for the Settings button.
 func _on_settings_focus_entered() -> void:
 	if not _is_first_focus:
 		navigate_sfx_player.play()
 
-
+## Play a sound on focus for the Quit button.
 func _on_quit_focus_entered() -> void:
 	if not _is_first_focus:
 		navigate_sfx_player.play()

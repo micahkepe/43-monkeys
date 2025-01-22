@@ -13,6 +13,7 @@ const SFX_BUS = 2
 # Slider control constants
 const SLIDER_STEP = 0.1  # Amount to change when using keys
 
+## Initialize the necessary variables for the script.
 func _ready() -> void:
 	if music_volume and sfx_volume:
 		# Initialize slider values
@@ -36,6 +37,7 @@ func _ready() -> void:
 	visible = false
 	custom_minimum_size = Vector2(400, 300)
 
+## Handle A and D to change the volume sliders on focus.
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not visible:
 		return
@@ -50,6 +52,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 				focused_slider.value += SLIDER_STEP
 				get_viewport().set_input_as_handled()
 
+## Show the settings menu.
 func show_settings() -> void:
 	# Reset position and ensure full size
 	position = Vector2.ZERO
@@ -64,24 +67,29 @@ func show_settings() -> void:
 	if music_volume:
 		music_volume.grab_focus()
 
+## Hide the settings menu.
 func hide_settings() -> void:
 	visible = false
 
+## Hide settings when the Back button is pressed.
 func _on_back_pressed() -> void:
 	if select_sfx_player:
 		select_sfx_player.play()
 	hide_settings()
 
+## Change music volume when the slider changes.
 func _on_music_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(MUSIC_BUS, linear_to_db(value))
 	if music_player and not music_player.playing:
 		music_player.play()
-
+		
+## Change sfx volume when the slider changes.
 func _on_sfx_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(SFX_BUS, linear_to_db(value))
 	if select_sfx_player:
 		select_sfx_player.play()
 
+## Hide setttings if 'esc' is pressed.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		_on_back_pressed()
