@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=4 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=18 format=4 uid="uid://8cuycqhvypgw"]
 
 [ext_resource type="Script" path="res://menus/main-menu/main_menu.gd" id="1_lroqc"]
+[ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="2_84a4x"]
 [ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="2_rao6y"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
 [ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme/main-menu-theme.ogg" id="4_p6sc7"]
@@ -8,6 +9,18 @@
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="5_11l5k"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="5_s0yjt"]
 [ext_resource type="Texture2D" uid="uid://hr1aa7728i3r" path="res://assets/images/monkey-trio.png" id="7_3kvuq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88p3p"]
+atlas = ExtResource("2_84a4x")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2vbe"]
+atlas = ExtResource("2_84a4x")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro5db"]
+atlas = ExtResource("2_84a4x")
+region = Rect2(96, 96, 32, 32)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7w1jv"]
 
@@ -162,6 +175,33 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_lroqc")
 
+[node name="SocialsContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.738
+anchor_top = 0.937
+anchor_right = 0.974
+anchor_bottom = 1.063
+offset_left = 66.824
+offset_top = -57.176
+offset_right = -110.048
+offset_bottom = -103.824
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2, 2)
+alignment = 2
+
+[node name="ItchIoButton" type="TextureButton" parent="SocialsContainer"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_88p3p")
+texture_pressed = SubResource("AtlasTexture_y2vbe")
+stretch_mode = 4
+
+[node name="GithubButton" type="TextureButton" parent="SocialsContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ro5db")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 2
@@ -296,6 +336,8 @@ bus = &"SFX"
 stream = ExtResource("5_11l5k")
 bus = &"SFX"
 
+[connection signal="pressed" from="SocialsContainer/ItchIoButton" to="." method="_on_itch_io_button_pressed"]
+[connection signal="pressed" from="SocialsContainer/GithubButton" to="." method="_on_github_button_pressed"]
 [connection signal="focus_entered" from="VBoxContainer/StartButton" to="." method="_on_start_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="focus_entered" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_focus_entered"]

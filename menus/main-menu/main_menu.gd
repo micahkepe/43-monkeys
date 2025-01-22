@@ -19,6 +19,12 @@ extends Control
 const SettingsScene = preload("res://menus/settings-menu/settings-menu.tscn")
 @onready var settings_menu = $SettingsMenu
 
+## ItchIo social icon button
+@onready var itch_io_icon = get_node("SocialsContainer/ItchIoButton")
+
+## Github social icon button
+@onready var github_icon = get_node("SocialsContainer/GithubButton")
+
 ## Whether this is the first time the main menu has focus. This is to prevent
 ## playing the navigate sound effect when the scene is first loaded.
 var _is_first_focus: bool = true
@@ -72,3 +78,14 @@ func _on_settings_button_focus_entered() -> void:
 func _on_quit_button_focus_entered() -> void:
 	if not _is_first_focus:
 		navigate_sfx_player.play()
+
+
+## Handle clicking the Github social icon. Opens the Github page for the game.
+func _on_github_button_pressed() -> void:
+	OS.shell_open("https://github.com/micahkepe/43-monkeys")
+
+
+## Handle clicking the ItchIo social icon. Opens the ItchIo page for the game.
+func _on_itch_io_button_pressed() -> void:
+	OS.shell_open("https://fourge-studios.itch.io/")
+
