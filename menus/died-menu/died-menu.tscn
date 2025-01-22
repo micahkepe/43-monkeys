@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://b0cj7suiadfgl"]
+[gd_scene load_steps=17 format=3 uid="uid://b0cj7suiadfgl"]
 
+[ext_resource type="Script" path="res://menus/died-menu/died_menu.gd" id="1_ejmq8"]
 [ext_resource type="Texture2D" uid="uid://cnhigf8cv6vbo" path="res://assets/sprites/ui/YouDiedScreen.png" id="1_lpfjf"]
 [ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="1_qmipa"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="2_0c483"]
@@ -34,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ejmq8")
 
 [node name="Sound" type="Node" parent="."]
 

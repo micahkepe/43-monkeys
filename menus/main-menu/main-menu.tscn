@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=4 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=14 format=4 uid="uid://8cuycqhvypgw"]
 
 [ext_resource type="Script" path="res://menus/main-menu/main_menu.gd" id="1_lroqc"]
 [ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="2_rao6y"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
 [ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme/main-menu-theme.ogg" id="4_p6sc7"]
+[ext_resource type="Texture2D" uid="uid://cti8ohty27ds1" path="res://assets/images/game-logo.png" id="4_vlrly"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="5_11l5k"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="5_s0yjt"]
 [ext_resource type="Texture2D" uid="uid://hr1aa7728i3r" path="res://assets/images/monkey-trio.png" id="7_3kvuq"]
@@ -260,6 +261,7 @@ offset_left = 201.0
 offset_top = -162.0
 offset_right = 957.0
 offset_bottom = 594.0
+texture = ExtResource("4_vlrly")
 
 [node name="MonkeyTrio" type="TextureRect" parent="."]
 z_index = -1
