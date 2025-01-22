@@ -12,6 +12,9 @@ extends Control
 ## The AudioStreamPlayer node that plays the navigate sound effect.
 @onready var navigate_sfx_player: AudioStreamPlayer = get_node("Sound/NavigateSFXPlayer")
 
+const SettingsScene = preload("res://menus/settings-menu/settings-menu.tscn")
+@onready var settings_menu = $SettingsMenu
+
 # Paths to scenes (update these with the actual paths in your project)
 const MAIN_MENU_SCENE = "res://menus/main-menu/main-menu.tscn"
 
@@ -25,13 +28,16 @@ var _is_first_focus: bool = true
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
+	if !settings_menu:
+		# Create settings menu if it doesn't exist
+		settings_menu = SettingsScene.instantiate()
+		add_child(settings_menu)
+	
 	# Connect button signals using Callable
 	$VBoxContainer/Resume.connect("pressed", Callable(self, "_on_resume_pressed"))
 	$VBoxContainer/MainMenu.connect("pressed", Callable(self, "_on_main_menu_pressed"))
 	$VBoxContainer/Settings.connect("pressed", Callable(self, "_on_settings_pressed"))
 	$VBoxContainer/Quit.connect("pressed", Callable(self, "_on_quit_pressed"))
-
-	# Start with pause menu hidden
 	hide()
 
 
@@ -81,9 +87,13 @@ func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 
+
 func _on_settings_pressed() -> void:
 	sfx_player.play()
-	get_tree().change_scene_to_file("res://menus/settings-menu/settings-menu.tscn")
+	if settings_menu:
+		# Ensure settings menu is properly positioned
+		settings_menu.position = Vector2.ZERO
+		settings_menu.show_settings()
 
 
 func _on_quit_pressed() -> void:
@@ -109,4 +119,3 @@ func _on_settings_focus_entered() -> void:
 func _on_quit_focus_entered() -> void:
 	if not _is_first_focus:
 		navigate_sfx_player.play()
-

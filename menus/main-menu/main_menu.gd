@@ -16,15 +16,20 @@ extends Control
 ## The background music player for the theme
 @onready var theme_player: AudioStreamPlayer = get_node("Sound/BackgroundMusic")
 
+const SettingsScene = preload("res://menus/settings-menu/settings-menu.tscn")
+@onready var settings_menu = $SettingsMenu
+
 ## Whether this is the first time the main menu has focus. This is to prevent
 ## playing the navigate sound effect when the scene is first loaded.
 var _is_first_focus: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if !settings_menu:
+		# Create settings menu if it doesn't exist
+		settings_menu = SettingsScene.instantiate()
+		add_child(settings_menu)
 	$VBoxContainer/StartButton.grab_focus()
-
-	# Allow UI to settle before tracking focus changes
 	await get_tree().process_frame
 	_is_first_focus = false
 
@@ -38,8 +43,9 @@ func _on_start_button_pressed() -> void:
 
 ## Handle the press event on the settings button. Currently does nothing.
 func _on_settings_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://menus/settings-menu/settings-menu.tscn")
 	select_sfx_player.play()
+	if settings_menu:
+		settings_menu.show_settings()
 
 
 ## Handle the press event on the quit button. Quits the node tree to exit the
