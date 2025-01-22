@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://b8hvlr7xxbcu5"]
+[gd_scene load_steps=30 format=4 uid="uid://b8hvlr7xxbcu5"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="2_hpihk"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="11_in3d4"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="12_44r5b"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/boid_joe.tscn" id="13_yg254"]
+[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser.tscn" id="15_si2mn"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="15_xoarp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3nvw"]
@@ -995,3 +996,24 @@ scale = Vector2(1.8, 1.8)
 
 [node name="Projectiles" type="Node2D" parent="."]
 z_index = 2
+
+[node name="laser1" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5308, 3167)
+
+[node name="laser2" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5308, 3199)
+
+[node name="laser3" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5309, 3233)
+
+[node name="laser4" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5309, 3263)
+
+[node name="laser5" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5309, 3296)
+
+[node name="laser6" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5310, 3328)
+
+[node name="laser7" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5310, 3360)
