@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://8cuycqhvypgw"]
+[gd_scene load_steps=17 format=4 uid="uid://8cuycqhvypgw"]
 
 [ext_resource type="Script" path="res://menus/main-menu/main_menu.gd" id="1_lroqc"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="2_84a4x"]
@@ -11,10 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://hr1aa7728i3r" path="res://assets/images/monkey-trio.png" id="7_3kvuq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_88p3p"]
-atlas = ExtResource("2_84a4x")
-region = Rect2(64, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y2vbe"]
 atlas = ExtResource("2_84a4x")
 region = Rect2(64, 96, 32, 32)
 
@@ -192,10 +188,8 @@ scale = Vector2(2, 2)
 alignment = 2
 
 [node name="ItchIoButton" type="TextureButton" parent="SocialsContainer"]
-self_modulate = Color(0.8, 0.8, 0.8, 1)
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_88p3p")
-texture_pressed = SubResource("AtlasTexture_y2vbe")
 stretch_mode = 4
 
 [node name="GithubButton" type="TextureButton" parent="SocialsContainer"]
