@@ -201,6 +201,9 @@ func add_monkey_to_swarm() -> void:
 	#recalc angles?
 	_needs_full_ellipse_recalc = true
 
+func _update_swarm_center() -> void:
+	swarm_world_center = global_position + swarm_center_offset
+
 ##
 # positions each monkey on the ellipse boundary using their angle, plus
 # 'swarm_center_offset', plus Player.global_position
@@ -249,14 +252,15 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_rotation += 1.5 * _delta
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
-	if Input.is_action_pressed("rotate_swarm_clockwise_90"):
-		swarm_rotation += deg_to_rad(90)
-		_needs_full_ellipse_recalc = true
-		swarm_moved = true
 	
 	# Handle troop lock
 	if Input.is_action_pressed("toggle_lock"):
+		var was_locked = swarm_locked
 		swarm_locked = not swarm_locked
+
+		if was_locked and not swarm_locked:
+			swarm_center_offset = swarm_world_center - global_position
+			
 		swarm_moved = true #maybe delete
 	
 	# Manual Swarm Translation (U/O/H/;)
@@ -295,7 +299,7 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_ellipse_width = max(0.0, swarm_ellipse_width - 100.0 * _delta)
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
-	if Input.is_action_pressed("inc_height_ellipse"):
+	if Input.is_action_pressed("inc_width_ellipse"):
 		swarm_ellipse_width += 200.0 * _delta
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
