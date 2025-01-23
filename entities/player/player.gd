@@ -204,27 +204,67 @@ func add_monkey_to_swarm() -> void:
 ##
 func _update_swarm_positions() -> void:
 	if not swarm_locked:
-		swarm_world_center = global_position + swarm_center_offset
-	#else, use old center
-	
+		var center_offset = swarm_center_offset.rotated(swarm_rotation)
+		swarm_world_center = global_position + center_offset
+
 	for entry in swarm_monkeys:
 		var angle = entry["angle"]
 		var monkey = entry["node"]
-		
+
+		# Calculate target position
 		var x_component = Vector2(1, 0).rotated(swarm_rotation) * ellipse_width_scale * cos(angle)
 		var y_component = Vector2(0, 1).rotated(swarm_rotation) * ellipse_height_scale * sin(angle)
-		monkey.global_position = swarm_world_center + x_component + y_component
+		var target_position = swarm_world_center + x_component + y_component
+
+		# Calculate the difference to the target position
+		var to_target = target_position - monkey.global_position
+
+		# Add a threshold to avoid unnecessary movement
+		if to_target.length() < 3.0:  # Threshold distance, adjust as necessary
+			monkey.velocity = Vector2.ZERO  # Still set velocity to zero
+		else:
+			# Calculate velocity towards the target
+			var direction = to_target.normalized()
+			monkey.velocity = direction * speed  # Adjust `speed` as necessary
+
+		# Always call move_and_slide to maintain collision behavior
+		monkey.move_and_slide()
+
+
 		
 ##
 # Translates all monkeys by the same offset for WASD movement or swarm keys
 ##
-func _shift_swarm_position(shift: Vector2) -> void:
-	# Shift the "center" offset so future rotations know we've moved
-	swarm_center_offset += shift
-	
-	#Move each monkey's global position
+func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
+	# Calculate the global shift direction and magnitude
+	var shift_vector = global_dir.normalized() * delta
+
+	# Update the swarm center offset for future calculations
+	swarm_center_offset += shift_vector
+
+	# Update each monkey's position based on the shift
 	for entry in swarm_monkeys:
-		entry["node"].global_position += shift
+		var monkey = entry["node"]
+
+		# Move each monkey towards its new global position
+		var target_position = monkey.global_position + shift_vector
+
+		# Calculate the difference to the target
+		var to_target = target_position - monkey.global_position
+
+		# Add a threshold to avoid unnecessary movement
+		if to_target.length() < 3.0:  # Small threshold to avoid jittering
+			monkey.velocity = Vector2.ZERO
+		else:
+			# Move toward the target using velocity
+			var direction = to_target.normalized()
+			monkey.velocity = direction * speed
+
+		# Apply velocity with move_and_slide for collision handling
+		monkey.move_and_slide()
+
+
+
 
 # Store flag to indicate if a full ellipse recalc is needed
 var _needs_full_ellipse_recalc: bool = false
@@ -246,9 +286,15 @@ func handle_swarm_input(_delta: float) -> bool:
 	#Rotations keys
 	if Input.is_action_pressed("rotate_swarm_clockwise"):
 		# Rotate the transformation matrix
-		swarm_rotation += 1.5 * _delta
+		var rotation_speed = 1.0 * _delta
+		swarm_rotation += rotation_speed
+
+		# Adjust the center offset to rotate around the player
+		swarm_center_offset = swarm_center_offset.rotated(rotation_speed)
+
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
+
 	
 	# Handle troop lock
 	if Input.is_action_pressed("toggle_lock"):
@@ -260,28 +306,24 @@ func handle_swarm_input(_delta: float) -> bool:
 			
 		swarm_moved = true #maybe delete
 	
+	
 	# Manual Swarm Translation (U/O/H/;)
-	var manual_shift = Vector2.ZERO
 	if Input.is_action_pressed("translate_up"):
 		_swarm_monkeys_walk_up()
-		manual_shift.y -= 100.0 * _delta
+		_shift_swarm_position(Vector2(0, -1), 100.0 * _delta)
 		swarm_moved = true
 	if Input.is_action_pressed("translate_down"):
 		_swarm_monkeys_walk_down()
-		manual_shift.y += 100.0 * _delta
+		_shift_swarm_position(Vector2(0, 1), 100.0 * _delta)
 		swarm_moved = true
 	if Input.is_action_pressed("translate_left"):
 		_swarm_monkeys_walk_left()
-		manual_shift.x -= 100.0 * _delta
+		_shift_swarm_position(Vector2(-1, 0), 100.0 * _delta)
 		swarm_moved = true
 	if Input.is_action_pressed("translate_right"):
 		_swarm_monkeys_walk_right()
-		manual_shift.x += 100 * _delta
+		_shift_swarm_position(Vector2(1, 0), 100.0 * _delta)
 		swarm_moved = true
-	
-	# Apply the shift if not zero
-	if manual_shift != Vector2.ZERO:
-		_shift_swarm_position(manual_shift)
 	
 # Ellipse resizing
 	if Input.is_action_pressed("inc_height_ellipse"):
@@ -334,18 +376,18 @@ func handle_shooting() -> void:
 # Depending on which button is pressed, pass a direction vector
 # If we are still in the cooldown, do nothing
 	if _current_shoot_cooldown > 0.0:
-		return
-	if Input.is_action_pressed("shoot_up"):
+		return 
+	if Input.is_action_pressed("shoot_up") and not Input.is_key_pressed(KEY_SHIFT):
 		print()
 		spawn_projectile(Vector2.UP)
 		_current_shoot_cooldown = shoot_cooldown_duration
-	elif Input.is_action_pressed("shoot_down"):
+	elif Input.is_action_pressed("shoot_down") and not Input.is_key_pressed(KEY_SHIFT):
 		spawn_projectile(Vector2.DOWN)
 		_current_shoot_cooldown = shoot_cooldown_duration
-	elif Input.is_action_pressed("shoot_left"):
+	elif Input.is_action_pressed("shoot_left") and not Input.is_key_pressed(KEY_SHIFT):
 		spawn_projectile(Vector2.LEFT)
 		_current_shoot_cooldown = shoot_cooldown_duration
-	elif Input.is_action_pressed("shoot_right"):
+	elif Input.is_action_pressed("shoot_right") and not Input.is_key_pressed(KEY_SHIFT):
 		spawn_projectile(Vector2.RIGHT)
 		_current_shoot_cooldown = shoot_cooldown_duration
 
@@ -365,7 +407,7 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	if projectile == null:
 		return
 
-	var offset_distance = 90.0
+	var offset_distance = 30.0
 	var spawn_offset = shoot_direction.normalized() * offset_distance
 	var spawn_global_position = global_position + spawn_offset
 
