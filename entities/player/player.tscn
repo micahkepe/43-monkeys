@@ -300,3 +300,5 @@ animation = &"walk_down"
 position = Vector2(7, 35)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_007hl")
+
+[node name="TroopContainer" type="Node2D" parent="."]

@@ -54,11 +54,8 @@ var banana_boomerang_scene: PackedScene
 # -----------------------------------------------------------------
 @export var troopDefaultMonkey: PackedScene
 
-@export var swarm_ellipse_width: float = 200.0
-@export var swarm_ellipse_height: float = 200
-
-# Rotation of ellipse in radians
-var swarm_rotation: float = 0.0
+var ellipse_width_scale: float = 100.0
+var ellipse_height_scale: float = 100.0
 
 # Whether swarm is "locked" (Does not move with player on WASD)
 var swarm_locked: bool = false
@@ -201,9 +198,6 @@ func add_monkey_to_swarm() -> void:
 	#recalc angles?
 	_needs_full_ellipse_recalc = true
 
-func _update_swarm_center() -> void:
-	swarm_world_center = global_position + swarm_center_offset
-
 ##
 # positions each monkey on the ellipse boundary using their angle, plus
 # 'swarm_center_offset', plus Player.global_position
@@ -212,17 +206,14 @@ func _update_swarm_positions() -> void:
 	if not swarm_locked:
 		swarm_world_center = global_position + swarm_center_offset
 	#else, use old center
-
-	var rx = swarm_ellipse_width * 0.5
-	var ry = swarm_ellipse_height * 0.5
 	
 	for entry in swarm_monkeys:
 		var angle = entry["angle"]
 		var monkey = entry["node"]
 		
-		var local_pos  = Vector2(rx * cos(angle), ry * sin(angle))
-		local_pos = local_pos.rotated(swarm_rotation)
-		monkey.global_position = swarm_world_center + local_pos
+		var x_component = Vector2(1, 0).rotated(swarm_rotation) * ellipse_width_scale * cos(angle)
+		var y_component = Vector2(0, 1).rotated(swarm_rotation) * ellipse_height_scale * sin(angle)
+		monkey.global_position = swarm_world_center + x_component + y_component
 		
 ##
 # Translates all monkeys by the same offset for WASD movement or swarm keys
@@ -238,17 +229,23 @@ func _shift_swarm_position(shift: Vector2) -> void:
 # Store flag to indicate if a full ellipse recalc is needed
 var _needs_full_ellipse_recalc: bool = false
 
+var WORLD_UP    = Vector2(0, -1)
+var WORLD_RIGHT = Vector2(1, 0)
+
 ## 
 # Checks keys for ellipse rotation, resizing, lock toggle, and manual swarm
 # translation.
 # Returns 'true' if any translation or animation occured on the swarm in this 
 # frame
 ##
+var swarm_rotation: float = 0.0
+
 func handle_swarm_input(_delta: float) -> bool:
 	var swarm_moved = false
 	
 	#Rotations keys
 	if Input.is_action_pressed("rotate_swarm_clockwise"):
+		# Rotate the transformation matrix
 		swarm_rotation += 1.5 * _delta
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
@@ -286,23 +283,30 @@ func handle_swarm_input(_delta: float) -> bool:
 	if manual_shift != Vector2.ZERO:
 		_shift_swarm_position(manual_shift)
 	
-	# Ellipse resizing
+# Ellipse resizing
 	if Input.is_action_pressed("inc_height_ellipse"):
-		swarm_ellipse_height += 100.0 * _delta
+		_adjust_ellipse_global(Vector2(0, 1), +100.0 * _delta)  # Stretch along global y-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
+
 	if Input.is_action_pressed("dec_height_ellipse"):
-		swarm_ellipse_height = max(0.0, swarm_ellipse_height - 100.0 * _delta)
+		_adjust_ellipse_global(Vector2(0, 1), -100.0 * _delta)  # Shrink along global y-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
-	if Input.is_action_pressed("dec_width_ellipse"):
-		swarm_ellipse_width = max(0.0, swarm_ellipse_width - 100.0 * _delta)
-		_needs_full_ellipse_recalc = true
-		swarm_moved = true
+
 	if Input.is_action_pressed("inc_width_ellipse"):
-		swarm_ellipse_width += 200.0 * _delta
+		_adjust_ellipse_global(Vector2(1, 0), +100.0 * _delta)  # Stretch along global x-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
+
+	if Input.is_action_pressed("dec_width_ellipse"):
+		_adjust_ellipse_global(Vector2(1, 0), -100.0 * _delta)  # Shrink along global x-axis
+		_needs_full_ellipse_recalc = true
+		swarm_moved = true
+
+
+
+
 	
 	return swarm_moved
 	
@@ -396,3 +400,29 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	projectile.position = local_spawn_pos
 
 	projectiles_node.call_deferred("add_child", projectile)
+	
+	
+# Custom sign function for float
+func sign(value: float) -> int:
+	if value > 0:
+		return 1
+	elif value < 0:
+		return -1
+	return 0
+	
+func _adjust_ellipse_global(global_dir: Vector2, delta: float) -> void:
+	# Compute rotated axes based on current rotation
+	var local_x_axis = Vector2(1, 0).rotated(swarm_rotation)  # Rotated x-axis
+	var local_y_axis = Vector2(0, 1).rotated(swarm_rotation)  # Rotated y-axis
+
+	# Project global_dir onto the rotated axes
+	var x_contribution = abs(global_dir.dot(local_x_axis))
+	var y_contribution = abs(global_dir.dot(local_y_axis))
+
+	# Adjust based on the dominant axis
+	if abs(x_contribution) > abs(y_contribution):  # Dominantly affects width
+		var width_adjustment = delta * sign(x_contribution)
+		ellipse_width_scale = max(10.0, ellipse_width_scale + width_adjustment)
+	else:  # Dominantly affects height
+		var height_adjustment = delta * sign(y_contribution)
+		ellipse_height_scale = max(10.0, ellipse_height_scale + height_adjustment)
