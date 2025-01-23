@@ -1,8 +1,9 @@
-[gd_scene load_steps=42 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=43 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
+[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/default_monkey.tscn" id="3_73h8e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -284,9 +285,12 @@ radius = 22.5154
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-10, -13)
+collision_layer = 2
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_ieec4")
 banana_boomerang_scene = ExtResource("2_yc2po")
+troopDefaultMonkey = ExtResource("3_73h8e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)
@@ -295,6 +299,8 @@ sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(7, 35)
+position = Vector2(7, 36)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_007hl")
+
+[node name="Node2D" type="Node2D" parent="."]

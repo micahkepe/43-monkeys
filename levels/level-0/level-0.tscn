@@ -936,9 +936,9 @@ tile_set = SubResource("TileSet_h060g")
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("10_i5f2g")]
 y_sort_enabled = true
 position = Vector2(-44, 102.667)
-scale = Vector2(0.66, 0.66)
+scale = Vector2(0.499, 0.499)
 collision_layer = 2
-collision_mask = 3
+collision_mask = 5
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 
