@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/boid_joe.tscn" id="13_yg254"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser.tscn" id="15_si2mn"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="15_xoarp"]
-[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/buttons/buttons.tscn" id="16_aua4w"]
+[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/buttons/buttons.tscn" id="16_ufxko"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3nvw"]
 font = ExtResource("1_3rsmv")
@@ -999,5 +999,5 @@ z_index = 2
 [node name="laser1" parent="." instance=ExtResource("15_si2mn")]
 position = Vector2(5308, 3167)
 
-[node name="Buttons" parent="." instance=ExtResource("16_aua4w")]
-position = Vector2(5307, 2945)
+[node name="Buttons" parent="." instance=ExtResource("16_ufxko")]
+position = Vector2(195, 62)
