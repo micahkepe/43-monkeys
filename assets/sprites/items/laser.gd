@@ -21,6 +21,7 @@ func _on_body_exited(body: Node2D) -> void:
 	
 func deactivate_laser() -> void:
 	is_active = false
+	animated_sprite.play("laser_turn_off")
 	animated_sprite.play("laser_off")
 	
 	# Disable both collision shapes
