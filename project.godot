@@ -26,8 +26,8 @@ enabled=PackedStringArray()
 [global_group]
 
 boids="NPC-like characters that flock together"
-Monkeys=""
 player=""
+troop=""
 
 [input]
 

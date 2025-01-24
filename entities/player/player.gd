@@ -50,8 +50,12 @@ var banana_boomerang_scene: PackedScene
 # TROOP VARIABLES
 # -----------------------------------------------------------------
 
-## The default monkey scene to spawn in the troop
-@export var troopDefaultMonkey: PackedScene
+## The available variants of the monkeys to populate the troop.
+@export var monkey_scenes: Array[PackedScene] = []
+
+## The initial amount of monkeys in the troop
+@export
+var initial_troop_amount: int = 10
 
 ## The scale of the troop ellipse along the x-axis
 @export
@@ -80,10 +84,13 @@ var _swarm_rotation: float = 0.0
 # Store flag to indicate if a full ellipse recalc is needed
 var _needs_full_ellipse_recalc: bool = false
 
-## Constnat vectors for world directions
-const WORLD_UP    = Vector2(0, -1)
+## Constant vector for upward world direction.
+const WORLD_UP = Vector2(0, -1)
+
+## Constant vector for downward world direction.
 const WORLD_RIGHT = Vector2(1, 0)
 
+# -----------------------------------------------------------------
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
@@ -93,13 +100,12 @@ func _ready() -> void:
 
 	_swarm_world_center = global_position
 
-	# Spawn 5 monkeys in the swarm for testing
-	for i in range(10):
+	# Pre-spawn the entire troop at the start
+	for i in range(initial_troop_amount):
 		add_monkey_to_swarm()
 
-	# Update positions after adding monkeys
+	# Update positions after adding all monkeys
 	_update_swarm_positions()
-
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
@@ -148,27 +154,29 @@ func _physics_process(_delta: float) -> void:
 			_current_shoot_cooldown = 0.0
 
 	# Handle banana shooting
-	handle_shooting()
+	_handle_shooting()
 
 	var swarm_modified = handle_swarm_input(_delta)
 
 	# If swam unlocked, move with WASD as the player moves
 	if not _swarm_locked and input_velocity != Vector2.ZERO:
 		# Animate the monkeys in the correct direction
-		if input_velocity.x > 0:
-			_swarm_monkeys_walk_right()
-		elif input_velocity.x < 0:
-			_swarm_monkeys_walk_left()
-		elif input_velocity.y < 0:
+		if input_velocity.y < 0:
 			_swarm_monkeys_walk_up()
 		elif input_velocity.y > 0:
 			_swarm_monkeys_walk_down()
+		elif input_velocity.x > 0:
+			_swarm_monkeys_walk_right()
+		elif input_velocity.x < 0:
+			_swarm_monkeys_walk_left()
 
 		swarm_modified = true
+
+	# If no movement keys pressed, stop monkey animations
 	elif not swarm_modified:
 		_swarm_monkeys_stop_walk()
 
-	#If changed rotation/size, do angle recalc
+	# If changed rotation/size, do angle recalc
 	if _needs_full_ellipse_recalc:
 		_update_swarm_positions()
 
@@ -176,7 +184,8 @@ func _physics_process(_delta: float) -> void:
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
 ## ellipse
 func add_monkey_to_swarm() -> void:
-	var new_monkey = troopDefaultMonkey.instantiate()
+	var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
+	var new_monkey = new_monkey_scene.instantiate()
 	new_monkey.scale = Vector2(2.5, 2.5)
 	add_child(new_monkey)
 
@@ -359,7 +368,7 @@ func _swarm_monkeys_walk_right() -> void:
 
 
 ## Handles shooting logic. Shoots in the direction of the pressed key.
-func handle_shooting() -> void:
+func _handle_shooting() -> void:
 	# Depending on which button is pressed, pass a direction vector
 	# If we are still in the cooldown, do nothing
 	if _current_shoot_cooldown > 0.0:

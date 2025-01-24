@@ -1,9 +1,13 @@
-[gd_scene load_steps=43 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=47 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
-[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/default_monkey.tscn" id="3_73h8e"]
+[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/monkeys/formal_monkey.tscn" id="3_73h8e"]
+[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/monkeys/pirate_monkey.tscn" id="4_xwpq6"]
+[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/monkeys/roid_monkey.tscn" id="5_dvwff"]
+[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/monkeys/santa_monkey.tscn" id="6_ghmbx"]
+[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/monkeys/wizard_monkey.tscn" id="7_facpj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -290,7 +294,7 @@ collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_ieec4")
 banana_boomerang_scene = ExtResource("2_yc2po")
-troopDefaultMonkey = ExtResource("3_73h8e")
+monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)
