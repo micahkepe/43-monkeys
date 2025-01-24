@@ -27,6 +27,7 @@ enabled=PackedStringArray()
 
 boids="NPC-like characters that flock together"
 Monkeys=""
+player=""
 
 [input]
 
