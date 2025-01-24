@@ -47,6 +47,7 @@ var _can_advance: bool = false
 @onready var background: Sprite2D = get_node("Background")
 @onready var label: Label = get_node("Label")
 @onready var type_timer: Timer = Timer.new()
+@onready var frame_timer: Timer = Timer.new()
 
 # Typewriter effect settings
 const TYPING_SPEED: float = 0.05  # Seconds between each character
@@ -60,6 +61,11 @@ func _ready() -> void:
 	type_timer.one_shot = false
 	type_timer.connect("timeout", _on_type_timer_timeout)
 	add_child(type_timer)
+	
+	# Setup frame timer
+	frame_timer.one_shot = true
+	frame_timer.connect("timeout", _on_frame_timer_timeout)
+	add_child(frame_timer)
 
 	# Start first frame if available
 	if _frames.size() > 0:
@@ -74,6 +80,7 @@ func _input(event: InputEvent) -> void:
 			# Skip typing and show full text
 			_complete_typing()
 		elif _can_advance:
+			frame_timer.stop()
 			_current_frame += 1
 			show_frame(_current_frame)
 
@@ -123,6 +130,10 @@ func _on_type_timer_timeout() -> void:
 	else:
 		type_timer.start(TYPING_SPEED)
 
+## Timer callback for the frame transfer.
+func _on_frame_timer_timeout() -> void:
+	_current_frame += 1
+	show_frame(_current_frame)
 
 ## Completes the typing effect and shows the full text.
 func _complete_typing() -> void:
@@ -130,6 +141,7 @@ func _complete_typing() -> void:
 	_can_advance = true
 	type_timer.stop()
 	label.text = _target_text
+	frame_timer.start(2.0)
 
 
 ## Ends the cutscene and transitions to the first level.
