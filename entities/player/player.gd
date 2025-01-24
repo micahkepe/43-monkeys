@@ -235,8 +235,9 @@ func _update_swarm_positions() -> void:
 ## @param global_dir: Vector2 - The global direction to move the swarm
 ## @param delta: float - The distance to move the swarm
 func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
-	# Calculate the global shift direction and magnitude
-	var shift_vector = global_dir.normalized() * delta
+	# Convert the global direction to the swarm's local space using the inverse rotation
+	var local_dir = global_dir.rotated(-_swarm_rotation)
+	var shift_vector = local_dir.normalized() * delta
 
 	# Update the swarm center offset for future calculations
 	_swarm_center_offset += shift_vector
@@ -261,6 +262,7 @@ func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
 
 		# Apply velocity with move_and_slide for collision handling
 		monkey.move_and_slide()
+
 
 ##
 # Checks keys for ellipse rotation, resizing, lock toggle, and manual swarm
