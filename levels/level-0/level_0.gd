@@ -1,6 +1,5 @@
 extends Node2D
 
-
 @onready var button = $"Buttons"  # Use the exact node name from your scene
 @onready var laser = $"Laser"
 
@@ -16,6 +15,7 @@ func _ready() -> void:
 		if !laser:
 			print("Laser node missing")
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

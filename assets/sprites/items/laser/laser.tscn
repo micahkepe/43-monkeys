@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://d0jfylax23b4g"]
 
 [ext_resource type="Texture2D" uid="uid://bmjhrqdnqpmi5" path="res://assets/sprites/tilesets/laser.png" id="1_rdxdw"]
-[ext_resource type="Script" path="res://assets/sprites/items/laser.gd" id="1_y8frr"]
+[ext_resource type="Script" path="res://assets/sprites/items/laser/laser.gd" id="1_y8frr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mcgpk"]
 atlas = ExtResource("1_rdxdw")
@@ -100,7 +100,7 @@ animations = [{
 size = Vector2(256, 13)
 
 [node name="Laser" type="Area2D"]
-collision_mask = 7
+collision_mask = 31
 script = ExtResource("1_y8frr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

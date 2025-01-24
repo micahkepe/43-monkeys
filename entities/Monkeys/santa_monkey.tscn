@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://byjjnstxuhusk"]
 
-[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_8rwev"]
+[ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_kt3cs"]
 [ext_resource type="Texture2D" uid="uid://dkutugit6rrcq" path="res://assets/sprites/characters/monkeys/santa-monkey.png" id="1_n0oss"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x6a2l"]
@@ -281,7 +281,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_fysl8"]
 
 [node name="SantaMonkey" type="CharacterBody2D" groups=["troop"]]
-script = ExtResource("1_8rwev")
+collision_layer = 8
+collision_mask = 15
+script = ExtResource("1_kt3cs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["troop"]]
 sprite_frames = SubResource("SpriteFrames_1dvou")

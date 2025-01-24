@@ -290,11 +290,12 @@ radius = 22.5154
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-10, -13)
 collision_layer = 2
-collision_mask = 5
+collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_ieec4")
 banana_boomerang_scene = ExtResource("2_yc2po")
 monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj")])
+initial_troop_amount = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)

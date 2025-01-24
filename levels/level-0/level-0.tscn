@@ -14,9 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="11_in3d4"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="12_44r5b"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/boid_joe.tscn" id="13_yg254"]
-[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser.tscn" id="15_si2mn"]
+[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="15_si2mn"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="15_xoarp"]
-[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/buttons.tscn" id="16_ufxko"]
+[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="16_ufxko"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3nvw"]
 font = ExtResource("1_3rsmv")
@@ -933,7 +933,7 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(50, -110)
 scale = Vector2(1.5, 1.5)
-tile_map_data = PackedByteArray("AADp/xIAAAAAAAUAAADu/xIAAAADAAUAAADy/xIAAAADAAUAAAD2/xIAAAADAAUAAAD7/xIAAAAFAAUAAAABABIAAAAAAAUAAAAHABIAAAAAAAUAAAAPABMAAAAAAAAAAAAOAPv/AAACAAIAAAAQAP3/AAACAAIAAAAOAP7/AAACAAIAAAAQAAIAAAACAAIAAAAZAAkAAAACAAIAAAALACUAAAACAAIAAAANACYAAAACAAIAAAAaACQAAAAEAAAAAAAFACYAAAAEAAAAAAAFAC8AAAADAAUAAAABAC8AAAADAAUAAAD8/y8AAAACAAIAAADw/wcAAAAAAAAAAADu/woAAAAAAAAAAADy/wsAAAACAAIAAAAgADQAAAAAAAUAAAAlADQAAAADAAUAAAApADQAAAADAAUAAAAuADQAAAAFAAUAAADo/yAAAwAAABAAAAAbAEwAAwAFAAAAAAAhAEwAAwAFAAAAAAAaAEoAAwAEAAgAAAAaADcAAwAEAAgAAADn/0IAAwAAABAAAADo/xgAAwAAAAAAAABEADgAAwAAABAAAABEAD4AAwAAAAAAAABEAEUAAwAAABAAAAB6ADwAAwAFAAAAAAB1AFQAAwAUABAAAACaADgAAwAUABAAAAA5AFcAAwAMAAEAAAA9AFcAAwAMAAEAAABBAFcAAwAMAAEAAABFAFcAAwAMAAEAAAA=")
+tile_map_data = PackedByteArray("AADp/xIAAAAAAAUAAADu/xIAAAADAAUAAADy/xIAAAADAAUAAAD2/xIAAAADAAUAAAD7/xIAAAAFAAUAAAABABIAAAAAAAUAAAAHABIAAAAAAAUAAAAPABMAAAAAAAAAAAAOAPv/AAACAAIAAAAQAP3/AAACAAIAAAAOAP7/AAACAAIAAAAQAAIAAAACAAIAAAAZAAkAAAACAAIAAAALACUAAAACAAIAAAANACYAAAACAAIAAAAaACQAAAAEAAAAAAAFACYAAAAEAAAAAAAFAC8AAAADAAUAAAABAC8AAAADAAUAAAD8/y8AAAACAAIAAADw/wcAAAAAAAAAAADu/woAAAAAAAAAAADy/wsAAAACAAIAAAAgADQAAAAAAAUAAAAlADQAAAADAAUAAAApADQAAAADAAUAAAAuADQAAAAFAAUAAADo/yAAAwAAABAAAAAbAEwAAwAFAAAAAAAhAEwAAwAFAAAAAAAaAEoAAwAEAAgAAADn/0IAAwAAABAAAADo/xgAAwAAAAAAAABEADgAAwAAABAAAABEAD4AAwAAAAAAAABEAEUAAwAAABAAAAB6ADwAAwAFAAAAAAB1AFQAAwAUABAAAACaADgAAwAUABAAAAA5AFcAAwAMAAEAAAA9AFcAAwAMAAEAAABBAFcAAwAMAAEAAABFAFcAAwAMAAEAAAAaADcAAwAAABAAAAA=")
 tile_set = SubResource("TileSet_h060g")
 
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("10_i5f2g")]

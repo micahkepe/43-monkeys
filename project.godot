@@ -25,9 +25,9 @@ enabled=PackedStringArray()
 
 [global_group]
 
-boids="NPC-like characters that flock together"
-player=""
-troop=""
+boids="NPC-like characters that flock together."
+troop="The monkey troop that the main player can control."
+player="The main player's monkey to control."
 
 [input]
 
@@ -149,8 +149,10 @@ dec_width_ellipse={
 [layer_names]
 
 2d_physics/layer_1="World"
-2d_physics/layer_2="Characters"
+2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Projectiles"
+2d_physics/layer_4="Troop"
+2d_physics/layer_5="Leader"
 
 [navigation]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://4t4db1lpm8w4"]
 
-[ext_resource type="Script" path="res://assets/sprites/items/buttons.gd" id="1_4fyle"]
+[ext_resource type="Script" path="res://assets/sprites/items/button/button.gd" id="1_5qpy4"]
 [ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="2_oh6hi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iq7t4"]
@@ -79,7 +79,7 @@ size = Vector2(44, 47)
 
 [node name="Buttons" type="Area2D" groups=["button"]]
 collision_mask = 7
-script = ExtResource("1_4fyle")
+script = ExtResource("1_5qpy4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ew7lx")

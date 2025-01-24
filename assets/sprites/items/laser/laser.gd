@@ -13,23 +13,26 @@ func _ready() -> void:
 	var collision_shape = $CollisionShape2D.duplicate()
 	static_body.add_child(collision_shape)
 
-func _on_body_entered(body: Node2D) -> void:
+
+func _on_body_entered(_body: Node2D) -> void:
 	print("collided")
 
-func _on_body_exited(body: Node2D) -> void:
+
+func _on_body_exited(_body: Node2D) -> void:
 	print("exited")
-	
+
+
 func deactivate_laser() -> void:
 	is_active = false
 	animated_sprite.play("laser_turn_off")
 	animated_sprite.play("laser_off")
-	
+
 	# Disable both collision shapes
 	$CollisionShape2D.set_deferred("disabled", true)  # Area2D collision
-	
+
 	# Make sure we have the static body and its collision
 	if static_body and static_body.get_child_count() > 0:
 		static_body.get_child(0).set_deferred("disabled", true)  # StaticBody2D collision
-	
+
 	# Optional: Make the static body inactive
 	static_body.set_physics_process(false)
