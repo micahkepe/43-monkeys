@@ -25,10 +25,16 @@ Game Design at Rice University.
 
   - [x] Volume and SFX sliders work properly with dragging behavior
 
+- [x] Monkey troop controls
+- [x] More music (background/menu music, different level music)
+- [x] Auto timer on cutscenes so user doesn't have to give input
 - [ ] Player health and damage
-- [ ] Monkey troop controls
-- [ ] More music (background/menu music, different level music)
-- [ ] Auto timer on cutscenes so user doesn't have to give input
+- [ ] Glow effect for the player to differentiate
+- [ ] Level 0
+  - [ ] puzzles to solve with troop controls
+  - [ ] attack at least one enemies
+- [ ] Troop and enemy boid field of vision attack triggers
+- [ ] FIX: Pause menu in game not full sized
 
 ## Project Structure
 
