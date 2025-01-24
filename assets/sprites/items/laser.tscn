@@ -1,9 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://d0jfylax23b4g"]
 
 [ext_resource type="Texture2D" uid="uid://bmjhrqdnqpmi5" path="res://assets/sprites/tilesets/laser.png" id="1_rdxdw"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iqh7d"]
-size = Vector2(7, 21)
+[ext_resource type="Script" path="res://assets/sprites/items/laser.gd" id="1_y8frr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mcgpk"]
 atlas = ExtResource("1_rdxdw")
@@ -98,23 +96,17 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gukld"]
-size = Vector2(240, 12)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvclh"]
+size = Vector2(256, 13)
 
-[node name="Area2D" type="Area2D"]
-
-[node name="LeftEmitterCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-124.5, -1)
-shape = SubResource("RectangleShape2D_iqh7d")
-
-[node name="RightEmitterCollision" type="CollisionShape2D" parent="."]
-position = Vector2(124, 0)
-shape = SubResource("RectangleShape2D_iqh7d")
+[node name="Laser" type="Area2D"]
+collision_mask = 7
+script = ExtResource("1_y8frr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5w4xi")
 animation = &"laser_on"
 
-[node name="LaserCollisionHurtbox" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_gukld")
-disabled = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_qvclh")

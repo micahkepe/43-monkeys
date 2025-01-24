@@ -1,6 +1,7 @@
-[gd_scene load_steps=31 format=4 uid="uid://b8hvlr7xxbcu5"]
+[gd_scene load_steps=32 format=4 uid="uid://b8hvlr7xxbcu5"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
+[ext_resource type="Script" path="res://levels/level-0/level_0.gd" id="1_t800r"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="2_hpihk"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="3_pcuto"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_qxfbq"]
@@ -891,6 +892,7 @@ sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
 [node name="level-0" type="Node2D" groups=["boids"]]
 position = Vector2(580, 274)
+script = ExtResource("1_t800r")
 
 [node name="MoveInstruction" type="Label" parent="."]
 anchors_preset = 1
@@ -996,8 +998,8 @@ scale = Vector2(1.8, 1.8)
 [node name="Projectiles" type="Node2D" parent="."]
 z_index = 2
 
-[node name="laser1" parent="." instance=ExtResource("15_si2mn")]
-position = Vector2(5308, 3167)
-
 [node name="Buttons" parent="." instance=ExtResource("16_ufxko")]
-position = Vector2(195, 62)
+position = Vector2(5271, 2951)
+
+[node name="Laser" parent="." instance=ExtResource("15_si2mn")]
+position = Vector2(5306, 3167)
