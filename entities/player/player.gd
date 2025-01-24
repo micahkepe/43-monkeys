@@ -291,7 +291,7 @@ func handle_swarm_input(_delta: float) -> bool:
 		_swarm_locked = not _swarm_locked
 
 		if was_locked and not _swarm_locked:
-			_swarm_center_offset = _swarm_world_center - global_position
+			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
 
 		swarm_moved = true #maybe delete
 
