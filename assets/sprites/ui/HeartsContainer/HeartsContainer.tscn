@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpg5gffrgnefa"]
+
+[ext_resource type="Texture2D" uid="uid://db183n0avct2b" path="res://assets/sprites/ui/hearts.png" id="1_n11en"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e685f"]
+atlas = ExtResource("1_n11en")
+region = Rect2(160, 32, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhf42"]
+atlas = ExtResource("1_n11en")
+region = Rect2(32, 32, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykhk0"]
+atlas = ExtResource("1_n11en")
+region = Rect2(32, 160, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x7l7l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e685f")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhf42")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykhk0")
+}],
+"loop": true,
+"name": &"half",
+"speed": 5.0
+}]
+
+[node name="HeartsContainer" type="HBoxContainer"]
+offset_left = 59.0
+offset_top = 47.0
+offset_right = 59.0
+offset_bottom = 47.0
+
+[node name="Heart1" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_x7l7l")
+animation = &"full"
+frame_progress = 0.720523
+
+[node name="Heart2" type="AnimatedSprite2D" parent="."]
+position = Vector2(70, 0)
+sprite_frames = SubResource("SpriteFrames_x7l7l")
+animation = &"full"
+
+[node name="Heart3" type="AnimatedSprite2D" parent="."]
+position = Vector2(137, 0)
+sprite_frames = SubResource("SpriteFrames_x7l7l")
+animation = &"full"

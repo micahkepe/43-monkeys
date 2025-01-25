@@ -93,6 +93,13 @@ const WORLD_UP = Vector2(0, -1)
 ## Constant vector for downward world direction.
 const WORLD_RIGHT = Vector2(1, 0)
 
+## Health variables.
+var max_health: float = 6.0  # 6 half-hearts = 3 full hearts
+var current_health: float = 6.0
+var damage_cooldown: float = 1.0  # Time between damage ticks
+var current_cooldown: float = 0.0
+@onready var hearts_container = $UI/HeartsContainer
+
 # -----------------------------------------------------------------
 
 ## Called when the node enters the scene tree for the first time.
@@ -107,6 +114,13 @@ func _ready() -> void:
 
 	# Update positions after adding all monkeys
 	_update_swarm_positions()
+	
+	if !hearts_container:
+		print("Hearts container not found!")
+		return
+		
+	current_health = max_health
+	update_hearts_display()
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
@@ -180,6 +194,9 @@ func _physics_process(_delta: float) -> void:
 	# If changed rotation/size, do angle recalc
 	if _needs_full_ellipse_recalc:
 		_update_swarm_positions()
+	
+	if current_cooldown > 0:
+		current_cooldown -= _delta
 
 
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
@@ -512,3 +529,30 @@ func _adjust_ellipse_global(global_dir: Vector2, delta: float) -> void:
 	else:  # Dominantly affects height
 		var height_adjustment = delta * _sign(y_contribution)
 		ellipse_height_scale = max(10.0, ellipse_height_scale + height_adjustment)
+
+func update_hearts_display() -> void:
+	for i in range(hearts_container.get_child_count()):
+		var heart = hearts_container.get_child(i)
+		if current_health > i * 2 + 1:
+			heart.play("full")  # Fully filled heart
+		elif current_health == i * 2 + 1:
+			heart.play("half")  # Half-filled heart
+		else:
+			heart.play("empty")  # Empty heart
+			
+
+## If the player's health falls below zero.
+func die() -> void:
+	# Implement death behavior
+	queue_free()
+
+## Take damage for the player.
+func take_damage(amount: float) -> void:
+	print("damage!")
+	if current_cooldown <= 0:
+		current_health = max(0, current_health - amount)
+		current_cooldown = damage_cooldown
+		update_hearts_display()
+		
+		if current_health <= 0:
+			die()

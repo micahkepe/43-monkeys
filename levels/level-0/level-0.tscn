@@ -988,7 +988,7 @@ z_index = 2
 position = Vector2(5271, 2951)
 
 [node name="Laser" parent="." instance=ExtResource("15_si2mn")]
-position = Vector2(5306, 3167)
+position = Vector2(635, 581)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100

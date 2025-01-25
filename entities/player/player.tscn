@@ -1,14 +1,15 @@
-[gd_scene load_steps=50 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=51 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
-[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/monkeys/formal_monkey.tscn" id="3_73h8e"]
-[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/monkeys/pirate_monkey.tscn" id="4_xwpq6"]
-[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/monkeys/roid_monkey.tscn" id="5_dvwff"]
-[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/monkeys/santa_monkey.tscn" id="6_ghmbx"]
-[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/monkeys/wizard_monkey.tscn" id="7_facpj"]
+[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="3_73h8e"]
+[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/Monkeys/pirate_monkey.tscn" id="4_xwpq6"]
+[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="5_dvwff"]
+[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="6_ghmbx"]
+[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="7_facpj"]
 [ext_resource type="Shader" path="res://entities/player/halo_glow_shader.gdshader" id="9_5qvqw"]
+[ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://assets/sprites/ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -330,3 +331,7 @@ polygon = PackedVector2Array(-33, -14, -33, 15, 38, 15, 38, -14)
 
 [node name="SwarmMonkeys" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HeartsContainer" parent="UI" instance=ExtResource("10_l0e3e")]
