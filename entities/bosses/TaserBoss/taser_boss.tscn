@@ -1,6 +1,9 @@
-[gd_scene load_steps=108 format=3 uid="uid://cp5du4n6j8tbm"]
+[gd_scene load_steps=111 format=3 uid="uid://cp5du4n6j8tbm"]
 
 [ext_resource type="Texture2D" uid="uid://blunq804f35ls" path="res://assets/sprites/characters/boss/taser_boss.png" id="1_2lrr3"]
+[ext_resource type="Script" path="res://entities/bosses/TaserBoss/taser_boss.gd" id="1_gt0xw"]
+[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="2_s2ljo"]
+[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/taser-projectile/taser_projectile.tscn" id="3_51xi7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0s22d"]
 radius = 10.0499
@@ -797,8 +800,12 @@ animations = [{
 }]
 
 [node name="TaserBoss" type="CharacterBody2D"]
+z_index = 2
 collision_layer = 2
 collision_mask = 15
+script = ExtResource("1_gt0xw")
+electro_laser_scene = ExtResource("2_s2ljo")
+taser_projectile_scene = ExtResource("3_51xi7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

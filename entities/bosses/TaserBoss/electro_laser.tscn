@@ -96,6 +96,8 @@ animations = [{
 }]
 
 [node name="ElectroLaser" type="Area2D"]
+top_level = true
+z_index = 3
 scale = Vector2(3, 3)
 script = ExtResource("1_olds0")
 
@@ -104,6 +106,7 @@ position = Vector2(0, -3.17891e-07)
 shape = SubResource("RectangleShape2D_esoew")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 3
 sprite_frames = SubResource("SpriteFrames_kacac")
 animation = &"start_up"
 frame = 1
