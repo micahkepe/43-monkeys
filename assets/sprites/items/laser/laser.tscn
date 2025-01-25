@@ -105,7 +105,8 @@ script = ExtResource("1_y8frr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5w4xi")
-animation = &"laser_on"
+animation = &"laser_turn_on"
+frame_progress = 0.548513
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

@@ -1,0 +1,110 @@
+[gd_scene load_steps=13 format=3 uid="uid://qo5g1h3qpgww"]
+
+[ext_resource type="Texture2D" uid="uid://bsrpm5xgnxp0j" path="res://assets/sprites/characters/boss/electro_laser.png" id="1_idals"]
+[ext_resource type="Script" path="res://entities/bosses/TaserBoss/electro_laser.gd" id="1_olds0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_esoew"]
+size = Vector2(14, 28)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gfny5"]
+load_path = "res://.godot/imported/electro_laser.png-5f11bd9cfa481e45f2463786f58dc31a.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6kpd1"]
+atlas = SubResource("CompressedTexture2D_gfny5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h8wvg"]
+atlas = SubResource("CompressedTexture2D_gfny5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqpx0"]
+atlas = SubResource("CompressedTexture2D_gfny5")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rp2k"]
+atlas = ExtResource("1_idals")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0jfw"]
+atlas = ExtResource("1_idals")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glsv7"]
+atlas = ExtResource("1_idals")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol5sw"]
+atlas = ExtResource("1_idals")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kacac"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6kpd1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h8wvg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqpx0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rp2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0jfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glsv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rp2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0jfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glsv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rp2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0jfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glsv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rp2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0jfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ol5sw")
+}],
+"loop": false,
+"name": &"start_up",
+"speed": 3.0
+}]
+
+[node name="ElectroLaser" type="Area2D"]
+scale = Vector2(3, 3)
+script = ExtResource("1_olds0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.17891e-07)
+shape = SubResource("RectangleShape2D_esoew")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kacac")
+animation = &"start_up"
+frame = 1
+frame_progress = 0.935162

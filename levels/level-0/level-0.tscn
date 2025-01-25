@@ -940,6 +940,7 @@ tile_set = SubResource("TileSet_h060g")
 y_sort_enabled = true
 position = Vector2(-44, 102.667)
 scale = Vector2(0.499, 0.499)
+initial_troop_amount = 20
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 

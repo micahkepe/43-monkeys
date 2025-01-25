@@ -345,6 +345,46 @@ func handle_swarm_input(_delta: float) -> bool:
 		_adjust_ellipse_global(Vector2(1, 0), -100.0 * _delta)  # Shrink along global x-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
+		
+	if Input.is_action_pressed("reset_swarm"):
+		# Step 1: Reset swarm position using _shift_swarm_position
+		var reset_vector = global_position - _swarm_world_center
+		var direction = reset_vector.normalized()  # Get normalized direction
+		# Step 2: Play animations for all monkeys based on the reset direction
+		for monkey_entry in _swarm_monkeys:
+			var monkey = monkey_entry["node"]
+			if direction.angle_to(Vector2(0, 1)) < 0.25:  # Closest to down
+				monkey.walk_down()
+			elif direction.angle_to(Vector2(1, 0)) < 0.25:  # Closest to right
+				monkey.walk_right()
+			elif direction.angle_to(Vector2(0, -1)) < 0.25:  # Closest to up
+				monkey.walk_up()
+			elif direction.angle_to(Vector2(-1, 0)) < 0.25:  # Closest to left
+				monkey.walk_left()
+		
+		_shift_swarm_position(reset_vector, reset_vector.length())
+
+		# Step 2: Reset ellipse size
+		ellipse_width_scale = 100.0  # Default width
+		ellipse_height_scale = 100.0  # Default height
+
+		# Step 3: Reset swarm rotation and offset
+		_swarm_rotation = 0.0  # Reset rotation
+		_swarm_center_offset = Vector2.ZERO  # Reset any offset
+		_swarm_world_center = global_position  # Align with the player
+
+		# Step 4: Redistribute monkeys evenly around the ellipse
+		var total = float(_swarm_monkeys.size())
+		for i in range(_swarm_monkeys.size()):
+			var fraction = float(i) / total
+			_swarm_monkeys[i]["angle"] = fraction * TAU  # Evenly spaced angles
+
+		# Step 5: Mark for full recalculation of positions
+		_needs_full_ellipse_recalc = true
+		swarm_moved = true
+
+		print("Swarm reset: Position, size, rotation, and distribution updated.")
+
 
 	return swarm_moved
 
@@ -408,7 +448,7 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	var spawn_global_position = global_position + spawn_offset
 
 	# calculating velocity
-	var bullet_speed = 375.0
+	var bullet_speed = 550.0
 	var shot_dir = shoot_direction.normalized()
 	var main_vel = shot_dir * bullet_speed
 

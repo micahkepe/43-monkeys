@@ -78,7 +78,7 @@ animations = [{
 size = Vector2(44, 47)
 
 [node name="Buttons" type="Area2D" groups=["button"]]
-collision_mask = 7
+collision_mask = 15
 script = ExtResource("1_5qpy4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
