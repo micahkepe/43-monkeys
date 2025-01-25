@@ -944,19 +944,6 @@ initial_troop_amount = 20
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 
-[node name="PauseMenu" parent="ForegroundTiles/Player/Camera2D" instance=ExtResource("11_in3d4")]
-visible = false
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -545.455
-offset_top = -313.132
-offset_right = -545.455
-offset_bottom = -313.132
-grow_horizontal = 1
-grow_vertical = 1
-size_flags_horizontal = 4
-
 [node name="Boid1" parent="ForegroundTiles" instance=ExtResource("12_44r5b")]
 position = Vector2(-303.333, 427.333)
 scale = Vector2(1.66667, 1.66667)
@@ -1004,3 +991,9 @@ position = Vector2(5271, 2951)
 
 [node name="Laser" parent="." instance=ExtResource("15_si2mn")]
 position = Vector2(5306, 3167)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_in3d4")]
+metadata/_edit_use_anchors_ = true
