@@ -937,10 +937,8 @@ tile_map_data = PackedByteArray("AADp/xIAAAAAAAUAAADu/xIAAAADAAUAAADy/xIAAAADAAU
 tile_set = SubResource("TileSet_h060g")
 
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("10_i5f2g")]
-y_sort_enabled = true
 position = Vector2(-44, 102.667)
 scale = Vector2(0.499, 0.499)
-initial_troop_amount = 20
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 
@@ -996,4 +994,5 @@ position = Vector2(5306, 3167)
 layer = 100
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_in3d4")]
+visible = false
 metadata/_edit_use_anchors_ = true

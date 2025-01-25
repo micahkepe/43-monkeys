@@ -1,13 +1,14 @@
-[gd_scene load_steps=47 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=50 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
-[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="3_73h8e"]
-[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/Monkeys/pirate_monkey.tscn" id="4_xwpq6"]
-[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="5_dvwff"]
-[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="6_ghmbx"]
-[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="7_facpj"]
+[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/monkeys/formal_monkey.tscn" id="3_73h8e"]
+[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/monkeys/pirate_monkey.tscn" id="4_xwpq6"]
+[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/monkeys/roid_monkey.tscn" id="5_dvwff"]
+[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/monkeys/santa_monkey.tscn" id="6_ghmbx"]
+[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/monkeys/wizard_monkey.tscn" id="7_facpj"]
+[ext_resource type="Shader" path="res://entities/player/halo_glow_shader.gdshader" id="9_5qvqw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -285,11 +286,21 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_007hl"]
-radius = 22.5154
+radius = 20.0174
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ntnfs"]
+shader = ExtResource("9_5qvqw")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ebpfv"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+self_modulate = Color(1, 1, 0.0980392, 1)
+y_sort_enabled = true
 position = Vector2(-10, -13)
-collision_layer = 2
+collision_layer = 16
 collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_ieec4")
@@ -301,11 +312,21 @@ initial_troop_amount = 5
 position = Vector2(7, -1.99999)
 scale = Vector2(2.54091, 2.54091)
 sprite_frames = SubResource("SpriteFrames_rp06w")
-animation = &"walk_up"
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(7, 36)
+position = Vector2(5, 40)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_007hl")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="HaloEffect" type="Polygon2D" parent="."]
+z_index = -1
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_ntnfs")
+position = Vector2(-70, -10.0001)
+scale = Vector2(154.279, 100.459)
+texture = SubResource("CanvasTexture_ebpfv")
+polygon = PackedVector2Array(-33, -14, -33, 15, 38, 15, 38, -14)
+
+[node name="SwarmMonkeys" type="Node2D" parent="."]
+y_sort_enabled = true

@@ -282,6 +282,7 @@ animations = [{
 radius = 9.0
 
 [node name="PirateMonkey" type="CharacterBody2D" groups=["troop"]]
+y_sort_enabled = true
 collision_layer = 8
 collision_mask = 15
 script = ExtResource("1_6iwet")

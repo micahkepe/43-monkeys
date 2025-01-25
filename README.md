@@ -30,11 +30,11 @@ Game Design at Rice University.
 - [x] Auto timer on cutscenes so user doesn't have to give input
 - [ ] Player health and damage
 - [ ] Glow effect for the player to differentiate
-- [ ] Level 0
+- [ ] Demo level
   - [ ] puzzles to solve with troop controls
   - [ ] attack at least one enemies
 - [ ] Troop and enemy boid field of vision attack triggers
-- [ ] FIX: Pause menu in game not full sized
+- [x] FIX: Pause menu in game not full sized
 
 ## Project Structure
 

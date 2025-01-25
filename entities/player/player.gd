@@ -68,6 +68,9 @@ var ellipse_height_scale: float = 100.0
 ## Whether swarm is "locked" (Does not move with player on WASD)
 var _swarm_locked: bool = false
 
+## SwarmMonkeys root node
+@onready var _swarm_monkeys_root: Node2D = $SwarmMonkeys
+
 ## Additional offset from the player's position
 ## (Changed by U, O, H, ;)
 var _swarm_center_offset: Vector2 = Vector2.ZERO
@@ -95,9 +98,7 @@ const WORLD_RIGHT = Vector2(1, 0)
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
 func _ready() -> void:
-	## Set the player's initial animation
-	_animated_sprite.play("walk_down")
-
+	## Set the player's initial position
 	_swarm_world_center = global_position
 
 	# Pre-spawn the entire troop at the start
@@ -187,7 +188,9 @@ func add_monkey_to_swarm() -> void:
 	var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
 	var new_monkey = new_monkey_scene.instantiate()
 	new_monkey.scale = Vector2(2.5, 2.5)
-	add_child(new_monkey)
+
+	# Add monkey to the swarm root node
+	_swarm_monkeys_root.add_child(new_monkey)
 
 	var count = _swarm_monkeys.size()
 	var new_angle  = 0.0
@@ -206,7 +209,7 @@ func add_monkey_to_swarm() -> void:
 		var fraction = float(i) / total
 		_swarm_monkeys[i]["angle"] = fraction * TAU
 
-	# TODO: recalc angles?
+	## Mark for full recalculation of positions
 	_needs_full_ellipse_recalc = true
 
 ## Positions each monkey on the ellipse boundary using their angle, plus
@@ -345,7 +348,7 @@ func handle_swarm_input(_delta: float) -> bool:
 		_adjust_ellipse_global(Vector2(1, 0), -100.0 * _delta)  # Shrink along global x-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
-		
+
 	if Input.is_action_pressed("reset_swarm"):
 		# Step 1: Reset swarm position using _shift_swarm_position
 		var reset_vector = global_position - _swarm_world_center
@@ -361,7 +364,7 @@ func handle_swarm_input(_delta: float) -> bool:
 				monkey.walk_up()
 			elif direction.angle_to(Vector2(-1, 0)) < 0.25:  # Closest to left
 				monkey.walk_left()
-		
+
 		_shift_swarm_position(reset_vector, reset_vector.length())
 
 		# Step 2: Reset ellipse size
