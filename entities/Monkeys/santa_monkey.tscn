@@ -283,7 +283,7 @@ animations = [{
 [node name="SantaMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
 collision_layer = 8
-collision_mask = 15
+collision_mask = 31
 script = ExtResource("1_kt3cs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["troop"]]

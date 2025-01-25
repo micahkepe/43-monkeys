@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://do6hihoyl8x5u"]
+[gd_scene load_steps=26 format=4 uid="uid://b1alcd2lo4xnw"]
 
 [ext_resource type="Script" path="res://levels/demo_level.gd" id="1_mqgct"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="4_3rox1"]
@@ -8,10 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="8_envnl"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_78bp4"]
 [ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="10_nxgtp"]
-[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="11_dvr86"]
+[ext_resource type="PackedScene" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="11_dvr86"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="11_s1uti"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="12_c4kud"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="13_pt541"]
+[ext_resource type="PackedScene" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="13_pt541"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="16_hfkby"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="17_ul4oh"]
 
@@ -843,9 +843,9 @@ tile_map_data = PackedByteArray("AAD8/x8AAAAAAAAAAAAHAB8AAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_h060g")
 
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("11_s1uti")]
-y_sort_enabled = true
 position = Vector2(36, 365.333)
 scale = Vector2(0.499, 0.499)
+collision_mask = 31
 initial_troop_amount = 10
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
