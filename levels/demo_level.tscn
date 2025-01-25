@@ -1,4 +1,3 @@
-<<<<<<< HEAD:levels/demo_level.tscn
 [gd_scene load_steps=26 format=4 uid="uid://b1alcd2lo4xnw"]
 
 [ext_resource type="Script" path="res://levels/demo_level.gd" id="1_mqgct"]
@@ -15,27 +14,10 @@
 [ext_resource type="PackedScene" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="13_pt541"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="16_hfkby"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="17_ul4oh"]
-=======
-[gd_scene load_steps=25 format=4 uid="uid://do6hihoyl8x5u"]
-
-[ext_resource type="Script" path="res://levels/demo-level/demo_level.gd" id="1_k6a2h"]
-[ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_3or2j"]
-[ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="3_12jhi"]
-[ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="4_ewnxd"]
-[ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_ltcwe"]
-[ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="6_m7v2x"]
-[ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="7_bf7s2"]
-[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_85fvg"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="9_sievg"]
-[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="10_we204"]
-[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="11_da7vl"]
-[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="12_qrcd8"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="13_7d4ub"]
->>>>>>> c312f5e (Work on taser boss):levels/demo-level/demo_level.tscn
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bu8l"]
 resource_name = "blank-tiles"
-texture = ExtResource("2_3or2j")
+texture = ExtResource("4_3rox1")
 0:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -88,7 +70,7 @@ texture = ExtResource("2_3or2j")
 7:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fr8o3"]
-texture = ExtResource("3_12jhi")
+texture = ExtResource("5_vave5")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/z_index = -3
@@ -125,7 +107,7 @@ texture_region_size = Vector2i(32, 32)
 0:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7m7yo"]
-texture = ExtResource("4_ewnxd")
+texture = ExtResource("6_n2vm6")
 texture_region_size = Vector2i(32, 32)
 0:0/size_in_atlas = Vector2i(2, 4)
 0:0/0 = 0
@@ -147,7 +129,7 @@ texture_region_size = Vector2i(32, 32)
 0:5/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb811"]
-texture = ExtResource("5_ltcwe")
+texture = ExtResource("7_crj8l")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -207,7 +189,7 @@ sources/3 = SubResource("TileSetAtlasSource_7m7yo")
 sources/4 = SubResource("TileSetAtlasSource_sb811")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d2i4d"]
-texture = ExtResource("4_ewnxd")
+texture = ExtResource("6_n2vm6")
 texture_region_size = Vector2i(32, 32)
 9:0/0 = 0
 10:0/0 = 0
@@ -373,7 +355,7 @@ texture_region_size = Vector2i(32, 32)
 5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-46.4923, 1.41421, 46.4923, 0, 47.5529, 28.9914, -45.7852, 29.6985)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xol5g"]
-texture = ExtResource("5_ltcwe")
+texture = ExtResource("7_crj8l")
 1:0/0 = 0
 2:0/0 = 0
 5:0/0 = 0
@@ -548,7 +530,7 @@ texture = ExtResource("5_ltcwe")
 3:15/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m2v1e"]
-texture = ExtResource("7_bf7s2")
+texture = ExtResource("9_78bp4")
 texture_region_size = Vector2i(32, 32)
 16:0/0 = 0
 16:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-34.25, 41.5, 35.8857, 42.0729, 35.5321, 64.3467, -33.0572, 63.9932)
@@ -664,7 +646,7 @@ texture_region_size = Vector2i(32, 32)
 12:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-34.25, 41.5, 35.8857, 42.0729, 35.5321, 64.3467, -33.0572, 63.9932)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vhjgw"]
-texture = ExtResource("8_85fvg")
+texture = ExtResource("10_nxgtp")
 5:0/size_in_atlas = Vector2i(6, 5)
 5:0/0 = 0
 5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48.25, 6.5, 44.25, 8, 44.25, 39, -47.75, 39.5)
@@ -697,7 +679,7 @@ texture = ExtResource("8_85fvg")
 12:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.375, -5.5, 31.375, -5.25, 31.125, 30.5, -32.125, 30.75)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t4ikr"]
-texture = ExtResource("3_12jhi")
+texture = ExtResource("5_vave5")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -837,7 +819,7 @@ sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
 [node name="demo_level" type="Node2D" groups=["boids"]]
 position = Vector2(580, 274)
-script = ExtResource("1_k6a2h")
+script = ExtResource("1_mqgct")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -3
@@ -847,7 +829,7 @@ tile_map_data = PackedByteArray("AADu//b/AAAAAAQAAADu//X/AAAAAAQAAADv//X/AAAAAAQ
 tile_set = SubResource("TileSet_6tb6n")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_m7v2x")
+stream = ExtResource("8_envnl")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
@@ -860,24 +842,16 @@ scale = Vector2(1.5, 1.5)
 tile_map_data = PackedByteArray("AAD8/x8AAAAAAAAAAAAHAB8AAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_h060g")
 
-<<<<<<< HEAD:levels/demo_level.tscn
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("11_s1uti")]
 position = Vector2(36, 365.333)
 scale = Vector2(0.499, 0.499)
 collision_mask = 31
-=======
-[node name="Player" parent="ForegroundTiles" instance=ExtResource("9_sievg")]
-self_modulate = Color(1, 1, 1, 1)
-position = Vector2(17.3334, -611.333)
-scale = Vector2(0.499, 0.499)
-collision_layer = 2
->>>>>>> c312f5e (Work on taser boss):levels/demo-level/demo_level.tscn
 initial_troop_amount = 10
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 zoom = Vector2(0.82, 0.82)
 
-[node name="PauseMenu" parent="ForegroundTiles/Player/Camera2D" instance=ExtResource("10_we204")]
+[node name="PauseMenu" parent="ForegroundTiles/Player/Camera2D" instance=ExtResource("12_c4kud")]
 visible = false
 anchors_preset = 0
 anchor_right = 0.0
@@ -894,13 +868,13 @@ size_flags_horizontal = 4
 position = Vector2(-534, -240)
 scale = Vector2(0.75, 0.75)
 
-[node name="Button" parent="Buttons" instance=ExtResource("11_da7vl")]
+[node name="Button" parent="Buttons" instance=ExtResource("16_hfkby")]
 position = Vector2(328, 777.333)
 
-[node name="Button1" parent="Buttons" instance=ExtResource("11_da7vl")]
+[node name="Button1" parent="Buttons" instance=ExtResource("16_hfkby")]
 position = Vector2(1376, 777.333)
 
-[node name="Button2" parent="Buttons" instance=ExtResource("11_da7vl")]
+[node name="Button2" parent="Buttons" instance=ExtResource("16_hfkby")]
 position = Vector2(856, 522.667)
 scale = Vector2(1.33333, 1.33333)
 
@@ -909,20 +883,24 @@ z_index = 2
 
 [node name="Lasers" type="Node2D" parent="."]
 
-[node name="Laser" parent="Lasers" instance=ExtResource("12_qrcd8")]
+[node name="Laser" parent="Lasers" instance=ExtResource("17_ul4oh")]
 position = Vector2(13, -370)
 rotation = 1.5708
 scale = Vector2(2, 3)
 
-[node name="Laser2" parent="Lasers" instance=ExtResource("12_qrcd8")]
+[node name="Laser2" parent="Lasers" instance=ExtResource("17_ul4oh")]
 position = Vector2(199, -369)
 rotation = 1.5708
 scale = Vector2(2, 3)
 
-[node name="Laser3" parent="Lasers" instance=ExtResource("12_qrcd8")]
+[node name="Laser3" parent="Lasers" instance=ExtResource("17_ul4oh")]
 position = Vector2(106, -58)
 scale = Vector2(3.25, 2)
 
-[node name="TaserBoss" parent="." instance=ExtResource("13_7d4ub")]
+[node name="TaserBoss" parent="." instance=ExtResource("13_pt541")]
 position = Vector2(99, -1368)
 scale = Vector2(2.67, 2.67)
+
+[node name="ElectroLaser" parent="." instance=ExtResource("11_dvr86")]
+position = Vector2(266, 174)
+scale = Vector2(3, 15)

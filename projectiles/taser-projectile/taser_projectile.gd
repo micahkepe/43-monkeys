@@ -1,47 +1,52 @@
 extends Area2D
-## A taser projectile that damages entities on contact if the body implements
-## the `take_damage` method or is within specific groups. The projectile moves
-## in a straight line and destroys itself after a set lifetime.
+## A taser projectile that damages bodies on contact if the body implements
+## the `take_damage` method.
+##
+## The projectile moves in the direction it was spawned in and deals damage
+## to the player on contact. The projectile is destroyed after dealing damage.
 
-## Speed of the taser projectile
-@export var speed: float = 175.0
+## The speed of the banana projectile.
+@export var speed: float = 100.0
 
-## Damage dealt by the taser on contact
-@export var damage: int = 15
+## The amount of damage the banana deals to the player.
+@export var damage: int = 10
 
-## Lifetime of the taser projectile in seconds
-@export var lifetime: float = 8.0
+## The direction the banana is moving in radians.
+@export var dir_rads: float = 0.0
 
-## Velocity of the taser projectile
-var velocity: Vector2 = Vector2.ZERO
+## The position the banana is spawned at.
+@export var spawn_pos_vec: Vector2
+
+## The rotation of the banana when spawned.
+@export var spawn_rotation: float
 
 
 ## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	print("taser spawned at:", global_position)
-	
-	# Play an animation if available
+func _ready():
+	# Play the animation
 	if $AnimationPlayer.has_animation("taser_spin"):
 		$AnimationPlayer.play("taser_spin")
-	
-	# Connect the body_entered signal
+
+	# Connect collision detection
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
-	
-	# Schedule projectile destruction after its lifetime expires
-	await get_tree().create_timer(lifetime).timeout
-	queue_free()
 
 
-## Called every frame. Handles movement and rotation.
-func _physics_process(delta: float) -> void:
-	# Move the taser based on its velocity
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	# Calculate velocity and update position
+	var velocity = Vector2(0, -speed).rotated(dir_rads)
 	global_position += velocity * delta
 
-	# Adjust rotation to align with the direction of motion
-	if velocity.length() > 0:
-		rotation = velocity.angle()
+	# Destroy the projectile if it's off-screen
+	if not get_viewport_rect().has_point(global_position):
+		queue_free()
 
 
-## Called when the taser collides with another body.
-func _on_body_entered(body: Node) -> void:
-	print("enter")
+## Called when the projectile collides with a body.
+## If the body is the player, deal damage and destroy the projectile.
+func _on_body_entered(body):
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
+
+	# Destroy the projectile after dealing damage
+	queue_free()

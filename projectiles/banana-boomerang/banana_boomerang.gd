@@ -45,5 +45,3 @@ func _on_body_entered(body: Node) -> void:
 		queue_free()
 	elif body.is_in_group("Character") or body.is_in_group("boids"):
 		queue_free()
-	elif body.name == "TaserBoss":
-		queue_free()
