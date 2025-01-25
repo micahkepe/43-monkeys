@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://by1ydwv3oxie0"]
+[gd_scene load_steps=40 format=4 uid="uid://by1ydwv3oxie0"]
 
 [ext_resource type="Texture2D" uid="uid://b2r77g38aossh" path="res://assets/sprites/ui/SettingsTitle.png" id="1_8gg7j"]
 [ext_resource type="Script" path="res://menus/settings-menu/settings_menu.gd" id="1_f2gom"]
@@ -307,6 +307,34 @@ region = Rect2(64, 32, 32, 32)
 atlas = ExtResource("3_a5leq")
 region = Rect2(160, 32, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1mpv"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlghe"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(192, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwqhy"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3pnj"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(192, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atbsr"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxoxq"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(192, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3s4t"]
+atlas = ExtResource("3_a5leq")
+region = Rect2(64, 0, 64, 32)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_612a0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4bxe2"]
@@ -356,26 +384,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -224.0
-offset_top = -279.0
-offset_right = 656.0
-offset_bottom = 235.0
+offset_left = -244.0
+offset_top = -346.0
+offset_right = 636.0
+offset_bottom = 168.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_8gg7j")
 
 [node name="Background" type="TileMapLayer" parent="."]
 z_index = -1
+position = Vector2(126, 124)
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAAAAAAAAACAAEAAAAAAAEAAAACAAEAAAAAAAIAAAACAAEAAAAAAAMAAAACAAEAAAAAAAQAAAACAAEAAAAAAAUAAAACAAEAAAAAAAYAAAACAAEAAAAAAAcAAAACAAEAAAABAAAAAAACAAEAAAABAAEAAAACAAEAAAABAAIAAAACAAEAAAABAAMAAAACAAEAAAABAAQAAAAAAAAAAAABAAUAAAACAAEAAAABAAYAAAACAAEAAAABAAcAAAACAAEAAAACAAAAAAACAAEAAAACAAEAAAACAAEAAAACAAIAAAACAAEAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAACAAEAAAACAAYAAAACAAEAAAACAAcAAAACAAEAAAADAAAAAAACAAEAAAADAAEAAAACAAEAAAADAAIAAAACAAEAAAADAAMAAAACAAEAAAADAAQAAAAAAAAAAAADAAUAAAACAAEAAAADAAYAAAACAAEAAAADAAcAAAACAAEAAAAEAAAAAAACAAEAAAAEAAEAAAACAAEAAAAEAAIAAAACAAEAAAAEAAMAAAACAAEAAAAEAAQAAAACAAEAAAAEAAUAAAACAAEAAAAEAAYAAAACAAEAAAAEAAcAAAACAAEAAAAFAAAAAAACAAEAAAAFAAEAAAACAAEAAAAFAAIAAAACAAEAAAAFAAMAAAACAAEAAAAFAAQAAAACAAEAAAAFAAUAAAACAAEAAAAFAAYAAAACAAEAAAAFAAcAAAACAAEAAAAGAAAAAAACAAEAAAAGAAEAAAACAAEAAAAGAAIAAAACAAEAAAAGAAMAAAACAAEAAAAGAAQAAAACAAEAAAAGAAUAAAACAAEAAAAGAAYAAAACAAEAAAAGAAcAAAACAAEAAAAHAAAAAAACAAEAAAAHAAEAAAACAAEAAAAHAAIAAAACAAEAAAAHAAMAAAACAAEAAAAHAAQAAAAAAAAAAAAHAAUAAAACAAEAAAAHAAYAAAACAAEAAAAHAAcAAAACAAEAAAAIAAAAAAACAAEAAAAIAAEAAAACAAEAAAAIAAIAAAACAAEAAAAIAAMAAAACAAEAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAACAAEAAAAIAAcAAAACAAEAAAAJAAAAAAACAAEAAAAJAAEAAAACAAEAAAAJAAIAAAACAAEAAAAJAAMAAAACAAEAAAAJAAQAAAACAAEAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAACAAEAAAAKAAAAAAACAAEAAAAKAAEAAAACAAEAAAAKAAIAAAACAAEAAAAKAAMAAAACAAEAAAAKAAQAAAACAAEAAAAKAAUAAAACAAEAAAAKAAYAAAACAAEAAAAKAAcAAAACAAEAAAALAAAAAAACAAEAAAALAAEAAAACAAEAAAALAAIAAAACAAEAAAALAAMAAAACAAEAAAALAAQAAAACAAEAAAALAAUAAAACAAEAAAALAAYAAAACAAEAAAALAAcAAAACAAEAAAAMAAAAAAACAAEAAAAMAAEAAAACAAEAAAAMAAIAAAACAAEAAAAMAAMAAAACAAEAAAAMAAQAAAACAAEAAAAMAAUAAAACAAEAAAAMAAYAAAACAAEAAAAMAAcAAAACAAEAAAANAAAAAAACAAEAAAANAAEAAAACAAEAAAANAAIAAAACAAEAAAANAAMAAAACAAEAAAANAAQAAAACAAEAAAANAAUAAAACAAEAAAANAAYAAAACAAEAAAANAAcAAAACAAEAAAAOAAAAAAACAAEAAAAOAAEAAAACAAEAAAAOAAIAAAACAAEAAAAOAAMAAAACAAEAAAAOAAQAAAACAAEAAAAOAAUAAAACAAEAAAAOAAYAAAACAAEAAAAOAAcAAAACAAEAAAAPAAAAAAACAAEAAAAPAAEAAAACAAEAAAAPAAIAAAACAAEAAAAPAAMAAAACAAEAAAAPAAQAAAACAAEAAAAPAAUAAAACAAEAAAAPAAYAAAACAAEAAAAPAAcAAAACAAEAAAAQAAAAAAACAAEAAAAQAAEAAAACAAEAAAAQAAIAAAACAAEAAAAQAAMAAAACAAEAAAAQAAQAAAACAAEAAAAQAAUAAAACAAEAAAAQAAYAAAACAAEAAAAQAAcAAAACAAEAAAAKAAgAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAgAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAgAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAgAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAQAAgAAAAAAAAAAAAQAAkAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAACAAgAAAAAAAAAAAACAAkAAAAAAAAAAAADAAgAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAgAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAgAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAAAAAAAAAARAAAAAAAAAAAAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAARAAMAAAAAAAAAAAARAAQAAAAAAAAAAAARAAUAAAAAAAAAAAARAAYAAAAAAAAAAAARAAcAAAAAAAAAAAARAAgAAAAAAAAAAAARAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAD//woAAAAAAAAAAAD//wkAAAAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAQAP//AAAAAAAAAAARAP//AAAAAAAAAAD///7/AAAAAAAAAAAAAP7/AAAAAAAAAAABAP7/AAAAAAAAAAACAP7/AAAAAAAAAAADAP7/AAAAAAAAAAAEAP7/AAAAAAAAAAAFAP7/AAAAAAAAAAAGAP7/AAAAAAAAAAAHAP7/AAAAAAAAAAAIAP7/AAAAAAAAAAAJAP7/AAAAAAAAAAAKAP7/AAAAAAAAAAALAP7/AAAAAAAAAAAMAP7/AAAAAAAAAAANAP7/AAAAAAAAAAAOAP7/AAAAAAAAAAAPAP7/AAAAAAAAAAAQAP7/AAAAAAAAAAARAP7/AAAAAAAAAAD+//7/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD+/wQAAAAAAAAAAAD+/wUAAAAAAAAAAAD+/wYAAAAAAAAAAAD+/wcAAAAAAAAAAAD+/wgAAAAAAAAAAAD+/wkAAAAAAAAAAAD+/woAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAEAAAAAAAEAAAACAAEAAAAAAAIAAAACAAEAAAAAAAMAAAACAAEAAAAAAAQAAAACAAEAAAAAAAUAAAACAAEAAAAAAAYAAAACAAEAAAAAAAcAAAACAAEAAAABAAAAAAACAAEAAAABAAEAAAACAAEAAAABAAIAAAACAAEAAAABAAMAAAACAAEAAAABAAQAAAAAAAAAAAABAAUAAAACAAEAAAABAAYAAAACAAEAAAABAAcAAAACAAEAAAACAAAAAAACAAEAAAACAAEAAAACAAEAAAACAAIAAAACAAEAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAACAAUAAAACAAEAAAACAAYAAAACAAEAAAACAAcAAAACAAEAAAADAAAAAAACAAEAAAADAAEAAAACAAEAAAADAAIAAAACAAEAAAADAAMAAAACAAEAAAADAAQAAAAAAAAAAAADAAUAAAACAAEAAAADAAYAAAACAAEAAAADAAcAAAACAAEAAAAEAAAAAAACAAEAAAAEAAEAAAACAAEAAAAEAAIAAAACAAEAAAAEAAMAAAACAAEAAAAEAAQAAAACAAEAAAAEAAUAAAACAAEAAAAEAAYAAAACAAEAAAAEAAcAAAACAAEAAAAFAAAAAAACAAEAAAAFAAEAAAACAAEAAAAFAAIAAAACAAEAAAAFAAMAAAACAAEAAAAFAAQAAAACAAEAAAAFAAUAAAACAAEAAAAFAAYAAAACAAEAAAAFAAcAAAACAAEAAAAGAAAAAAACAAEAAAAGAAEAAAACAAEAAAAGAAIAAAACAAEAAAAGAAMAAAACAAEAAAAGAAQAAAACAAEAAAAGAAUAAAACAAEAAAAGAAYAAAACAAEAAAAGAAcAAAACAAEAAAAHAAAAAAACAAEAAAAHAAEAAAACAAEAAAAHAAIAAAACAAEAAAAHAAMAAAACAAEAAAAHAAQAAAAAAAAAAAAHAAUAAAACAAEAAAAHAAYAAAACAAEAAAAHAAcAAAACAAEAAAAIAAAAAAACAAEAAAAIAAEAAAACAAEAAAAIAAIAAAACAAEAAAAIAAMAAAACAAEAAAAIAAQAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAYAAAACAAEAAAAIAAcAAAACAAEAAAAJAAAAAAACAAEAAAAJAAEAAAACAAEAAAAJAAIAAAACAAEAAAAJAAMAAAACAAEAAAAJAAQAAAACAAEAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAACAAEAAAAKAAAAAAACAAEAAAAKAAEAAAACAAEAAAAKAAIAAAACAAEAAAAKAAMAAAACAAEAAAAKAAQAAAACAAEAAAAKAAUAAAACAAEAAAAKAAYAAAACAAEAAAAKAAcAAAACAAEAAAALAAAAAAACAAEAAAALAAEAAAACAAEAAAALAAIAAAACAAEAAAALAAMAAAACAAEAAAALAAQAAAACAAEAAAALAAUAAAACAAEAAAALAAYAAAACAAEAAAALAAcAAAACAAEAAAAMAAAAAAACAAEAAAAMAAEAAAACAAEAAAAMAAIAAAACAAEAAAAMAAMAAAACAAEAAAAMAAQAAAACAAEAAAAMAAUAAAACAAEAAAAMAAYAAAACAAEAAAAMAAcAAAACAAEAAAANAAAAAAACAAEAAAANAAEAAAACAAEAAAANAAIAAAACAAEAAAANAAMAAAACAAEAAAANAAQAAAACAAEAAAANAAUAAAACAAEAAAANAAYAAAACAAEAAAANAAcAAAACAAEAAAAOAAAAAAACAAEAAAAOAAEAAAACAAEAAAAOAAIAAAACAAEAAAAOAAMAAAACAAEAAAAOAAQAAAACAAEAAAAOAAUAAAACAAEAAAAOAAYAAAACAAEAAAAOAAcAAAACAAEAAAAPAAAAAAACAAEAAAAPAAEAAAACAAEAAAAPAAIAAAACAAEAAAAPAAMAAAACAAEAAAAPAAQAAAACAAEAAAAPAAUAAAACAAEAAAAPAAYAAAACAAEAAAAPAAcAAAACAAEAAAAQAAAAAAACAAEAAAAQAAEAAAACAAEAAAAQAAIAAAACAAEAAAAQAAMAAAACAAEAAAAQAAQAAAACAAEAAAAQAAUAAAACAAEAAAAQAAYAAAACAAEAAAAQAAcAAAACAAEAAAAKAAgAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAgAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAgAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAgAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAQAAgAAAAAAAAAAAAQAAkAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAACAAgAAAAAAAAAAAACAAkAAAAAAAAAAAADAAgAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAgAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAgAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAAAAAAAAAARAAAAAAAAAAAAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAARAAMAAAAAAAAAAAARAAQAAAAAAAAAAAARAAUAAAAAAAAAAAARAAYAAAAAAAAAAAARAAcAAAAAAAAAAAARAAgAAAAAAAAAAAARAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAADAP7/AAAAAAAAAAACAP7/AAAAAAAAAAAEAP7/AAAAAAAAAAAFAP7/AAAAAAAAAAAGAP7/AAAAAAAAAAAHAP7/AAAAAAAAAAAIAP7/AAAAAAAAAAAJAP7/AAAAAAAAAAAKAP7/AAAAAAAAAAALAP7/AAAAAAAAAAAMAP7/AAAAAAAAAAANAP7/AAAAAAAAAAAOAP7/AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAQAP//AAAAAAAAAAARAP7/AAAAAAAAAAAQAP7/AAAAAAAAAAAPAP7/AAAAAAAAAAARAP//AAAAAAAAAAANAP//AAAAAAAAAAAMAP//AAAAAAAAAAALAP//AAAAAAAAAAAKAP//AAAAAAAAAAAJAP//AAAAAAAAAAAIAP//AAAAAAAAAAD///7/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD+/wQAAAAAAAAAAAD+/wUAAAAAAAAAAAD+/wYAAAAAAAAAAAD+/wcAAAAAAAAAAAD+/wgAAAAAAAAAAAD+/wkAAAAAAAAAAAD+/woAAAAAAAAAAAD+//7/AAAAAAAAAAAAAP7/AAAAAAAAAAABAP7/AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAD//woAAAAAAAAAAAD//wkAAAAAAAAAAAD//wgAAAAAAAAAAAD//wcAAAAAAAAAAAD//wYAAAAAAAAAAAD//wUAAAAAAAAAAAD//wQAAAAAAAAAAAD//wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_cftpx")
 
 [node name="MoveLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 665.0
-offset_top = 212.0
-offset_right = 785.0
-offset_bottom = 287.0
+offset_left = 350.0
+offset_top = 181.0
+offset_right = 470.0
+offset_bottom = 256.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
@@ -433,10 +462,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -102.0
-offset_top = -112.0
-offset_right = 98.0
-offset_bottom = -12.0
+offset_left = -513.0
+offset_top = -188.0
+offset_right = -114.0
+offset_bottom = 85.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -445,7 +474,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
-theme_override_font_sizes/font_size = 75
+theme_override_font_sizes/font_size = 60
 text = "Music Volume"
 
 [node name="MusicVolume" type="HSlider" parent="VBoxContainer"]
@@ -455,23 +484,412 @@ step = 0.1
 tick_count = 10
 ticks_on_borders = true
 
-[node name="SFXLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
+[node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_2r4mj")
+bus = &"SFX"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = &"Music"
+
+[node name="ShootLabel" type="Label" parent="."]
+offset_left = 287.0
+offset_top = 341.0
+offset_right = 437.0
+offset_bottom = 416.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
 theme_override_font_sizes/font_size = 75
-text = "SFX Volume"
+text = "Shoot"
 
-[node name="SFXVolume" type="HSlider" parent="VBoxContainer"]
-layout_mode = 2
-max_value = 1.0
-step = 0.1
-tick_count = 10
-ticks_on_borders = true
+[node name="JKeyButton" type="TextureButton" parent="ShootLabel"]
+layout_mode = 0
+offset_left = -223.0
+offset_top = 6.0
+offset_right = -191.0
+offset_bottom = 38.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_t1mpv")
+texture_pressed = SubResource("AtlasTexture_wlghe")
+stretch_mode = 0
 
-[node name="Back" type="Button" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="ShootLabel/JKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 31.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "J"
+
+[node name="KKeyButton" type="TextureButton" parent="ShootLabel"]
+layout_mode = 0
+offset_left = -154.0
+offset_top = 6.0
+offset_right = -122.0
+offset_bottom = 38.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_wwqhy")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="ShootLabel/KKeyButton"]
+layout_mode = 0
+offset_left = 10.2659
+offset_top = 1.46656
+offset_right = 50.2659
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "K"
+
+[node name="LKeyButton" type="TextureButton" parent="ShootLabel"]
+layout_mode = 0
+offset_left = -83.0
+offset_top = 6.0
+offset_right = -51.0
+offset_bottom = 38.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_atbsr")
+texture_pressed = SubResource("AtlasTexture_oxoxq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="ShootLabel/LKeyButton"]
+layout_mode = 0
+offset_left = 10.2659
+offset_top = 1.46656
+offset_right = 50.2659
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "L"
+
+[node name="IKeyButton" type="TextureButton" parent="ShootLabel"]
+offset_left = -154.0
+offset_top = -62.0
+offset_right = -122.0
+offset_bottom = -30.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_t1mpv")
+texture_pressed = SubResource("AtlasTexture_wlghe")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="ShootLabel/IKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 31.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "I"
+
+[node name="SwarmPosLabel" type="Label" parent="."]
+offset_left = 814.0
+offset_top = 191.0
+offset_right = 1150.0
+offset_bottom = 266.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 60
+text = "Swarm Position"
+
+[node name="HKeyButton" type="TextureButton" parent="SwarmPosLabel"]
+layout_mode = 0
+offset_left = -146.0
+offset_top = -2.0
+offset_right = -114.0
+offset_bottom = 30.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_t1mpv")
+texture_pressed = SubResource("AtlasTexture_wlghe")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmPosLabel/HKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 31.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "H"
+
+[node name=";KeyButton" type="TextureButton" parent="SwarmPosLabel"]
+layout_mode = 0
+offset_left = -77.0
+offset_top = -2.0
+offset_right = -45.0
+offset_bottom = 30.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_wwqhy")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmPosLabel/;KeyButton"]
+layout_mode = 0
+offset_left = 11.2436
+offset_top = 1.46656
+offset_right = 51.2436
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 23
+text = ";"
+
+[node name="UKeyButton" type="TextureButton" parent="SwarmPosLabel"]
+offset_left = -146.0
+offset_top = -71.0
+offset_right = -114.0
+offset_bottom = -39.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_t1mpv")
+texture_pressed = SubResource("AtlasTexture_wlghe")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmPosLabel/UKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 31.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "U"
+
+[node name="OKeyButton" type="TextureButton" parent="SwarmPosLabel"]
+offset_left = -77.0
+offset_top = -71.0
+offset_right = -45.0
+offset_bottom = -39.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_wwqhy")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmPosLabel/OKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "O"
+
+[node name="RotateSwarmLabel" type="Label" parent="."]
+offset_left = 144.0
+offset_top = 451.0
+offset_right = 480.0
+offset_bottom = 526.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 50
+text = "Rotate Swarm"
+
+[node name="XKeyButton" type="TextureButton" parent="RotateSwarmLabel"]
+layout_mode = 0
+offset_left = -80.0
+offset_top = -8.0
+offset_right = -48.0
+offset_bottom = 24.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_wwqhy")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="RotateSwarmLabel/XKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "X"
+
+[node name="LockSwarmLabel" type="Label" parent="."]
+offset_left = 619.0
+offset_top = 449.0
+offset_right = 955.0
+offset_bottom = 524.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 50
+text = "Lock Swarm"
+
+[node name="SpaceKeyButton" type="TextureButton" parent="LockSwarmLabel"]
+layout_mode = 0
+offset_left = -144.0
+offset_top = -6.0
+offset_right = -80.0
+offset_bottom = 26.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_x3s4t")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="LockSwarmLabel/SpaceKeyButton"]
+layout_mode = 0
+offset_left = 9.28823
+offset_top = 1.95542
+offset_right = 55.2882
+offset_bottom = 30.9554
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 23
+text = "Space"
+
+[node name="SwarmAreaLabel" type="Label" parent="."]
+offset_left = 971.0
+offset_top = 347.0
+offset_right = 1271.0
+offset_bottom = 422.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 60
+text = "Swarm Area"
+
+[node name="JKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+layout_mode = 0
+offset_left = -220.0
+offset_top = -1.0
+offset_right = -188.0
+offset_bottom = 31.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_t1mpv")
+texture_pressed = SubResource("AtlasTexture_wlghe")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmAreaLabel/JKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 31.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "J"
+
+[node name="KKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+layout_mode = 0
+offset_left = -151.0
+offset_top = -1.0
+offset_right = -119.0
+offset_bottom = 31.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_wwqhy")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmAreaLabel/KKeyButton"]
+layout_mode = 0
+offset_left = 10.2659
+offset_top = 1.46656
+offset_right = 50.2659
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "K"
+
+[node name="LKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+layout_mode = 0
+offset_left = -80.0
+offset_top = -1.0
+offset_right = -48.0
+offset_bottom = 31.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_atbsr")
+texture_pressed = SubResource("AtlasTexture_oxoxq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmAreaLabel/LKeyButton"]
+layout_mode = 0
+offset_left = 10.2659
+offset_top = 1.46656
+offset_right = 50.2659
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "L"
+
+[node name="ShiftKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+offset_left = -412.0
+offset_top = -1.00002
+offset_right = -348.0
+offset_bottom = 31.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_x3s4t")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmAreaLabel/ShiftKeyButton"]
+layout_mode = 0
+offset_left = 9.28823
+offset_top = 3.42197
+offset_right = 55.2882
+offset_bottom = 32.422
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 23
+text = "Shift"
+
+[node name="Label" type="Label" parent="SwarmAreaLabel"]
+layout_mode = 0
+offset_left = -267.0
+offset_top = -9.0
+offset_right = -227.0
+offset_bottom = 71.0
+theme_override_colors/font_color = Color(0.788235, 0.623529, 0.486275, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 80
+text = "+"
+
+[node name="IKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+offset_left = -151.0
+offset_top = -69.0
+offset_right = -119.0
+offset_bottom = -37.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_t1mpv")
+texture_pressed = SubResource("AtlasTexture_wlghe")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwarmAreaLabel/IKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 31.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "I"
+
+[node name="Back" type="Button" parent="."]
 layout_mode = 2
+offset_left = 457.0
+offset_top = 624.0
+offset_right = 817.0
+offset_bottom = 699.0
 theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
@@ -493,14 +911,61 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ougmw")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tkqnf")
 text = "Back"
 
-[node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_2r4mj")
-bus = &"SFX"
+[node name="ResetSwarmLabel" type="Label" parent="."]
+offset_left = 990.0
+offset_top = 451.0
+offset_right = 1326.0
+offset_bottom = 526.0
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 50
+text = "Reset Swarm"
 
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-autoplay = true
-bus = &"Music"
+[node name="VKeyButton" type="TextureButton" parent="ResetSwarmLabel"]
+layout_mode = 0
+offset_left = -80.0
+offset_top = -8.0
+offset_right = -48.0
+offset_bottom = 24.0
+scale = Vector2(2.0456, 2.0456)
+texture_normal = SubResource("AtlasTexture_wwqhy")
+texture_pressed = SubResource("AtlasTexture_s3pnj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="ResetSwarmLabel/VKeyButton"]
+layout_mode = 0
+offset_left = 9.77708
+offset_top = 1.46656
+offset_right = 49.7771
+offset_bottom = 30.4666
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 28
+text = "V"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 533.0
+offset_right = 1151.0
+offset_bottom = 613.0
+
+[node name="SFXLabel" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_c1yfi")
+theme_override_font_sizes/font_size = 60
+text = "SFX Volume"
+
+[node name="SFXVolume" type="HSlider" parent="VBoxContainer2"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+tick_count = 10
+ticks_on_borders = true
 
 [connection signal="value_changed" from="VBoxContainer/MusicVolume" to="." method="_on_music_volume_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/SFXVolume" to="." method="_on_sfx_volume_value_changed"]
-[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="VBoxContainer2/SFXVolume" to="." method="_on_sfx_volume_value_changed"]
