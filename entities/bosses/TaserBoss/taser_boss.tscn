@@ -17,15 +17,15 @@ script/source = "extends CharacterBody2D
 @export var max_health: int = 300  # Maximum health
 var current_health: int  # Current health
 
-@export var min_attack_interval: float = 4.0  # Minimum interval between attacks
-@export var max_attack_interval: float = 10.0  # Maximum interval between attacks
+@export var min_attack_interval: float = 3.0  # Minimum interval between attacks
+@export var max_attack_interval: float = 8.0  # Maximum interval between attacks
 
 var current_target: Vector2 = Vector2.ZERO  # The current waypoint the boss is moving to
 @export var move_speed: float = 150.0       # Speed of movement
 @export var proximity_threshold: float = 10.0  # How close to the target before picking a new one
 
-@export var min_wait_time: float = 5.0  # Minimum wait time between moves
-@export var max_wait_time: float = 10.0  # Maximum wait time between moves
+@export var min_wait_time: float = 4.0  # Minimum wait time between moves
+@export var max_wait_time: float = 8.0  # Maximum wait time between moves
 
 var last_animation: String = \"idle_down\"
 var has_forcefield: bool = false  # Tracks if the forcefield is active
@@ -39,6 +39,7 @@ var is_attacking: bool = false  # Prevents walking animations from overwriting a
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
+	
 	attack_spawn_buttons_with_forcefield()
 	move_to_next_waypoint()
 
@@ -52,10 +53,10 @@ func _ready() -> void:
 	
 	
 func choose_random_waypoint() -> Vector2:
-	var min_x = 133 + 50
-	var max_x = 1238 - 50
-	var min_y = -1158 + 50
-	var max_y = -404 - 50
+	var min_x = 24 + 50
+	var max_x = 1133 + 50
+	var min_y = -800 + 50
+	var max_y = -51 + 50
 
 	# Randomly select a new waypoint
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
@@ -269,6 +270,7 @@ func attack_spiral_shoot(num_projectiles: int = 16, spiral_speed: float = 0.25) 
 
 		# Set the projectile's position and velocity
 		projectile.scale = Vector2(2.25,2.25)
+		projectile.speed = 250.0
 		projectile.global_position = global_position
 		projectile.velocity = direction * projectile.speed
 		
@@ -289,20 +291,21 @@ func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -
 	if not player:
 		print(\"Player not found!\")
 		return
+		
 
 	# Determine starting y position (farthest from the player)
 	var start_y: float
 	var direction: Vector2
 
-	if abs(-1158 - player.global_position.y) > abs(-404 - player.global_position.y):
-		start_y = -1158  # Farthest top
+	if abs(-800 - player.global_position.y) > abs(-51 - player.global_position.y):
+		start_y = -800  # Farthest top
 		direction = Vector2(0, 1)  # Move downward
 	else:
-		start_y = -404  # Farthest bottom
+		start_y = -51  # Farthest bottom
 		direction = Vector2(0, -1)  # Move upward
 
 	# Calculate the horizontal center (midpoint) of the range
-	var horizontal_center_x = (133 + 1238) / 2.0
+	var horizontal_center_x = (24 + 1133) / 2.0
 
 	# Calculate the starting position of the wall
 	var start_position = Vector2(horizontal_center_x - (num_projectiles - 1) * spacing / 2, start_y)
@@ -323,7 +326,7 @@ func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 		
-func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 200.0) -> void:
+func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 150.0) -> void:
 	if not taser_projectile_scene:
 		print(\"Taser Projectile scene not set!\")
 		return
@@ -340,15 +343,16 @@ func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 200.0) -> 
 	var start_x: float
 	var direction: Vector2
 
-	if abs(133 - player.global_position.x) > abs(1238 - player.global_position.x):
-		start_x = 133  # Farthest left
+
+	if abs(24 - player.global_position.x) > abs(1133 - player.global_position.x):
+		start_x = 24  # Farthest left
 		direction = Vector2(1, 0)  # Move right
 	else:
-		start_x = 1238  # Farthest right
+		start_x = 1133  # Farthest right
 		direction = Vector2(-1, 0)  # Move left
 
 	# Calculate the vertical center (midpoint) of the range
-	var vertical_center_y = (-1158 + -404) / 2.0
+	var vertical_center_y = (-800 + -51) / 2.0
 
 	# Calculate the starting position of the wall
 	var start_position = Vector2(start_x, vertical_center_y - (num_projectiles - 1) * spacing / 2)
@@ -384,8 +388,8 @@ func spawn_electro_lasers():
 	electro_laser_node.add_child(vertical_laser)  # Add as child of the boss
 
 	# Set the correct global position for the vertical laser
-	var random_x = randf_range(133, 1238)
-	vertical_laser.global_position = Vector2(random_x, -783)  # Exact global position
+	var random_x = randf_range(24, 1133) #1238
+	vertical_laser.global_position = Vector2(random_x, -426)  # Exact global position
 	vertical_laser.scale = Vector2(3, 28.6)  # Proper scale
 	print(\"Vertical laser global position: \", vertical_laser.global_position, \" scale: \", vertical_laser.scale)
 
@@ -395,8 +399,8 @@ func spawn_electro_lasers():
 	electro_laser_node.add_child(horizontal_laser)  # Add as child of the boss
 
 	# Set the correct global position for the horizontal laser
-	var random_y = randf_range(-1158, -404)
-	horizontal_laser.global_position = Vector2(686, random_y)  # Exact global position
+	var random_y = randf_range(-800, -51)
+	horizontal_laser.global_position = Vector2(577, random_y)  # Exact global position
 	horizontal_laser.scale = Vector2(3, 41.2)  # Proper scale
 	horizontal_laser.rotation = deg_to_rad(90)  # Rotate horizontal laser
 	print(\"Horizontal laser global position: \", horizontal_laser.global_position, \" scale: \", horizontal_laser.scale)
@@ -472,10 +476,10 @@ func attack_spawn_buttons_with_forcefield():
 	is_attacking = false  # Reset attacking flag
 
 func calculate_button_positions() -> Array:
-	var min_x = 133
-	var max_x = 1238
-	var min_y = -1158
-	var max_y = -404
+	var min_x = 24
+	var max_x = 1133
+	var min_y = -800
+	var max_y = -51
 
 	# Generate a random position for the first button
 	var pos1 = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
@@ -529,9 +533,9 @@ func take_damage(amount: float) -> void:
 	if current_health <= 0:
 		die()
 	
-	if current_health / max_health <= 0.5:
+	if (float(current_health) / float(max_health)) <= 0.5:
 		for attack in attacks:
-			if not attack.unlocked:
+			if attack.unlocked == false:
 				attack.unlocked = true
 	
 	health_bar.health = current_health
@@ -603,25 +607,25 @@ var attacks = [
 	{
 		\"name\": \"attack_spiral_shoot\",
 		\"function\": Callable(self, \"attack_spiral_shoot\"),
-		\"weight\": 2,
+		\"weight\": 5,
 		\"unlocked\": false  # Unlock later
 	},
 	{
 		\"name\": \"attack_horizontal_wall\",
 		\"function\": Callable(self, \"attack_horizontal_wall\"),
-		\"weight\": 2,
+		\"weight\": 4,
 		\"unlocked\": false  # Unlock later
 	},
 	{
 		\"name\": \"attack_vertical_wall\",
 		\"function\": Callable(self, \"attack_vertical_wall\"),
-		\"weight\": 2,
+		\"weight\": 4,
 		\"unlocked\": false  # Unlock later
 	},
 	{
 		\"name\": \"attack_electro_laser\",
 		\"function\": Callable(self, \"attack_electro_laser\"),
-		\"weight\": 2,
+		\"weight\": 3,
 		\"unlocked\": false  # Unlock later
 	},
 	{

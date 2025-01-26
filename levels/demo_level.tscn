@@ -820,7 +820,7 @@ sources/1 = SubResource("TileSetAtlasSource_xol5g")
 sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
 [node name="demo_level" type="Node2D" groups=["boids"]]
-position = Vector2(580, 274)
+position = Vector2(494, 564)
 script = ExtResource("1_mqgct")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
@@ -845,7 +845,7 @@ tile_map_data = PackedByteArray("AAD8/x8AAAAAAAAAAAAHAB8AAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_h060g")
 
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("11_s1uti")]
-position = Vector2(30.6667, 322.667)
+position = Vector2(-262.667, -416.667)
 scale = Vector2(0.499, 0.499)
 collision_mask = 23
 
