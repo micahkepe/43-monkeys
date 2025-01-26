@@ -147,4 +147,4 @@ func _complete_typing() -> void:
 ## Ends the cutscene and transitions to the first level.
 func _end_cutscene() -> void:
 	_is_cutscene_active = false
-	get_tree().change_scene_to_file("res://levels/level-0/level-0.tscn")
+	get_tree().change_scene_to_file("res://levels/demo_level.tscn")
