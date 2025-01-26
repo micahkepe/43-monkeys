@@ -24,7 +24,7 @@ extends CharacterBody2D
 @export var banana_boomerang_scene: PackedScene
 @export var attack_range: float = 400.0         # Distance to throw bananas
 var attack_timer: float       # Time between throws
-@export var attack_cooldown = 1.25
+@export var attack_cooldown = 1.3
 
 
 ## Whether the monkey is currently detecting an enemy

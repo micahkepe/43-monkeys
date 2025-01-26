@@ -24,7 +24,7 @@ var current_target: Vector2 = Vector2.ZERO  # The current waypoint the boss is m
 @export var move_speed: float = 150.0       # Speed of movement
 @export var proximity_threshold: float = 10.0  # How close to the target before picking a new one
 
-@export var min_wait_time: float = 4.0  # Minimum wait time between moves
+@export var min_wait_time: float = 3.0  # Minimum wait time between moves
 @export var max_wait_time: float = 8.0  # Maximum wait time between moves
 
 var last_animation: String = \"idle_down\"
@@ -54,9 +54,9 @@ func _ready() -> void:
 	
 func choose_random_waypoint() -> Vector2:
 	var min_x = 24 + 50
-	var max_x = 1133 + 50
+	var max_x = 1133 - 50
 	var min_y = -800 + 50
-	var max_y = -51 + 50
+	var max_y = -51 - 50
 
 	# Randomly select a new waypoint
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
@@ -66,23 +66,22 @@ func move_to_next_waypoint():
 	current_target = choose_random_waypoint()
 
 func _physics_process(delta: float) -> void:
-	if is_attacking:
-		return
 	# If we have a target waypoint, move toward it
 	if current_target != Vector2.ZERO:
 		var direction = (current_target - global_position).normalized()
 		velocity = direction * move_speed
 		# Determine the animation to play based on movement direction
-		if abs(direction.x) > abs(direction.y):  # Horizontal movement
-			if direction.x > 0:
-				play_animation(\"walk_right\")  # Moving right
-			else:
-				play_animation(\"walk_left\")  # Moving left
-		else:  # Vertical movement
-			if direction.y > 0:
-				play_animation(\"walk_down\")  # Moving down
-			else:
-				play_animation(\"walk_up\")  # Moving up
+		if not is_attacking:
+			if abs(direction.x) > abs(direction.y):  # Horizontal movement
+				if direction.x > 0:
+					play_animation(\"walk_right\")  # Moving right
+				else:
+					play_animation(\"walk_left\")  # Moving left
+			else:  # Vertical movement
+				if direction.y > 0:
+					play_animation(\"walk_down\")  # Moving down
+				else:
+					play_animation(\"walk_up\")  # Moving up
 
 	# Apply movement
 		move_and_slide()
@@ -625,7 +624,7 @@ var attacks = [
 	{
 		\"name\": \"attack_electro_laser\",
 		\"function\": Callable(self, \"attack_electro_laser\"),
-		\"weight\": 3,
+		\"weight\": 6.5,
 		\"unlocked\": false  # Unlock later
 	},
 	{
