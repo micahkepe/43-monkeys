@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://b0cj7suiadfgl"]
+[gd_scene load_steps=18 format=3 uid="uid://b0cj7suiadfgl"]
 
 [ext_resource type="Script" path="res://menus/died-menu/died_menu.gd" id="1_ejmq8"]
 [ext_resource type="Texture2D" uid="uid://cnhigf8cv6vbo" path="res://assets/sprites/ui/YouDiedScreen.png" id="1_lpfjf"]
 [ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="1_qmipa"]
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="2_0c483"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_af7uj"]
+[ext_resource type="AudioStream" uid="uid://bjrxyytgwirof" path="res://assets/music/after-youve-gone/after-youve-gone-theme.ogg" id="6_b1qbk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c2tww"]
 
@@ -138,3 +139,8 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_2on0a")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_7y4r3")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_aq3hr")
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_b1qbk")
+autoplay = true
+parameters/looping = true
