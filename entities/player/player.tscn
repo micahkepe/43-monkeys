@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=53 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="7_facpj"]
 [ext_resource type="Shader" path="res://entities/player/halo_glow_shader.gdshader" id="9_5qvqw"]
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://assets/sprites/ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
+[ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/hitHurt.wav" id="11_mqlhb"]
+[ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/banana_throw.wav" id="12_o6mwb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -335,3 +337,11 @@ y_sort_enabled = true
 z_index = 1
 position = Vector2(0, 14)
 shape = SubResource("CircleShape2D_qk8jr")
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_mqlhb")
+bus = &"SFX"
+
+[node name="BananaSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_o6mwb")
+bus = &"SFX"

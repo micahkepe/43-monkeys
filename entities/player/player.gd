@@ -463,6 +463,8 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 
 	if projectile == null:
 		return
+		
+	$BananaSound.play()
 
 	var offset_distance = 30.0
 	var spawn_offset = shoot_direction.normalized() * offset_distance
@@ -554,6 +556,7 @@ func take_damage(amount: float) -> void:
 		current_health = max(0, current_health - amount)
 		current_cooldown = damage_cooldown
 		update_hearts_display()
+		$HurtSound.play()
 		
 		if current_health <= 0:
 			die()
