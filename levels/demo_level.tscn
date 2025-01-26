@@ -870,13 +870,13 @@ position = Vector2(-534, -240)
 scale = Vector2(0.75, 0.75)
 
 [node name="Button" parent="Buttons" instance=ExtResource("16_hfkby")]
-position = Vector2(328, 777.333)
+position = Vector2(301.333, 866.667)
 
 [node name="Button1" parent="Buttons" instance=ExtResource("16_hfkby")]
-position = Vector2(1376, 777.333)
+position = Vector2(1346.67, 866.667)
 
 [node name="Button2" parent="Buttons" instance=ExtResource("16_hfkby")]
-position = Vector2(856, 522.667)
+position = Vector2(834.667, 658.667)
 scale = Vector2(1.33333, 1.33333)
 
 [node name="Projectiles" type="Node2D" parent="."]
@@ -885,17 +885,17 @@ z_index = 2
 [node name="Lasers" type="Node2D" parent="."]
 
 [node name="Laser" parent="Lasers" instance=ExtResource("17_ul4oh")]
-position = Vector2(13, -370)
+position = Vector2(-7, -268)
 rotation = 1.5708
 scale = Vector2(2, 3)
 
 [node name="Laser2" parent="Lasers" instance=ExtResource("17_ul4oh")]
-position = Vector2(199, -369)
+position = Vector2(178, -269)
 rotation = 1.5708
 scale = Vector2(2, 3)
 
 [node name="Laser3" parent="Lasers" instance=ExtResource("17_ul4oh")]
-position = Vector2(106, -58)
+position = Vector2(85, 8)
 scale = Vector2(3.25, 2)
 
 [node name="TaserBoss" parent="." instance=ExtResource("13_pt541")]
