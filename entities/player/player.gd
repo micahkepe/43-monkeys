@@ -548,6 +548,10 @@ func update_hearts_display() -> void:
 func die() -> void:
 	# Implement death behavior
 	queue_free()
+	
+	# switch to Die screen 
+	get_tree().change_scene_to_file("res://menus/died-menu/died-menu.tscn")
+	
 
 ## Take damage for the player.
 func take_damage(amount: float) -> void:
