@@ -1,7 +1,9 @@
-[gd_scene load_steps=41 format=3 uid="uid://cdbs8ve7uh1wk"]
+[gd_scene load_steps=43 format=3 uid="uid://cdbs8ve7uh1wk"]
 
-[ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_by6a3"]
+[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_0575n"]
 [ext_resource type="Texture2D" uid="uid://24vuoclcgt7s" path="res://assets/sprites/characters/monkeys/roid-monkey.png" id="1_e85bf"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_of1yx"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_olrby"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m1mj8"]
 atlas = ExtResource("1_e85bf")
@@ -278,19 +280,27 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ct57f"]
-radius = 9.05539
+[sub_resource type="CircleShape2D" id="CircleShape2D_5b72x"]
+radius = 15.0
 
 [node name="RoidMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
-script = ExtResource("1_by6a3")
+script = ExtResource("1_0575n")
+banana_boomerang_scene = ExtResource("2_of1yx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a5ahn")
 animation = &"walk_down"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["troop"]]
-position = Vector2(0, 21)
-shape = SubResource("CircleShape2D_ct57f")
+[node name="HealthBar" parent="." instance=ExtResource("3_olrby")]
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 17.0
+offset_bottom = -28.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_5b72x")

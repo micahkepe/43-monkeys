@@ -24,7 +24,7 @@ extends CharacterBody2D
 
 ## The base speed at which the player moves
 @export
-var speed: float = 300.0
+var speed: float = 450.0
 
 ## The player's current health
 @export
@@ -130,8 +130,9 @@ func _physics_process(_delta: float) -> void:
 	var input_velocity = Vector2.ZERO
 
 	# Get current movement speed (base or sprint)
-	var current_speed = speed * sprint_multiplier if Input.is_key_pressed(KEY_SHIFT) else speed
-
+	#var current_speed = speed * sprint_multiplier if Input.is_key_pressed(KEY_SHIFT) else speed
+	var current_speed = speed
+	
 	# Movement input
 	if Input.is_action_pressed("ui_right"):
 		input_velocity.x += 1
@@ -249,7 +250,7 @@ func _update_swarm_positions() -> void:
 		var to_target = target_position - monkey.global_position
 
 		# Add a threshold to avoid unnecessary movement
-		if to_target.length() < 3.0:  # Threshold distance, adjust as necessary
+		if to_target.length() < 5.0:  # Threshold distance, adjust as necessary
 			monkey.velocity = Vector2.ZERO  # Still set velocity to zero
 		else:
 			# Calculate velocity towards the target
@@ -282,12 +283,12 @@ func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
 		var to_target = target_position - monkey.global_position
 
 		# Add a threshold to avoid unnecessary movement
-		if to_target.length() < 3.0:  # Small threshold to avoid jittering
+		if to_target.length() < 5.0:  # Small threshold to avoid jittering
 			monkey.velocity = Vector2.ZERO
 		else:
 			# Move toward the target using velocity
 			var direction = to_target.normalized()
-			monkey.velocity = direction * speed
+			monkey.velocity = direction * 450
 
 		# Apply velocity with move_and_slide for collision handling
 		monkey.move_and_slide()
@@ -305,7 +306,7 @@ func handle_swarm_input(_delta: float) -> bool:
 	# Rotations keys
 	if Input.is_action_pressed("rotate_swarm_clockwise"):
 		# Rotate the transformation matrix
-		var rotation_speed = 1.0 * _delta
+		var rotation_speed = 1.75 * _delta
 		_swarm_rotation += rotation_speed
 
 		# Adjust the center offset to rotate around the player
@@ -330,39 +331,39 @@ func handle_swarm_input(_delta: float) -> bool:
 	# Manual Swarm Translation (U/O/H/;)
 	if Input.is_action_pressed("translate_up"):
 		_swarm_monkeys_walk_up()
-		_shift_swarm_position(Vector2(0, -1), 100.0 * _delta)
+		_shift_swarm_position(Vector2(0, -1), 200.0 * _delta)
 		swarm_moved = true
 	if Input.is_action_pressed("translate_down"):
 		_swarm_monkeys_walk_down()
-		_shift_swarm_position(Vector2(0, 1), 100.0 * _delta)
+		_shift_swarm_position(Vector2(0, 1), 200.0 * _delta)
 		swarm_moved = true
 	if Input.is_action_pressed("translate_left"):
 		_swarm_monkeys_walk_left()
-		_shift_swarm_position(Vector2(-1, 0), 100.0 * _delta)
+		_shift_swarm_position(Vector2(-1, 0), 200.0 * _delta)
 		swarm_moved = true
 	if Input.is_action_pressed("translate_right"):
 		_swarm_monkeys_walk_right()
-		_shift_swarm_position(Vector2(1, 0), 100.0 * _delta)
+		_shift_swarm_position(Vector2(1, 0), 200.0 * _delta)
 		swarm_moved = true
 
 # Ellipse resizing
 	if Input.is_action_pressed("inc_height_ellipse"):
-		_adjust_ellipse_global(Vector2(0, 1), +100.0 * _delta)  # Stretch along global y-axis
+		_adjust_ellipse_global(Vector2(0, 1), +200.0 * _delta)  # Stretch along global y-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
 	if Input.is_action_pressed("dec_height_ellipse"):
-		_adjust_ellipse_global(Vector2(0, 1), -100.0 * _delta)  # Shrink along global y-axis
+		_adjust_ellipse_global(Vector2(0, 1), -200.0 * _delta)  # Shrink along global y-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
 	if Input.is_action_pressed("inc_width_ellipse"):
-		_adjust_ellipse_global(Vector2(1, 0), +100.0 * _delta)  # Stretch along global x-axis
+		_adjust_ellipse_global(Vector2(1, 0), +200.0 * _delta)  # Stretch along global x-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
 	if Input.is_action_pressed("dec_width_ellipse"):
-		_adjust_ellipse_global(Vector2(1, 0), -100.0 * _delta)  # Shrink along global x-axis
+		_adjust_ellipse_global(Vector2(1, 0), -200.0 * _delta)  # Shrink along global x-axis
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
@@ -556,3 +557,15 @@ func take_damage(amount: float) -> void:
 		
 		if current_health <= 0:
 			die()
+
+func remove_monkey(monkey: Node) -> void:
+	print("===REMOVED MONNKEY===")
+	# Find the entry with the matching monkey node and remove it
+	for i in range(_swarm_monkeys.size()):
+		if _swarm_monkeys[i]["node"] == monkey:
+			_swarm_monkeys.remove_at(i)
+			break
+
+	# Recalculate swarm positions to redistribute the monkeys
+	_needs_full_ellipse_recalc = true
+	print("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())

@@ -1,7 +1,9 @@
-[gd_scene load_steps=41 format=3 uid="uid://byjjnstxuhusk"]
+[gd_scene load_steps=43 format=3 uid="uid://byjjnstxuhusk"]
 
-[ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_kt3cs"]
+[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_kbx86"]
 [ext_resource type="Texture2D" uid="uid://dkutugit6rrcq" path="res://assets/sprites/characters/monkeys/santa-monkey.png" id="1_n0oss"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_am7ij"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_img2p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x6a2l"]
 atlas = ExtResource("1_n0oss")
@@ -278,13 +280,15 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fysl8"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_b1itq"]
+radius = 15.0
 
 [node name="SantaMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
-script = ExtResource("1_kt3cs")
+script = ExtResource("1_kbx86")
+banana_boomerang_scene = ExtResource("2_am7ij")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["troop"]]
 sprite_frames = SubResource("SpriteFrames_1dvou")
@@ -292,6 +296,13 @@ animation = &"walk_right"
 frame = 1
 frame_progress = 0.535712
 
+[node name="HealthBar" parent="." instance=ExtResource("3_img2p")]
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 17.0
+offset_bottom = -28.0
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 19)
-shape = SubResource("CircleShape2D_fysl8")
+z_index = 1
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_b1itq")

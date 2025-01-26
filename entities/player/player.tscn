@@ -286,9 +286,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_007hl"]
-radius = 25.0139
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ntnfs"]
 shader = ExtResource("9_5qvqw")
 shader_parameter/glow_spread = 0.5
@@ -296,6 +293,9 @@ shader_parameter/glow_intensity = 1.5
 shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ebpfv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qk8jr"]
+radius = 15.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 self_modulate = Color(1, 1, 0.0980392, 1)
@@ -307,18 +307,13 @@ motion_mode = 1
 script = ExtResource("1_ieec4")
 banana_boomerang_scene = ExtResource("2_yc2po")
 monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj")])
-initial_troop_amount = 5
+initial_troop_amount = 6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)
 scale = Vector2(2.54091, 2.54091)
 sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, 40)
-scale = Vector2(1.2, 1.2)
-shape = SubResource("CircleShape2D_007hl")
 
 [node name="HaloEffect" type="Polygon2D" parent="."]
 z_index = -1
@@ -335,3 +330,8 @@ y_sort_enabled = true
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HeartsContainer" parent="UI" instance=ExtResource("10_l0e3e")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_qk8jr")

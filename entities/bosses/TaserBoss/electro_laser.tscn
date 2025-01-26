@@ -96,7 +96,9 @@ animations = [{
 }]
 
 [node name="ElectroLaser" type="Area2D"]
+z_index = 5
 scale = Vector2(3, 3)
+collision_mask = 24
 script = ExtResource("1_olds0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

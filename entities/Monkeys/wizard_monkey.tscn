@@ -1,7 +1,9 @@
-[gd_scene load_steps=41 format=3 uid="uid://dlv2gwbsq0ljg"]
+[gd_scene load_steps=43 format=3 uid="uid://dlv2gwbsq0ljg"]
 
-[ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_7bo5r"]
+[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_1r7bs"]
 [ext_resource type="Texture2D" uid="uid://bumdf8v27ed33" path="res://assets/sprites/characters/monkeys/wizard-monkey.png" id="1_c10kj"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_hs064"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_x3rfr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugglv"]
 atlas = ExtResource("1_c10kj")
@@ -278,20 +280,28 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mbs66"]
-radius = 9.05539
+[sub_resource type="CircleShape2D" id="CircleShape2D_giiv6"]
+radius = 15.0
 
 [node name="WizardMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
-script = ExtResource("1_7bo5r")
+script = ExtResource("1_1r7bs")
+banana_boomerang_scene = ExtResource("2_hs064")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8c6rb")
 animation = &"walk_down"
 frame_progress = 0.998813
 
+[node name="HealthBar" parent="." instance=ExtResource("3_x3rfr")]
+offset_left = -16.0
+offset_top = -35.0
+offset_right = 17.0
+offset_bottom = -31.0
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 21)
-shape = SubResource("CircleShape2D_mbs66")
+z_index = 1
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_giiv6")

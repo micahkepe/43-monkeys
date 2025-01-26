@@ -1,10 +1,12 @@
-[gd_scene load_steps=41 format=3 uid="uid://c5nx4jcpdcmuy"]
+[gd_scene load_steps=43 format=3 uid="uid://c5nx4jcpdcmuy"]
 
-[ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_0xy28"]
+[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_2q2ax"]
 [ext_resource type="Texture2D" uid="uid://cvs778vja8v7p" path="res://assets/sprites/characters/monkeys/formal-monkey.png" id="2_ec8ci"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_vy6pf"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_idj8b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hp6us"]
-radius = 8.0
+radius = 15.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xwm4i"]
 atlas = ExtResource("2_ec8ci")
@@ -285,14 +287,24 @@ animations = [{
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
-script = ExtResource("1_0xy28")
+script = ExtResource("1_2q2ax")
+banana_boomerang_scene = ExtResource("2_vy6pf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, 21)
+position = Vector2(0, 14)
 shape = SubResource("CircleShape2D_hp6us")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4nhkg")
 animation = &"walk_down"
 frame_progress = 0.220239
+metadata/_edit_lock_ = true
+
+[node name="HealthBar" parent="." instance=ExtResource("3_idj8b")]
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 17.0
+offset_bottom = -28.0
+
+[node name="DamageTimer" type="Timer" parent="."]
