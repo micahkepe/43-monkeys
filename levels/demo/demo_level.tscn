@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=4 uid="uid://c376o5eql56yl"]
 
-[ext_resource type="Script" path="res://levels/demo_level.gd" id="1_mqgct"]
+[ext_resource type="Script" path="res://levels/demo/demo_level.gd" id="1_esnnl"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="4_3rox1"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="5_vave5"]
 [ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="6_n2vm6"]
@@ -821,7 +821,7 @@ sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
 [node name="demo_level" type="Node2D" groups=["boids"]]
 position = Vector2(494, 564)
-script = ExtResource("1_mqgct")
+script = ExtResource("1_esnnl")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -3
