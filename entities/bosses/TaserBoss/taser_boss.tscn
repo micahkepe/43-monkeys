@@ -624,7 +624,7 @@ var attacks = [
 	{
 		\"name\": \"attack_electro_laser\",
 		\"function\": Callable(self, \"attack_electro_laser\"),
-		\"weight\": 8,
+		\"weight\": 12,
 		\"unlocked\": false  # Unlock later
 	},
 	{
