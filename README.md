@@ -21,20 +21,19 @@ Game Design at Rice University.
 
 ## TODOs
 
-- [x] Settings menu fixes:
-
-  - [x] Volume and SFX sliders work properly with dragging behavior
-
-- [x] Monkey troop controls
-- [x] More music (background/menu music, different level music)
-- [x] Auto timer on cutscenes so user doesn't have to give input
-- [ ] Player health and damage
-- [ ] Glow effect for the player to differentiate
-- [ ] Demo level
-  - [ ] puzzles to solve with troop controls
-  - [ ] attack at least one enemies
+- [ ] Momemntarily change color to red shade on hit
 - [ ] Troop and enemy boid field of vision attack triggers
-- [x] FIX: Pause menu in game not full sized
+- [ ] More curated levels
+- [ ] Explore shaders
+  - [ ] Dark rooms/levels with flashlight navigation
+- [ ] Minimap
+- [ ] Monkey counter
+- [ ] FIX: More contrast in menu screens
+- [ ] Better art
+  - [ ] Explore [PixelLab](https://www.pixellab.ai/)
+  - [ ] Death animations
+  - [ ] Redo/enhance intro cutscene frames
+- [ ] FIX: volume sliders should not be initialized to 0 in settings screen
 
 ## Project Structure
 
