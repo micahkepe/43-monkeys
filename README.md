@@ -4,7 +4,7 @@ In-development 2D pixel art rogue-like game made with Godot for COMP 460: Video
 Game Design at Rice University.
 
 <div align="center">
-  <img src="./teaser.png" alt="Teaser image of the monkey character" width="50%">
+  <img src="./assets/images/post-demo-plan.png" alt="Game planning overview" width="100%">
 </div>
 
 ## Overview
@@ -24,8 +24,7 @@ Game Design at Rice University.
 - [ ] Momemntarily change color to red shade on hit
 - [ ] Troop and enemy boid field of vision attack triggers
 - [ ] More curated levels
-- [ ] Explore shaders
-  - [ ] Dark rooms/levels with flashlight navigation
+- [ ] Create shaders
 - [ ] Minimap
 - [ ] Monkey counter
 - [ ] FIX: More contrast in menu screens
@@ -37,14 +36,15 @@ Game Design at Rice University.
 
 ## Project Structure
 
-| Directory     | Description                                          |
-| ------------- | ---------------------------------------------------- |
-| `assets/`     | Contains all the assets used in the game.            |
-| `cutscenes/`  | Contains all the cutscenes used in the game.         |
-| `entities/`   | Contains all the entity scenes used in the game.     |
-| `levels/`     | Contains all the scripts used in the game.           |
-| `menus/`      | Extermnal Godot plugins used in the game.            |
-| `projectiles` | Contains all the projectile scenes used in the game. |
+| Directory      | Description                                          |
+| -------------- | ---------------------------------------------------- |
+| `assets/`      | Contains all static assets used in the game.         |
+| `cutscenes/`   | Contains all the cutscenes used in the game.         |
+| `entities/`    | Contains all the entity scenes used in the game.     |
+| `levels/`      | Contains all the scripts used in the game.           |
+| `menus/`       | Extermnal Godot plugins used in the game.            |
+| `projectiles/` | Contains all the projectile scenes used in the game. |
+| `shaders/`     | Custom game-wide shaders for the game.               |
 
 ## Helpful Tools for Development
 
@@ -59,7 +59,7 @@ Game Design at Rice University.
   converting images to pixel art with parameters like pixel size, dithering, and
   color palette
 
-## Code Documentation
+## Code Style and Documentation
 
 - File documentation should follow the guidelines outlined in the Godot
   documentation [convention](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_documentation_comments.html).
@@ -141,7 +141,7 @@ Game Design at Rice University.
 >
 > </details>
 
-## Tutorials and Guides
+## References and Resources
 
 - [Official Godot Documentation (Latest Stable Release)](https://docs.godotengine.org/en/stable/index.html)
 - [Godot in 100 Seconds](https://www.youtube.com/watch?v=QKgTZWbwD1U)
@@ -149,3 +149,4 @@ Game Design at Rice University.
 - [How to make a Video Game - Godot Beginner Tutorial](https://www.youtube.com/watch?v=LOhfqjmasi0&t=62s)
 - [Godot 4 Crash Course for Beginners - GameDev 2D Top Down Tutorial](https://youtu.be/Luf2Kr5s3BM)
 - [Flocking - AI for Game Development](https://www.oreilly.com/library/view/ai-for-game/0596005555/ch04.html)
+- [Godot Shaders](https://godotshaders.com/)
