@@ -1,17 +1,46 @@
-[gd_scene load_steps=53 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=61 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
-[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="3_73h8e"]
-[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/Monkeys/pirate_monkey.tscn" id="4_xwpq6"]
-[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="5_dvwff"]
-[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="6_ghmbx"]
-[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="7_facpj"]
+[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/monkeys/formal_monkey.tscn" id="3_73h8e"]
+[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/monkeys/pirate_monkey.tscn" id="4_xwpq6"]
+[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/monkeys/roid_monkey.tscn" id="5_dvwff"]
+[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/monkeys/santa_monkey.tscn" id="6_ghmbx"]
+[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/monkeys/wizard_monkey.tscn" id="7_facpj"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="8_vswvm"]
 [ext_resource type="Shader" path="res://entities/player/halo_glow_shader.gdshader" id="9_5qvqw"]
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://assets/sprites/ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
 [ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/hitHurt.wav" id="11_mqlhb"]
 [ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/banana_throw.wav" id="12_o6mwb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spox5"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl50i"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7up1"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktuct"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elctg"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otbbj"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6lb6o"]
+atlas = ExtResource("8_vswvm")
+region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayors"]
 atlas = ExtResource("2_3oa06")
@@ -159,6 +188,32 @@ region = Rect2(517, 522, 55, 60)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rp06w"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spox5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl50i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7up1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktuct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elctg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otbbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6lb6o")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ayors")

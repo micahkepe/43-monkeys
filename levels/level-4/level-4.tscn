@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cscspmt2tgh5x"]
+[gd_scene load_steps=26 format=4 uid="uid://cscspmt2tgh5x"]
 
 [ext_resource type="Script" path="res://levels/level-4/level-4.gd" id="1_u2jwd"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="4_3rox1"]
@@ -8,12 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="8_envnl"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_78bp4"]
 [ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="10_nxgtp"]
-[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="11_dvr86"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="11_s1uti"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="12_c4kud"]
+[ext_resource type="Script" path="res://entities/bosses/TaserBoss/taser_boss.gd" id="13_i8jlm"]
 [ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="13_pt541"]
-[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/taser-projectile/taser_projectile.tscn" id="15_4fr8t"]
-[ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="16_7r0t3"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="16_hfkby"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="17_ul4oh"]
 
@@ -889,10 +887,7 @@ scale = Vector2(3.25, 2)
 z_index = 999
 position = Vector2(99, -1368)
 scale = Vector2(2.67, 2.67)
-electro_laser_scene = ExtResource("11_dvr86")
-taser_projectile_scene = ExtResource("15_4fr8t")
-button_scene = ExtResource("16_hfkby")
-electric_forcefield_scene = ExtResource("16_7r0t3")
+script = ExtResource("13_i8jlm")
 
 [node name="BossButtons" type="Node2D" parent="."]
 position = Vector2(-534, -240)

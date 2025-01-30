@@ -1,7 +1,12 @@
-[gd_scene load_steps=114 format=3 uid="uid://cp5du4n6j8tbm"]
+[gd_scene load_steps=127 format=3 uid="uid://cp5du4n6j8tbm"]
 
-[ext_resource type="Texture2D" uid="uid://blunq804f35ls" path="res://assets/sprites/characters/boss/taser_boss.png" id="1_2lrr3"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="1_01vq4"]
+[ext_resource type="Texture2D" uid="uid://blunq804f35ls" path="res://assets/sprites/characters/bosses/taser_boss.png" id="1_2lrr3"]
+[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="1_lx14d"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="2_flp2v"]
+[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/taser-projectile/taser_projectile.tscn" id="2_qjvf0"]
+[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="3_t76re"]
+[ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="4_p5cmy"]
 
 [sub_resource type="GDScript" id="GDScript_kf6yr"]
 script/source = "extends CharacterBody2D
@@ -718,6 +723,38 @@ func _perform_quick_succession_attack(available_attacks: Array) -> void:
 [sub_resource type="CircleShape2D" id="CircleShape2D_0s22d"]
 radius = 10.0499
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kv14"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcpnh"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8nqs"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88vhn"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyr7p"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2rft"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3g0ok"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxqpr"]
+atlas = ExtResource("1_01vq4")
+region = Rect2(448, 64, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_t1r3v"]
 atlas = ExtResource("1_2lrr3")
 region = Rect2(0, 384, 64, 64)
@@ -1154,6 +1191,35 @@ region = Rect2(512, 516, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_5kv14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcpnh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8nqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88vhn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yyr7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2rft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3g0ok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxqpr")
+}],
+"loop": false,
+"name": &"die",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_t1r3v")
 }],
 "loop": true,
@@ -1561,6 +1627,11 @@ animations = [{
 collision_layer = 2
 collision_mask = 7
 script = SubResource("GDScript_kf6yr")
+electro_laser_scene = ExtResource("1_lx14d")
+taser_projectile_scene = ExtResource("2_qjvf0")
+button_scene = ExtResource("3_t76re")
+electric_forcefield_scene = ExtResource("4_p5cmy")
+move_speed = 200.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -1569,7 +1640,7 @@ shape = SubResource("CircleShape2D_0s22d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"spell_down"
+animation = &"idle_down"
 
 [node name="HealthBar" parent="." instance=ExtResource("2_flp2v")]
 offset_left = -22.0

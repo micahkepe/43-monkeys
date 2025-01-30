@@ -114,11 +114,11 @@ func _ready() -> void:
 
 	# Update positions after adding all monkeys
 	_update_swarm_positions()
-	
+
 	if !hearts_container:
 		print("Hearts container not found!")
 		return
-		
+
 	current_health = max_health
 	update_hearts_display()
 
@@ -132,7 +132,7 @@ func _physics_process(_delta: float) -> void:
 	# Get current movement speed (base or sprint)
 	#var current_speed = speed * sprint_multiplier if Input.is_key_pressed(KEY_SHIFT) else speed
 	var current_speed = speed
-	
+
 	# Movement input
 	if Input.is_action_pressed("ui_right"):
 		input_velocity.x += 1
@@ -195,7 +195,7 @@ func _physics_process(_delta: float) -> void:
 	# If changed rotation/size, do angle recalc
 	if _needs_full_ellipse_recalc:
 		_update_swarm_positions()
-	
+
 	if current_cooldown > 0:
 		current_cooldown -= _delta
 
@@ -463,7 +463,7 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 
 	if projectile == null:
 		return
-		
+
 	$BananaSound.play()
 
 	var offset_distance = 30.0
@@ -542,16 +542,19 @@ func update_hearts_display() -> void:
 			heart.play("half")  # Half-filled heart
 		else:
 			heart.play("empty")  # Empty heart
-			
+
 
 ## If the player's health falls below zero.
-func die() -> void:
+func _die() -> void:
 	# Implement death behavior
 	queue_free()
-	
-	# switch to Die screen 
+
+	# TODO: right now just switches IMMEDIATELY to the Die screen, we could play
+	# a death animation or something first before switching
+
+	# switch to Die screen
 	get_tree().change_scene_to_file("res://menus/died-menu/died-menu.tscn")
-	
+
 
 ## Take damage for the player.
 func take_damage(amount: float) -> void:
@@ -561,9 +564,9 @@ func take_damage(amount: float) -> void:
 		current_cooldown = damage_cooldown
 		update_hearts_display()
 		$HurtSound.play()
-		
+
 		if current_health <= 0:
-			die()
+			_die()
 
 func remove_monkey(monkey: Node) -> void:
 	print("===REMOVED MONNKEY===")

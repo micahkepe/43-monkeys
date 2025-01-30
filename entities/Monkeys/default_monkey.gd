@@ -18,14 +18,20 @@ extends CharacterBody2D
 @onready var _raycast_vision_15_left: RayCast2D
 @onready var _raycast_vision_15_right: RayCast2D
 
-
+## The HealthBar node to display the monkey's health
 @onready var health_bar = $HealthBar
 
+## The PackedScene for the banana boomerang projectile
 @export var banana_boomerang_scene: PackedScene
-@export var attack_range: float = 400.0         # Distance to throw bananas
-var attack_timer: float       # Time between throws
-@export var attack_cooldown = 1.3
 
+## The monkey's attack range
+@export var attack_range: float = 400.0
+
+## The monkey's attack cooldown
+var attack_timer: float
+
+## The time (in seconds) between attacks; the effective cooldown period
+@export var attack_cooldown = 1.3
 
 ## Whether the monkey is currently detecting an enemy
 var _enemy_in_sight: bool = false
@@ -41,22 +47,30 @@ var _current_enemy = null
 @export var vision_range: float = 200.0
 @export var vision_angle: float = 60.0
 
+## The maximum health of the monkey (in total heart units)
 @export var max_health: int = 5
+
 var current_health : int
-var damage_cooldown: float = 1.5 
+var damage_cooldown: float = 1.5
 var current_cooldown: float = 0.0
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
-	
+
+	# Set initial animation to "walk_down"
+	_animated_sprite.play("walk_down")
+
 	# Setup RayCasts for collision avoidance
 	_setup_collision_raycasts()
 
 	# Setup RayCast for vision detection
 	_setup_vision_raycast()
-	
+
+	# Connect the animation finished signal to the handler
+	_animated_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
+
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
 
 ## Setup RayCasts for collision detection
@@ -137,19 +151,19 @@ func _check_collision_avoidance() -> Vector2:
 ## Vision detection logic
 func _check_vision_detection() -> void:
 	var raycasts = [
-		_raycast_vision, 
-		_raycast_vision_7_5_left, 
-		_raycast_vision_7_5_right, 
-		_raycast_vision_15_left, 
+		_raycast_vision,
+		_raycast_vision_7_5_left,
+		_raycast_vision_7_5_right,
+		_raycast_vision_15_left,
 		_raycast_vision_15_right
 	]
-	
+
 	# Reset defaults
 	_enemy_in_sight = false
 	_current_enemy = null
-	
+
 	# Iterate through raycasts to check for collisions
-	for raycast in raycasts:	
+	for raycast in raycasts:
 		if raycast.is_colliding():
 			var collider = raycast.get_collider()
 			if collider and global_position.distance_to(collider.global_position) <= attack_range:
@@ -169,12 +183,15 @@ func _physics_process(_delta: float) -> void:
 	# Manage attack cooldown
 	if attack_timer > 0:
 		attack_timer -= _delta
-	
-	
+
+
 	# If an enemy is in sight, you can add attack logic here
 	if _enemy_in_sight and _current_enemy and attack_timer <= 0:
 		_throw_banana_at_position(_current_enemy)
-	
+
+	# Move the monkey's velocity based on the avoidance vector
+	velocity = velocity.normalized() - avoidance_vector
+
 	if current_cooldown > 0:
 		current_cooldown -= _delta
 
@@ -207,7 +224,7 @@ func _update_vision_rays(direction: Vector2) -> void:
 		_raycast_vision_15_left: -15.0,
 		_raycast_vision_15_right: 15.0
 	}
-	
+
 	# Update each raycast's target_position with its respective angle
 	for raycast in angle_offsets.keys():
 		raycast.target_position = direction.rotated(deg_to_rad(angle_offsets[raycast]))
@@ -217,24 +234,61 @@ func _update_vision_rays(direction: Vector2) -> void:
 func stop_walk() -> void:
 	_animated_sprite.stop()
 
-func die() -> void:
-	if get_parent():
-		get_parent().get_parent().remove_monkey(self)
-	# Implement death behavior
-	queue_free()
-	
+## Handles monkey death. Plays the death animation and cleans the monkey from
+## the scene.
+func _die() -> void:
+	print_debug("Trying to _die for monkey", self)
+
+	# Debug check if animation exists
+	print_debug("Available animations:", _animated_sprite.sprite_frames.get_animation_names())
+	print_debug("Current animation:", _animated_sprite.animation)
+
+	set_physics_process(false)
+	set_process(false)
+	collision_layer = 0
+	collision_mask = 0
+
+	# Hide the health bar
+	if health_bar:
+		health_bar.hide()
+		print("Health bar hidden")
+
+	# zero out the velocity to stop additional movement
+	velocity = Vector2.ZERO
+
+	var parent = get_parent()
+	# Remove the monkey from the parent node to avoid having it continue to walk
+	# and conflict with the die animation
+	# parent --> the 'Monkeys' node
+	# parent.get_parent() --> the level node
+	if parent:
+		parent.get_parent().remove_monkey(self)
+
+	# Try to play death animation
+	if _animated_sprite.sprite_frames.has_animation("die"):
+			print_debug("Found die animation, attempting to play")
+			_animated_sprite.stop()
+			_animated_sprite.play("die")
+	else:
+			print_debug("ERROR: No die animation found!")
+			queue_free()
+
+
 func take_damage(amount: float) -> void:
 	if current_cooldown <= 0:
 		current_health = max(0, current_health - amount)
 		current_cooldown = damage_cooldown
+		print_debug("Monkey took damage. Current health:", current_health)
+
 		if health_bar:
 			health_bar.value = current_health
-		
+
 		if current_health <= 0:
-			die()
-			
+			print_debug("Health <= 0, calling _die()")
+			_die()
+
 		health_bar.health = current_health
-		
+
 
 ## Function to throw a banana at a specific position
 ## Function to throw a banana at a specific position
@@ -250,8 +304,8 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 	var offset_distance = 30.0
 	var spawn_offset = shoot_direction * offset_distance
 	var spawn_global_position = global_position + spawn_offset
-	print("BANANA POS (global):", spawn_global_position)
-	print("MONKEY POS (global):", global_position)
+	print_debug("BANANA POS (global):", spawn_global_position)
+	print_debug("MONKEY POS (global):", global_position)
 
 	# Calculate the projectile velocity
 	var bullet_speed = 550.0
@@ -276,7 +330,7 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 		projectile.position = local_spawn_pos
 
 		projectiles_node.call_deferred("add_child", projectile)
-		print("Projectile added to the Projectiles node at:", local_spawn_pos)
+		print_debug("Projectile added to the Projectiles node at:", local_spawn_pos)
 	else:
 		print_debug("Projectiles node not found. Projectile not spawned.")
 
@@ -285,3 +339,11 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 
 	# Play attack animation or effects if needed
 	print("Banana thrown at position:", target_position)
+
+
+## Called when the monkey's AnimatedSprite2D node finishes playing an animation.
+## If the animation is "die", the monkey is queued for deletion.
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if _animated_sprite.animation == "die":
+		_animated_sprite.stop()
+		queue_free()

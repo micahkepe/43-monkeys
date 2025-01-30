@@ -1,9 +1,41 @@
-[gd_scene load_steps=43 format=3 uid="uid://dlv2gwbsq0ljg"]
+[gd_scene load_steps=51 format=3 uid="uid://dlv2gwbsq0ljg"]
 
-[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_1r7bs"]
 [ext_resource type="Texture2D" uid="uid://bumdf8v27ed33" path="res://assets/sprites/characters/monkeys/wizard-monkey.png" id="1_c10kj"]
-[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_hs064"]
+[ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_xsyrx"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="3_7lncv"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_x3rfr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76qsn"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogoe"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd3ij"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc7mp"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyp33"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqpbo"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0jur"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3hsb"]
+atlas = ExtResource("3_7lncv")
+region = Rect2(448, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugglv"]
 atlas = ExtResource("1_c10kj")
@@ -153,6 +185,35 @@ region = Rect2(512, 515, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_76qsn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd3ij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc7mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyp33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqpbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0jur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3hsb")
+}],
+"loop": false,
+"name": &"die",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ugglv")
 }, {
 "duration": 1.0,
@@ -287,13 +348,11 @@ radius = 15.0
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
-script = ExtResource("1_1r7bs")
-banana_boomerang_scene = ExtResource("2_hs064")
+script = ExtResource("1_xsyrx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8c6rb")
 animation = &"walk_down"
-frame_progress = 0.998813
 
 [node name="HealthBar" parent="." instance=ExtResource("3_x3rfr")]
 offset_left = -16.0
