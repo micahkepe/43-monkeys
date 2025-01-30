@@ -63,6 +63,8 @@ var attack_timer: Timer
 ## Prevents walking animations from overwriting attack animations
 var is_attacking: bool = false
 
+## Keeps track of the current angle
+var spiral_angle: float = 0.0
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -70,7 +72,7 @@ func _ready() -> void:
 	health_bar.init_health(_current_health)
 
 	attack_spawn_buttons_with_forcefield()
-	move_to_next_waypoint()
+	_move_to_next_waypoint()
 
 	# Initialize attack timer
 	attack_timer = Timer.new()
@@ -79,7 +81,10 @@ func _ready() -> void:
 	attack_timer.connect("timeout", Callable(self, "_choose_and_execute_attack"))
 	_start_random_attack_timer()
 
-func choose_random_waypoint() -> Vector2:
+
+## Chooses a random waypoint within the room bounds.
+## @return Vector2 - the random waypoint position
+func _choose_random_waypoint() -> Vector2:
 	var min_x = 24 + 50
 	var max_x = 1133 - 50
 	var min_y = -800 + 50
@@ -88,10 +93,14 @@ func choose_random_waypoint() -> Vector2:
 	# Randomly select a new waypoint
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
 
-func move_to_next_waypoint():
+## Moves the boss to the next waypoint.
+func _move_to_next_waypoint():
 	# Choose a random waypoint and start moving toward it
-	current_target = choose_random_waypoint()
+	current_target = _choose_random_waypoint()
 
+
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+## @param delta: float - the time since the previous frame
 func _physics_process(_delta: float) -> void:
 	# If we have a target waypoint, move toward it
 	if current_target != Vector2.ZERO:
@@ -119,20 +128,24 @@ func _physics_process(_delta: float) -> void:
 			velocity = Vector2.ZERO  # Stop moving
 			current_target = Vector2.ZERO  # Clear the target
 			play_idle_animation()
-			start_wait_timer()  # Start a timer for the next movement
+			_start_wait_timer()  # Start a timer for the next movement
 	else:
 		velocity = Vector2.ZERO  # No movement when no target
 		play_idle_animation()  # Ensure the boss is idle
 
-func start_wait_timer():
+
+## Starts a timer to wait for a random interval before moving to the next
+## waypoint.
+func _start_wait_timer() -> void:
 	# Wait for a random interval, then move to the next waypoint
 	var wait_time = randf_range(min_wait_time, max_wait_time)
 	await get_tree().create_timer(wait_time).timeout
-	move_to_next_waypoint()
+	_move_to_next_waypoint()
 
 
-# Helper function to find the player based on your node structure
-func get_player() -> Node2D:
+## Helper function to find the player based on your node structure
+## @return Node2D - the player node
+func _get_player() -> Node2D:
 	var player = get_parent().get_node("ForegroundTiles/Player")
 	if player:
 		return player
@@ -141,7 +154,9 @@ func get_player() -> Node2D:
 		return null
 
 
-func createTaserProj(projectile):
+## Helper function to create a taser projectile and add it to the scene
+## @param projectile: Node - the projectile node to create
+func _create_projectile(projectile: Node) -> void:
 	var taser_proj = get_parent().get_node("TaserProjectiles")
 	taser_proj.add_child(projectile)
 
@@ -149,19 +164,21 @@ func createTaserProj(projectile):
 # --------------------------------------------------
 # Attack 1: Single Projectile Towards Player
 # --------------------------------------------------
-func attack_shoot_at_player():
+
+## The boss shoots a single taser projectile at the player.
+func _attack_shoot_at_player() -> void:
 	if not taser_projectile_scene:
 		print("Taser Projectile scene not set!")
 		return
 
-	var player = get_player()
+	var player = _get_player()
 	if not player:
 		print("Player not found!")
 		return
 
 	# Spawn the taser projectile
 	var projectile = taser_projectile_scene.instantiate()
-	createTaserProj(projectile)
+	_create_projectile(projectile)
 
 	# Set the attacking flag to true
 	is_attacking = true
@@ -178,12 +195,21 @@ func attack_shoot_at_player():
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
+
+## --------------------------------------------------
+## Additional Attack patterns
+## --------------------------------------------------
+
+
+## Attack 2: Burst of Projectiles towards the player
+## @param burst_count: int - the number of projectiles to fire
+## @param delay: float - the delay between each projectile
 func attack_burst_shoot_at_player(burst_count: int = 3, delay: float = 0.1) -> void:
 	if not taser_projectile_scene:
 		print("Taser Projectile scene not set!")
 		return
 
-	var player = get_player()
+	var player = _get_player()
 	if not player:
 		print("Player not found!")
 		return
@@ -199,7 +225,7 @@ func attack_burst_shoot_at_player(burst_count: int = 3, delay: float = 0.1) -> v
 
 		# Spawn the taser projectile
 		var projectile = taser_projectile_scene.instantiate()
-		createTaserProj(projectile)
+		_create_projectile(projectile)
 
 		# Calculate direction to the player and set projectile velocity
 		projectile.scale = Vector2(2.25,2.25)
@@ -216,7 +242,7 @@ func attack_spread_shoot_at_player(spread_count: int = 5, angle_range: float = P
 		print("Taser Projectile scene not set!")
 		return
 
-	var player = get_player()
+	var player = _get_player()
 	if not player:
 		print("Player not found!")
 		return
@@ -236,7 +262,7 @@ func attack_spread_shoot_at_player(spread_count: int = 5, angle_range: float = P
 
 		# Spawn the taser projectile
 		var projectile = taser_projectile_scene.instantiate()
-		createTaserProj(projectile)
+		_create_projectile(projectile)
 
 		# Set its position and velocity
 		projectile.scale = Vector2(2.25, 2.25)
@@ -247,6 +273,9 @@ func attack_spread_shoot_at_player(spread_count: int = 5, angle_range: float = P
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
+
+## Circular pattern of projectiles
+## @param num_projectiles: int - the number of projectiles to fire in a circle
 func attack_circular_shoot(num_projectiles: int = 8) -> void:
 	if not taser_projectile_scene:
 		print("Taser Projectile scene not set!")
@@ -261,7 +290,7 @@ func attack_circular_shoot(num_projectiles: int = 8) -> void:
 
 		# Spawn the taser projectile
 		var projectile = taser_projectile_scene.instantiate()
-		createTaserProj(projectile)
+		_create_projectile(projectile)
 
 		# Set its position and velocity
 		projectile.scale = Vector2(2.25,2.25)
@@ -272,8 +301,10 @@ func attack_circular_shoot(num_projectiles: int = 8) -> void:
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
-var spiral_angle: float = 0.0  # Keeps track of the current angle
 
+## Spiral pattern of projectiles
+## @param num_projectiles: int - the number of projectiles to fire in a spiral
+## @param spiral_speed: float - the speed of the spiral rotation
 func attack_spiral_shoot(num_projectiles: int = 16, spiral_speed: float = 0.1) -> void:
 	if not taser_projectile_scene:
 		print("Taser Projectile scene not set!")
@@ -289,7 +320,7 @@ func attack_spiral_shoot(num_projectiles: int = 16, spiral_speed: float = 0.1) -
 
 		# Spawn the taser projectile
 		var projectile = taser_projectile_scene.instantiate()
-		createTaserProj(projectile)
+		_create_projectile(projectile)
 
 		# Calculate the angle for this projectile
 		spiral_angle += TAU / num_projectiles  # Increment the spiral angle
@@ -306,6 +337,9 @@ func attack_spiral_shoot(num_projectiles: int = 16, spiral_speed: float = 0.1) -
 	is_attacking = false  # Reset attacking flag
 
 
+## Horizontal wall of projectiles
+## @param num_projectiles: int - the number of projectiles to fire in the wall
+## @param spacing: float - the spacing between projectiles (in pixels)
 func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -> void:
 	if not taser_projectile_scene:
 		print("Taser Projectile scene not set!")
@@ -314,7 +348,7 @@ func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -
 	# Set the attacking flag to true
 	is_attacking = true
 
-	var player = get_player()
+	var player = _get_player()
 	if not player:
 		print("Player not found!")
 		return
@@ -341,7 +375,7 @@ func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -
 	for i in range(num_projectiles):
 		# Spawn the taser projectile
 		var projectile = taser_projectile_scene.instantiate()
-		createTaserProj(projectile)
+		_create_projectile(projectile)
 
 		# Set the projectile's position and velocity
 		projectile.lifetime = 10.0
@@ -353,6 +387,10 @@ func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
+
+## Vertical wall of projectiles
+## @param num_projectiles: int - the number of projectiles to fire in the wall
+## @param spacing: float - the spacing between projectiles (in pixels)
 func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 150.0) -> void:
 	if not taser_projectile_scene:
 		print("Taser Projectile scene not set!")
@@ -361,7 +399,7 @@ func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 150.0) -> 
 	# Set the attacking flag to true
 	is_attacking = true
 
-	var player = get_player()
+	var player = _get_player()
 	if not player:
 		print("Player not found!")
 		return
@@ -388,7 +426,7 @@ func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 150.0) -> 
 	for i in range(num_projectiles):
 		# Spawn the taser projectile
 		var projectile = taser_projectile_scene.instantiate()
-		createTaserProj(projectile)
+		_create_projectile(projectile)
 
 		# Set the projectile's position and velocity
 		projectile.lifetime = 10.0
@@ -400,7 +438,9 @@ func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 150.0) -> 
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
-func spawn_electro_lasers():
+
+## Spawns a grid of electo laser obstacles
+func spawn_electro_lasers() -> void:
 	if not electro_laser_scene:
 		print("Electro Laser scene not set!")
 		return
@@ -436,12 +476,14 @@ func spawn_electro_lasers():
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
-func delete_electro_lasers():
+## Deletes all electro laser obstacles
+func delete_electro_lasers() -> void:
 	var electro_laser_node = get_parent().get_node("ElectroLasers")
 	for child in electro_laser_node.get_children():
 		child.queue_free()
 
-func attack_electro_laser():
+## Spawns buttons and a forcefield for the player to interact with
+func attack_electro_laser() -> void:
 	# Spawn the lasers using the existing function
 	spawn_electro_lasers()
 
@@ -449,7 +491,8 @@ func attack_electro_laser():
 	await get_tree().create_timer(10.0).timeout
 	delete_electro_lasers()
 
-func attack_spawn_buttons_with_forcefield():
+## Spawns buttons and a forcefield for the player to interact with
+func attack_spawn_buttons_with_forcefield() -> void:
 	if not button_scene or not electric_forcefield_scene:
 		print("Button or Forcefield scene not set!")
 		return
@@ -471,7 +514,7 @@ func attack_spawn_buttons_with_forcefield():
 		return
 
 	# Spawn the two buttons at valid random positions
-	var button_positions = calculate_button_positions()
+	var button_positions = _calculate_button_positions()
 	if button_positions.size() == 0:
 		print("Failed to calculate valid button positions!")
 		forcefield.queue_free()  # Remove forcefield if button spawning fails
@@ -502,7 +545,8 @@ func attack_spawn_buttons_with_forcefield():
 	await _animated_sprite.animation_finished
 	is_attacking = false  # Reset attacking flag
 
-func calculate_button_positions() -> Array:
+## Calculates random positions for two buttons within the room bounds
+func _calculate_button_positions() -> Array:
 	var min_x = 24
 	var max_x = 1133
 	var min_y = -800
@@ -525,7 +569,11 @@ func calculate_button_positions() -> Array:
 	# Return the two positions
 	return [pos1, pos2]
 
-# Handle button press events
+## Handle button press events
+## @param is_pressed: bool - the state of the button (pressed or released)
+## @param button: Node - the button node that triggered the event
+## @param button_states: Dictionary - the dictionary of button states
+## @param forcefield: Node2D - the forcefield node to remove
 func _on_button_state_changed(is_pressed: bool, button: Node, button_states: Dictionary, forcefield: Node2D) -> void:
 	# Update the specific button's state
 	button_states[button] = is_pressed
@@ -539,7 +587,8 @@ func _on_button_state_changed(is_pressed: bool, button: Node, button_states: Dic
 		for button_instance in button_states.keys():
 			button_instance.queue_free()
 
-# Helper to check if all buttons are pressed
+## Helper to check if all buttons are pressed
+## @param button_states: Dictionary - the dictionary of button states
 func all_buttons_pressed(button_states: Dictionary) -> bool:
 	# Check if all buttons in the dictionary are pressed
 	for button in button_states:
@@ -548,9 +597,16 @@ func all_buttons_pressed(button_states: Dictionary) -> bool:
 	return true
 
 
+## Applies the amount of specified damage if the boss is not protected.
+## @param amount: float - the amount of damamge to deal
 func take_damage(amount: float) -> void:
 	if has_forcefield:
 		return
+
+	# momentarily recolor the monkey to indicate damage
+	_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
+	await get_tree().create_timer(0.5).timeout
+	_animated_sprite.modulate = Color(1, 1, 1, 1)
 
 	_current_health -= amount
 	# Check if the boss is dead
@@ -570,14 +626,16 @@ func take_damage(amount: float) -> void:
 func die() -> void:
 	queue_free()  # Remove the boss from the scene
 
-# Helper to play animations and track the last one
+## Helper to play animations and track the last one
+## @param animation_name: String - the name of the animation to play
 func play_animation(animation_name: String) -> void:
 	var animated_sprite = $AnimatedSprite2D  # Adjust this path if needed
 	if animated_sprite.animation != animation_name:
 		animated_sprite.play(animation_name)
 		last_animation = animation_name
 
-# Helper to play the idle animation based on the last animation
+
+## Helper to play the idle animation based on the last animation
 func play_idle_animation() -> void:
 	if "down" in last_animation:
 		play_animation("idle_down")
@@ -590,7 +648,10 @@ func play_idle_animation() -> void:
 	else:
 		play_animation("idle_down")  # Default idle if no direction found
 
-func play_spell_animation(direction):
+
+## Helper to play the spell animation based on the direction
+## @param direction: Vector2 - the direction to play the animation
+func play_spell_animation(direction: Vector2) -> void:
 	if abs(direction.x) > abs(direction.y):  # Horizontal movement
 		if direction.x > 0:
 			play_animation("spell_right")  # Moving right
@@ -603,13 +664,15 @@ func play_spell_animation(direction):
 			play_animation("spell_up")  # Moving up
 
 
-###
+# --------------------------------------------------
 # ATTACK LOGIC
-###
+# --------------------------------------------------
+
+## Define the available attacks with their properties
 var attacks = [
 	{
-		"name": "attack_shoot_at_player",
-		"function": Callable(self, "attack_shoot_at_player"),
+		"name": "_attack_shoot_at_player",
+		"function": Callable(self, "_attack_shoot_at_player"),
 		"weight": 3,  # Probability weight
 		"unlocked": true  # Initially available
 	},
@@ -664,7 +727,8 @@ var attacks = [
 ]
 
 
-func _start_random_attack_timer():
+## Starts the random attack timer with a random interval
+func _start_random_attack_timer() -> void:
 	# Set the timer with a random interval between min and max
 	var wait_time = randf_range(min_attack_interval, max_attack_interval)
 	attack_timer.wait_time = wait_time
@@ -674,7 +738,8 @@ func _start_random_attack_timer():
 @export var quick_succession_chance: float = 0.25  # 30% chance for a quick follow-up attack
 @export var quick_succession_delay: float = 0.8  # Delay between the successive attacks
 
-func _choose_and_execute_attack():
+## Chooses and executes a random attack based on weights
+func _choose_and_execute_attack() -> void:
 	# Filter unlocked attacks
 	var available_attacks = []
 	for attack in attacks:
@@ -717,6 +782,9 @@ func _choose_and_execute_attack():
 	# Start the main timer again for the next attack
 	_start_random_attack_timer()
 
+
+## Executes a quick succession attack after a short delay
+## @param available_attacks: Array - the available attacks to choose from
 func _perform_quick_succession_attack(available_attacks: Array) -> void:
 	# Wait for the quick succession delay
 	await get_tree().create_timer(quick_succession_delay).timeout

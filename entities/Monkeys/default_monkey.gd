@@ -13,9 +13,17 @@ extends CharacterBody2D
 
 ## Vision detection RayCast
 @onready var _raycast_vision: RayCast2D = $RayCastVision
+
+## RayCast vision left (short)
 @onready var _raycast_vision_7_5_left: RayCast2D
+
+## RayCast vision right (short)
 @onready var _raycast_vision_7_5_right: RayCast2D
+
+## RayCast vision left (long)
 @onready var _raycast_vision_15_left: RayCast2D
+
+## RayCast vision right (long)
 @onready var _raycast_vision_15_right: RayCast2D
 
 ## The HealthBar node to display the monkey's health
@@ -50,8 +58,13 @@ var _current_enemy = null
 ## The maximum health of the monkey (in total heart units)
 @export var max_health: int = 5
 
+## The current health of the monkey
 var current_health : int
+
+## Cooldown for taking damage
 var damage_cooldown: float = 1.5
+
+## The current cooldown for taking damage
 var current_cooldown: float = 0.0
 
 ## Called when the node enters the scene tree for the first time.
@@ -274,11 +287,17 @@ func _die() -> void:
 			queue_free()
 
 
+## Takes the specified amount of damage from the monkey's health.
 func take_damage(amount: float) -> void:
 	if current_cooldown <= 0:
 		current_health = max(0, current_health - amount)
 		current_cooldown = damage_cooldown
 		print_debug("Monkey took damage. Current health:", current_health)
+
+		# momentarily recolor the monkey to indicate damage
+		_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
+		await get_tree().create_timer(0.5).timeout
+		_animated_sprite.modulate = Color(1, 1, 1, 1)
 
 		if health_bar:
 			health_bar.value = current_health

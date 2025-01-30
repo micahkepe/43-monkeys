@@ -559,6 +559,12 @@ func _die() -> void:
 ## Take damage for the player.
 func take_damage(amount: float) -> void:
 	print("damage!")
+
+	# momentarily recolor the monkey to indicate damage
+	_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
+	await get_tree().create_timer(0.5).timeout
+	_animated_sprite.modulate = Color(1, 1, 1, 1)
+
 	if current_cooldown <= 0:
 		current_health = max(0, current_health - amount)
 		current_cooldown = damage_cooldown
