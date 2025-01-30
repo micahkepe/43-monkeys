@@ -1,15 +1,14 @@
 extends Node2D
-
 ## A cutscene that plays at the start of the game with typewriter text effect.
 ##
 ## The cutscene displays a series of frames with images and text. The player can
 ## advance through the cutscene by pressing the "ui_select" action. The text appears
 ## with a typewriter effect. Once complete, transitions to the first level.
 
-# Story frames data
+## Story frames data
 var _frames = [
 	{
-		"image": "res://assets/exposition/intro/exposition-1.png",
+		"image": "res://assets/exposition/intro/frame-0.png",
 		"text": "South Carolina\nNovember 2024"
 	},
 	{
@@ -29,12 +28,12 @@ var _frames = [
 		"text": "Until one day...\nA careless mistake changes everything"
 	},
 	{
-		"image": "res://assets/exposition/intro/frame-5.png", # monkey running away
-		"text": "Now is our chance for freedom\nLet's save my brethen..."
+		"image": "res://assets/exposition/intro/frame-5.png",
+		"text": "Now is our chance for freedom\nWe mustn't waste it..."
 	},
 ]
 
-# Current state variables
+## Current state variables
 var _current_frame = 0
 var _is_cutscene_active: bool = true
 var _is_typing: bool = false
@@ -61,7 +60,7 @@ func _ready() -> void:
 	type_timer.one_shot = false
 	type_timer.connect("timeout", _on_type_timer_timeout)
 	add_child(type_timer)
-	
+
 	# Setup frame timer
 	frame_timer.one_shot = true
 	frame_timer.connect("timeout", _on_frame_timer_timeout)
@@ -147,4 +146,4 @@ func _complete_typing() -> void:
 ## Ends the cutscene and transitions to the first level.
 func _end_cutscene() -> void:
 	_is_cutscene_active = false
-	get_tree().change_scene_to_file("res://levels/demo/demo_level.tscn")
+	get_tree().change_scene_to_file("res://levels/level-4/level-4.tscn")

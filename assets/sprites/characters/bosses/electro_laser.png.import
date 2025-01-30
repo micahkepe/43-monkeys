@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5nv805q3ihk7"
-path="res://.godot/imported/exposition-1.png-4df6fae6e717c8a2a7391e990d76c7bc.ctex"
+uid="uid://bsrpm5xgnxp0j"
+path="res://.godot/imported/electro_laser.png-0fde9da458f5c8d0e66a108113ac5df9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/exposition/intro/exposition-1.png"
-dest_files=["res://.godot/imported/exposition-1.png-4df6fae6e717c8a2a7391e990d76c7bc.ctex"]
+source_file="res://assets/sprites/characters/bosses/electro_laser.png"
+dest_files=["res://.godot/imported/electro_laser.png-0fde9da458f5c8d0e66a108113ac5df9.ctex"]
 
 [params]
 

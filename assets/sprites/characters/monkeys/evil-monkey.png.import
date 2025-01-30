@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blunq804f35ls"
-path="res://.godot/imported/taser_boss.png-a254e960bd0211b3ba415e2b386ebe5e.ctex"
+uid="uid://usn1r0wp2ofw"
+path="res://.godot/imported/evil-monkey.png-48190c4adf1ffee6a65c6a944528a5c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/boss/taser_boss.png"
-dest_files=["res://.godot/imported/taser_boss.png-a254e960bd0211b3ba415e2b386ebe5e.ctex"]
+source_file="res://assets/sprites/characters/monkeys/evil-monkey.png"
+dest_files=["res://.godot/imported/evil-monkey.png-48190c4adf1ffee6a65c6a944528a5c0.ctex"]
 
 [params]
 
