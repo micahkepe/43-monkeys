@@ -21,11 +21,10 @@ Game Design at Rice University.
 
 ## TODOs
 
-- [ ] Momemntarily change color to red shade on hit
+- [x] Momemntarily change color to red shade on hit
 - [ ] Troop and enemy boid field of vision attack triggers
 - [ ] More curated levels
 - [ ] Create shaders
-- [ ] Minimap
 - [ ] Monkey counter
 - [ ] FIX: More contrast in menu screens
 - [ ] Better art

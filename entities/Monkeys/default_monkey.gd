@@ -53,6 +53,8 @@ var _current_enemy = null
 
 ## Vision detection settings
 @export var vision_range: float = 200.0
+
+## The range of the monkey's vision angle
 @export var vision_angle: float = 60.0
 
 ## The maximum health of the monkey (in total heart units)
