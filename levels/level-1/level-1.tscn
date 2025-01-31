@@ -1,7 +1,6 @@
-[gd_scene load_steps=32 format=4 uid="uid://b8hvlr7xxbcu5"]
+[gd_scene load_steps=30 format=4 uid="uid://b8hvlr7xxbcu5"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
-[ext_resource type="Script" path="res://levels/level-0/level_0.gd" id="1_t800r"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="2_hpihk"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="3_pcuto"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_qxfbq"]
@@ -14,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="11_in3d4"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="12_44r5b"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/boid_joe.tscn" id="13_yg254"]
-[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="15_si2mn"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="15_xoarp"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="16_ufxko"]
 
@@ -892,7 +890,6 @@ sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
 [node name="level-0" type="Node2D" groups=["boids"]]
 position = Vector2(580, 274)
-script = ExtResource("1_t800r")
 
 [node name="MoveInstruction" type="Label" parent="."]
 anchors_preset = 1
@@ -986,9 +983,6 @@ z_index = 2
 
 [node name="Buttons" parent="." instance=ExtResource("16_ufxko")]
 position = Vector2(5271, 2951)
-
-[node name="Laser" parent="." instance=ExtResource("15_si2mn")]
-position = Vector2(635, 581)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100

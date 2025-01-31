@@ -809,4 +809,3 @@ func _perform_quick_succession_attack(available_attacks: Array) -> void:
 			# Execute the second attack
 			attack.function.call()
 			break
-
