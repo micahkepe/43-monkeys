@@ -144,25 +144,7 @@ func _setup_vision_raycast() -> void:
 				_raycast_vision_15_right = raycast
 
 
-
 ## Collision avoidance logic
-func _check_collision_avoidance() -> Vector2:
-	var avoidance_vector = Vector2.ZERO
-
-	# Check front RayCast
-	if _raycast_front.is_colliding():
-		avoidance_vector += Vector2(-1, 0)
-
-	# Check left RayCast
-	if _raycast_left.is_colliding():
-		avoidance_vector += Vector2(0, -1)
-
-	# Check right RayCast
-	if _raycast_right.is_colliding():
-		avoidance_vector += Vector2(0, 1)
-
-	return avoidance_vector.normalized()
-
 ## Vision detection logic
 func _check_vision_detection() -> void:
 	var raycasts = [
@@ -187,11 +169,9 @@ func _check_vision_detection() -> void:
 				_current_enemy = collider.global_position
 				break
 
+
 ## Physics processing to handle collision avoidance and vision
 func _physics_process(_delta: float) -> void:
-	# Check for collision avoidance
-	var avoidance_vector = _check_collision_avoidance()
-
 	# Check for enemy vision
 	_check_vision_detection()
 
@@ -204,31 +184,33 @@ func _physics_process(_delta: float) -> void:
 	if _enemy_in_sight and _current_enemy and attack_timer <= 0:
 		_throw_banana_at_position(_current_enemy)
 
-	# Move the monkey's velocity based on the avoidance vector
-	velocity = velocity.normalized() - avoidance_vector
-
 	if current_cooldown > 0:
 		current_cooldown -= _delta
+
 
 ## Called by the Player when the player is moving left
 func walk_left() -> void:
 	_animated_sprite.play("walk_left")
 	_update_vision_rays(Vector2(-vision_range, 0))
 
+
 ## Called by the Player when the player is moving right
 func walk_right() -> void:
 	_animated_sprite.play("walk_right")
 	_update_vision_rays(Vector2(vision_range, 0))
+
 
 ## Called by the Player when the player is moving up
 func walk_up() -> void:
 	_animated_sprite.play("walk_up")
 	_update_vision_rays(Vector2(0, -vision_range))
 
+
 ## Called by the Player when the player is moving down
 func walk_down() -> void:
 	_animated_sprite.play("walk_down")
 	_update_vision_rays(Vector2(0, vision_range))
+
 
 ## Helper function to update all vision raycasts
 func _update_vision_rays(direction: Vector2) -> void:
@@ -248,6 +230,7 @@ func _update_vision_rays(direction: Vector2) -> void:
 ## Called by the Player when no swarm-translation key is pressed (monkey idle)
 func stop_walk() -> void:
 	_animated_sprite.stop()
+
 
 ## Handles monkey death. Plays the death animation and cleans the monkey from
 ## the scene.
