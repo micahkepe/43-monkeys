@@ -1,23 +1,23 @@
 [gd_scene load_steps=26 format=4 uid="uid://cscspmt2tgh5x"]
 
-[ext_resource type="Script" path="res://levels/level-4/level-4.gd" id="1_u2jwd"]
-[ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="4_3rox1"]
-[ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="5_vave5"]
-[ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="6_n2vm6"]
-[ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="7_crj8l"]
-[ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="8_envnl"]
-[ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_78bp4"]
-[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="10_nxgtp"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="11_s1uti"]
-[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="12_c4kud"]
-[ext_resource type="Script" path="res://entities/bosses/TaserBoss/taser_boss.gd" id="13_i8jlm"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="13_pt541"]
-[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="16_hfkby"]
-[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="17_ul4oh"]
+[ext_resource type="Script" path="res://levels/level-3/level-3.gd" id="1_3vp1w"]
+[ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_4ox51"]
+[ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="3_7bl8f"]
+[ext_resource type="Texture2D" uid="uid://b2rxu7wx60uqv" path="res://assets/sprites/tilesets/foreground.png" id="4_mll7v"]
+[ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_xsrua"]
+[ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="6_y5rmm"]
+[ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="7_suumw"]
+[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_6sl07"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="9_lxlag"]
+[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="10_q1d5o"]
+[ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="11_pcrwo"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="12_8y3f8"]
+[ext_resource type="Script" path="res://entities/bosses/TaserBoss/taser_boss.gd" id="13_0v6xr"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="14_boakj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bu8l"]
 resource_name = "blank-tiles"
-texture = ExtResource("4_3rox1")
+texture = ExtResource("2_4ox51")
 0:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -70,7 +70,7 @@ texture = ExtResource("4_3rox1")
 7:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fr8o3"]
-texture = ExtResource("5_vave5")
+texture = ExtResource("3_7bl8f")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/z_index = -3
@@ -107,7 +107,7 @@ texture_region_size = Vector2i(32, 32)
 0:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7m7yo"]
-texture = ExtResource("6_n2vm6")
+texture = ExtResource("4_mll7v")
 texture_region_size = Vector2i(32, 32)
 0:0/size_in_atlas = Vector2i(2, 4)
 0:0/0 = 0
@@ -129,7 +129,7 @@ texture_region_size = Vector2i(32, 32)
 0:5/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb811"]
-texture = ExtResource("7_crj8l")
+texture = ExtResource("5_xsrua")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -189,7 +189,7 @@ sources/3 = SubResource("TileSetAtlasSource_7m7yo")
 sources/4 = SubResource("TileSetAtlasSource_sb811")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d2i4d"]
-texture = ExtResource("6_n2vm6")
+texture = ExtResource("4_mll7v")
 texture_region_size = Vector2i(32, 32)
 9:0/0 = 0
 10:0/0 = 0
@@ -355,7 +355,7 @@ texture_region_size = Vector2i(32, 32)
 5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-46.4923, 1.41421, 46.4923, 0, 47.5529, 28.9914, -45.7852, 29.6985)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xol5g"]
-texture = ExtResource("7_crj8l")
+texture = ExtResource("5_xsrua")
 1:0/0 = 0
 2:0/0 = 0
 5:0/0 = 0
@@ -530,7 +530,7 @@ texture = ExtResource("7_crj8l")
 3:15/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m2v1e"]
-texture = ExtResource("9_78bp4")
+texture = ExtResource("7_suumw")
 texture_region_size = Vector2i(32, 32)
 16:0/0 = 0
 16:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-34.25, 41.5, 35.8857, 42.0729, 35.5321, 64.3467, -33.0572, 63.9932)
@@ -646,7 +646,7 @@ texture_region_size = Vector2i(32, 32)
 12:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-34.25, 41.5, 35.8857, 42.0729, 35.5321, 64.3467, -33.0572, 63.9932)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vhjgw"]
-texture = ExtResource("10_nxgtp")
+texture = ExtResource("8_6sl07")
 5:0/size_in_atlas = Vector2i(6, 5)
 5:0/0 = 0
 5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48.25, 6.5, 44.25, 8, 44.25, 39, -47.75, 39.5)
@@ -679,7 +679,7 @@ texture = ExtResource("10_nxgtp")
 12:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.375, -5.5, 31.375, -5.25, 31.125, 30.5, -32.125, 30.75)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t4ikr"]
-texture = ExtResource("5_vave5")
+texture = ExtResource("3_7bl8f")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -817,9 +817,9 @@ sources/3 = SubResource("TileSetAtlasSource_vhjgw")
 sources/1 = SubResource("TileSetAtlasSource_xol5g")
 sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
-[node name="level-4" type="Node2D" groups=["boids"]]
+[node name="level-3" type="Node2D" groups=["boids"]]
 position = Vector2(494, 564)
-script = ExtResource("1_u2jwd")
+script = ExtResource("1_3vp1w")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -3
@@ -829,7 +829,7 @@ tile_map_data = PackedByteArray("AADu//b/AAAAAAQAAADu//X/AAAAAAQAAADv//X/AAAAAAQ
 tile_set = SubResource("TileSet_6tb6n")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_envnl")
+stream = ExtResource("6_y5rmm")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
@@ -842,7 +842,7 @@ scale = Vector2(1.5, 1.5)
 tile_map_data = PackedByteArray("AAAHAB8AAAAAAAAAAAD7/x8AAAAAAAAAAAARAA0AAAACAAIAAAARAAsAAAACAAIAAAARAAkAAAACAAIAAADx/w0AAAACAAIAAADx/wsAAAACAAIAAADx/wkAAAACAAIAAAA=")
 tile_set = SubResource("TileSet_h060g")
 
-[node name="Player" parent="ForegroundTiles" instance=ExtResource("11_s1uti")]
+[node name="Player" parent="ForegroundTiles" instance=ExtResource("9_lxlag")]
 position = Vector2(22.6666, 334.667)
 scale = Vector2(0.499, 0.499)
 collision_mask = 23
@@ -854,13 +854,13 @@ zoom = Vector2(0.82, 0.82)
 position = Vector2(-534, -240)
 scale = Vector2(0.75, 0.75)
 
-[node name="Button" parent="Buttons" instance=ExtResource("16_hfkby")]
+[node name="Button" parent="Buttons" instance=ExtResource("10_q1d5o")]
 position = Vector2(301.333, 866.667)
 
-[node name="Button1" parent="Buttons" instance=ExtResource("16_hfkby")]
+[node name="Button1" parent="Buttons" instance=ExtResource("10_q1d5o")]
 position = Vector2(1346.67, 866.667)
 
-[node name="Button2" parent="Buttons" instance=ExtResource("16_hfkby")]
+[node name="Button2" parent="Buttons" instance=ExtResource("10_q1d5o")]
 position = Vector2(834.667, 658.667)
 scale = Vector2(1.33333, 1.33333)
 
@@ -869,25 +869,25 @@ z_index = 2
 
 [node name="Lasers" type="Node2D" parent="."]
 
-[node name="Laser" parent="Lasers" instance=ExtResource("17_ul4oh")]
+[node name="Laser" parent="Lasers" instance=ExtResource("11_pcrwo")]
 position = Vector2(-7, -268)
 rotation = 1.5708
 scale = Vector2(2, 3)
 
-[node name="Laser2" parent="Lasers" instance=ExtResource("17_ul4oh")]
+[node name="Laser2" parent="Lasers" instance=ExtResource("11_pcrwo")]
 position = Vector2(178, -269)
 rotation = 1.5708
 scale = Vector2(2, 3)
 
-[node name="Laser3" parent="Lasers" instance=ExtResource("17_ul4oh")]
+[node name="Laser3" parent="Lasers" instance=ExtResource("11_pcrwo")]
 position = Vector2(85, 8)
 scale = Vector2(3.25, 2)
 
-[node name="TaserBoss" parent="." instance=ExtResource("13_pt541")]
+[node name="TaserBoss" parent="." instance=ExtResource("12_8y3f8")]
 z_index = 999
 position = Vector2(99, -1368)
 scale = Vector2(2.67, 2.67)
-script = ExtResource("13_i8jlm")
+script = ExtResource("13_0v6xr")
 
 [node name="BossButtons" type="Node2D" parent="."]
 position = Vector2(-534, -240)
@@ -900,6 +900,6 @@ scale = Vector2(2.25, 2.25)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="PauseMenu" parent="UI" instance=ExtResource("12_c4kud")]
+[node name="PauseMenu" parent="UI" instance=ExtResource("14_boakj")]
 visible = false
 offset_right = 0.0

@@ -1,6 +1,7 @@
-[gd_scene load_steps=51 format=3 uid="uid://c5nx4jcpdcmuy"]
+[gd_scene load_steps=52 format=3 uid="uid://c5nx4jcpdcmuy"]
 
 [ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_44641"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_16tm4"]
 [ext_resource type="Texture2D" uid="uid://cvs778vja8v7p" path="res://assets/sprites/characters/monkeys/formal-monkey.png" id="2_ec8ci"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_idj8b"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="3_p3i8y"]
@@ -349,6 +350,7 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_44641")
+banana_boomerang_scene = ExtResource("2_16tm4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -357,9 +359,7 @@ shape = SubResource("CircleShape2D_hp6us")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4nhkg")
-animation = &"die"
-frame = 7
-frame_progress = 1.0
+animation = &"walk_down"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_idj8b")]
 offset_left = -16.0

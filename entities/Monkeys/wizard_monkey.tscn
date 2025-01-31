@@ -1,7 +1,8 @@
-[gd_scene load_steps=51 format=3 uid="uid://dlv2gwbsq0ljg"]
+[gd_scene load_steps=52 format=3 uid="uid://dlv2gwbsq0ljg"]
 
 [ext_resource type="Texture2D" uid="uid://bumdf8v27ed33" path="res://assets/sprites/characters/monkeys/wizard-monkey.png" id="1_c10kj"]
 [ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_xsyrx"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_aqovo"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="3_7lncv"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_x3rfr"]
 
@@ -349,6 +350,7 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_xsyrx")
+banana_boomerang_scene = ExtResource("2_aqovo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8c6rb")
