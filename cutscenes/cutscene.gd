@@ -1,11 +1,4 @@
 extends Node2D
-## A generic, reusable cutscene system with typewriter text effect.
-## Provides several utility functions for easily managing cutscene frames
-## and transitioning to the next scene after the cutscene completes.
-##
-## To use this cutscene system, extend this script and implement the `_ready`
-## function with the proper frame data and initialization. Then, call the
-## `initialize` function with the frame data to start the cutscene.
 
 ## Configuration for the cutscene
 class CutsceneFrame:
@@ -17,7 +10,10 @@ class CutsceneFrame:
 		text = txt
 
 ## Export variables for easy configuration in the editor
-@export var next_scene: PackedScene = null
+@export var transition_scene: PackedScene = null  # Optional Level Transition Scene
+@export var next_level_scene: PackedScene = null  # Target Level Scene
+@export var transition_level_number: int = 1      # Configurable Level Number
+@export var transition_level_title: String = ""   # Configurable Level Title
 @export var auto_advance_delay: float = 2.0
 @export var typing_speed: float = 0.05
 @export var punctuation_pause: float = 0.2
@@ -44,7 +40,6 @@ signal cutscene_completed
 ## Called when the node enters the scene tree.
 func _ready() -> void:
 	_setup_timers()
-
 
 ## Utility to create frames easily
 func create_frame(image: Texture2D, text: String) -> CutsceneFrame:
@@ -122,14 +117,37 @@ func _complete_typing() -> void:
 	label.text = _target_text
 	frame_timer.start(auto_advance_delay)
 
-## Ends the cutscene and transitions to the specified scene
+
+## Ends the cutscene and triggers either a transition or level load
 func _end_cutscene() -> void:
 	_is_cutscene_active = false
 	emit_signal("cutscene_completed")
 
-	if next_scene:
-		var result = get_tree().change_scene_to_packed(next_scene)
-		if result != OK:
-			push_error("Failed to change scene to the next scene")
+	# Trigger level transition if defined
+	if transition_scene:
+		var transition = transition_scene.instantiate()
+		transition.level_number = transition_level_number
+		transition.level_title = transition_level_title
+		transition.next_level_scene = next_level_scene  # Pass next level to the transition
+
+		# Defer the freeing of the current scene
+		call_deferred("_switch_to_transition_scene", transition)
 	else:
-		print_debug("No next scene specified for cutscene")
+		_on_transition_completed()
+
+## Defer switching to the transition scene to avoid freeing locked objects
+func _switch_to_transition_scene(transition):
+	if get_tree().current_scene:
+		get_tree().current_scene.queue_free()  # Use queue_free() for safety
+	get_tree().current_scene = transition
+	get_tree().root.add_child(transition)
+
+
+
+## Load the next gameplay level after the transition (or immediately if no transition)
+func _on_transition_completed():
+	if next_level_scene:
+		get_tree().change_scene_to_packed(next_level_scene)
+	else:
+		push_error("No next level scene specified after cutscene.")
+

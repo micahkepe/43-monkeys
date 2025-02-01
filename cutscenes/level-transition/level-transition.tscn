@@ -6,7 +6,6 @@
 [node name="LevelTransition" type="Node2D"]
 modulate = Color(0.00392157, 0, 0, 0)
 script = ExtResource("1_we6ay")
-level_title = "testing"
 
 [node name="Label" type="Label" parent="."]
 top_level = true
