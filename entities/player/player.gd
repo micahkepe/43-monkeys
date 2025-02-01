@@ -202,33 +202,64 @@ func _physics_process(_delta: float) -> void:
 
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
 ## ellipse
-func add_monkey_to_swarm() -> void:
-	var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
-	var new_monkey = new_monkey_scene.instantiate()
-	new_monkey.scale = Vector2(2.5, 2.5)
+func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
+	var new_monkey: Node2D
 
-	# Add monkey to the swarm root node
-	_swarm_monkeys_root.add_child(new_monkey)
+	# If an existing monkey is provided, use it
+	if existing_monkey:
+		new_monkey = existing_monkey
+		print("Adding existing monkey to swarm!")
 
+		# 🔥 Fix: Preserve global scale before reparenting
+		var original_global_scale = new_monkey.global_scale
+
+		# Remove from old parent safely
+		if new_monkey.get_parent():
+			new_monkey.get_parent().remove_child(new_monkey)
+
+		# Add to swarm
+		_swarm_monkeys_root.add_child(new_monkey)
+
+		# 🔥 Fix: Restore the correct global scale
+		new_monkey.scale = original_global_scale / _swarm_monkeys_root.global_scale
+	else:
+		# Spawn a random monkey if none provided
+		if monkey_scenes.is_empty():
+			print("No monkey scenes available!")
+			return
+
+		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
+		new_monkey = new_monkey_scene.instantiate()
+		new_monkey.scale = Vector2(2.5, 2.5)  # Scale it properly
+		print("Spawning a new monkey for the swarm!")
+
+		# Add monkey to the swarm root node
+		_swarm_monkeys_root.add_child(new_monkey)
+
+	new_monkey.scale = Vector2(2.5,2.5)
+	# Determine the monkey's position in the swarm
 	var count = _swarm_monkeys.size()
-	var new_angle  = 0.0
+	var new_angle = 0.0
 	if count >= 1:
 		new_angle = float(count) / float(count + 1) * TAU
 
+	# Store monkey in swarm list
 	_swarm_monkeys.append({
 		"node": new_monkey,
 		"angle": new_angle
 	})
 
-	print("?")
+	# Recalculate swarm positions
 	var total = float(_swarm_monkeys.size())
 	for i in range(_swarm_monkeys.size()):
-		print("done: ", i)
 		var fraction = float(i) / total
 		_swarm_monkeys[i]["angle"] = fraction * TAU
 
-	## Mark for full recalculation of positions
-	_needs_full_ellipse_recalc = true
+	_needs_full_ellipse_recalc = true  # Mark for recalculation
+
+	print("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
+
+
 
 ## Positions each monkey on the ellipse boundary using their angle, plus
 ## '_swarm_center_offset', plus Player.global_position

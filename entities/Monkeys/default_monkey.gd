@@ -75,7 +75,7 @@ func _ready() -> void:
 	health_bar.init_health(current_health)
 
 	# Set initial animation to "walk_down"
-	_animated_sprite.play("walk_down")
+	#_animated_sprite.play("walk_down")
 
 	# Setup RayCasts for collision avoidance
 	_setup_collision_raycasts()
