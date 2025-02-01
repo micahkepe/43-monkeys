@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5ccssb5kjdpo"]
+
+[ext_resource type="Script" path="res://cutscenes/level-transition/level-transition.gd" id="1_we6ay"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_1b3p5"]
+
+[node name="LevelTransition" type="Node2D"]
+modulate = Color(0.00392157, 0, 0, 0)
+script = ExtResource("1_we6ay")
+level_title = "testing"
+
+[node name="Label" type="Label" parent="."]
+top_level = true
+z_index = 100
+y_sort_enabled = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -50.0
+offset_right = 160.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.737193, 0.737193, 0.737193, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("2_1b3p5")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FadeRect" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+y_sort_enabled = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)
