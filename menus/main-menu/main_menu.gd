@@ -44,7 +44,7 @@ func _ready() -> void:
 func _on_start_button_pressed() -> void:
 	theme_player.stop()
 	select_sfx_player.play()
-	get_tree().change_scene_to_file("res://cutscenes/intro-cutscene/intro_cutscene.tscn")
+	get_tree().change_scene_to_file("res://cutscenes/intro/intro_cutscene.tscn")
 
 
 ## Handle the press event on the settings button. Currently does nothing.
