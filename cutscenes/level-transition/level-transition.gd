@@ -3,22 +3,32 @@ extends Node2D
 @export var level_number: int = 1
 @export var level_title: String = ""
 @export var next_level_scene: PackedScene = null  # Scene to load after transition
-@export var display_duration: float = 2.0
-@export var fade_duration: float = 0.5
+@export var display_duration: float = 2.0         # Time the full text stays visible
+@export var fade_duration: float = 0.5            # Fade in/out duration
+@export var typing_speed: float = 0.05            # Speed of typewriter effect
+@export var punctuation_pause: float = 0.2        # Pause for punctuation marks
 
 # Node references
 @onready var label: Label = get_node("Label")
 @onready var fade_rect: ColorRect = get_node("FadeRect")
+@onready var type_timer: Timer = Timer.new()      # Timer for typewriter effect
 
 signal transition_completed
 
+# Typewriter state variables
+var _target_text: String = ""
+var _current_text: String = ""
+var _char_index: int = 0
+var _is_typing: bool = false
+
 func _ready():
+	# Setup typewriter timer
+	type_timer.one_shot = false
+	type_timer.connect("timeout", _on_type_timer_timeout)
+	add_child(type_timer)
+
 	# Ensure the node is at the top of everything
 	z_index = 100
-
-	# Set text
-	label.text = "Level %d: %s" % [level_number, level_title]
-	label.visible = true
 
 	# Center the label
 	var viewport_size = get_viewport_rect().size
@@ -28,6 +38,10 @@ func _ready():
 
 	# Start fade-in
 	fade_rect.modulate.a = 1.0
+	label.text = ""
+	_target_text = "Level %d: %s" % [level_number, level_title]
+	_is_typing = true
+
 	fade_in()
 
 func fade_in():
@@ -36,7 +50,37 @@ func fade_in():
 	tween.tween_callback(Callable(self, "_on_fade_in_complete"))
 
 func _on_fade_in_complete():
-	# Display the text for a duration, then fade out
+	# Start typewriter effect after fade-in
+	_start_typing()
+
+func _start_typing():
+	_current_text = ""
+	_char_index = 0
+	label.text = ""
+	type_timer.start(typing_speed)
+
+func _on_type_timer_timeout():
+	if _char_index >= _target_text.length():
+		_complete_typing()
+		return
+
+	var next_char = _target_text[_char_index]
+	_current_text += next_char
+	label.text = _current_text
+	_char_index += 1
+
+	# Add extra pause for punctuation
+	if next_char in ['.', '?', '!', ',']:
+		type_timer.start(punctuation_pause)
+	else:
+		type_timer.start(typing_speed)
+
+func _complete_typing():
+	_is_typing = false
+	type_timer.stop()
+	label.text = _target_text
+
+	# Wait before fading out
 	await get_tree().create_timer(display_duration).timeout
 	fade_out()
 

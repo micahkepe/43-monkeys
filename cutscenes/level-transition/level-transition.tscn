@@ -4,8 +4,21 @@
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_1b3p5"]
 
 [node name="LevelTransition" type="Node2D"]
-modulate = Color(0.00392157, 0, 0, 0)
+modulate = Color(1, 1, 1, 0)
 script = ExtResource("1_we6ay")
+
+[node name="FadeRect" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+y_sort_enabled = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="."]
 top_level = true
@@ -32,16 +45,3 @@ theme_override_fonts/font = ExtResource("2_1b3p5")
 theme_override_font_sizes/font_size = 100
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="FadeRect" type="ColorRect" parent="."]
-modulate = Color(0, 0, 0, 1)
-z_index = -1
-y_sort_enabled = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-color = Color(0, 0, 0, 1)
