@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_iok2g"]
 [ext_resource type="Texture2D" uid="uid://dkutugit6rrcq" path="res://assets/sprites/characters/monkeys/santa-monkey.png" id="1_n0oss"]
-[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_q4ies"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_q4ies"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="3_img2p"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="3_m8jw6"]
 

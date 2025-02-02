@@ -1,21 +1,21 @@
 [gd_scene load_steps=17 format=4 uid="uid://8cuycqhvypgw"]
 
-[ext_resource type="Script" path="res://menus/main-menu/main_menu.gd" id="1_lroqc"]
-[ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="2_84a4x"]
-[ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="2_rao6y"]
-[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_rsk68"]
-[ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme/main-menu-theme.ogg" id="4_p6sc7"]
-[ext_resource type="Texture2D" uid="uid://cti8ohty27ds1" path="res://assets/images/game-logo.png" id="4_vlrly"]
-[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="5_11l5k"]
-[ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="5_s0yjt"]
-[ext_resource type="Texture2D" uid="uid://hr1aa7728i3r" path="res://assets/images/monkey-trio.png" id="7_3kvuq"]
+[ext_resource type="Script" path="res://menus/MainMenu/main_menu.gd" id="1_2ke84"]
+[ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="2_cfnyu"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="3_4oq2b"]
+[ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_wfbt0"]
+[ext_resource type="Texture2D" uid="uid://cti8ohty27ds1" path="res://assets/images/game-logo.png" id="5_4b7jm"]
+[ext_resource type="Texture2D" uid="uid://hr1aa7728i3r" path="res://assets/images/monkey-trio.png" id="6_8morn"]
+[ext_resource type="AudioStream" uid="uid://b34jb3r52jqed" path="res://assets/music/main-menu-theme/main-menu-theme.ogg" id="7_7imlk"]
+[ext_resource type="AudioStream" uid="uid://b6eybw1lp0exj" path="res://assets/sfx/menu-navigate.wav" id="8_0vs8k"]
+[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="9_vgldu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_88p3p"]
-atlas = ExtResource("2_84a4x")
+atlas = ExtResource("2_cfnyu")
 region = Rect2(64, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro5db"]
-atlas = ExtResource("2_84a4x")
+atlas = ExtResource("2_cfnyu")
 region = Rect2(96, 96, 32, 32)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7w1jv"]
@@ -25,7 +25,7 @@ region = Rect2(96, 96, 32, 32)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p6trc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1c5jv"]
-texture = ExtResource("5_s0yjt")
+texture = ExtResource("4_wfbt0")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -169,7 +169,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_lroqc")
+script = ExtResource("1_2ke84")
 
 [node name="SocialsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -217,7 +217,7 @@ theme_override_colors/font_focus_color = Color(0.857103, 0.253716, 1.92523e-07, 
 theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = ExtResource("2_rsk68")
+theme_override_fonts/font = ExtResource("3_4oq2b")
 theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7w1jv")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7w1jv")
@@ -241,7 +241,7 @@ theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
 theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = ExtResource("2_rsk68")
+theme_override_fonts/font = ExtResource("3_4oq2b")
 theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_k85yc")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_k85yc")
@@ -266,7 +266,7 @@ theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
 theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
-theme_override_fonts/font = ExtResource("2_rsk68")
+theme_override_fonts/font = ExtResource("3_4oq2b")
 theme_override_font_sizes/font_size = 75
 theme_override_styles/focus = SubResource("StyleBoxEmpty_p6trc")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_p6trc")
@@ -295,7 +295,7 @@ offset_left = 289.0
 offset_top = -147.0
 offset_right = 1045.0
 offset_bottom = 609.0
-texture = ExtResource("4_vlrly")
+texture = ExtResource("5_4b7jm")
 
 [node name="MonkeyTrio" type="TextureRect" parent="."]
 z_index = -1
@@ -311,23 +311,23 @@ offset_right = 231.0
 offset_bottom = 273.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_3kvuq")
+texture = ExtResource("6_8morn")
 expand_mode = 2
 
 [node name="Sound" type="Node" parent="."]
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="Sound"]
-stream = ExtResource("4_p6sc7")
+stream = ExtResource("7_7imlk")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
 
 [node name="NavigateSFXPlayer" type="AudioStreamPlayer" parent="Sound"]
-stream = ExtResource("2_rao6y")
+stream = ExtResource("8_0vs8k")
 bus = &"SFX"
 
 [node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="Sound"]
-stream = ExtResource("5_11l5k")
+stream = ExtResource("9_vgldu")
 bus = &"SFX"
 
 [connection signal="pressed" from="SocialsContainer/ItchIoButton" to="." method="_on_itch_io_button_pressed"]

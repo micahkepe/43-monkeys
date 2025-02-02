@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
-[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="11_in3d4"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="11_in3d4"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="12_44r5b"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/boid_joe.tscn" id="13_yg254"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="15_xoarp"]

@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
-[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/banana-boomerang/banana_boomerang.tscn" id="2_yc2po"]
-[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="3_73h8e"]
-[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/Monkeys/pirate_monkey.tscn" id="4_xwpq6"]
-[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="5_dvwff"]
-[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="6_ghmbx"]
-[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="7_facpj"]
+[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_yc2po"]
+[ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/monkeys/formal_monkey.tscn" id="3_73h8e"]
+[ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/monkeys/pirate_monkey.tscn" id="4_xwpq6"]
+[ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/monkeys/roid_monkey.tscn" id="5_dvwff"]
+[ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/monkeys/santa_monkey.tscn" id="6_ghmbx"]
+[ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/monkeys/wizard_monkey.tscn" id="7_facpj"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="8_vswvm"]
 [ext_resource type="Shader" path="res://entities/player/halo_glow_shader.gdshader" id="9_5qvqw"]
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://assets/sprites/ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
@@ -378,7 +378,7 @@ animation = &"walk_down"
 z_index = -1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_ntnfs")
-position = Vector2(-158, -62)
+position = Vector2(-70, -5)
 scale = Vector2(154.279, 100.459)
 texture = SubResource("CanvasTexture_ebpfv")
 polygon = PackedVector2Array(-33, -14, -33, 15, 38, 15, 38, -14)

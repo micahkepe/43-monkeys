@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dl0decauitbts"]
 
-[ext_resource type="Script" path="res://cutscenes/intro/intro_cutscene.gd" id="1_lxcfy"]
+[ext_resource type="Script" path="res://cutscenes/Intro/intro_cutscene.gd" id="1_lxcfy"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_j7cev"]
-[ext_resource type="PackedScene" uid="uid://b5ccssb5kjdpo" path="res://cutscenes/level-transition/level-transition.tscn" id="2_ntrmn"]
+[ext_resource type="PackedScene" uid="uid://b5ccssb5kjdpo" path="res://cutscenes/LevelTransition/level_transition.tscn" id="2_ntrmn"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="3_eq8yl"]
-[ext_resource type="PackedScene" uid="uid://cscspmt2tgh5x" path="res://levels/level-3/level-3.tscn" id="3_fxv6q"]
-[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/pause-menu/pause-menu.tscn" id="4_dpys7"]
+[ext_resource type="PackedScene" uid="uid://cscspmt2tgh5x" path="res://levels/Level3/level_3.tscn" id="3_fxv6q"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="4_dpys7"]
 
 [node name="IntroCutscene" type="Node2D"]
 script = ExtResource("1_lxcfy")

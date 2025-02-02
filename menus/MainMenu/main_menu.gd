@@ -16,7 +16,7 @@ extends Control
 ## The background music player for the theme
 @onready var theme_player: AudioStreamPlayer = get_node("Sound/BackgroundMusic")
 
-const SettingsScene = preload("res://menus/settings-menu/settings-menu.tscn")
+const SettingsScene = preload("res://menus/SettingsMenu/settings_menu.tscn")
 @onready var settings_menu = $SettingsMenu
 
 ## ItchIo social icon button
@@ -44,7 +44,7 @@ func _ready() -> void:
 func _on_start_button_pressed() -> void:
 	theme_player.stop()
 	select_sfx_player.play()
-	get_tree().change_scene_to_file("res://cutscenes/intro/intro_cutscene.tscn")
+	get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
 
 
 ## Handle the press event on the settings button. Currently does nothing.

@@ -19,14 +19,14 @@ var velocity: Vector2 = Vector2.ZERO
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print("taser spawned at:", global_position)
-	
+
 	# Play an animation if available
 	if $AnimationPlayer.has_animation("taser_spin"):
 		$AnimationPlayer.play("taser_spin")
-	
+
 	# Connect the body_entered signal
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
-	
+
 	# Schedule projectile destruction after its lifetime expires
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()

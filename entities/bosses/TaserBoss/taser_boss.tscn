@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://blunq804f35ls" path="res://assets/sprites/characters/bosses/taser_boss.png" id="1_2lrr3"]
 [ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="1_lx14d"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="2_flp2v"]
-[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/taser-projectile/taser_projectile.tscn" id="2_qjvf0"]
+[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/TaserProjectile/taser_projectile.tscn" id="2_qjvf0"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="3_t76re"]
 [ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="4_p5cmy"]
 

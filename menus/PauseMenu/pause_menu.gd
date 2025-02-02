@@ -13,11 +13,11 @@ extends Control
 @onready var navigate_sfx_player: AudioStreamPlayer = get_node("Sound/NavigateSFXPlayer")
 
 ## The setting scene loaded from the settings-menu.tscn file.
-const SettingsScene = preload("res://menus/settings-menu/settings-menu.tscn")
+const SettingsScene = preload("res://menus/SettingsMenu/settings_menu.tscn")
 @onready var settings_menu = $SettingsMenu
 
 # Paths to scenes (update these with the actual paths in your project)
-const MAIN_MENU_SCENE = "res://menus/main-menu/main-menu.tscn"
+const MAIN_MENU_SCENE = "res://menus/MainMenu/main_menu.tscn"
 
 ## If the pause menu is visible
 var _pause_menu_visible: bool = false
