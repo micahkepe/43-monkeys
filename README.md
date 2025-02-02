@@ -25,11 +25,11 @@ Game Design at Rice University.
 - [ ] Troop and enemy boid field of vision attack triggers
 - [ ] More curated levels
 - [ ] Create shaders
-- [ ] Monkey counter
+- [X] Monkey counter
 - [ ] FIX: More contrast in menu screens
 - [ ] Better art
-  - [ ] Explore [PixelLab](https://www.pixellab.ai/)
-  - [ ] Death animations
+  - [X] Explore [PixelLab](https://www.pixellab.ai/)
+  - [X] Death animations
   - [ ] Redo/enhance intro cutscene frames
 - [ ] FIX: volume sliders should not be initialized to 0 in settings screen
 
