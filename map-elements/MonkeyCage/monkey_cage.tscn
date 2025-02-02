@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://c1cqahrbs025d"]
 
-[ext_resource type="Script" path="res://map_elements/MonkeyCage/monkey_cage.gd" id="2_12jvl"]
+[ext_resource type="Script" path="res://map-elements/MonkeyCage/monkey_cage.gd" id="2_12jvl"]
 [ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="2_h65kn"]
 [ext_resource type="Texture2D" uid="uid://b6m03oxii7im3" path="res://assets/sprites/tilesets/cage.png" id="2_ocib3"]
 [ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/Monkeys/pirate_monkey.tscn" id="3_0ii12"]
