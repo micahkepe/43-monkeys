@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=63 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://assets/sprites/ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
 [ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/hitHurt.wav" id="11_mqlhb"]
 [ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/banana_throw.wav" id="12_o6mwb"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
+[ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_spox5"]
 atlas = ExtResource("8_vswvm")
@@ -376,7 +378,7 @@ animation = &"walk_down"
 z_index = -1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_ntnfs")
-position = Vector2(-70, -10.0001)
+position = Vector2(-158, -62)
 scale = Vector2(154.279, 100.459)
 texture = SubResource("CanvasTexture_ebpfv")
 polygon = PackedVector2Array(-33, -14, -33, 15, 38, 15, 38, -14)
@@ -386,7 +388,35 @@ y_sort_enabled = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="MonkeyIcon" type="Sprite2D" parent="UI"]
+position = Vector2(1197, 59)
+scale = Vector2(0.859375, 1)
+texture = ExtResource("14_sepjg")
+
 [node name="HeartsContainer" parent="UI" instance=ExtResource("10_l0e3e")]
+offset_left = 62.0
+offset_top = 65.0
+offset_right = 62.0
+offset_bottom = 65.0
+
+[node name="MonkeyCounter" type="Label" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1017.0
+offset_top = 21.0
+offset_right = -125.0
+offset_bottom = -617.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("13_na4qj")
+theme_override_font_sizes/font_size = 80
+text = "1/43"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

@@ -100,6 +100,10 @@ var damage_cooldown: float = 1.0  # Time between damage ticks
 var current_cooldown: float = 0.0
 @onready var hearts_container = $UI/HeartsContainer
 
+# Monkey counter for number of monkeys in group, including the main monkey.
+@onready var monkey_counter_label: Label = $UI/MonkeyCounter
+signal monkey_count_changed(new_count: int)
+
 # -----------------------------------------------------------------
 
 ## Called when the node enters the scene tree for the first time.
@@ -121,6 +125,15 @@ func _ready() -> void:
 
 	current_health = max_health
 	update_hearts_display()
+	monkey_count_changed.connect(_update_monkey_counter)
+	
+	# Initialize the counter
+	_update_monkey_counter(_swarm_monkeys.size())
+
+# update the monkey group number
+func _update_monkey_counter(count: int) -> void:
+	if monkey_counter_label:
+		monkey_counter_label.text = "%d/43" % (count + 1)
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
@@ -256,7 +269,7 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		_swarm_monkeys[i]["angle"] = fraction * TAU
 
 	_needs_full_ellipse_recalc = true  # Mark for recalculation
-
+	monkey_count_changed.emit(_swarm_monkeys.size())
 	print("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
 
 
@@ -615,4 +628,5 @@ func remove_monkey(monkey: Node) -> void:
 
 	# Recalculate swarm positions to redistribute the monkeys
 	_needs_full_ellipse_recalc = true
+	monkey_count_changed.emit(_swarm_monkeys.size())
 	print("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())
