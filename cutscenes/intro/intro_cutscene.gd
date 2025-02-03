@@ -1,5 +1,6 @@
 extends "res://cutscenes/cutscene.gd"
 
+## Called when the node enters the scene tree.
 func _ready():
 	super._ready()
 
@@ -14,4 +15,3 @@ func _ready():
 	]
 
 	initialize(frame_data)
-
