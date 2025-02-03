@@ -15,8 +15,9 @@ class CutsceneFrame:
 @export var transition_level_number: int = 1      # Configurable Level Number
 @export var transition_level_title: String = ""   # Configurable Level Title
 @export var auto_advance_delay: float = 2.0
-@export var typing_speed: float = 0.05
-@export var punctuation_pause: float = 0.2
+@export var typing_speed: float = 0.05            # Base typing speed
+@export var punctuation_pause: float = 0.2        # Additional pause for punctuation
+@export var typing_variation: float = 0.02        # New: Variation in typing speed
 
 ## Current state variables
 var _frames: Array[CutsceneFrame] = []
@@ -31,6 +32,7 @@ var _can_advance: bool = false
 # Node references
 @onready var background: Sprite2D = get_node("Background")
 @onready var label: Label = get_node("Label")
+@onready var keystroke_player: AudioStreamPlayer = get_node("KeyStrokePlayer")
 @onready var type_timer: Timer = Timer.new()
 @onready var frame_timer: Timer = Timer.new()
 
@@ -89,7 +91,7 @@ func _start_typing(text: String) -> void:
 	_current_text = ""
 	_char_index = 0
 	label.text = ""
-	type_timer.start(typing_speed)
+	type_timer.start(_get_random_typing_speed())
 
 ## Timer callback for the typewriter effect
 func _on_type_timer_timeout() -> void:
@@ -100,9 +102,16 @@ func _on_type_timer_timeout() -> void:
 	var next_char = _target_text[_char_index]
 	_current_text += next_char
 	label.text = _current_text
+	keystroke_player.play()
 	_char_index += 1
 
-	type_timer.start(punctuation_pause if next_char in ['.', '?', '!', ','] else typing_speed)
+	# Determine delay for next character
+	var delay = punctuation_pause if next_char in ['.', '?', '!', ','] else _get_random_typing_speed()
+	type_timer.start(delay)
+
+## Generates a random typing speed to simulate natural typing
+func _get_random_typing_speed() -> float:
+	return typing_speed + randf_range(-typing_variation, typing_variation)
 
 ## Timer callback for the frame transfer
 func _on_frame_timer_timeout() -> void:
@@ -116,7 +125,6 @@ func _complete_typing() -> void:
 	type_timer.stop()
 	label.text = _target_text
 	frame_timer.start(auto_advance_delay)
-
 
 ## Ends the cutscene and triggers either a transition or level load
 func _end_cutscene() -> void:
@@ -141,8 +149,6 @@ func _switch_to_transition_scene(transition):
 		get_tree().current_scene.queue_free()  # Use queue_free() for safety
 	get_tree().current_scene = transition
 	get_tree().root.add_child(transition)
-
-
 
 ## Load the next gameplay level after the transition (or immediately if no transition)
 func _on_transition_completed():

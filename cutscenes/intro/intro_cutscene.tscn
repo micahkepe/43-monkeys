@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dl0decauitbts"]
+[gd_scene load_steps=13 format=3 uid="uid://dl0decauitbts"]
 
 [ext_resource type="Script" path="res://cutscenes/Intro/intro_cutscene.gd" id="1_lxcfy"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_j7cev"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="4_dpys7"]
 [ext_resource type="Shader" path="res://shaders/vhs_post_processing.gdshader" id="7_i3u8b"]
 [ext_resource type="Texture2D" uid="uid://dt5ejgeb1v134" path="res://assets/sprites/textures/godot-logo.png" id="8_7ey3k"]
+[ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/type.wav" id="9_v8s4g"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vlkf1"]
 frequency = 0.4015
@@ -38,6 +39,7 @@ transition_scene = ExtResource("2_ntrmn")
 next_level_scene = ExtResource("3_fxv6q")
 transition_level_number = 3
 transition_level_title = "The Unknown Depths"
+typing_speed = 0.07
 
 [node name="Background" type="Sprite2D" parent="."]
 
@@ -82,5 +84,10 @@ material = SubResource("ShaderMaterial_eo37s")
 position = Vector2(-1, -6.00002)
 scale = Vector2(2.684, 2.776)
 texture = ExtResource("8_7ey3k")
+
+[node name="KeyStrokePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_v8s4g")
+volume_db = -30.0
+bus = &"SFX"
 
 [connection signal="cutscene_completed" from="." to="." method="_on_cutscene_completed"]
