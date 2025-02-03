@@ -8,11 +8,15 @@
 
   1. Place a node of a control type (i.e. TextureRect/Button);
   2. Create a ColorRect child;
-  3. In the Inspector under CanvasItem panel apply the material and select Highlight shader;
-  4. If needed change Clip Children property of the parent node to Clip+Draw (Inspector -> CanvasItem -> Visibility -> Clip Children);
-  5. If experience the change of parent node’s color change the blending mode of either the highlight shader (line 2 of shader code) or the parent node’s material, pick a combination that works for you.
-
+  3. In the Inspector under CanvasItem panel apply the material and select
+     Highlight shader;
+  4. If needed change Clip Children property of the parent node to Clip+Draw
+     (Inspector -> CanvasItem -> Visibility -> Clip Children);
+  5. If experience the change of parent node’s color change the blending mode
+     of either the highlight shader (line 2 of shader code) or the parent
+     node’s material, pick a combination that works for you.
 */
+
 shader_type canvas_item;
 render_mode blend_premul_alpha;
 

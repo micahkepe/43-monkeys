@@ -5,12 +5,10 @@
     https://godotshaders.com/shader/vhs/
 
   Instructions:
-
     1- Create a CanvasLayer node
-
     2- Add a ColorRect to the CanvasLayer node
-
-    3- Click on the ColorRect -> Material -> New ShaderMaterial -> Shader -> Create New Shader -> Paste the code below
+    3- Click on the ColorRect -> Material -> New ShaderMaterial -> Shader ->
+       Create New Shader -> Paste the code below
 */
 shader_type canvas_item;
 

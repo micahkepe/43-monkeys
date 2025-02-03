@@ -1,6 +1,6 @@
 /*
 	Glitch Effect Shader by Yui Kinomoto @arlez80
-  https://godotshaders.com/shader/glitch-effect-shader-for-godot-engine-4/
+    https://godotshaders.com/shader/glitch-effect-shader-for-godot-engine-4/
 
 	MIT License
 */
