@@ -1,6 +1,6 @@
 [gd_scene load_steps=40 format=4 uid="uid://by1ydwv3oxie0"]
 
-[ext_resource type="Texture2D" uid="uid://b2r77g38aossh" path="res://assets/sprites/ui/SettingsTitle.png" id="1_8gg7j"]
+[ext_resource type="Texture2D" uid="uid://tl62orjqje7v" path="res://assets/sprites/ui/SettingsTitle.png" id="1_8gg7j"]
 [ext_resource type="Script" path="res://menus/SettingsMenu/settings_menu.gd" id="1_f2gom"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="2_o4el6"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="3_a5leq"]
@@ -401,22 +401,24 @@ tile_set = SubResource("TileSet_cftpx")
 
 [node name="MoveLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 350.0
-offset_top = 181.0
-offset_right = 470.0
-offset_bottom = 256.0
+offset_left = 280.0
+offset_top = 157.0
+offset_right = 400.0
+offset_bottom = 232.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
 theme_override_font_sizes/font_size = 75
 text = "Move"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
-offset_left = -223.0
-offset_top = 6.0
-offset_right = -191.0
-offset_bottom = 38.0
+offset_left = -222.0
+offset_top = 28.0
+offset_right = -190.0
+offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_g8bt5")
 texture_pressed = SubResource("AtlasTexture_uxxkl")
@@ -425,9 +427,9 @@ stretch_mode = 0
 [node name="WKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
 offset_left = -154.0
-offset_top = -62.0
+offset_top = -41.0
 offset_right = -122.0
-offset_bottom = -30.0
+offset_bottom = -9.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_d2hsc")
 texture_pressed = SubResource("AtlasTexture_6hqai")
@@ -436,9 +438,9 @@ stretch_mode = 0
 [node name="SKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
 offset_left = -154.0
-offset_top = 6.0
+offset_top = 28.0
 offset_right = -122.0
-offset_bottom = 38.0
+offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_bugj3")
 texture_pressed = SubResource("AtlasTexture_j3nq6")
@@ -447,9 +449,9 @@ stretch_mode = 0
 [node name="DKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
 offset_left = -83.0
-offset_top = 6.0
+offset_top = 28.0
 offset_right = -51.0
-offset_bottom = 38.0
+offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_ppmt5")
 texture_pressed = SubResource("AtlasTexture_4h0tq")
@@ -493,10 +495,11 @@ autoplay = true
 bus = &"Music"
 
 [node name="ShootLabel" type="Label" parent="."]
-offset_left = 287.0
-offset_top = 341.0
-offset_right = 437.0
-offset_bottom = 416.0
+layout_mode = 0
+offset_left = 280.0
+offset_top = 317.0
+offset_right = 430.0
+offset_bottom = 392.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
@@ -505,10 +508,10 @@ text = "Shoot"
 
 [node name="JKeyButton" type="TextureButton" parent="ShootLabel"]
 layout_mode = 0
-offset_left = -223.0
-offset_top = 6.0
-offset_right = -191.0
-offset_bottom = 38.0
+offset_left = -224.0
+offset_top = 30.0
+offset_right = -192.0
+offset_bottom = 62.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -528,9 +531,9 @@ text = "J"
 [node name="KKeyButton" type="TextureButton" parent="ShootLabel"]
 layout_mode = 0
 offset_left = -154.0
-offset_top = 6.0
+offset_top = 28.0
 offset_right = -122.0
-offset_bottom = 38.0
+offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_wwqhy")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -538,10 +541,10 @@ stretch_mode = 0
 
 [node name="Label" type="Label" parent="ShootLabel/KKeyButton"]
 layout_mode = 0
-offset_left = 10.2659
-offset_top = 1.46656
-offset_right = 50.2659
-offset_bottom = 30.4666
+offset_left = 10.7548
+offset_top = 0.977704
+offset_right = 50.7548
+offset_bottom = 32.9777
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_c1yfi")
 theme_override_font_sizes/font_size = 28
@@ -550,9 +553,9 @@ text = "K"
 [node name="LKeyButton" type="TextureButton" parent="ShootLabel"]
 layout_mode = 0
 offset_left = -83.0
-offset_top = 6.0
+offset_top = 30.0
 offset_right = -51.0
-offset_bottom = 38.0
+offset_bottom = 62.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_atbsr")
 texture_pressed = SubResource("AtlasTexture_oxoxq")
@@ -570,10 +573,11 @@ theme_override_font_sizes/font_size = 28
 text = "L"
 
 [node name="IKeyButton" type="TextureButton" parent="ShootLabel"]
+layout_mode = 0
 offset_left = -154.0
-offset_top = -62.0
+offset_top = -41.0
 offset_right = -122.0
-offset_bottom = -30.0
+offset_bottom = -9.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -591,10 +595,11 @@ theme_override_font_sizes/font_size = 28
 text = "I"
 
 [node name="SwarmPosLabel" type="Label" parent="."]
-offset_left = 814.0
-offset_top = 191.0
-offset_right = 1150.0
-offset_bottom = 266.0
+layout_mode = 0
+offset_left = 843.0
+offset_top = 149.0
+offset_right = 1179.0
+offset_bottom = 224.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
@@ -604,9 +609,9 @@ text = "Swarm Position"
 [node name="HKeyButton" type="TextureButton" parent="SwarmPosLabel"]
 layout_mode = 0
 offset_left = -146.0
-offset_top = -2.0
+offset_top = 36.0
 offset_right = -114.0
-offset_bottom = 30.0
+offset_bottom = 68.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -626,9 +631,9 @@ text = "H"
 [node name=";KeyButton" type="TextureButton" parent="SwarmPosLabel"]
 layout_mode = 0
 offset_left = -77.0
-offset_top = -2.0
+offset_top = 35.0
 offset_right = -45.0
-offset_bottom = 30.0
+offset_bottom = 67.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_wwqhy")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -646,10 +651,11 @@ theme_override_font_sizes/font_size = 23
 text = ";"
 
 [node name="UKeyButton" type="TextureButton" parent="SwarmPosLabel"]
+layout_mode = 0
 offset_left = -146.0
-offset_top = -71.0
+offset_top = -32.0
 offset_right = -114.0
-offset_bottom = -39.0
+offset_bottom = -1.14441e-05
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -667,10 +673,10 @@ theme_override_font_sizes/font_size = 28
 text = "U"
 
 [node name="OKeyButton" type="TextureButton" parent="SwarmPosLabel"]
-offset_left = -77.0
-offset_top = -71.0
-offset_right = -45.0
-offset_bottom = -39.0
+layout_mode = 0
+offset_left = -76.0
+offset_top = -32.0
+offset_right = -44.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_wwqhy")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -688,6 +694,7 @@ theme_override_font_sizes/font_size = 28
 text = "O"
 
 [node name="RotateSwarmLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 144.0
 offset_top = 451.0
 offset_right = 480.0
@@ -721,6 +728,7 @@ theme_override_font_sizes/font_size = 28
 text = "X"
 
 [node name="LockSwarmLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 619.0
 offset_top = 449.0
 offset_right = 955.0
@@ -754,10 +762,11 @@ theme_override_font_sizes/font_size = 23
 text = "Space"
 
 [node name="SwarmAreaLabel" type="Label" parent="."]
-offset_left = 971.0
-offset_top = 347.0
-offset_right = 1271.0
-offset_bottom = 422.0
+layout_mode = 0
+offset_left = 966.0
+offset_top = 318.0
+offset_right = 1266.0
+offset_bottom = 393.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
@@ -767,9 +776,9 @@ text = "Swarm Area"
 [node name="JKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
 layout_mode = 0
 offset_left = -220.0
-offset_top = -1.0
+offset_top = 31.0
 offset_right = -188.0
-offset_bottom = 31.0
+offset_bottom = 63.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -789,9 +798,9 @@ text = "J"
 [node name="KKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
 layout_mode = 0
 offset_left = -151.0
-offset_top = -1.0
+offset_top = 32.0
 offset_right = -119.0
-offset_bottom = 31.0
+offset_bottom = 64.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_wwqhy")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -811,9 +820,9 @@ text = "K"
 [node name="LKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
 layout_mode = 0
 offset_left = -80.0
-offset_top = -1.0
+offset_top = 32.0
 offset_right = -48.0
-offset_bottom = 31.0
+offset_bottom = 64.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_atbsr")
 texture_pressed = SubResource("AtlasTexture_oxoxq")
@@ -831,10 +840,11 @@ theme_override_font_sizes/font_size = 28
 text = "L"
 
 [node name="ShiftKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+layout_mode = 0
 offset_left = -412.0
-offset_top = -1.00002
+offset_top = 7.00001
 offset_right = -348.0
-offset_bottom = 31.0
+offset_bottom = 39.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_x3s4t")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -853,10 +863,10 @@ text = "Shift"
 
 [node name="Label" type="Label" parent="SwarmAreaLabel"]
 layout_mode = 0
-offset_left = -267.0
-offset_top = -9.0
-offset_right = -227.0
-offset_bottom = 71.0
+offset_left = -264.0
+offset_top = -2.0
+offset_right = -224.0
+offset_bottom = 78.0
 theme_override_colors/font_color = Color(0.788235, 0.623529, 0.486275, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
@@ -864,10 +874,11 @@ theme_override_font_sizes/font_size = 80
 text = "+"
 
 [node name="IKeyButton" type="TextureButton" parent="SwarmAreaLabel"]
+layout_mode = 0
 offset_left = -151.0
-offset_top = -69.0
+offset_top = -35.0
 offset_right = -119.0
-offset_bottom = -37.0
+offset_bottom = -3.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -912,6 +923,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_tkqnf")
 text = "Back"
 
 [node name="ResetSwarmLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = 990.0
 offset_top = 451.0
 offset_right = 1326.0
