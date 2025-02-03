@@ -597,7 +597,7 @@ func _die() -> void:
 	# a death animation or something first before switching
 
 	# switch to Die screen
-	get_tree().change_scene_to_file("res://menus/died-menu/died-menu.tscn")
+	get_tree().change_scene_to_file("res://menus/DiedMenuenu/died_menu.tscn")
 
 
 ## Take damage for the player.
