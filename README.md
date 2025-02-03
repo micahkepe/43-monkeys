@@ -24,12 +24,12 @@ Game Design at Rice University.
 - [x] Momemntarily change color to red shade on hit
 - [ ] Troop and enemy boid field of vision attack triggers
 - [ ] More curated levels
-- [ ] Create shaders
-- [X] Monkey counter
-- [ ] FIX: More contrast in menu screens
+- [x] Create shaders
+- [x] Monkey counter
+- [x] FIX: More contrast in menu screens
 - [ ] Better art
-  - [X] Explore [PixelLab](https://www.pixellab.ai/)
-  - [X] Death animations
+  - [x] Explore [PixelLab](https://www.pixellab.ai/)
+  - [x] Death animations
   - [ ] Redo/enhance intro cutscene frames
 - [ ] FIX: volume sliders should not be initialized to 0 in settings screen
 
