@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/TaserProjectile/taser_projectile.tscn" id="2_qjvf0"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="3_t76re"]
 [ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="4_p5cmy"]
-[ext_resource type="Texture2D" uid="uid://b45w4nj55rqoa" path="res://assets/sprites/characters/bosses/chemist.png" id="6_knd7w"]
+[ext_resource type="Texture2D" uid="uid://mimnl2g76xwc" path="res://assets/sprites/characters/bosses/chemist.png" id="6_knd7w"]
 
 [sub_resource type="GDScript" id="GDScript_kf6yr"]
 script/source = "extends CharacterBody2D
@@ -1416,8 +1416,7 @@ shape = SubResource("CircleShape2D_0s22d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"idle_up"
-frame_progress = 0.118055
+animation = &"walk_left"
 
 [node name="HealthBar" parent="." instance=ExtResource("2_flp2v")]
 offset_left = -22.0
