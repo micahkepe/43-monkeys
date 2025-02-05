@@ -354,7 +354,9 @@ banana_boomerang_scene = ExtResource("2_t2inc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nh1ph")
-animation = &"walk_down"
+animation = &"die"
+frame = 7
+frame_progress = 1.0
 
 [node name="HealthBar" parent="." instance=ExtResource("3_1ny1a")]
 offset_left = -16.0

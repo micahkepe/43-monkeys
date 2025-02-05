@@ -1,5 +1,5 @@
 extends CharacterBody2D
-## Represents a 2D boid character that is part of a larger flock.
+## Represents a 2D NPC enemy boid character that is part of a larger flock.
 ##
 ## Boids are autonomous agents that exhibit flocking behavior, such as alignment,
 ## cohesion, and separation. This script defines the behavior of a single boid
@@ -7,6 +7,9 @@ extends CharacterBody2D
 ## character, enemy, or NPC. In addition to the basic separation, alignment, and
 ## cohesion, this script also includes wall avoidance behavior and a minimum
 ## speed to keep the boids in constant motion.
+##
+## Reference:
+##		https://en.wikipedia.org/wiki/Boids
 
 ## The maximum speed of the boid.
 @export var max_speed: float = 200.0
@@ -41,6 +44,9 @@ extends CharacterBody2D
 ## The minimum speed of the boid.
 @export var minimum_speed: float = 50.0
 
+## The number of hits required to kill the boid.
+@export var hits_to_kill: int = 2
+
 ## The animated sprite node for the boid.
 @onready var _anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -60,14 +66,21 @@ extends CharacterBody2D
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
 func _ready() -> void:
+	# set default animation to "walk_down"
+	_anim_sprite.play("walk_down")
+
 	# Set up raycasts
-		for ray in [_ray_right, _ray_left, _ray_up, _ray_down]:
-			ray.target_position = ray.target_position.normalized() * raycast_length
-			ray.enabled = true
+	for ray in [_ray_right, _ray_left, _ray_up, _ray_down]:
+		ray.target_position = ray.target_position.normalized() * raycast_length
+		ray.enabled = true
 
-		# Set initial velocity
-		velocity = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * max_speed
+	# Set initial velocity
+	velocity = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * max_speed
 
+	# Connect the animation finished signal to the handler
+	_anim_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
+
+	$HitBox.connect("area_entered", Callable(self, "_on_hit_box_area_entered"))
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
@@ -229,3 +242,59 @@ func _compute_cohesion(neighbors: Array) -> Vector2:
 		steer = steer.normalized() * max_force
 
 	return steer
+
+## Handles the boid taking damage. If the boid has no more hits left, it will
+## call the `_die()` function to handle its death.` You can specify the amount
+## of damage to take.
+## @param amount: float - The amount of damage to take.
+func take_damage(amount: float) -> void:
+	# decrement the number of hits required to kill the boid
+	print_debug("Boid taking damage:", amount, " | Hits left:", hits_to_kill)
+
+	if hits_to_kill > 0:
+		if amount > 1:
+			hits_to_kill -= int(amount)
+		else:
+			hits_to_kill -= 1
+
+		print_debug("Hits to kill: ", hits_to_kill)
+
+		# kill off the boid if it has no more hits left
+		if hits_to_kill == 0:
+			_die()
+
+		# momentarily recolor the monkey to indicate damage
+		_anim_sprite.modulate = Color(1, 0.5, 0.5, 1)
+		await get_tree().create_timer(0.5).timeout
+		_anim_sprite.modulate = Color(1, 1, 1, 1)
+
+## Handles the boid's death.
+func _die():
+	print_debug("In _die()")
+
+	## Disable physics and processing
+	set_physics_process(false)
+	set_process(false)
+	collision_layer = 0
+	collision_mask = 0
+
+	print_debug("Boid died", self)
+	_anim_sprite.play("die")
+	# NOTE: The boid will be removed from the scene tree when the animation
+	## finishes
+
+## Handles the boid being hit by a projectile.
+## @param area: Area2D - The area that entered the hit box.
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	print_debug("Boid hit by: ", area)
+
+	if area.is_in_group("projectiles"):
+		take_damage(1.0)
+		area.queue_free()
+
+
+## Handles the animation finished signal for the boid.
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if _anim_sprite.animation == "die":
+		_anim_sprite.stop()
+		queue_free()

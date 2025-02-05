@@ -24,7 +24,11 @@ extends CharacterBody2D
 
 ## The base speed at which the player moves
 @export
-var speed: float = 300
+var speed: float = 450.0
+
+## The player's current health
+@export
+var health: int = 100
 
 ## The multiplier applied to speed when sprinting
 @export
@@ -49,10 +53,9 @@ var banana_boomerang_scene: PackedScene
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
 
-## The initial amount of monkeys in the troop. FOR DEBUGGING PURPOSES ONLY
-## The troop will need be collected and have continuity between levels.
+## The initial amount of monkeys in the troop
 @export
-var initial_troop_amount: int = 0
+var initial_troop_amount: int = 10
 
 ## The scale of the troop ellipse along the x-axis
 @export
@@ -91,18 +94,9 @@ const WORLD_UP = Vector2(0, -1)
 const WORLD_RIGHT = Vector2(1, 0)
 
 ## Health variables.
-
-## The player's maximum health. Units are in half-hearts.
-@export
-var max_health: float = 6.0
-
-## The player's current health.
+var max_health: float = 6.0  # 6 half-hearts = 3 full hearts
 var current_health: float = 6.0
-
-## The player's damage cooldown period (in seconds)
-var damage_cooldown: float = 1.0
-
-## The player's current damage cooldown period.
+var damage_cooldown: float = 1.0  # Time between damage ticks
 var current_cooldown: float = 0.0
 @onready var hearts_container = $UI/HeartsContainer
 
@@ -126,13 +120,13 @@ func _ready() -> void:
 	_update_swarm_positions()
 
 	if !hearts_container:
-		print_debug("Hearts container not found!")
+		print("Hearts container not found!")
 		return
 
 	current_health = max_health
 	update_hearts_display()
 	monkey_count_changed.connect(_update_monkey_counter)
-
+	
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
 
@@ -224,62 +218,61 @@ func _physics_process(_delta: float) -> void:
 func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 	var new_monkey: Node2D
 
-	# If an existing monkey is provided, use it
 	if existing_monkey:
+		var curr_global_pos = existing_monkey.global_position
+		print("first global pos:", curr_global_pos)
 		new_monkey = existing_monkey
 		print("Adding existing monkey to swarm!")
 
-		var original_global_scale = new_monkey.global_scale
-
-		# Remove from old parent safely
+		# Remove from the old parent safely.
 		if new_monkey.get_parent():
 			new_monkey.get_parent().remove_child(new_monkey)
 
-		# Add to swarm
+		# Add to the swarm root.
 		_swarm_monkeys_root.add_child(new_monkey)
 
-		# Set the scale of the monkey to match the global scale of the swarm
-		new_monkey.scale = original_global_scale / _swarm_monkeys_root.global_scale
+		# Reapply the stored global transform to preserve its world position.
+		new_monkey.global_position = curr_global_pos
 	else:
-
-		## FIX: troop monkeys need to have continuity between scenes, can't just
-		## spawn new ones each time
-
-		# Spawn a random monkey if none provided
 		if monkey_scenes.is_empty():
 			print("No monkey scenes available!")
 			return
 
 		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
 		new_monkey = new_monkey_scene.instantiate()
-		new_monkey.scale = Vector2(2.5, 2.5)  # Scale it properly
+		new_monkey.scale = Vector2(2.5, 2.5)
 		print("Spawning a new monkey for the swarm!")
-
-		# Add monkey to the swarm root node
 		_swarm_monkeys_root.add_child(new_monkey)
+		# new_monkey will be positioned based on its scene settings.
 
-	new_monkey.scale = Vector2(2.5,2.5)
-	# Determine the monkey's position in the swarm
+	new_monkey.scale = Vector2(2.5, 2.5)
+
+	# Determine a new angle for the monkey in the swarm.
 	var count = _swarm_monkeys.size()
 	var new_angle = 0.0
 	if count >= 1:
 		new_angle = float(count) / float(count + 1) * TAU
 
-	# Store monkey in swarm list
+	# Add the monkey along with a transitioning flag so it will walk to its target.
 	_swarm_monkeys.append({
 		"node": new_monkey,
-		"angle": new_angle
+		"angle": new_angle,
+		"transitioning": true  # This flag can be used to control movement speed.
 	})
 
-	# Recalculate swarm positions
+	# Recalculate angles for an even distribution.
 	var total = float(_swarm_monkeys.size())
 	for i in range(_swarm_monkeys.size()):
 		var fraction = float(i) / total
 		_swarm_monkeys[i]["angle"] = fraction * TAU
 
-	_needs_full_ellipse_recalc = true  # Mark for recalculation
+	print("end global pos:", new_monkey.global_position)
+	_needs_full_ellipse_recalc = true  # Flag to update positions on the ellipse.
 	monkey_count_changed.emit(_swarm_monkeys.size())
 	print("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
+
+
+
 
 
 ## Positions each monkey on the ellipse boundary using their angle, plus
@@ -293,24 +286,55 @@ func _update_swarm_positions() -> void:
 		var angle = entry["angle"]
 		var monkey = entry["node"]
 
-		# Calculate target position
+		# Calculate target position on the ellipse:
 		var x_component = Vector2(1, 0).rotated(_swarm_rotation) * ellipse_width_scale * cos(angle)
 		var y_component = Vector2(0, 1).rotated(_swarm_rotation) * ellipse_height_scale * sin(angle)
 		var target_position = _swarm_world_center + x_component + y_component
 
-		# Calculate the difference to the target position
+		# Calculate how far the monkey is from its target:
 		var to_target = target_position - monkey.global_position
+		var move_direction = to_target.normalized()
 
-		# Add a threshold to avoid unnecessary movement
-		if to_target.length() < 5.0:  # Threshold distance, adjust as necessary
-			monkey.velocity = Vector2.ZERO  # Still set velocity to zero
+		# If the monkey is close enough, stop its movement:
+		if to_target.length() < 5.0:
+			monkey.velocity = Vector2.ZERO
+			# Remove the transitioning flag if present
+			if entry.has("transitioning"):
+				entry["transitioning"] = false
 		else:
-			# Calculate velocity towards the target
-			var direction = to_target.normalized()
-			monkey.velocity = direction * speed  # Adjust `speed` as necessary
+			# Use a slower speed if the monkey is transitioning
+			var move_speed = speed
+			if entry.has("transitioning") and entry["transitioning"]:
+				move_speed = speed * 0.75  # Adjust this multiplier as needed
 
-		# Always call move_and_slide to maintain collision behavior
+			var direction = to_target.normalized()
+			monkey.velocity = direction * move_speed
+			
+			if abs(direction.x) > abs(direction.y):
+				# Horizontal movement
+				if direction.x > 0:
+					if monkey.has_method("walk_right"):
+						#print("Walk right")
+						monkey.walk_right()
+				else:
+					if monkey.has_method("walk_left"):
+						#print("Walk left")
+						monkey.walk_left()
+			else:
+				#print("VERT MOVE")
+				# Vertical movement
+				if direction.y > 0:
+					if monkey.has_method("walk_down"):
+						#print("Walk down")
+						monkey.walk_down()
+				else:
+					if monkey.has_method("walk_up"):
+						#print("Walk up")
+						monkey.walk_up()
+			
+
 		monkey.move_and_slide()
+
 
 
 ## Translates all monkeys by the same offset for WASD movement or swarm keys
@@ -605,7 +629,7 @@ func _die() -> void:
 	# a death animation or something first before switching
 
 	# switch to Die screen
-	get_tree().change_scene_to_file("res://menus/DiedMenuenu/died_menu.tscn")
+	get_tree().change_scene_to_file("res://menus/died-menu/died-menu.tscn")
 
 
 ## Take damage for the player.

@@ -44,7 +44,7 @@ _data = {
 "banana_spin": SubResource("Animation_pejof")
 }
 
-[node name="BananaBoomerang" type="Area2D"]
+[node name="BananaBoomerang" type="Area2D" groups=["projectiles"]]
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true

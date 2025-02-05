@@ -1,3 +1,8 @@
+
+
+
+
+
 extends CharacterBody2D
 ## A single monkey in the monkey troop.
 ##
@@ -87,6 +92,7 @@ func _ready() -> void:
 	_animated_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
+
 
 ## Setup RayCasts for collision detection
 func _setup_collision_raycasts() -> void:
@@ -186,6 +192,7 @@ func _physics_process(_delta: float) -> void:
 
 	if current_cooldown > 0:
 		current_cooldown -= _delta
+		
 
 
 ## Called by the Player when the player is moving left
@@ -208,6 +215,7 @@ func walk_up() -> void:
 
 ## Called by the Player when the player is moving down
 func walk_down() -> void:
+	#print("MONKEY WALKIN DOWQN!")
 	_animated_sprite.play("walk_down")
 	_update_vision_rays(Vector2(0, vision_range))
 
