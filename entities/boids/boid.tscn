@@ -1,7 +1,40 @@
-[gd_scene load_steps=41 format=3 uid="uid://dd8b8qu4e6jme"]
+[gd_scene load_steps=51 format=3 uid="uid://dd8b8qu4e6jme"]
 
 [ext_resource type="Script" path="res://entities/boids/boid.gd" id="1_j73er"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="2_eigla"]
 [ext_resource type="Texture2D" uid="uid://bodwmlsthyj68" path="res://assets/sprites/characters/people/scientist.png" id="2_mccus"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_768l2"]
+atlas = ExtResource("2_eigla")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avgqo"]
+atlas = ExtResource("2_eigla")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5ws5"]
+atlas = ExtResource("2_eigla")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mf240"]
+atlas = ExtResource("2_eigla")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prf3b"]
+atlas = ExtResource("2_eigla")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7lf8"]
+atlas = ExtResource("2_eigla")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehal3"]
+atlas = ExtResource("2_eigla")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylqfm"]
+atlas = ExtResource("2_eigla")
+region = Rect2(448, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_og16s"]
 atlas = ExtResource("2_mccus")
@@ -151,6 +184,35 @@ region = Rect2(512, 518, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_768l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avgqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5ws5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mf240")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prf3b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7lf8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehal3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylqfm")
+}],
+"loop": false,
+"name": &"die",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_og16s")
 }, {
 "duration": 1.0,
@@ -281,6 +343,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_qfxij"]
 radius = 9.05539
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8novc"]
+size = Vector2(29, 46)
+
 [node name="Boid" type="CharacterBody2D" groups=["boids"]]
 collision_layer = 2
 collision_mask = 7
@@ -290,8 +355,6 @@ script = ExtResource("1_j73er")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5pjvm")
 animation = &"walk_down"
-frame = 6
-frame_progress = 0.18692
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 18)
@@ -307,3 +370,14 @@ target_position = Vector2(-62, 1)
 
 [node name="RayRight" type="RayCast2D" parent="."]
 target_position = Vector2(66, 0)
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 31
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_8novc")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

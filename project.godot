@@ -31,6 +31,7 @@ boids="NPC-like characters that flock together."
 troop="The monkey troop that the main player can control."
 player="The main player's monkey to control."
 enemies=""
+projectiles=""
 
 [input]
 

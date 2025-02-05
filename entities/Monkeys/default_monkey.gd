@@ -93,6 +93,7 @@ func _ready() -> void:
 
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
 
+
 ## Setup RayCasts for collision detection
 func _setup_collision_raycasts() -> void:
 	# Front RayCast

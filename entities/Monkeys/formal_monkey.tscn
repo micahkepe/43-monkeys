@@ -359,7 +359,7 @@ shape = SubResource("CircleShape2D_hp6us")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4nhkg")
-animation = &"walk_down"
+animation = &"die"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_idj8b")]
 offset_left = -16.0
