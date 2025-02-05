@@ -12,13 +12,13 @@ extends CharacterBody2D
 ##		https://en.wikipedia.org/wiki/Boids
 
 ## The maximum speed of the boid.
-@export var max_speed: float = 200.0
+@export var max_speed: float = 250.0
 
 ## The maxiumum force that can be applied to the boid.
 @export var max_force: float = 100.0
 
 ## The distance to which the boid can see in its range of view.
-@export var view_radius: float = 150.0
+@export var view_radius: float = 300.0
 
 ## The field of vision of the boid in degrees.
 @export var view_angle_degrees: float = 270.0
@@ -37,6 +37,9 @@ extends CharacterBody2D
 
 ## The weight for wall avoidance.
 @export var weight_avoidance: float = 2.0
+
+## The weight for targeting a specific node.
+@export var weight_targeting: float = 3.0
 
 ## The length of the raycasts used for wall avoidance.
 @export var raycast_length: float = 50.0
@@ -62,6 +65,14 @@ extends CharacterBody2D
 ## The downward raycast node for wall avoidance.
 @onready var _ray_down: RayCast2D = $RayDown
 
+## Attack timer to control the rate of attacks.
+var attack_timer: float = 0.0
+
+@export var attack_damage: int = 1
+@export var attack_cooldown: float = 1.5
+
+var is_attacking: bool = false
+
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
@@ -86,13 +97,26 @@ func _ready() -> void:
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _physics_process(delta: float) -> void:
-	var neighbors = _get_neighbors()
-	var force_separation = _compute_separation(neighbors) * weight_separation
-	var force_alignment = _compute_alignment(neighbors) * weight_alignment
-	var force_cohesion = _compute_cohesion(neighbors) * weight_cohesion
-	var force_avoidance = _compute_wall_avoidance() * weight_avoidance
+	attack_timer -= delta
+	var target = _get_closest_target()
+	var steering = Vector2.ZERO
 
-	var steering = force_separation + force_alignment + force_cohesion + force_avoidance
+	# See if we have a target, else continue with boid-like movement
+	if target:
+		# seek out the target
+		var to_target = (target.global_position - global_position).normalized()
+		steering += to_target * max_force * weight_targeting
+	else:
+		# flocking behavior
+		var neighbors = _get_neighbors()
+		steering += _compute_separation(neighbors) * weight_separation
+		steering += _compute_alignment(neighbors) * weight_alignment
+		steering += _compute_cohesion(neighbors) * weight_cohesion
+
+	# Add wall avoidance force
+	steering += _compute_wall_avoidance() * weight_avoidance
+
+	# Limit the steering force
 	if steering.length() > max_force:
 		steering = steering.normalized() * max_force
 
@@ -106,6 +130,31 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	_update_animation()
+
+func _get_closest_target() -> Node2D:
+	var closest_target = null
+	var min_distance = INF
+
+	for group in ["player", "troop"]:
+		for target in get_tree().get_nodes_in_group(group):
+			var distance = global_position.distance_to(target.global_position)
+			if distance < view_radius and distance < min_distance:
+				closest_target = target
+				min_distance = distance
+
+	return closest_target
+
+func _play_attack_animation(target: Node2D) -> void:
+	var direction = (target.global_position - global_position).normalized()
+
+	if abs(direction.x) > abs(direction.y):
+		# Horizontal attack
+		_anim_sprite.play("slash_right" if direction.x > 0 else "slash_left")
+	else:
+		# Vertical attack
+		_anim_sprite.play("slash_down" if direction.y > 0 else "slash_up")
+
+	is_attacking = true
 
 
 ## Computes the avoidance force to avoid walls.
@@ -132,6 +181,10 @@ func _compute_wall_avoidance() -> Vector2:
 ## Updates the boid's animation based on its velocity.
 ## The boid will play the appropriate animation based on its velocity.
 func _update_animation() -> void:
+	if is_attacking:
+		# Don't change the animation while attacking
+		return
+
 	if velocity.length() < minimum_speed:
 		_anim_sprite.stop()
 		return
@@ -286,11 +339,20 @@ func _die():
 ## Handles the boid being hit by a projectile.
 ## @param area: Area2D - The area that entered the hit box.
 func _on_hit_box_area_entered(area: Area2D) -> void:
-	print_debug("Boid hit by: ", area)
-
 	if area.is_in_group("projectiles"):
+		print_debug("Boid hit by: ", area)
 		take_damage(1.0)
 		area.queue_free()
+
+	if attack_timer <= 0 and (area.is_in_group("player") or area.is_in_group("troop")):
+		print_debug("Attacking target:", area)
+		_play_attack_animation(area)
+
+		if area.has_method("take_damage"):
+			area.take_damage(attack_damage)
+			print_debug("Damage applied:", attack_damage)
+
+		attack_timer = attack_cooldown
 
 
 ## Handles the animation finished signal for the boid.
@@ -298,3 +360,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if _anim_sprite.animation == "die":
 		_anim_sprite.stop()
 		queue_free()
+
+	if _anim_sprite.animation.begins_with("slash"):
+		# Add a small delay before resetting the attack state
+		await get_tree().create_timer(0.2).timeout  # Adjust the delay as needed
+		is_attacking = false
+		_anim_sprite.play("walk_down")

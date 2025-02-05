@@ -1,8 +1,3 @@
-
-
-
-
-
 extends CharacterBody2D
 ## A single monkey in the monkey troop.
 ##
@@ -41,7 +36,7 @@ extends CharacterBody2D
 @export var attack_range: float = 400.0
 
 ## The monkey's attack cooldown
-var attack_timer: float
+var attack_timer: float = 0.0
 
 ## The time (in seconds) between attacks; the effective cooldown period
 @export var attack_cooldown = 1.3
