@@ -1,3 +1,4 @@
+
 extends StaticBody2D
 
 @onready var anim_sprite = $AnimatedSprite2D
@@ -6,7 +7,7 @@ extends StaticBody2D
 @onready var collision_open_right = $CollisionOpenRight
 @onready var monkey_holder = $MonkeyHolder  # This node holds the monkey
 
-@export var open_distance: float = 100.0  # Maximum distance to open
+@export var open_distance: float = 150.0  # Maximum distance to open
 
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
@@ -53,6 +54,7 @@ func spawn_caged_monkey():
 	caged_monkey = new_monkey
 
 	print("Monkey spawned inside the cage with correct global scale!")
+	print("Monkey spawned inside cage at:", caged_monkey.global_position)
 
 
 func open_cage():
@@ -75,10 +77,6 @@ func release_monkey():
 	if caged_monkey and player:
 		# Enable movement again
 		caged_monkey.set_physics_process(true)
-
-		# Remove from MonkeyHolder and reparent to swarm
-		if caged_monkey.get_parent():
-			caged_monkey.get_parent().remove_child(caged_monkey)
 
 		# Immediately add to player's swarm
 		if player.has_method("add_monkey_to_swarm"):

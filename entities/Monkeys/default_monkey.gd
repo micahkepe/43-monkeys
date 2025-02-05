@@ -1,3 +1,8 @@
+
+
+
+
+
 extends CharacterBody2D
 ## A single monkey in the monkey troop.
 ##
@@ -186,6 +191,7 @@ func _physics_process(_delta: float) -> void:
 
 	if current_cooldown > 0:
 		current_cooldown -= _delta
+		
 
 
 ## Called by the Player when the player is moving left
@@ -208,6 +214,7 @@ func walk_up() -> void:
 
 ## Called by the Player when the player is moving down
 func walk_down() -> void:
+	#print("MONKEY WALKIN DOWQN!")
 	_animated_sprite.play("walk_down")
 	_update_vision_rays(Vector2(0, vision_range))
 
