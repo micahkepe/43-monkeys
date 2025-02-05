@@ -24,11 +24,7 @@ extends CharacterBody2D
 
 ## The base speed at which the player moves
 @export
-var speed: float = 450.0
-
-## The player's current health
-@export
-var health: int = 100
+var speed: float = 300
 
 ## The multiplier applied to speed when sprinting
 @export
@@ -53,9 +49,10 @@ var banana_boomerang_scene: PackedScene
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
 
-## The initial amount of monkeys in the troop
+## The initial amount of monkeys in the troop. FOR DEBUGGING PURPOSES ONLY
+## The troop will need be collected and have continuity between levels.
 @export
-var initial_troop_amount: int = 10
+var initial_troop_amount: int = 0
 
 ## The scale of the troop ellipse along the x-axis
 @export
@@ -94,9 +91,18 @@ const WORLD_UP = Vector2(0, -1)
 const WORLD_RIGHT = Vector2(1, 0)
 
 ## Health variables.
-var max_health: float = 6.0  # 6 half-hearts = 3 full hearts
+
+## The player's maximum health. Units are in half-hearts.
+@export
+var max_health: float = 6.0
+
+## The player's current health.
 var current_health: float = 6.0
-var damage_cooldown: float = 1.0  # Time between damage ticks
+
+## The player's damage cooldown period (in seconds)
+var damage_cooldown: float = 1.0
+
+## The player's current damage cooldown period.
 var current_cooldown: float = 0.0
 @onready var hearts_container = $UI/HeartsContainer
 
@@ -120,13 +126,13 @@ func _ready() -> void:
 	_update_swarm_positions()
 
 	if !hearts_container:
-		print("Hearts container not found!")
+		print_debug("Hearts container not found!")
 		return
 
 	current_health = max_health
 	update_hearts_display()
 	monkey_count_changed.connect(_update_monkey_counter)
-	
+
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
 
@@ -223,7 +229,6 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		new_monkey = existing_monkey
 		print("Adding existing monkey to swarm!")
 
-		# 🔥 Fix: Preserve global scale before reparenting
 		var original_global_scale = new_monkey.global_scale
 
 		# Remove from old parent safely
@@ -233,9 +238,13 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		# Add to swarm
 		_swarm_monkeys_root.add_child(new_monkey)
 
-		# 🔥 Fix: Restore the correct global scale
+		# Set the scale of the monkey to match the global scale of the swarm
 		new_monkey.scale = original_global_scale / _swarm_monkeys_root.global_scale
 	else:
+
+		## FIX: troop monkeys need to have continuity between scenes, can't just
+		## spawn new ones each time
+
 		# Spawn a random monkey if none provided
 		if monkey_scenes.is_empty():
 			print("No monkey scenes available!")
@@ -271,7 +280,6 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 	_needs_full_ellipse_recalc = true  # Mark for recalculation
 	monkey_count_changed.emit(_swarm_monkeys.size())
 	print("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
-
 
 
 ## Positions each monkey on the ellipse boundary using their angle, plus

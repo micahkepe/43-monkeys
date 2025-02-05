@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="9_lxlag"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="10_q1d5o"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://assets/sprites/items/laser/laser.tscn" id="11_pcrwo"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TaserBoss/taser_boss.tscn" id="12_8y3f8"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/Terminator/terminator.tscn" id="12_8y3f8"]
 [ext_resource type="Script" path="res://entities/bosses/TaserBoss/taser_boss.gd" id="13_0v6xr"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="14_boakj"]
 

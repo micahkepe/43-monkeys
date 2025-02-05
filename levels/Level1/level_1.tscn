@@ -938,6 +938,7 @@ position = Vector2(-44, 102.667)
 scale = Vector2(0.499, 0.499)
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
+position_smoothing_enabled = true
 
 [node name="Boid1" parent="ForegroundTiles" instance=ExtResource("12_44r5b")]
 position = Vector2(-303.333, 427.333)

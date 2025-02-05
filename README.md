@@ -30,7 +30,7 @@ Game Design at Rice University.
 - [ ] Better art
   - [x] Explore [PixelLab](https://www.pixellab.ai/)
   - [x] Death animations
-  - [ ] Redo/enhance intro cutscene frames
+  - [x] Redo/enhance intro cutscene frames
 - [ ] FIX: volume sliders should not be initialized to 0 in settings screen
 
 ## Project Structure

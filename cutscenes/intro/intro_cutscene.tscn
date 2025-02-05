@@ -4,7 +4,7 @@
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_j7cev"]
 [ext_resource type="PackedScene" uid="uid://b5ccssb5kjdpo" path="res://cutscenes/LevelTransition/level_transition.tscn" id="2_ntrmn"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="3_eq8yl"]
-[ext_resource type="PackedScene" uid="uid://cscspmt2tgh5x" path="res://levels/Level3/level_3.tscn" id="3_fxv6q"]
+[ext_resource type="PackedScene" uid="uid://b8hvlr7xxbcu5" path="res://levels/Level1/level_1.tscn" id="3_vhlu5"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="4_dpys7"]
 [ext_resource type="Shader" path="res://shaders/vhs_post_processing.gdshader" id="7_i3u8b"]
 [ext_resource type="Texture2D" uid="uid://dt5ejgeb1v134" path="res://assets/sprites/textures/godot-logo.png" id="8_7ey3k"]
@@ -36,9 +36,8 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_ajjb5")
 [node name="IntroCutscene" type="Node2D"]
 script = ExtResource("1_lxcfy")
 transition_scene = ExtResource("2_ntrmn")
-next_level_scene = ExtResource("3_fxv6q")
-transition_level_number = 3
-transition_level_title = "The Unknown Depths"
+next_level_scene = ExtResource("3_vhlu5")
+transition_level_title = "The Basement"
 typing_speed = 0.07
 
 [node name="Background" type="Sprite2D" parent="."]
