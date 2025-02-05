@@ -24,11 +24,7 @@ extends CharacterBody2D
 
 ## The base speed at which the player moves
 @export
-var speed: float = 450.0
-
-## The player's current health
-@export
-var health: int = 100
+var speed: float = 300.0
 
 ## The multiplier applied to speed when sprinting
 @export
@@ -53,9 +49,11 @@ var banana_boomerang_scene: PackedScene
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
 
-## The initial amount of monkeys in the troop
+## [DEBUG] The initial amount of monkeys in the troop.
+## The troop will need to be collected by the player and have continuity
+# between levels.
 @export
-var initial_troop_amount: int = 10
+var initial_troop_amount: int = 0
 
 ## The scale of the troop ellipse along the x-axis
 @export
@@ -93,11 +91,21 @@ const WORLD_UP = Vector2(0, -1)
 ## Constant vector for downward world direction.
 const WORLD_RIGHT = Vector2(1, 0)
 
-## Health variables.
+# Health variables.
+
+## The maximum health of the player character (in half-hearts).
 var max_health: float = 6.0  # 6 half-hearts = 3 full hearts
-var current_health: float = 6.0
-var damage_cooldown: float = 1.0  # Time between damage ticks
-var current_cooldown: float = 0.0
+
+## The current health of the player character (in half-hearts).
+var _current_health: float = 6.0
+
+## The time between damage ticks.
+var _damage_cooldown: float = 1.0
+
+## The current cooldown for taking damage.
+var _current_cooldown: float = 0.0
+
+## The UI container for the player's health display.
 @onready var hearts_container = $UI/HeartsContainer
 
 # Monkey counter for number of monkeys in group, including the main monkey.
@@ -120,13 +128,13 @@ func _ready() -> void:
 	_update_swarm_positions()
 
 	if !hearts_container:
-		print("Hearts container not found!")
+		print_debug("Hearts container not found!")
 		return
 
-	current_health = max_health
+	_current_health = max_health
 	update_hearts_display()
 	monkey_count_changed.connect(_update_monkey_counter)
-	
+
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
 
@@ -209,8 +217,8 @@ func _physics_process(_delta: float) -> void:
 	if _needs_full_ellipse_recalc:
 		_update_swarm_positions()
 
-	if current_cooldown > 0:
-		current_cooldown -= _delta
+	if _current_cooldown > 0:
+		_current_cooldown -= _delta
 
 
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
@@ -220,9 +228,9 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 
 	if existing_monkey:
 		var curr_global_pos = existing_monkey.global_position
-		print("first global pos:", curr_global_pos)
+		print_debug("first global pos:", curr_global_pos)
 		new_monkey = existing_monkey
-		print("Adding existing monkey to swarm!")
+		print_debug("Adding existing monkey to swarm!")
 
 		# Remove from the old parent safely.
 		if new_monkey.get_parent():
@@ -235,13 +243,13 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		new_monkey.global_position = curr_global_pos
 	else:
 		if monkey_scenes.is_empty():
-			print("No monkey scenes available!")
+			print_debug("No monkey scenes available!")
 			return
 
 		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
 		new_monkey = new_monkey_scene.instantiate()
 		new_monkey.scale = Vector2(2.5, 2.5)
-		print("Spawning a new monkey for the swarm!")
+		print_debug("Spawning a new monkey for the swarm!")
 		_swarm_monkeys_root.add_child(new_monkey)
 		# new_monkey will be positioned based on its scene settings.
 
@@ -266,10 +274,10 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		var fraction = float(i) / total
 		_swarm_monkeys[i]["angle"] = fraction * TAU
 
-	print("end global pos:", new_monkey.global_position)
+	print_debug("end global pos:", new_monkey.global_position)
 	_needs_full_ellipse_recalc = true  # Flag to update positions on the ellipse.
 	monkey_count_changed.emit(_swarm_monkeys.size())
-	print("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
+	print_debug("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
 
 
 
@@ -293,7 +301,7 @@ func _update_swarm_positions() -> void:
 
 		# Calculate how far the monkey is from its target:
 		var to_target = target_position - monkey.global_position
-		var move_direction = to_target.normalized()
+		var _move_direction = to_target.normalized()
 
 		# If the monkey is close enough, stop its movement:
 		if to_target.length() < 5.0:
@@ -309,29 +317,29 @@ func _update_swarm_positions() -> void:
 
 			var direction = to_target.normalized()
 			monkey.velocity = direction * move_speed
-			
+
 			if abs(direction.x) > abs(direction.y):
 				# Horizontal movement
 				if direction.x > 0:
 					if monkey.has_method("walk_right"):
-						#print("Walk right")
+						#print_debug("Walk right")
 						monkey.walk_right()
 				else:
 					if monkey.has_method("walk_left"):
-						#print("Walk left")
+						#print_debug("Walk left")
 						monkey.walk_left()
 			else:
-				#print("VERT MOVE")
+				#print_debug("VERT MOVE")
 				# Vertical movement
 				if direction.y > 0:
 					if monkey.has_method("walk_down"):
-						#print("Walk down")
+						#print_debug("Walk down")
 						monkey.walk_down()
 				else:
 					if monkey.has_method("walk_up"):
-						#print("Walk up")
+						#print_debug("Walk up")
 						monkey.walk_up()
-			
+
 
 		monkey.move_and_slide()
 
@@ -480,7 +488,7 @@ func handle_swarm_input(_delta: float) -> bool:
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
-		print("Swarm reset: Position, size, rotation, and distribution updated.")
+		print_debug("Swarm reset: Position, size, rotation, and distribution updated.")
 
 
 	return swarm_moved
@@ -511,7 +519,7 @@ func _handle_shooting() -> void:
 	if _current_shoot_cooldown > 0.0:
 		return
 	if Input.is_action_pressed("shoot_up") and not Input.is_key_pressed(KEY_SHIFT):
-		print()
+		print_debug()
 		spawn_projectile(Vector2.UP)
 		_current_shoot_cooldown = shoot_cooldown_duration
 	elif Input.is_action_pressed("shoot_down") and not Input.is_key_pressed(KEY_SHIFT):
@@ -612,9 +620,9 @@ func _adjust_ellipse_global(global_dir: Vector2, delta: float) -> void:
 func update_hearts_display() -> void:
 	for i in range(hearts_container.get_child_count()):
 		var heart = hearts_container.get_child(i)
-		if current_health > i * 2 + 1:
+		if _current_health > i * 2 + 1:
 			heart.play("full")  # Fully filled heart
-		elif current_health == i * 2 + 1:
+		elif _current_health == i * 2 + 1:
 			heart.play("half")  # Half-filled heart
 		else:
 			heart.play("empty")  # Empty heart
@@ -634,24 +642,24 @@ func _die() -> void:
 
 ## Take damage for the player.
 func take_damage(amount: float) -> void:
-	print("damage!")
+	print_debug("damage!")
 
 	# momentarily recolor the monkey to indicate damage
 	_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
 	await get_tree().create_timer(0.5).timeout
 	_animated_sprite.modulate = Color(1, 1, 1, 1)
 
-	if current_cooldown <= 0:
-		current_health = max(0, current_health - amount)
-		current_cooldown = damage_cooldown
+	if _current_cooldown <= 0:
+		_current_health = max(0, _current_health - amount)
+		_current_cooldown = _damage_cooldown
 		update_hearts_display()
 		$HurtSound.play()
 
-		if current_health <= 0:
+		if _current_health <= 0:
 			_die()
 
 func remove_monkey(monkey: Node) -> void:
-	print("===REMOVED MONNKEY===")
+	print_debug("===REMOVED MONNKEY===")
 	# Find the entry with the matching monkey node and remove it
 	for i in range(_swarm_monkeys.size()):
 		if _swarm_monkeys[i]["node"] == monkey:
@@ -661,4 +669,4 @@ func remove_monkey(monkey: Node) -> void:
 	# Recalculate swarm positions to redistribute the monkeys
 	_needs_full_ellipse_recalc = true
 	monkey_count_changed.emit(_swarm_monkeys.size())
-	print("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())
+	print_debug("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())
