@@ -936,7 +936,6 @@ tile_set = SubResource("TileSet_h060g")
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("10_i5f2g")]
 position = Vector2(-44, 102.667)
 scale = Vector2(0.499, 0.499)
-initial_troop_amount = 2
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 

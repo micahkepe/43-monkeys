@@ -630,14 +630,8 @@ func update_hearts_display() -> void:
 
 ## If the player's health falls below zero.
 func _die() -> void:
-	# Implement death behavior
 	queue_free()
-
-	# TODO: right now just switches IMMEDIATELY to the Die screen, we could play
-	# a death animation or something first before switching
-
-	# switch to Die screen
-	get_tree().change_scene_to_file("res://menus/died-menu/died-menu.tscn")
+	get_tree().change_scene_to_file("res://menus/DiedMenu/died_menu.tscn")
 
 
 ## Take damage for the player.

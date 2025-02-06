@@ -16,6 +16,9 @@
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qk8jr"]
+radius = 43.1856
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_spox5"]
 atlas = ExtResource("8_vswvm")
 region = Rect2(64, 0, 64, 64)
@@ -353,9 +356,6 @@ shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ebpfv"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qk8jr"]
-radius = 43.1856
-
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 self_modulate = Color(1, 1, 0.0980392, 1)
 y_sort_enabled = true
@@ -366,6 +366,11 @@ motion_mode = 1
 script = ExtResource("1_ieec4")
 banana_boomerang_scene = ExtResource("2_yc2po")
 monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(8, 20)
+shape = SubResource("CircleShape2D_qk8jr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)
@@ -416,11 +421,6 @@ theme_override_font_sizes/font_size = 60
 text = "1/43"
 horizontal_alignment = 2
 vertical_alignment = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(8, 20)
-shape = SubResource("CircleShape2D_qk8jr")
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_mqlhb")

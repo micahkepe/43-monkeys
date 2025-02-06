@@ -97,6 +97,9 @@ func _ready() -> void:
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _physics_process(delta: float) -> void:
+	if is_attacking or _anim_sprite.animation.begins_with("slash"):
+		return
+
 	attack_timer -= delta
 	var target = _get_closest_target()
 	var steering = Vector2.ZERO
@@ -131,6 +134,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animation()
 
+
+## Returns the closest target node within the boid's view radius.
 func _get_closest_target() -> Node2D:
 	var closest_target = null
 	var min_distance = INF
@@ -138,6 +143,7 @@ func _get_closest_target() -> Node2D:
 	for group in ["player", "troop"]:
 		for target in get_tree().get_nodes_in_group(group):
 			var distance = global_position.distance_to(target.global_position)
+
 			if distance < view_radius and distance < min_distance:
 				closest_target = target
 				min_distance = distance
@@ -146,13 +152,16 @@ func _get_closest_target() -> Node2D:
 
 func _play_attack_animation(target: Node2D) -> void:
 	var direction = (target.global_position - global_position).normalized()
+	print_debug("Playing attack animation. Direction: ", direction)
 
 	if abs(direction.x) > abs(direction.y):
 		# Horizontal attack
 		_anim_sprite.play("slash_right" if direction.x > 0 else "slash_left")
+		print_debug("Playing horizontal attack animation: ", "slash_right" if direction.x > 0 else "slash_left")
 	else:
 		# Vertical attack
 		_anim_sprite.play("slash_down" if direction.y > 0 else "slash_up")
+		print_debug("Playing vertical attack animation: ", "slash_down" if direction.y > 0 else "slash_up")
 
 	is_attacking = true
 
@@ -181,8 +190,7 @@ func _compute_wall_avoidance() -> Vector2:
 ## Updates the boid's animation based on its velocity.
 ## The boid will play the appropriate animation based on its velocity.
 func _update_animation() -> void:
-	if is_attacking:
-		# Don't change the animation while attacking
+	if is_attacking or _anim_sprite.animation.begins_with("slash"):
 		return
 
 	if velocity.length() < minimum_speed:
@@ -349,8 +357,8 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		_play_attack_animation(area)
 
 		if area.has_method("take_damage"):
+			print_debug("Applying damage to target: ", area.name)
 			area.take_damage(attack_damage)
-			print_debug("Damage applied:", attack_damage)
 
 		attack_timer = attack_cooldown
 
@@ -361,8 +369,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		_anim_sprite.stop()
 		queue_free()
 
-	if _anim_sprite.animation.begins_with("slash"):
-		# Add a small delay before resetting the attack state
-		await get_tree().create_timer(0.2).timeout  # Adjust the delay as needed
+	elif _anim_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
+		print_debug("Attack animation finished. Resetting is_attacking.")
 		is_attacking = false
-		_anim_sprite.play("walk_down")
+		_update_animation()
