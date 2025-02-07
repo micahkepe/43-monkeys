@@ -869,3 +869,11 @@ metadata/_edit_lock_ = true
 [node name="ChemistBoss" parent="." instance=ExtResource("8_ry57q")]
 position = Vector2(514, 289)
 scale = Vector2(3, 3)
+
+[node name="BlindnessPotion" parent="." instance=ExtResource("9_6mg2b")]
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(326, 528)
+scale = Vector2(3, 3)
+
+[node name="BlindnessPotion2" parent="." instance=ExtResource("9_6mg2b")]
+position = Vector2(309, 644)

@@ -1,3 +1,218 @@
-[gd_scene format=3 uid="uid://8co3a7en1acd"]
+[gd_scene load_steps=30 format=3 uid="uid://8co3a7en1acd"]
 
-[node name="BlindnessPotion" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://i8ehjdjrjxty" path="res://assets/sprites/items/orange_potion_spinning_in_air.png" id="1_u7qb5"]
+[ext_resource type="Texture2D" uid="uid://c5v6a56uwudgf" path="res://assets/sprites/items/orange_potion_splashing.png" id="2_ffq65"]
+[ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_0ublm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtpxl"]
+height = 26.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmwew"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1xlo"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrkw7"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcgki"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdrg4"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31i2n"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d61pc"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bshh"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amtk1"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seywj"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_150iy"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxudt"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjjew"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3t3t"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(416, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tdmf"]
+atlas = ExtResource("1_u7qb5")
+region = Rect2(448, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knm4h"]
+atlas = ExtResource("2_ffq65")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pxw2"]
+atlas = ExtResource("2_ffq65")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c7qm"]
+atlas = ExtResource("2_ffq65")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4oabg"]
+atlas = ExtResource("2_ffq65")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrmbc"]
+atlas = ExtResource("2_ffq65")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqcol"]
+atlas = ExtResource("3_0ublm")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndh3l"]
+atlas = ExtResource("3_0ublm")
+region = Rect2(32, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uuyv8"]
+atlas = ExtResource("3_0ublm")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qt2x8"]
+atlas = ExtResource("3_0ublm")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hf648"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmwew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1xlo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrkw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcgki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdrg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31i2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d61pc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bshh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amtk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seywj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_150iy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxudt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjjew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3t3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tdmf")
+}],
+"loop": false,
+"name": &"bottle_spin",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knm4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pxw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0c7qm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4oabg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrmbc")
+}],
+"loop": false,
+"name": &"bottle_splash",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqcol")
+}],
+"loop": true,
+"name": &"pool_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndh3l")
+}],
+"loop": true,
+"name": &"pool_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uuyv8")
+}],
+"loop": true,
+"name": &"pool_3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qt2x8")
+}],
+"loop": true,
+"name": &"pool_4",
+"speed": 5.0
+}]
+
+[node name="BlindnessPotion" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_mtpxl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hf648")
+animation = &"bottle_spin"

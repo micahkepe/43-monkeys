@@ -151,7 +151,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sivfu")
 }],
-"loop": true,
+"loop": false,
 "name": &"bottle_splash",
 "speed": 10.0
 }]
@@ -163,8 +163,7 @@ height = 26.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sq85o")
-animation = &"bottle_spin"
-frame_progress = 0.909684
+animation = &"bottle_splash"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_mtpxl")
