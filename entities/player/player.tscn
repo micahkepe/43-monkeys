@@ -359,7 +359,7 @@ shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 self_modulate = Color(1, 1, 0.0980392, 1)
 y_sort_enabled = true
-position = Vector2(-10, -13)
+position = Vector2(660, 353)
 collision_layer = 16
 collision_mask = 7
 motion_mode = 1
