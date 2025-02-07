@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://doa6som0atgby"]
+[gd_scene load_steps=21 format=4 uid="uid://b6ahsbqkav6uf"]
 
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="1_otwod"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="2_50tkm"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ds6owgqcqf46r" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_hmyis"]
 [ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="6_bhipq"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="7_vh646"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/ChemistBoss/chemist_boss.tscn" id="8_ry57q"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TerminatorBoss/terminator_boss.tscn" id="8_ry57q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"

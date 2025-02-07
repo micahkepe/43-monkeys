@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://duw8h7t4ye7j6"]
+[gd_scene load_steps=53 format=3 uid="uid://duw8h7t4ye7j6"]
 
 [ext_resource type="Script" path="res://entities/monkeys/default_monkey.gd" id="1_8qukr"]
 [ext_resource type="Texture2D" uid="uid://ckxclganh2nrs" path="res://assets/sprites/characters/monkeys/pirate-monkey.png" id="1_m76bo"]
@@ -37,6 +37,10 @@ region = Rect2(448, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_x1uju"]
 atlas = ExtResource("3_0ocv5")
 region = Rect2(448, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vna5k"]
+atlas = ExtResource("1_m76bo")
+region = Rect2(0, 900, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssrcu"]
 atlas = ExtResource("1_m76bo")
@@ -215,6 +219,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_vna5k")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ssrcu")
 }, {
 "duration": 1.0,
@@ -354,9 +366,7 @@ banana_boomerang_scene = ExtResource("2_t2inc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nh1ph")
-animation = &"die"
-frame = 7
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_1ny1a")]
 offset_left = -16.0

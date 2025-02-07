@@ -102,10 +102,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yc4u2"]
-size = Vector2(94, 82)
+size = Vector2(94, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hl67n"]
-size = Vector2(35, 54.5)
+size = Vector2(41.5, 2.78413)
 
 [node name="MonkeyCage" type="StaticBody2D"]
 z_index = 1
@@ -117,15 +117,17 @@ sprite_frames = SubResource("SpriteFrames_2f1v1")
 animation = &"cage_open"
 
 [node name="CollisionClose" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9)
+position = Vector2(0, 27.5)
 shape = SubResource("RectangleShape2D_yc4u2")
 
 [node name="CollisionOpenLeft" type="CollisionShape2D" parent="."]
-position = Vector2(-65, 15.25)
+position = Vector2(-65.8175, 34.8278)
+rotation = -0.380706
 shape = SubResource("RectangleShape2D_hl67n")
 
 [node name="CollisionOpenRight" type="CollisionShape2D" parent="."]
-position = Vector2(64, 15)
+position = Vector2(64, 34)
+rotation = -2.75631
 shape = SubResource("RectangleShape2D_hl67n")
 
 [node name="MonkeyHolder" type="Node2D" parent="."]
