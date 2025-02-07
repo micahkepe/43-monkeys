@@ -19,20 +19,6 @@ Game Design at Rice University.
 - Ascend through themed floors, face the mastermind scientist, and lead your
   monkey squad to freedom!
 
-## TODOs
-
-- [x] Momemntarily change color to red shade on hit
-- [ ] Troop and enemy boid field of vision attack triggers
-- [ ] More curated levels
-- [x] Create shaders
-- [x] Monkey counter
-- [x] FIX: More contrast in menu screens
-- [ ] Better art
-  - [x] Explore [PixelLab](https://www.pixellab.ai/)
-  - [x] Death animations
-  - [x] Redo/enhance intro cutscene frames
-- [ ] FIX: volume sliders should not be initialized to 0 in settings screen
-
 ## Project Structure
 
 | Directory      | Description                                          |
