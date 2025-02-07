@@ -636,7 +636,7 @@ func _die() -> void:
 
 ## Take damage for the player.
 func take_damage(amount: float) -> void:
-	print_debug("damage!")
+	print_debug("Player taking damage")
 
 	# momentarily recolor the monkey to indicate damage
 	_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)

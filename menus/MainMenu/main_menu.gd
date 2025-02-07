@@ -87,4 +87,4 @@ func _on_github_button_pressed() -> void:
 
 ## Handle clicking the ItchIo social icon. Opens the ItchIo page for the game.
 func _on_itch_io_button_pressed() -> void:
-	OS.shell_open("https://fourge-studios.itch.io/")
+	OS.shell_open("https://alpha-prime-studios.itch.io/")

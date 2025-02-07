@@ -538,27 +538,10 @@ size = Vector2(29, 50.5)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_t1ht1")
-max_speed = null
-max_force = null
-view_radius = null
-view_angle_degrees = null
-separation_distance = null
-weight_separation = null
-weight_alignment = null
-weight_cohesion = null
-weight_avoidance = null
-weight_targeting = null
-raycast_length = null
-minimum_speed = null
-hits_to_kill = null
-attack_damage = null
-attack_cooldown = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_5pjvm")
-animation = &"slash_right"
-frame = 5
-frame_progress = 0.186328
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
@@ -580,8 +563,10 @@ collision_layer = 2
 collision_mask = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-0.5, -1.25)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_qyujn")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]

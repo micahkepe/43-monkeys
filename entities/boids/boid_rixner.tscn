@@ -532,27 +532,12 @@ animations = [{
 radius = 9.05539
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uyxxe"]
-size = Vector2(28, 48)
+size = Vector2(28, 47)
 
 [node name="Boid" type="CharacterBody2D" groups=["boids", "enemies"]]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_xktke")
-max_speed = null
-max_force = null
-view_radius = null
-view_angle_degrees = null
-separation_distance = null
-weight_separation = null
-weight_alignment = null
-weight_cohesion = null
-weight_avoidance = null
-weight_targeting = null
-raycast_length = null
-minimum_speed = null
-hits_to_kill = null
-attack_damage = null
-attack_cooldown = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5pjvm")
@@ -578,7 +563,10 @@ collision_layer = 2
 collision_mask = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_uyxxe")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]

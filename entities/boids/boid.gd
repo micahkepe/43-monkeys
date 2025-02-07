@@ -73,6 +73,8 @@ var attack_timer: float = 0.0
 
 var is_attacking: bool = false
 
+var is_dead: bool = false
+
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
@@ -92,11 +94,16 @@ func _ready() -> void:
 	_anim_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
 	$HitBox.connect("area_entered", Callable(self, "_on_hit_box_area_entered"))
+	$HitBox.connect("body_entered", Callable(self, "_on_hit_box_body_entered"))
+	$HitBox.connect("body_exited", Callable(self, "_on_hit_box_body_exited"))
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+
 	if is_attacking or _anim_sprite.animation.begins_with("slash"):
 		return
 
@@ -198,7 +205,6 @@ func _update_animation() -> void:
 		return
 
 	# Simple animation logic using cardinal directions
-	# TODO: make this more sophisticated
 	var abs_x = abs(velocity.x)
 	var abs_y = abs(velocity.y)
 
@@ -331,7 +337,7 @@ func take_damage(amount: float) -> void:
 
 ## Handles the boid's death.
 func _die():
-	print_debug("In _die()")
+	is_dead = true
 
 	## Disable physics and processing
 	set_physics_process(false)
@@ -344,23 +350,26 @@ func _die():
 	# NOTE: The boid will be removed from the scene tree when the animation
 	## finishes
 
-## Handles the boid being hit by a projectile.
-## @param area: Area2D - The area that entered the hit box.
-func _on_hit_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("projectiles"):
-		print_debug("Boid hit by: ", area)
+func _handle_hit(hit: Node) -> void:
+	if hit.is_in_group("projectiles"):
+		print_debug("Boid hit by: ", hit)
 		take_damage(1.0)
-		area.queue_free()
+		hit.queue_free()
 
-	if attack_timer <= 0 and (area.is_in_group("player") or area.is_in_group("troop")):
-		print_debug("Attacking target:", area)
-		_play_attack_animation(area)
+	elif attack_timer <= 0 and (hit.is_in_group("player") or hit.is_in_group("troop")):
+		print_debug("Attacking target:", hit)
+		_play_attack_animation(hit)
 
-		if area.has_method("take_damage"):
-			print_debug("Applying damage to target: ", area.name)
-			area.take_damage(attack_damage)
-
+		if hit.has_method("take_damage"):
+			print_debug("Applying damage to target: ", hit.name)
+			hit.take_damage(attack_damage)
 		attack_timer = attack_cooldown
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	_handle_hit(area)
+
+func _on_hit_box_body_entered(body: Node) -> void:
+	_handle_hit(body)
 
 
 ## Handles the animation finished signal for the boid.
@@ -373,3 +382,13 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		print_debug("Attack animation finished. Resetting is_attacking.")
 		is_attacking = false
 		_update_animation()
+
+
+func _on_hit_box_body_exited(body:Node2D) -> void:
+	if is_dead:
+		return
+
+	print_debug("Boid hit box exited body: ", body)
+	is_attacking = false
+	_anim_sprite.play("walk_down")
+
