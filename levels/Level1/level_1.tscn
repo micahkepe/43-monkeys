@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=27 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="2_hpihk"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_6m36m"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
+[ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="11_wf3k5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ir1du"]
 texture = ExtResource("5_3nb2r")
@@ -685,7 +686,7 @@ position = Vector2(50, -110)
 y_sort_enabled = true
 position = Vector2(50, -110)
 scale = Vector2(1.5, 1.5)
-tile_map_data = PackedByteArray("AACqAKH/AgAAAAAAAACuAKH/AgAAAAAAAACyAKH/AgAAAAAAAAC6AKP/AgAKAAAAAAC6AKD/AgAKAAAAAAC6AJv/AgAKAAAAAAC6AJz/AgAKAAAAAAC6AJ3/AgAKAAAAAAC6AJ7/AgAKAAAAAADG/ycAAwAMAAEAAADK/ycAAwAMAAEAAAA=")
+tile_map_data = PackedByteArray("AACqAKH/AgAAAAAAAACuAKH/AgAAAAAAAACyAKH/AgAAAAAAAAC6AKP/AgAKAAAAAAC6AKD/AgAKAAAAAAC6AJv/AgAKAAAAAAC6AJz/AgAKAAAAAAC6AJ3/AgAKAAAAAAC6AJ7/AgAKAAAAAAA=")
 tile_set = SubResource("TileSet_y44o3")
 
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("10_i5f2g")]
@@ -727,3 +728,9 @@ position = Vector2(185, 55)
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAD//wAAAAABAAAAAAD+/wEAAAAAAAEAAAD//wEAAAABAAEAAAAAAAEAAAACAAEAAAA=")
 tile_set = SubResource("TileSet_k7l75")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_wf3k5")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
