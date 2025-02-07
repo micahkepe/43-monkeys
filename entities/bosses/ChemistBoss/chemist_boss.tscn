@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="3_rdxu5"]
 [ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="4_k2gkk"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="5_tiwid"]
-[ext_resource type="Texture2D" uid="uid://mimnl2g76xwc" path="res://assets/sprites/characters/bosses/chemist.png" id="6_usjmb"]
+[ext_resource type="Texture2D" uid="uid://mimnl2g76xwc" path="res://assets/sprites/characters/bosses/chemist_boss/chemist.png" id="6_usjmb"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="7_8xpwy"]
 
 [sub_resource type="GDScript" id="GDScript_kf6yr"]
@@ -1416,10 +1416,11 @@ shape = SubResource("CircleShape2D_0s22d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"walk_left"
+animation = &"walk_down"
+frame_progress = 0.0603059
 
 [node name="HealthBar" parent="." instance=ExtResource("7_8xpwy")]
 offset_left = -22.0
-offset_top = -22.0
+offset_top = -32.0
 offset_right = 23.0
-offset_bottom = -18.0
+offset_bottom = -28.0

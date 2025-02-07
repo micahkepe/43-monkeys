@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/TaserProjectile/taser_projectile.tscn" id="2_qjvf0"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="3_t76re"]
 [ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="4_p5cmy"]
-[ext_resource type="Texture2D" uid="uid://ckob206xe7seb" path="res://assets/sprites/characters/bosses/terminator.png" id="6_5oxay"]
+[ext_resource type="Texture2D" uid="uid://ckob206xe7seb" path="res://assets/sprites/characters/bosses/taser_boss/terminator.png" id="6_5oxay"]
 
 [sub_resource type="GDScript" id="GDScript_kf6yr"]
 script/source = "extends CharacterBody2D

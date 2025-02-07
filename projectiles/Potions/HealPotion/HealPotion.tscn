@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cm833e3rmrk2w"]
+
+[node name="HealPotion" type="Node2D"]

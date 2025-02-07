@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckob206xe7seb"
-path="res://.godot/imported/terminator.png-47118fa632e2b2fc0a5bb00042b555c6.ctex"
+uid="uid://blunq804f35ls"
+path="res://.godot/imported/taser_boss.png-9e41bc4f6d429ade409b6b278a1a6097.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/bosses/terminator.png"
-dest_files=["res://.godot/imported/terminator.png-47118fa632e2b2fc0a5bb00042b555c6.ctex"]
+source_file="res://assets/sprites/characters/bosses/taser_boss/taser_boss.png"
+dest_files=["res://.godot/imported/taser_boss.png-9e41bc4f6d429ade409b6b278a1a6097.ctex"]
 
 [params]
 

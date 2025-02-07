@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blunq804f35ls"
-path="res://.godot/imported/taser_boss.png-d30bdcfc8912c7843c0b21d84fb636a5.ctex"
+uid="uid://cfi3ivl4wve3h"
+path="res://.godot/imported/darkblue_potion_spinning_in_air.png-72429fcdd2288ab57fb489db857ce5e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/bosses/taser_boss.png"
-dest_files=["res://.godot/imported/taser_boss.png-d30bdcfc8912c7843c0b21d84fb636a5.ctex"]
+source_file="res://assets/sprites/items/darkblue_potion_spinning_in_air.png"
+dest_files=["res://.godot/imported/darkblue_potion_spinning_in_air.png-72429fcdd2288ab57fb489db857ce5e7.ctex"]
 
 [params]
 

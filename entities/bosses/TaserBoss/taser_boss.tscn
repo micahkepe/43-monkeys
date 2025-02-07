@@ -1,7 +1,7 @@
 [gd_scene load_steps=127 format=3 uid="uid://cp5du4n6j8tbm"]
 
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="1_01vq4"]
-[ext_resource type="Texture2D" uid="uid://blunq804f35ls" path="res://assets/sprites/characters/bosses/taser_boss.png" id="1_2lrr3"]
+[ext_resource type="Texture2D" uid="uid://blunq804f35ls" path="res://assets/sprites/characters/bosses/taser_boss/taser_boss.png" id="1_2lrr3"]
 [ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="1_lx14d"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="2_flp2v"]
 [ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/TaserProjectile/taser_projectile.tscn" id="2_qjvf0"]

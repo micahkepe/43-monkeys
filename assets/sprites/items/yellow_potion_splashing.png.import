@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mimnl2g76xwc"
-path="res://.godot/imported/chemist.png-ac7bc663d2ed2b780ba13530ce47a1ef.ctex"
+uid="uid://bc6s7yfupkihm"
+path="res://.godot/imported/yellow_potion_splashing.png-7863a7f2ef9ac885242c5dd0c4966aec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/bosses/chemist.png"
-dest_files=["res://.godot/imported/chemist.png-ac7bc663d2ed2b780ba13530ce47a1ef.ctex"]
+source_file="res://assets/sprites/items/yellow_potion_splashing.png"
+dest_files=["res://.godot/imported/yellow_potion_splashing.png-7863a7f2ef9ac885242c5dd0c4966aec.ctex"]
 
 [params]
 
