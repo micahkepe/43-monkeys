@@ -108,27 +108,33 @@ size = Vector2(94, 7)
 size = Vector2(41.5, 2.78413)
 
 [node name="MonkeyCage" type="StaticBody2D"]
-z_index = 1
+y_sort_enabled = true
+position = Vector2(658, 363)
+collision_mask = 31
 script = ExtResource("2_12jvl")
 monkey_scenes = Array[PackedScene]([ExtResource("2_h65kn"), ExtResource("3_0ii12"), ExtResource("4_4gyj8"), ExtResource("5_g1bd5"), ExtResource("6_g1dgp")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_2f1v1")
 animation = &"cage_open"
 
 [node name="CollisionClose" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, 27.5)
 shape = SubResource("RectangleShape2D_yc4u2")
 
 [node name="CollisionOpenLeft" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
 position = Vector2(-65.8175, 34.8278)
 rotation = -0.380706
 shape = SubResource("RectangleShape2D_hl67n")
 
 [node name="CollisionOpenRight" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
 position = Vector2(64, 34)
 rotation = -2.75631
 shape = SubResource("RectangleShape2D_hl67n")
 
 [node name="MonkeyHolder" type="Node2D" parent="."]
-z_index = -1
+y_sort_enabled = true

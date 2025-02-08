@@ -696,13 +696,9 @@ scale = Vector2(0.499, 0.499)
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 
 [node name="MonkeyCage" parent="ForegroundTiles" instance=ExtResource("9_6m36m")]
-z_index = 0
-y_sort_enabled = true
 position = Vector2(289.333, -527.333)
 
 [node name="MonkeyCage2" parent="ForegroundTiles" instance=ExtResource("9_6m36m")]
-z_index = 0
-y_sort_enabled = true
 position = Vector2(347.333, -1673.33)
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]

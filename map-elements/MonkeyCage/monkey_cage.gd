@@ -1,21 +1,43 @@
-
 extends StaticBody2D
+## The cage element for holding the monkeys.
+##
+## This element is responsible for spawning a monkey inside the cage and
+## releasing it when the player interacts with it.
+## The cage can only be opened when the player is within a certain distance
+## from it. The cage has three collision areas: one for closing the cage, and
+## two for opening it to the left or right. The cage has an animated sprite
+## for opening and closing the cage door.
 
+## Reference to the animated sprite for the cage movement.
 @onready var anim_sprite = $AnimatedSprite2D
+
+## Collision body at the base of the cage.
 @onready var collision_close = $CollisionClose
+
+## Collision body for opening the cage to the left.
 @onready var collision_open_left = $CollisionOpenLeft
+
+## Collision body for opening the cage to the right.
 @onready var collision_open_right = $CollisionOpenRight
-@onready var monkey_holder = $MonkeyHolder  # This node holds the monkey
+
+## Container for the monkeys inside the cage.
+@onready var monkey_holder = $MonkeyHolder
 
 @export var open_distance: float = 150.0  # Maximum distance to open
 
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
 
-var player: Node2D  # Reference to the player
-var is_open: bool = false  # Track if the cage is already opened
-var caged_monkey: Node2D  # Reference to the monkey inside
+## Reference to the player
+var player: Node2D
 
+## Track if the cage is already opened
+var is_open: bool = false
+
+## Reference to the monkey inside the cage
+var caged_monkey: Node2D
+
+## Called when the node enters the scene tree for the first time.
 func _ready():
 	anim_sprite.play("cage_close")  # Start with closed cage
 	collision_open_left.set_deferred("disabled", true)  # Initially disabled
@@ -27,12 +49,16 @@ func _ready():
 	# Spawn the monkey immediately inside the cage
 	spawn_caged_monkey()
 
-func _process(delta):
+
+## Process the cage opening when the player is near.
+func _process(_delta: float):
 	if not is_open and player and Input.is_action_just_pressed("open_cage"):
 		if global_position.distance_to(player.global_position) <= open_distance:
 			open_cage()  # Only open if player is within range
 
-func spawn_caged_monkey():
+
+## Spawns one of the available monkeys at random inside of the cage.
+func spawn_caged_monkey() -> void:
 	if monkey_scenes.is_empty():
 		print("No monkey scenes available!")
 		return
@@ -57,7 +83,8 @@ func spawn_caged_monkey():
 	print("Monkey spawned inside cage at:", caged_monkey.global_position)
 
 
-func open_cage():
+## Open the cage door and release the monkey inside.
+func open_cage() -> void:
 	is_open = true  # Mark cage as opened
 	anim_sprite.play("cage_close_to_open")  # Play opening animation
 
@@ -73,7 +100,8 @@ func open_cage():
 	release_monkey()
 
 
-func release_monkey():
+## Release the monkey from the cage and add it to the player's swarm.
+func release_monkey() -> void:
 	if caged_monkey and player:
 		# Enable movement again
 		caged_monkey.set_physics_process(true)
