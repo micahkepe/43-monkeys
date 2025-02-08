@@ -535,6 +535,8 @@ radius = 10.0499
 size = Vector2(29, 50.5)
 
 [node name="Boid" type="CharacterBody2D" groups=["boids"]]
+y_sort_enabled = true
+scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_t1ht1")

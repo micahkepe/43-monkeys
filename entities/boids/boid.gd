@@ -197,11 +197,16 @@ func _compute_wall_avoidance() -> Vector2:
 ## Updates the boid's animation based on its velocity.
 ## The boid will play the appropriate animation based on its velocity.
 func _update_animation() -> void:
+	if is_dead:
+		return
+
 	if is_attacking or _anim_sprite.animation.begins_with("slash"):
 		return
 
+	# Ensure the boid is always moving and playing an animation
 	if velocity.length() < minimum_speed:
-		_anim_sprite.stop()
+		# If velocity is too low, set a default animation
+		# _anim_sprite.play("walk_down")
 		return
 
 	# Simple animation logic using cardinal directions
@@ -345,8 +350,14 @@ func _die():
 	collision_layer = 0
 	collision_mask = 0
 
+	# Disable the hitbox to prevent further interactions
+	if is_instance_valid($HitBox):
+		$HitBox.set_deferred("monitoring", false)
+		$HitBox.set_deferred("monitorable", false)
+
 	print_debug("Boid died", self)
 	_anim_sprite.play("die")
+
 	# NOTE: The boid will be removed from the scene tree when the animation
 	## finishes
 
@@ -384,11 +395,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		_update_animation()
 
 
+## Handles the hit box area entered signal.
 func _on_hit_box_body_exited(body:Node2D) -> void:
 	if is_dead:
 		return
 
 	print_debug("Boid hit box exited body: ", body)
 	is_attacking = false
+
+	# Reset the animation to the walk animation
 	_anim_sprite.play("walk_down")
 

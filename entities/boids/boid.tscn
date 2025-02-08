@@ -535,6 +535,8 @@ radius = 9.05539
 size = Vector2(21, 46)
 
 [node name="Boid" type="CharacterBody2D" groups=["boids"]]
+y_sort_enabled = true
+scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 7
 motion_mode = 1
