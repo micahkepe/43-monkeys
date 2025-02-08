@@ -40,15 +40,38 @@ var caged_monkey: Node2D
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	anim_sprite.play("cage_close")  # Start with closed cage
-	collision_open_left.set_deferred("disabled", true)  # Initially disabled
-	collision_open_right.set_deferred("disabled", true)  # Initially disabled
+
+	# Make sure collision shapes are properly configured initially
+	if collision_close:
+		collision_close.set_deferred("disabled", false)  # Initially enabled for closed cage
+	if collision_open_left:
+		collision_open_left.set_deferred("disabled", true)  # Initially disabled
+	if collision_open_right:
+		collision_open_right.set_deferred("disabled", true)  # Initially disabled
 
 	# Get player node from parent scene
-	player = get_parent().get_node("Player")
+	player = find_player_node(get_tree().root)
 
 	# Spawn the monkey immediately inside the cage
 	spawn_caged_monkey()
 
+## Recursively searches for the Player node starting from the given root node.
+## Returns the Player node if found, otherwise returns null.
+## @param root: The root node to start the search from.
+## @return The Player node if found, otherwise null.
+func find_player_node(root: Node) -> Node:
+	# Check if the current node is the Player
+	if root.name == "Player":
+		return root
+
+	# Recursively search through all children
+	for child in root.get_children():
+		var result = find_player_node(child)
+		if result:
+			return result
+
+	# If no Player node is found, return null
+	return null
 
 ## Process the cage opening when the player is near.
 func _process(_delta: float):
@@ -79,6 +102,13 @@ func spawn_caged_monkey() -> void:
 	# Store reference to caged monkey for later release
 	caged_monkey = new_monkey
 
+	# Ensure monkey is marked as caged
+	caged_monkey.is_caged = true
+
+	# Remove from "troop" group if already in it
+	if caged_monkey and caged_monkey.is_in_group("troop"):
+		caged_monkey.remove_from_group("troop")
+
 	print("Monkey spawned inside the cage with correct global scale!")
 	print("Monkey spawned inside cage at:", caged_monkey.global_position)
 
@@ -106,11 +136,21 @@ func release_monkey() -> void:
 		# Enable movement again
 		caged_monkey.set_physics_process(true)
 
+		# Show the health bar if hidden
+		if caged_monkey.has_node("HealthBar"):
+			caged_monkey.get_node("HealthBar").show()
+
+		# Add monkey back to the "troop" group
+		caged_monkey.add_to_group("troop")
+
+		# set the monkey `is_caged` flag
+		caged_monkey.is_caged = false
+
 		# Immediately add to player's swarm
 		if player.has_method("add_monkey_to_swarm"):
 			player.add_monkey_to_swarm(caged_monkey)
 		else:
-			print("ERROR: Player does not have 'add_monkey_to_swarm' method!")
+			push_error("ERROR: Player does not have 'add_monkey_to_swarm' method!")
 
 		# Clear reference since it's no longer in the cage
 		caged_monkey = null

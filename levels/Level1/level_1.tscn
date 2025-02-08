@@ -698,11 +698,39 @@ scale = Vector2(0.499, 0.499)
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 
-[node name="MonkeyCage" parent="ForegroundTiles" instance=ExtResource("9_6m36m")]
-position = Vector2(289.333, -527.333)
+[node name="Cages" type="Node2D" parent="ForegroundTiles"]
+y_sort_enabled = true
 
-[node name="MonkeyCage2" parent="ForegroundTiles" instance=ExtResource("9_6m36m")]
+[node name="MonkeyCage" parent="ForegroundTiles/Cages" instance=ExtResource("9_6m36m")]
+position = Vector2(289.333, -527.333)
+open_distance = null
+
+[node name="MonkeyCage2" parent="ForegroundTiles/Cages" instance=ExtResource("9_6m36m")]
 position = Vector2(347.333, -1673.33)
+open_distance = null
+
+[node name="Boids" type="Node2D" parent="ForegroundTiles"]
+y_sort_enabled = true
+position = Vector2(-33.3333, 73.3333)
+scale = Vector2(0.666667, 0.666667)
+
+[node name="Boid" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-885, 133)
+
+[node name="Boid2" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-684, -96)
+
+[node name="Boid3" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-1061, -391)
+
+[node name="Boid4" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-765, -765)
+
+[node name="Boid5" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-733, -431)
+
+[node name="Boid6" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-1226, -704)
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -1
@@ -733,24 +761,3 @@ stream = ExtResource("11_wf3k5")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
-
-[node name="Boids" type="Node2D" parent="."]
-y_sort_enabled = true
-
-[node name="Boid" parent="Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-885, 133)
-
-[node name="Boid2" parent="Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-684, -96)
-
-[node name="Boid3" parent="Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-1061, -391)
-
-[node name="Boid4" parent="Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-765, -765)
-
-[node name="Boid5" parent="Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-733, -431)
-
-[node name="Boid6" parent="Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-1226, -704)

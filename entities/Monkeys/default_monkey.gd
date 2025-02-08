@@ -69,10 +69,14 @@ var damage_cooldown: float = 1.5
 ## The current cooldown for taking damage
 var current_cooldown: float = 0.0
 
+## Whether the monkey is currently caged.
+var is_caged: bool = false
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
+	health_bar.hide() # Hide the health bar initially
 
 	# Set initial animation to "walk_down"
 	_animated_sprite.play("idle")
@@ -173,6 +177,9 @@ func _check_vision_detection() -> void:
 
 ## Physics processing to handle collision avoidance and vision
 func _physics_process(_delta: float) -> void:
+	if is_caged:
+		return
+
 	# Check for enemy vision
 	_check_vision_detection()
 
@@ -187,7 +194,6 @@ func _physics_process(_delta: float) -> void:
 
 	if current_cooldown > 0:
 		current_cooldown -= _delta
-		
 
 
 ## Called by the Player when the player is moving left
