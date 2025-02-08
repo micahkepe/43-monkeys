@@ -214,5 +214,6 @@ animations = [{
 shape = SubResource("CapsuleShape2D_mtpxl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.75)
 sprite_frames = SubResource("SpriteFrames_hf648")
-animation = &"bottle_spin"
+animation = &"pool_4"

@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://cm833e3rmrk2w"]
+[gd_scene load_steps=30 format=3 uid="uid://cm833e3rmrk2w"]
 
 [ext_resource type="Texture2D" uid="uid://4hvdi4p6dnji" path="res://assets/sprites/items/lightblue_potion_spinning_in_air.png" id="1_qc7ce"]
 [ext_resource type="Texture2D" uid="uid://ctglrgd6rm86w" path="res://assets/sprites/items/lightblue_potion_splashing.png" id="2_obuxo"]
+[ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_j1sg5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtpxl"]
 height = 26.0
@@ -86,6 +87,22 @@ region = Rect2(96, 0, 32, 32)
 atlas = ExtResource("2_obuxo")
 region = Rect2(128, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_irp0x"]
+atlas = ExtResource("3_j1sg5")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4agp"]
+atlas = ExtResource("3_j1sg5")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3sry"]
+atlas = ExtResource("3_j1sg5")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvl0t"]
+atlas = ExtResource("3_j1sg5")
+region = Rect2(96, 64, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_th3lq"]
 animations = [{
 "frames": [{
@@ -157,6 +174,38 @@ animations = [{
 "loop": false,
 "name": &"bottle_splash",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irp0x")
+}],
+"loop": true,
+"name": &"pool_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4agp")
+}],
+"loop": true,
+"name": &"pool_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3sry")
+}],
+"loop": true,
+"name": &"pool_3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvl0t")
+}],
+"loop": true,
+"name": &"pool_4",
+"speed": 5.0
 }]
 
 [node name="HealPotion" type="Area2D"]
@@ -165,7 +214,6 @@ animations = [{
 shape = SubResource("CapsuleShape2D_mtpxl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.75)
 sprite_frames = SubResource("SpriteFrames_th3lq")
-animation = &"bottle_splash"
-frame = 4
-frame_progress = 1.0
+animation = &"pool_1"

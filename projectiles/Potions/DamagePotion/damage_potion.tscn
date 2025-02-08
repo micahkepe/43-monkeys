@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://cmt0k5vghfm35"]
+[gd_scene load_steps=30 format=3 uid="uid://cmt0k5vghfm35"]
 
 [ext_resource type="Texture2D" uid="uid://2st8jaogpaoc" path="res://assets/sprites/items/potions/damage_potion/potion_spinning_in_air.png" id="1_ujc05"]
 [ext_resource type="Texture2D" uid="uid://bjhm335v3ydrc" path="res://assets/sprites/items/potions/damage_potion/potion_splashing.png" id="2_gctfr"]
+[ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_6wosh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wgdj2"]
 atlas = ExtResource("1_ujc05")
@@ -83,6 +84,22 @@ region = Rect2(96, 0, 32, 32)
 atlas = ExtResource("2_gctfr")
 region = Rect2(128, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cval"]
+atlas = ExtResource("3_6wosh")
+region = Rect2(0, 0, 32, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wwmr"]
+atlas = ExtResource("3_6wosh")
+region = Rect2(32, 0, 32, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlanb"]
+atlas = ExtResource("3_6wosh")
+region = Rect2(64, 0, 32, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4a0t"]
+atlas = ExtResource("3_6wosh")
+region = Rect2(96, 0, 32, 38)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_sq85o"]
 animations = [{
 "frames": [{
@@ -154,6 +171,38 @@ animations = [{
 "loop": false,
 "name": &"bottle_splash",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cval")
+}],
+"loop": true,
+"name": &"pool_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wwmr")
+}],
+"loop": true,
+"name": &"pool_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlanb")
+}],
+"loop": true,
+"name": &"pool_3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4a0t")
+}],
+"loop": true,
+"name": &"pool_4",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtpxl"]
@@ -162,8 +211,9 @@ height = 26.0
 [node name="DamagePotion" type="Area2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.75)
 sprite_frames = SubResource("SpriteFrames_sq85o")
-animation = &"bottle_splash"
+animation = &"pool_1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_mtpxl")
