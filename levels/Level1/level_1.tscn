@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=29 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
+[ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
 [ext_resource type="Texture2D" uid="uid://d37qvmn7src22" path="res://assets/sprites/ui/keyboard.png" id="2_hpihk"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="3_pcuto"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_qxfbq"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_6m36m"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="11_wf3k5"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="13_d5kky"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ir1du"]
 texture = ExtResource("5_3nb2r")
@@ -678,6 +680,7 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_y2gn1")
 
 [node name="level-1" type="Node2D"]
+script = ExtResource("1_bim7o")
 
 [node name="Projectiles" type="Node2D" parent="."]
 position = Vector2(50, -110)
@@ -730,3 +733,24 @@ stream = ExtResource("11_wf3k5")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
+
+[node name="Boids" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Boid" parent="Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-885, 133)
+
+[node name="Boid2" parent="Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-684, -96)
+
+[node name="Boid3" parent="Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-1061, -391)
+
+[node name="Boid4" parent="Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-765, -765)
+
+[node name="Boid5" parent="Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-733, -431)
+
+[node name="Boid6" parent="Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(-1226, -704)
