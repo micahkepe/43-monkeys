@@ -14,9 +14,8 @@ var state: int = PotionState.SPIN
 # CONFIGURABLE VARIABLES
 #------------------------------------------------------------------
 # Adjusted for a constant-velocity projectile.
-# (Lowered speed compared to the original version.)
-@export var initial_velocity: Vector2 = Vector2(0, 0)  # Change as needed (e.g. 300 pixels/sec horizontally)
-@export var max_distance: float = 800.0                    # Maximum travel distance before auto-splash
+@export var initial_velocity: Vector2 = Vector2(0, 0)  # might be useless?
+@export var max_distance: float = 400.0                    # Maximum travel distance before auto-splash
 @export var pool_linger_time: float = 5.0                  # How long the pool lingers before deletion
 
 # Internal variables
@@ -26,7 +25,6 @@ var has_triggered_effect: bool = false
 
 #------------------------------------------------------------------
 # NODE REFERENCES
-# (Ensure your scene has nodes with these exact names)
 #------------------------------------------------------------------
 @onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -71,15 +69,15 @@ func _switch_to_splash() -> void:
 	_disable_bottle_shape()
 	_disable_all_pool_shapes()
 	
-	# (Debug) Print the loop setting and computed length of "bottle_splash"
-	if animation_player.sprite_frames.has_animation("bottle_splash"):
-		var loop_setting = animation_player.sprite_frames.get_animation_loop("bottle_splash")
-		var frame_count = animation_player.sprite_frames.get_frame_count("bottle_splash")
-		var anim_speed = animation_player.sprite_frames.get_animation_speed("bottle_splash")
-		var anim_length = frame_count / anim_speed
-		print("bottle_splash loop =", loop_setting, "length =", anim_length)
-	else:
-		print("bottle_splash animation not found!")
+	## (Debug) Print the loop setting and computed length of "bottle_splash"
+	#if animation_player.sprite_frames.has_animation("bottle_splash"):
+		#var loop_setting = animation_player.sprite_frames.get_animation_loop("bottle_splash")
+		#var frame_count = animation_player.sprite_frames.get_frame_count("bottle_splash")
+		#var anim_speed = animation_player.sprite_frames.get_animation_speed("bottle_splash")
+		#var anim_length = frame_count / anim_speed
+		#print("bottle_splash loop =", loop_setting, "length =", anim_length)
+	#else:
+		#print("bottle_splash animation not found!")
 	
 	animation_player.animation_finished.connect(_on_splash_animation_finished)
 	
@@ -88,7 +86,7 @@ func _switch_to_splash() -> void:
 	animation_player.play("bottle_splash")
 	print("PotionProjectile: Playing 'bottle_splash' animation.")
 
-# Note: In Godot 4 the animation_finished signal for AnimatedSprite2D does not pass parameters.
+# Runs on animation finished signal
 func _on_splash_animation_finished() -> void:
 	print("PotionProjectile: splash animation finished. Current animation:", animation_player.animation)
 	if animation_player.animation == "bottle_splash":
@@ -107,16 +105,10 @@ func _switch_to_pool() -> void:
 	animation_player.play(chosen_anim)
 	
 	_disable_bottle_shape()
-	# Explicitly check for each pool animation:
-	if chosen_anim == "pool_1":
+	# Explicitly check for each pool animation, enable specific pool shape accordingly:
+	if chosen_anim == "pool_1" or chosen_anim == "pool_2" or chosen_anim == "pool_3":
 		_enable_pool13_shape()
 		print("PotionProjectile: Pool 1 enabled (using pool13 shape).")
-	elif chosen_anim == "pool_2":
-		_enable_pool13_shape()
-		print("PotionProjectile: Pool 2 enabled (using pool13 shape).")
-	elif chosen_anim == "pool_3":
-		_enable_pool13_shape()
-		print("PotionProjectile: Pool 3 enabled (using pool13 shape).")
 	elif chosen_anim == "pool_4":
 		_enable_pool4_shape()
 		print("PotionProjectile: Pool 4 enabled.")

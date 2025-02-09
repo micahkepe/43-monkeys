@@ -120,7 +120,7 @@ func attack_throw_damage_potion() -> void:
 	
 	# Calculate the direction toward the player.
 	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.velocity = direction * 175  # Adjust the speed as needed
+	projectile.velocity = direction * 175 # Adjust speed of potion here
 	projectile.scale = Vector2(1.5, 1.5)
 	
 	# Play the appropriate attack animation.
