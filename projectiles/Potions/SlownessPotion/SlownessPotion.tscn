@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ds5aa7tdvxm1r"]
+[gd_scene load_steps=32 format=3 uid="uid://ds5aa7tdvxm1r"]
 
 [ext_resource type="Texture2D" uid="uid://cfi3ivl4wve3h" path="res://assets/sprites/items/darkblue_potion_spinning_in_air.png" id="1_afctc"]
 [ext_resource type="Texture2D" uid="uid://mcfgmmkvbs5j" path="res://assets/sprites/items/darkblue_potion_splashing.png" id="2_6y5ml"]
@@ -208,11 +208,31 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1mtj"]
+radius = 6.99998
+height = 34.0043
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tuxkj"]
+radius = 10.9995
+height = 29.9986
+
 [node name="SlownessPotion" type="Area2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="BottleCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_mtpxl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_od28l")
 animation = &"pool_4"
+
+[node name="Pool13Collision" type="CollisionShape2D" parent="."]
+position = Vector2(-2.38419e-07, 10)
+rotation = -1.5686
+shape = SubResource("CapsuleShape2D_g1mtj")
+disabled = true
+
+[node name="Pool4Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+rotation = -1.58045
+shape = SubResource("CapsuleShape2D_tuxkj")
+disabled = true
