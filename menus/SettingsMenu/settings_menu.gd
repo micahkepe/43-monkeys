@@ -14,7 +14,7 @@ extends Control
 @onready var music_volume = $VBoxContainer/MusicVolume
 
 ## The HSlider node that controls the sfx volume.
-@onready var sfx_volume = $VBoxContainer/SFXVolume
+@onready var sfx_volume = $VBoxContainer2/SFXVolume
 
 ## The master bus index.
 const MASTER_BUS = 0
@@ -35,18 +35,9 @@ func _ready() -> void:
 		music_volume.value = db_to_linear(AudioServer.get_bus_volume_db(MUSIC_BUS))
 		sfx_volume.value = db_to_linear(AudioServer.get_bus_volume_db(SFX_BUS))
 
-		# Connect slider signals
-		music_volume.value_changed.connect(_on_music_volume_value_changed)
-		sfx_volume.value_changed.connect(_on_sfx_volume_value_changed)
-
 		# Set up keyboard focus handling
 		music_volume.focus_mode = Control.FOCUS_ALL
 		sfx_volume.focus_mode = Control.FOCUS_ALL
-
-	# Connect back button
-	var back_button = $VBoxContainer/Back
-	if back_button:
-		back_button.pressed.connect(_on_back_pressed)
 
 	# Set up as popup behavior
 	visible = false

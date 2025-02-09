@@ -377,7 +377,6 @@ func _die():
 
 func _handle_hit(hit: Node) -> void:
 	if hit.is_in_group("projectiles"):
-		print_debug("Boid hit by: ", hit)
 		take_damage(1.0)
 		hit.queue_free()
 

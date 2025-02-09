@@ -36,9 +36,6 @@ var _can_advance: bool = false
 @onready var type_timer: Timer = Timer.new()
 @onready var frame_timer: Timer = Timer.new()
 
-## Signal emitted when the cutscene completes
-signal cutscene_completed
-
 ## Called when the node enters the scene tree.
 func _ready() -> void:
 	_setup_timers()

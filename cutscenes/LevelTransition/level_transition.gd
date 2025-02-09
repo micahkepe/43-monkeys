@@ -13,8 +13,6 @@ extends Node2D
 @onready var fade_rect: ColorRect = get_node("FadeRect")
 @onready var type_timer: Timer = Timer.new()      # Timer for typewriter effect
 
-signal transition_completed
-
 # Typewriter state variables
 var _target_text: String = ""
 var _current_text: String = ""

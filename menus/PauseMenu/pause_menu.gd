@@ -14,7 +14,7 @@ extends Control
 
 ## The setting scene loaded from the settings-menu.tscn file.
 const SettingsScene = preload("res://menus/SettingsMenu/settings_menu.tscn")
-@onready var settings_menu = $SettingsMenu
+@onready var settings_menu = null
 
 # Paths to scenes (update these with the actual paths in your project)
 const MAIN_MENU_SCENE = "res://menus/MainMenu/main_menu.tscn"
@@ -34,11 +34,6 @@ func _ready():
 		settings_menu = SettingsScene.instantiate()
 		add_child(settings_menu)
 
-	# Connect button signals using Callable
-	$VBoxContainer/Resume.connect("pressed", Callable(self, "_on_resume_pressed"))
-	$VBoxContainer/MainMenu.connect("pressed", Callable(self, "_on_main_menu_pressed"))
-	$VBoxContainer/Settings.connect("pressed", Callable(self, "_on_settings_pressed"))
-	$VBoxContainer/Quit.connect("pressed", Callable(self, "_on_quit_pressed"))
 	hide()
 
 

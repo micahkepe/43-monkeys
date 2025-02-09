@@ -17,7 +17,7 @@ extends Control
 @onready var theme_player: AudioStreamPlayer = get_node("Sound/BackgroundMusic")
 
 const SettingsScene = preload("res://menus/SettingsMenu/settings_menu.tscn")
-@onready var settings_menu = $SettingsMenu
+@onready var settings_menu = null
 
 ## ItchIo social icon button
 @onready var itch_io_icon = get_node("SocialsContainer/ItchIoButton")

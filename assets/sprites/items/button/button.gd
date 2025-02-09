@@ -1,8 +1,8 @@
 extends Area2D
 ## A button that can be pressed or unpressed by stepping on or off the button
 
+## The AnimatedSprite2D node that will animate the button
 @onready var _animated_sprite = $AnimatedSprite2D
-signal button_state_changed(is_pressed: bool)
 
 var is_pressed = false
 
