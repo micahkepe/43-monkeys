@@ -3,9 +3,9 @@ class_name PotionProjectile
 
 #------------------------------------------------------------------
 # STATES:
-#  SPIN   - The potion is thrown (playing "bottle_spin")
-#  SPLASH - The potion has hit something or reached max distance (playing "potion_splash")
-#  POOL   - After splash, a random pool animation is played ("pool_1" ... "pool_4")
+#   SPIN   - The potion is fired (plays "bottle_spin")
+#   SPLASH - The potion has reached max distance or hit something (plays "bottle_splash")
+#   POOL   - After splash, a random pool animation is played ("pool_1" ... "pool_4")
 #------------------------------------------------------------------
 enum PotionState { SPIN, SPLASH, POOL }
 var state: int = PotionState.SPIN
@@ -13,10 +13,11 @@ var state: int = PotionState.SPIN
 #------------------------------------------------------------------
 # CONFIGURABLE VARIABLES
 #------------------------------------------------------------------
-@export var initial_velocity: Vector2 = Vector2(600, -800)  # Initial throw velocity
-@export var potion_gravity: float = 1500.0                    # Gravity (for arc?)
-@export var max_distance: float = 800.0                       # Maximum distance before auto-splash
-@export var pool_linger_time: float = 5.0                     # Time the pool lingers before deletion
+# Adjusted for a constant-velocity projectile.
+# (Lowered speed compared to the original version.)
+@export var initial_velocity: Vector2 = Vector2(0, 0)  # Change as needed (e.g. 300 pixels/sec horizontally)
+@export var max_distance: float = 800.0                    # Maximum travel distance before auto-splash
+@export var pool_linger_time: float = 5.0                  # How long the pool lingers before deletion
 
 # Internal variables
 var traveled_distance: float = 0.0
@@ -24,160 +25,164 @@ var velocity: Vector2 = Vector2.ZERO
 var has_triggered_effect: bool = false
 
 #------------------------------------------------------------------
-# NODE REFERENCES (make sure your potion scene has these nodes with these names)
+# NODE REFERENCES
+# (Ensure your scene has nodes with these exact names)
 #------------------------------------------------------------------
 @onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 
-# Collision areas:
-# • BottleCollision is active during SPIN and SPLASH.
-# • Pool1Collision, Pool2Collision, Pool3Collision, and Pool4Collision are for the pool state.
-@onready var bottle_collision: Area2D = $BottleCollision
-@onready var pool1_collision: Area2D = $Pool1Collision
-@onready var pool2_collision: Area2D = $Pool2Collision
-@onready var pool3_collision: Area2D = $Pool3Collision
-@onready var pool4_collision: Area2D = $Pool4Collision
+# The collision zones are defined by CollisionShape2D nodes.
+@onready var bottle_shape: CollisionShape2D = $BottleCollision
+@onready var pool13_shape: CollisionShape2D = $Pool13Collision
+@onready var pool4_shape: CollisionShape2D = $Pool4Collision
 
-#------------------------------------------------------------------
-# _ready(): Initialize state, start the bottle_spin animation,
-#          and set up collision signals.
-#------------------------------------------------------------------
 func _ready() -> void:
+	# Initialize state and start the bottle_spin animation.
 	state = PotionState.SPIN
 	traveled_distance = 0.0
 	velocity = initial_velocity
 	animation_player.play("bottle_spin")
 	
-	# In SPIN (and SPLASH) state, enable only the bottle collision.
-	_enable_bottle_collision()
-	_disable_all_pool_collisions()
+	_enable_bottle_shape()
+	_disable_all_pool_shapes()
 	
-	# Connect collision signals using Callable.
-	bottle_collision.connect("body_entered", Callable(self, "_on_body_entered"))
-	pool1_collision.connect("body_entered", Callable(self, "_on_body_entered"))
-	pool2_collision.connect("body_entered", Callable(self, "_on_body_entered"))
-	pool3_collision.connect("body_entered", Callable(self, "_on_body_entered"))
-	pool4_collision.connect("body_entered", Callable(self, "_on_body_entered"))
+	# Connect the root Area2D's body_entered signal.
+	self.connect("body_entered", Callable(self, "_on_body_entered"))
+	print("PotionProjectile _ready: Fired with velocity ", velocity)
 
-#------------------------------------------------------------------
-# _physics_process(): Update the projectile’s position and apply gravity.
-#                      When max_distance is reached, switch to splash.
-#------------------------------------------------------------------
 func _physics_process(delta: float) -> void:
 	if state == PotionState.SPIN:
-		# Apply gravity to vertical velocity.
-		velocity.y += potion_gravity * delta
+		# Move in a straight line at constant velocity.
 		var displacement: Vector2 = velocity * delta
 		position += displacement
 		traveled_distance += displacement.length()
-		
-		# If maximum travel distance is reached, switch to splash.
+		# If the projectile has traveled its maximum distance, switch to splash.
 		if traveled_distance >= max_distance:
+			print("PotionProjectile _physics_process: Max distance reached.")
 			_switch_to_splash()
 
 #------------------------------------------------------------------
-# State Transition: Switch to SPLASH state.
+# State Transitions
 #------------------------------------------------------------------
 func _switch_to_splash() -> void:
 	if state != PotionState.SPIN:
-		return  # Already splashed or in pool state
+		return  # Already splashed or in pool state.
 	state = PotionState.SPLASH
-	_disable_bottle_collision()  # In splash, disable bottle collision.
-	_disable_all_pool_collisions()
-	animation_player.play("potion_splash")
-	# When the splash animation finishes, switch to pool.
-	animation_player.connect("animation_finished", Callable(self, "_on_splash_animation_finished"), CONNECT_ONE_SHOT)
+	print("PotionProjectile: Switching to SPLASH state.")
+	_disable_bottle_shape()
+	_disable_all_pool_shapes()
+	
+	# (Debug) Print the loop setting and computed length of "bottle_splash"
+	if animation_player.sprite_frames.has_animation("bottle_splash"):
+		var loop_setting = animation_player.sprite_frames.get_animation_loop("bottle_splash")
+		var frame_count = animation_player.sprite_frames.get_frame_count("bottle_splash")
+		var anim_speed = animation_player.sprite_frames.get_animation_speed("bottle_splash")
+		var anim_length = frame_count / anim_speed
+		print("bottle_splash loop =", loop_setting, "length =", anim_length)
+	else:
+		print("bottle_splash animation not found!")
+	
+	animation_player.animation_finished.connect(_on_splash_animation_finished)
+	
+	animation_player.stop()
+	animation_player.frame = 0  # Reset to the first frame
+	animation_player.play("bottle_splash")
+	print("PotionProjectile: Playing 'bottle_splash' animation.")
 
-func _on_splash_animation_finished(anim_name: String) -> void:
-	if anim_name == "potion_splash":
+# Note: In Godot 4 the animation_finished signal for AnimatedSprite2D does not pass parameters.
+func _on_splash_animation_finished() -> void:
+	print("PotionProjectile: splash animation finished. Current animation:", animation_player.animation)
+	if animation_player.animation == "bottle_splash":
 		_switch_to_pool()
 
-#------------------------------------------------------------------
-# State Transition: Switch to POOL state.
-#------------------------------------------------------------------
 func _switch_to_pool() -> void:
 	if state != PotionState.SPLASH:
 		return
 	state = PotionState.POOL
-	# Randomly select one of the pool animations.
+	print("PotionProjectile: Switching to POOL state.")
+	# Randomly choose one of the pool animations.
 	var pool_anims: Array[String] = ["pool_1", "pool_2", "pool_3", "pool_4"]
 	var chosen_anim: String = pool_anims[randi() % pool_anims.size()]
+	print("PotionProjectile: Chosen pool animation:", chosen_anim)
+	animation_player.stop()
 	animation_player.play(chosen_anim)
 	
-	# In the POOL state, disable the bottle collision and enable the corresponding pool collision.
-	_disable_bottle_collision()
-	match chosen_anim:
-		"pool_1":
-			_enable_pool1_collision()
-		"pool_2":
-			_enable_pool2_collision()
-		"pool_3":
-			_enable_pool3_collision()
-		"pool_4":
-			_enable_pool4_collision()
+	_disable_bottle_shape()
+	# Explicitly check for each pool animation:
+	if chosen_anim == "pool_1":
+		_enable_pool13_shape()
+		print("PotionProjectile: Pool 1 enabled (using pool13 shape).")
+	elif chosen_anim == "pool_2":
+		_enable_pool13_shape()
+		print("PotionProjectile: Pool 2 enabled (using pool13 shape).")
+	elif chosen_anim == "pool_3":
+		_enable_pool13_shape()
+		print("PotionProjectile: Pool 3 enabled (using pool13 shape).")
+	elif chosen_anim == "pool_4":
+		_enable_pool4_shape()
+		print("PotionProjectile: Pool 4 enabled.")
+	else:
+		_enable_pool13_shape()
+		print("PotionProjectile: Unknown pool animation; defaulting to pool13 shape.")
 	
-	# Start a timer so that the pool lingers before deletion.
+	# Start a timer to remove the projectile after the pool lingers.
 	var pool_timer: Timer = Timer.new()
 	pool_timer.wait_time = pool_linger_time
 	pool_timer.one_shot = true
 	add_child(pool_timer)
 	pool_timer.connect("timeout", Callable(self, "_on_pool_timeout"))
 	pool_timer.start()
+	print("PotionProjectile: Pool will linger for ", pool_linger_time, " seconds.")
 
 func _on_pool_timeout() -> void:
+	print("PotionProjectile: Pool timer finished, queueing free.")
 	queue_free()
 
 #------------------------------------------------------------------
-# Collision Enable/Disable Helper Functions
+# Collision Shape Enable/Disable Helpers
 #------------------------------------------------------------------
-func _enable_bottle_collision() -> void:
-	bottle_collision.monitoring = true
+func _enable_bottle_shape() -> void:
+	print("ENABLE BOTTLE SHAPE")
+	bottle_shape.disabled = false
 
-func _disable_bottle_collision() -> void:
-	bottle_collision.monitoring = false
+func _disable_bottle_shape() -> void:
+	bottle_shape.disabled = true
 
-func _disable_all_pool_collisions() -> void:
-	_disable_pool1_collision()
-	_disable_pool2_collision()
-	_disable_pool3_collision()
-	_disable_pool4_collision()
+func _disable_all_pool_shapes() -> void:
+	_disable_pool13_shape()
+	_disable_pool4_shape()
 
-func _enable_pool1_collision() -> void:
-	pool1_collision.monitoring = true
-func _disable_pool1_collision() -> void:
-	pool1_collision.monitoring = false
+func _enable_pool13_shape() -> void:
+	print("ENABLE POOL13 SHAPE")
+	pool13_shape.disabled = false
 
-func _enable_pool2_collision() -> void:
-	pool2_collision.monitoring = true
-func _disable_pool2_collision() -> void:
-	pool2_collision.monitoring = false
+func _disable_pool13_shape() -> void:
+	pool13_shape.disabled = true
 
-func _enable_pool3_collision() -> void:
-	pool3_collision.monitoring = true
-func _disable_pool3_collision() -> void:
-	pool3_collision.monitoring = false
+func _enable_pool4_shape() -> void:
+	print("ENABLE POOL4 SHAPE")
+	pool4_shape.disabled = false
 
-func _enable_pool4_collision() -> void:
-	pool4_collision.monitoring = true
-func _disable_pool4_collision() -> void:
-	pool4_collision.monitoring = false
+func _disable_pool4_shape() -> void:
+	pool4_shape.disabled = true
 
 #------------------------------------------------------------------
-# Collision Callback: Called when any connected collision area detects a body.
+# Collision Callback (via the root Area2D signal)
 #------------------------------------------------------------------
 func _on_body_entered(body: Node) -> void:
 	if _is_target(body):
+		print("PotionProjectile: Collision detected with ", body.name)
 		on_effect_body_entered(body)
 		has_triggered_effect = true
-		# If the potion is still in flight, switch immediately to splash.
+		# If the projectile is still in flight, switch immediately to splash.
 		if state == PotionState.SPIN:
 			_switch_to_splash()
 
-# Helper to determine if the body is a target.
+# Helper: Returns true if the body belongs to target groups.
 func _is_target(body: Node) -> bool:
 	return body.is_in_group("player") or body.is_in_group("monkey")
 
 #------------------------------------------------------------------
-# VIRTUAL FUNCTION: Override this in your potion-specific scripts to apply custom effects.
+# VIRTUAL FUNCTION: Override this in potion-specific scripts.
 #------------------------------------------------------------------
 func on_effect_body_entered(body: Node) -> void:
-	print("Potion projectile hit ", body.name)
+	print("PotionProjectile: Default on_effect_body_entered called for ", body.name)
