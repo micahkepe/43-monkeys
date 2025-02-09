@@ -765,9 +765,9 @@ autoplay = true
 bus = &"Music"
 parameters/looping = true
 
-[node name="PauseMenu" parent="." instance=ExtResource("18_5jmpx")]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("18_5jmpx")]
 visible = false
-offset_left = -803.0
-offset_top = 523.0
-offset_right = -802.0
-offset_bottom = 523.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
