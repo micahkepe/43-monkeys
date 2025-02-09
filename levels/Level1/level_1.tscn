@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=38 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="11_wf3k5"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ir1du"]
 texture = ExtResource("5_3nb2r")
@@ -763,3 +764,10 @@ stream = ExtResource("11_wf3k5")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("18_5jmpx")]
+visible = false
+offset_left = -803.0
+offset_top = 523.0
+offset_right = -802.0
+offset_bottom = 523.0
