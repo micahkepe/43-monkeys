@@ -12,10 +12,10 @@ extends CharacterBody2D
 ##		https://en.wikipedia.org/wiki/Boids
 
 ## The maximum speed of the boid.
-@export var max_speed: float = 250.0
+@export var max_speed: float = 125.0
 
 ## The maxiumum force that can be applied to the boid.
-@export var max_force: float = 100.0
+@export var max_force: float = 150.0
 
 ## The distance to which the boid can see in its range of view.
 @export var view_radius: float = 300.0
@@ -27,7 +27,7 @@ extends CharacterBody2D
 @export var separation_distance: float = 25.0
 
 ## The weight of the separation force.
-@export var weight_separation: float = 1.5
+@export var weight_separation: float = 2.0
 
 ## The weight of the alignment force.
 @export var weight_alignment: float = 1.0
@@ -38,11 +38,8 @@ extends CharacterBody2D
 ## The weight for wall avoidance.
 @export var weight_avoidance: float = 2.0
 
-## The weight for targeting a specific node.
-@export var weight_targeting: float = 3.0
-
 ## The length of the raycasts used for wall avoidance.
-@export var raycast_length: float = 50.0
+@export var raycast_length: float = 75.0
 
 ## The minimum speed of the boid.
 @export var minimum_speed: float = 50.0
@@ -114,8 +111,8 @@ func _physics_process(delta: float) -> void:
 	# See if we have a target, else continue with boid-like movement
 	if target:
 		# seek out the target
-		var to_target = (target.global_position - global_position).normalized()
-		steering += to_target * max_force * weight_targeting
+		var direction = (target.global_position - global_position).normalized()
+		velocity = direction * max_speed
 	else:
 		# flocking behavior
 		var neighbors = _get_neighbors()
@@ -150,13 +147,30 @@ func _get_closest_target() -> Node2D:
 	for group in ["player", "troop"]:
 		for target in get_tree().get_nodes_in_group(group):
 			var distance = global_position.distance_to(target.global_position)
+			var direction = (target.global_position - global_position).normalized()
 
-			if distance < view_radius and distance < min_distance:
-				closest_target = target
-				min_distance = distance
+			# temporary line of sight raycast for targeting
+			var space_state = get_world_2d().direct_space_state
+			var query = PhysicsRayQueryParameters2D.create(
+				global_position,
+				target.global_position,
+				1
+			)
+			var result = space_state.intersect_ray(query)
+
+			if distance < view_radius and not result:
+				var angle_between = velocity.angle_to(direction)
+
+				if abs(angle_between) <= deg_to_rad(view_angle_degrees / 2.0):
+					if distance < min_distance:
+						closest_target = target
+						min_distance = distance
 
 	return closest_target
 
+
+## Plays the attack animation and applies damage to the target node.
+## @param target: Node2D - The target node to attack.
 func _play_attack_animation(target: Node2D) -> void:
 	var direction = (target.global_position - global_position).normalized()
 	print_debug("Playing attack animation. Direction: ", direction)
