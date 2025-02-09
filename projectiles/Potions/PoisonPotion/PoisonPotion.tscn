@@ -1,7 +1,7 @@
 [gd_scene load_steps=32 format=3 uid="uid://bst06yrhcdv6k"]
 
-[ext_resource type="Texture2D" uid="uid://bpad5napyj27q" path="res://assets/sprites/items/purple_potion_spinning_in_air.png" id="1_oggje"]
-[ext_resource type="Texture2D" uid="uid://b8ecfmc525nos" path="res://assets/sprites/items/purple_potion_splashing.png" id="2_peuee"]
+[ext_resource type="Texture2D" uid="uid://bpad5napyj27q" path="res://assets/sprites/items/potions/purple_potion_spinning_in_air.png" id="1_oggje"]
+[ext_resource type="Texture2D" uid="uid://b8ecfmc525nos" path="res://assets/sprites/items/potions/purple_potion_splashing.png" id="2_peuee"]
 [ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_i71uh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtpxl"]

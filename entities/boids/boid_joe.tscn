@@ -1,8 +1,8 @@
 [gd_scene load_steps=75 format=3 uid="uid://c861smevaeaq6"]
 
-[ext_resource type="Script" path="res://entities/boids/boid.gd" id="1_t1ht1"]
+[ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_t1ht1"]
 [ext_resource type="Texture2D" uid="uid://bvdcerbrj443d" path="res://assets/sprites/characters/people/warren.png" id="2_bu32e"]
-[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="2_max7p"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_max7p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qjy4"]
 atlas = ExtResource("2_max7p")

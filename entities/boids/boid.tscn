@@ -1,7 +1,7 @@
 [gd_scene load_steps=75 format=3 uid="uid://dd8b8qu4e6jme"]
 
-[ext_resource type="Script" path="res://entities/boids/boid.gd" id="1_j73er"]
-[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="2_eigla"]
+[ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_j73er"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_eigla"]
 [ext_resource type="Texture2D" uid="uid://bodwmlsthyj68" path="res://assets/sprites/characters/people/scientist.png" id="2_mccus"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_768l2"]

@@ -1,11 +1,11 @@
 [gd_scene load_steps=95 format=3 uid="uid://cp5du4n6j8tbm"]
 
-[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/blood_explosion.png" id="1_01vq4"]
-[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="1_lx14d"]
-[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://assets/sprites/ui/HealthBar/health_bar.tscn" id="2_flp2v"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_01vq4"]
+[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/Bosses/TaserBoss/electro_laser.tscn" id="1_lx14d"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_flp2v"]
 [ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/TaserProjectile/taser_projectile.tscn" id="2_qjvf0"]
-[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://assets/sprites/items/button/button.tscn" id="3_t76re"]
-[ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/bosses/TaserBoss/electric_forcefield.tscn" id="4_p5cmy"]
+[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="3_t76re"]
+[ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/Bosses/TaserBoss/electric_forcefield.tscn" id="4_p5cmy"]
 [ext_resource type="Texture2D" uid="uid://bnub553joybdm" path="res://assets/sprites/characters/bosses/plantboss.png" id="6_hhtgi"]
 
 [sub_resource type="GDScript" id="GDScript_kf6yr"]
