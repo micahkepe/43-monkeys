@@ -224,6 +224,7 @@ script = ExtResource("1_h1onh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.75)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_sq85o")
 animation = &"bottle_splash"
 

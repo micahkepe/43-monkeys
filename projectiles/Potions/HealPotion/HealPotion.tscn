@@ -227,8 +227,9 @@ shape = SubResource("CapsuleShape2D_mtpxl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.75)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_th3lq")
-animation = &"pool_4"
+animation = &"bottle_spin"
 
 [node name="Pool13Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-2.38419e-07, 10)

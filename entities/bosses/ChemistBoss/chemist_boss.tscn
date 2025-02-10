@@ -694,13 +694,12 @@ size = Vector2(31.3483, 52.6966)
 
 [node name="ChemistBoss" type="CharacterBody2D" groups=["enemies"]]
 position = Vector2(640, 356)
-scale = Vector2(2.67, 2.67)
+scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_gnslh")
 damage_potion_scene = ExtResource("1_bd8l1")
 heal_potion_scene = ExtResource("2_uadid")
-max_health = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

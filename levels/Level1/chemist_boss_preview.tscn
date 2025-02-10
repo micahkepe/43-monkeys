@@ -392,7 +392,7 @@ script = ExtResource("9_x3jn7")
 zoom = Vector2(0.5, 0.5)
 
 [node name="MonkeyCage" parent="ForegroundTiles" instance=ExtResource("10_v3dr4")]
-position = Vector2(702, 825)
+position = Vector2(598.667, 810.667)
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -1

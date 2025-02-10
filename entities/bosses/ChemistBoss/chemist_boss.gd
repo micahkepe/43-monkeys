@@ -152,14 +152,23 @@ func start_wait_timer() -> void:
 	move_to_next_waypoint()
 
 
-## Helper function to find the player.
-func _get_player() -> Node2D:
-	var player = get_parent().get_node("ForegroundTiles/Player")
-	if player:
-		return player
-	else:
-		print("Player not found!")
-		return null
+## Recursively searches for the Player node starting from the given root node.
+## Returns the Player node if found, otherwise returns null.
+## @param root: The root node to start the search from.
+## @return The Player node if found, otherwise null.
+func find_player_node(root: Node) -> Node:
+	# Check if the current node is the Player
+	if root.name == "Player":
+		return root
+
+	# Recursively search through all children
+	for child in root.get_children():
+		var result = find_player_node(child)
+		if result:
+			return result
+
+	# If no Player node is found, return null
+	return null
 
 
 ## Adds a projectile to a container if available; otherwise adds it as a child.
@@ -181,7 +190,7 @@ func attack_throw_damage_potion() -> void:
 	if not damage_potion_scene:
 		print("DamagePotion scene not set!")
 		return
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		return
 
@@ -212,7 +221,7 @@ func attack_throw_damage_potion_spread() -> void:
 	if not damage_potion_scene:
 		print("DamagePotion scene not set!")
 		return
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		return
 
@@ -252,7 +261,7 @@ func attack_throw_heal_potion() -> void:
 	if not heal_potion_scene:
 		print("HealPotion scene not set!")
 		return
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		return
 
@@ -282,7 +291,8 @@ func attack_throw_heal_potion_spread() -> void:
 	if not heal_potion_scene:
 		print("HealPotion scene not set!")
 		return
-	var player = _get_player()
+
+	var player = find_player_node(get_tree().get_root())
 
 	if not player:
 		return

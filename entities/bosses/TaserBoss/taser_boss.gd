@@ -143,15 +143,23 @@ func _start_wait_timer() -> void:
 	_move_to_next_waypoint()
 
 
-## Helper function to find the player based on your node structure
-## @return Node2D - the player node
-func _get_player() -> Node2D:
-	var player = get_parent().get_node("ForegroundTiles/Player")
-	if player:
-		return player
-	else:
-		print("Player not found!")
-		return null
+## Recursively searches for the Player node starting from the given root node.
+## Returns the Player node if found, otherwise returns null.
+## @param root: The root node to start the search from.
+## @return The Player node if found, otherwise null.
+func find_player_node(root: Node) -> Node:
+	# Check if the current node is the Player
+	if root.name == "Player":
+		return root
+
+	# Recursively search through all children
+	for child in root.get_children():
+		var result = find_player_node(child)
+		if result:
+			return result
+
+	# If no Player node is found, return null
+	return null
 
 
 ## Helper function to create a taser projectile and add it to the scene
@@ -171,7 +179,8 @@ func _attack_shoot_at_player() -> void:
 		print("Taser Projectile scene not set!")
 		return
 
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
+
 	if not player:
 		print("Player not found!")
 		return
@@ -209,7 +218,7 @@ func attack_burst_shoot_at_player(burst_count: int = 3, delay: float = 0.1) -> v
 		print("Taser Projectile scene not set!")
 		return
 
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		print("Player not found!")
 		return
@@ -242,7 +251,7 @@ func attack_spread_shoot_at_player(spread_count: int = 5, angle_range: float = P
 		print("Taser Projectile scene not set!")
 		return
 
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		print("Player not found!")
 		return
@@ -348,7 +357,7 @@ func attack_horizontal_wall(num_projectiles: int = 10, spacing: float = 200.0) -
 	# Set the attacking flag to true
 	is_attacking = true
 
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		print("Player not found!")
 		return
@@ -399,7 +408,7 @@ func attack_vertical_wall(num_projectiles: int = 10, spacing: float = 150.0) -> 
 	# Set the attacking flag to true
 	is_attacking = true
 
-	var player = _get_player()
+	var player = find_player_node(get_tree().get_root())
 	if not player:
 		print("Player not found!")
 		return
