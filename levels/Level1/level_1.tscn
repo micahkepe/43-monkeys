@@ -618,7 +618,7 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_xfyfs"]
 sources/0 = SubResource("TileSetAtlasSource_704xv")
 
-[node name="level-1" type="Node2D"]
+[node name="Level1" type="Node2D"]
 script = ExtResource("1_bim7o")
 
 [node name="Projectiles" type="Node2D" parent="."]

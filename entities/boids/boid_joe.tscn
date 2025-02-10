@@ -1,8 +1,9 @@
-[gd_scene load_steps=75 format=3 uid="uid://c861smevaeaq6"]
+[gd_scene load_steps=76 format=3 uid="uid://c861smevaeaq6"]
 
 [ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_t1ht1"]
 [ext_resource type="Texture2D" uid="uid://bvdcerbrj443d" path="res://assets/sprites/characters/people/warren.png" id="2_bu32e"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_max7p"]
+[ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/wilhelm-scream.ogg" id="4_42v4i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qjy4"]
 atlas = ExtResource("2_max7p")
@@ -567,6 +568,14 @@ collision_mask = 31
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_qyujn")
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="ScreamPlayer" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("4_42v4i")
+volume_db = -15.0
+mix_target = 1
+bus = &"SFX"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

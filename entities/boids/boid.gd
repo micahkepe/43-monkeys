@@ -65,11 +65,19 @@ extends CharacterBody2D
 ## Attack timer to control the rate of attacks.
 var attack_timer: float = 0.0
 
+## The damage dealt by the boid's attack.
 @export var attack_damage: int = 1
+
+## The cooldown time between attacks (in seconds)
 @export var attack_cooldown: float = 1.5
 
+## The probability of the boid screaming when unaliving.
+@export var scream_probability: float = 0.1
+
+## The boid's current attacking state.
 var is_attacking: bool = false
 
+## The boid's current alive state.
 var is_dead: bool = false
 
 
@@ -372,6 +380,10 @@ func _die():
 	print_debug("Boid died", self)
 	_anim_sprite.play("die")
 
+	# Play a scream sound with a probability
+	if randf() < scream_probability:
+		$Sound/ScreamPlayer.play()
+
 	# NOTE: The boid will be removed from the scene tree when the animation
 	## finishes
 
@@ -399,6 +411,8 @@ func _on_hit_box_body_entered(body: Node) -> void:
 ## Handles the animation finished signal for the boid.
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if _anim_sprite.animation == "die":
+		if $Sound/ScreamPlayer.playing:
+			await $Sound/ScreamPlayer.finished
 		_anim_sprite.stop()
 		queue_free()
 
@@ -418,4 +432,3 @@ func _on_hit_box_body_exited(body:Node2D) -> void:
 
 	# Reset the animation to the walk animation
 	_anim_sprite.play("walk_down")
-

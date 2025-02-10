@@ -817,7 +817,7 @@ sources/3 = SubResource("TileSetAtlasSource_vhjgw")
 sources/1 = SubResource("TileSetAtlasSource_xol5g")
 sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
-[node name="level-3" type="Node2D" groups=["boids"]]
+[node name="Level3" type="Node2D" groups=["boids"]]
 position = Vector2(494, 564)
 script = ExtResource("1_3vp1w")
 
@@ -902,4 +902,3 @@ scale = Vector2(2.25, 2.25)
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("14_boakj")]
 visible = false
-offset_right = 0.0

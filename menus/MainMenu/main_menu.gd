@@ -43,13 +43,16 @@ func _ready() -> void:
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
 	theme_player.stop()
-	select_sfx_player.play()
+	# Only play the sound effect once
+	if !select_sfx_player.playing:
+		select_sfx_player.play()
 	get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
 
 
 ## Handle the press event on the settings button. Currently does nothing.
 func _on_settings_button_pressed() -> void:
-	select_sfx_player.play()
+	if !select_sfx_player.playing:
+		select_sfx_player.play()
 	if settings_menu:
 		settings_menu.show_settings()
 
@@ -57,7 +60,8 @@ func _on_settings_button_pressed() -> void:
 ## Handle the press event on the quit button. Quits the node tree to exit the
 ## game.
 func _on_quit_button_pressed() -> void:
-	select_sfx_player.play()
+	if !select_sfx_player.playing:
+		select_sfx_player.play()
 	get_tree().quit()
 
 
