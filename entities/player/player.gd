@@ -156,13 +156,13 @@ func _physics_process(_delta: float) -> void:
 	var current_speed = speed
 
 	# Movement input
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("ui_right") and not Input.is_key_pressed(KEY_SHIFT):
 		input_velocity.x += 1
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left") and not Input.is_key_pressed(KEY_SHIFT):
 		input_velocity.x -= 1
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") and not Input.is_key_pressed(KEY_SHIFT):
 		input_velocity.y -= 1
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") and not Input.is_key_pressed(KEY_SHIFT):
 		input_velocity.y += 1
 
 	# Normalize diagonal movement
@@ -431,7 +431,7 @@ func handle_swarm_input(_delta: float) -> bool:
 		_shift_swarm_position(Vector2(1, 0), 200.0 * _delta)
 		swarm_moved = true
 
-# Ellipse resizing
+	# Ellipse resizing
 	if Input.is_action_pressed("inc_height_ellipse"):
 		_adjust_ellipse_global(Vector2(0, 1), +200.0 * _delta)  # Stretch along global y-axis
 		_needs_full_ellipse_recalc = true
@@ -574,6 +574,15 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	projectile.scale = Vector2(1.5, 1.5)
 
 	var projectiles_node = find_node_recursive(get_tree().root, "Projectiles")
+
+	if projectiles_node == null:
+		print_debug("Projectiles node not found! Pwease add.")
+
+		# Defensively add in the node
+		projectiles_node = Node2D.new()
+		projectiles_node.name = "Projectiles"
+		get_tree().root.add_child(projectiles_node)
+
 	var local_spawn_pos = projectiles_node.to_local(spawn_global_position)
 	projectile.position = local_spawn_pos
 
@@ -673,18 +682,18 @@ func remove_monkey(monkey: Node) -> void:
 	_needs_full_ellipse_recalc = true
 	monkey_count_changed.emit(_swarm_monkeys.size())
 	print_debug("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())
-	
-	
+
+
 func heal(amount: float) -> void:
 	# Increase current health but do not exceed max_health.
 	_current_health = min(max_health, _current_health + amount)
-	
+
 	# Update the hearts UI display.
 	update_hearts_display()
-	
+
 	# Apply a light blue tint to indicate healing.
 	_animated_sprite.modulate = Color(0.7, 0.7, 1, 1)  # Light blue tint
 	await get_tree().create_timer(0.5).timeout
 	_animated_sprite.modulate = Color(1, 1, 1, 1)  # Reset to white
-	
+
 	print_debug("Player healed by ", amount, ". Current health: ", _current_health)
