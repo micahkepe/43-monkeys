@@ -16,10 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_311su"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
-[ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="11_wf3k5"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/ChemistBoss/chemist_boss.tscn" id="15_837f7"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/TerminatorBoss/terminator_boss.tscn" id="15_837f7"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
+[ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ir1du"]
 texture = ExtResource("5_3nb2r")
@@ -176,13 +176,6 @@ texture = ExtResource("4_qxfbq")
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6xns6"]
 texture = ExtResource("7_fa07u")
 texture_region_size = Vector2i(32, 32)
-4:0/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-4:3/0 = 0
-5:3/0 = 0
 0:0/0 = 0
 1:0/size_in_atlas = Vector2i(2, 2)
 1:0/0 = 0
@@ -1058,7 +1051,7 @@ tile_map_data = PackedByteArray("AACOACv/AAADAAUAAACtACz/AAADAAUAAACrACv/AAADAAU
 tile_set = SubResource("TileSet_xfyfs")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_wf3k5")
+stream = ExtResource("19_wc88d")
 autoplay = true
 bus = &"Music"
 parameters/looping = true

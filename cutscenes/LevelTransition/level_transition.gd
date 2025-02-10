@@ -30,9 +30,9 @@ func _ready():
 
 	# Center the label
 	var viewport_size = get_viewport_rect().size
-	fade_rect.size = viewport_size
-	label.position = Vector2(viewport_size.x / 2 - label.size.x / 2,
-	                         viewport_size.y / 2 - label.size.y / 2)
+	fade_rect.set_deferred("size", viewport_size)
+	label.set_deferred("position", Vector2(viewport_size.x / 2 - label.size.x / 2,
+	                         viewport_size.y / 2 - label.size.y / 2))
 
 	# Start fade-in
 	fade_rect.modulate.a = 1.0
@@ -88,7 +88,6 @@ func fade_out():
 	tween.tween_callback(Callable(self, "_on_fade_out_complete"))
 
 func _on_fade_out_complete():
-	emit_signal("transition_completed")
 	print_debug("Transition completed, loading next level.")
 
 	# Load the next level directly from here

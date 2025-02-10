@@ -241,9 +241,11 @@ offset_right = 12.6667
 offset_bottom = -20.0
 
 [node name="HitBox" type="Area2D" parent="."]
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 114
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+y_sort_enabled = true
 position = Vector2(0, 5.66667)
 shape = SubResource("CircleShape2D_yrfq4")

@@ -1,11 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5ccssb5kjdpo"]
+[gd_scene load_steps=4 format=3 uid="uid://b5ccssb5kjdpo"]
 
 [ext_resource type="Script" path="res://cutscenes/LevelTransition/level_transition.gd" id="1_we6ay"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_1b3p5"]
+[ext_resource type="PackedScene" uid="uid://8cuycqhvypgw" path="res://menus/MainMenu/main_menu.tscn" id="2_ujoxu"]
 
 [node name="LevelTransition" type="Node2D"]
 modulate = Color(1, 1, 1, 0)
 script = ExtResource("1_we6ay")
+level_number = -1
+level_title = "Debugging"
+next_level_scene = ExtResource("2_ujoxu")
+display_duration = null
+fade_duration = null
+typing_speed = null
+punctuation_pause = null
 
 [node name="FadeRect" type="ColorRect" parent="."]
 modulate = Color(0, 0, 0, 1)

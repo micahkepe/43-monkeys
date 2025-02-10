@@ -26,7 +26,7 @@ extends CharacterBody2D
 @export var max_health: int = 150
 
 ## Current health
-var current_health: int
+var current_health: float
 
 ## Minimum interval between attacks
 @export var min_attack_interval: float = 3.0
@@ -497,13 +497,13 @@ func attack_spawn_buttons_with_forcefield():
 	is_attacking = true
 
 	var buttons = []  # Store the button instances
-	for position in button_positions:
+	for pos in button_positions:
 		var button = button_scene.instantiate()
 		boss_button_node.add_child(button)
 		button.scale = Vector2(1.2, 1.2)
-		button.global_position = position
+		button.global_position = pos
 		buttons.append(button)
-		print("Spawned button at position: ", position)
+		print("Spawned button at position: ", pos)
 		print("Button visibility:", button.visible)
 		# Create a dictionary to track button states
 
