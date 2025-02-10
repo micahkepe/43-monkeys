@@ -138,6 +138,7 @@ func _ready() -> void:
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
 
+
 # update the monkey group number
 func _update_monkey_counter(count: int) -> void:
 	if monkey_counter_label:
