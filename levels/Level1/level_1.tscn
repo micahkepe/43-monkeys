@@ -504,22 +504,22 @@ scale = Vector2(4.005, 4.005)
 y_sort_enabled = true
 
 [node name="Buttons1" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(177.333, -768)
+position = Vector2(530.667, -1774.67)
 
 [node name="Buttons2" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(625.333, -767.333)
+position = Vector2(816, -1772.67)
 
 [node name="Buttons3" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3523.33, -2265.33)
+position = Vector2(3435.33, -1878.67)
 
 [node name="Buttons4" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3187.33, -1966.67)
+position = Vector2(3320.67, -1761.33)
 
 [node name="Buttons5" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3868.66, -1994.67)
+position = Vector2(3554, -1766.67)
 
 [node name="Buttons6" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3530.66, -1687.33)
+position = Vector2(3442.67, -1651.33)
 
 [node name="Lasers" type="Node2D" parent="ForegroundTiles"]
 y_sort_enabled = true

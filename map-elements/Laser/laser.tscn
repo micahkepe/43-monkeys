@@ -74,7 +74,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cvgv1")
 }],
-"loop": true,
+"loop": false,
 "name": &"laser_turn_off",
 "speed": 10.0
 }, {
@@ -106,8 +106,7 @@ script = ExtResource("1_y8frr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5w4xi")
-animation = &"laser_turn_on"
-frame_progress = 0.548513
+animation = &"laser_turn_off"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
