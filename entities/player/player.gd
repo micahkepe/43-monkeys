@@ -665,3 +665,18 @@ func remove_monkey(monkey: Node) -> void:
 	_needs_full_ellipse_recalc = true
 	monkey_count_changed.emit(_swarm_monkeys.size())
 	print_debug("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())
+	
+	
+func heal(amount: float) -> void:
+	# Increase current health but do not exceed max_health.
+	_current_health = min(max_health, _current_health + amount)
+	
+	# Update the hearts UI display.
+	update_hearts_display()
+	
+	# Apply a light blue tint to indicate healing.
+	_animated_sprite.modulate = Color(0.7, 0.7, 1, 1)  # Light blue tint
+	await get_tree().create_timer(0.5).timeout
+	_animated_sprite.modulate = Color(1, 1, 1, 1)  # Reset to white
+	
+	print_debug("Player healed by ", amount, ". Current health: ", _current_health)

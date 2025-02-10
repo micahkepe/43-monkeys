@@ -13,6 +13,7 @@ var damaged_bodies: Array = []
 
 # Override to apply immediate damage when hit during SPIN state.
 func on_effect_body_entered(body: Node) -> void:
+	print("body name:", body.name)
 	if state == PotionState.SPIN:
 		if body.has_method("take_damage") and not (body in damaged_bodies):
 			print("DamagePotion: Applying immediate damage to ", body.name)

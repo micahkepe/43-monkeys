@@ -171,7 +171,7 @@ func _on_body_entered(body: Node) -> void:
 
 # Helper: Returns true if the body belongs to target groups.
 func _is_target(body: Node) -> bool:
-	return body.is_in_group("player") or body.is_in_group("monkey")
+	return body.is_in_group("player") or body.is_in_group("troop")
 
 #------------------------------------------------------------------
 # VIRTUAL FUNCTION: Override this in potion-specific scripts.

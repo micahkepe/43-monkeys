@@ -1,6 +1,7 @@
-[gd_scene load_steps=92 format=3 uid="uid://cp5du4n6j8tbm"]
+[gd_scene load_steps=93 format=3 uid="uid://cp5du4n6j8tbm"]
 
 [ext_resource type="PackedScene" uid="uid://cmt0k5vghfm35" path="res://projectiles/Potions/DamagePotion/DamagePotion.tscn" id="1_bd8l1"]
+[ext_resource type="PackedScene" uid="uid://cm833e3rmrk2w" path="res://projectiles/Potions/HealPotion/HealPotion.tscn" id="2_uadid"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="5_tiwid"]
 [ext_resource type="Texture2D" uid="uid://mimnl2g76xwc" path="res://assets/sprites/characters/bosses/chemist_boss/chemist.png" id="6_usjmb"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="7_8xpwy"]
@@ -10,6 +11,8 @@ script/source = "extends CharacterBody2D
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var damage_potion_scene: PackedScene 
+@export var heal_potion_scene: PackedScene
+
 
 @onready var health_bar = $HealthBar
 
@@ -165,6 +168,73 @@ func attack_throw_damage_potion_spread() -> void:
 	play_spell_animation(base_direction)
 	await _animated_sprite.animation_finished
 	is_attacking = false
+	
+##################################################
+# ATTACK 3: Single Heal Potion Projectile
+##################################################
+func attack_throw_heal_potion() -> void:
+	if not heal_potion_scene:
+		print(\"HealPotion scene not set!\")
+		return
+	var player = get_player()
+	if not player:
+		return
+	
+	is_attacking = true
+	
+	# Instantiate and add the heal potion projectile.
+	var projectile = heal_potion_scene.instantiate()
+	add_projectile(projectile)
+	projectile.global_position = global_position
+	
+	# Calculate the direction toward the player.
+	var direction: Vector2 = (player.global_position - global_position).normalized()
+	projectile.velocity = direction * 175  # Adjust speed as needed
+	projectile.scale = Vector2(1.5, 1.5)
+	
+	# Play the appropriate attack animation.
+	play_spell_animation(direction)
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
+##################################################
+# ATTACK 4: Spread of 3 Heal Potion Projectiles
+##################################################
+func attack_throw_heal_potion_spread() -> void:
+	if not heal_potion_scene:
+		print(\"HealPotion scene not set!\")
+		return
+	var player = get_player()
+	if not player:
+		return
+	
+	is_attacking = true
+	
+	# Determine the base direction toward the player.
+	var base_direction: Vector2 = (player.global_position - global_position).normalized()
+	var base_angle: float = base_direction.angle()
+	
+	# Configure the spread: 3 projectiles with a total angular spread of 30° (PI/6 radians).
+	var spread_count: int = 3
+	var angle_range: float = PI / 6  # 30 degrees in radians
+	
+	# Spawn each projectile with an even angular offset.
+	for i in range(spread_count):
+		var t: float = float(i) / (spread_count - 1) if spread_count > 1 else 0.5
+		var offset_angle: float = lerp(-angle_range / 2, angle_range / 2, t)
+		var projectile_angle: float = base_angle + offset_angle
+		var projectile = heal_potion_scene.instantiate()
+		add_projectile(projectile)
+		projectile.global_position = global_position
+		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 175  # Same speed multiplier
+		projectile.scale = Vector2(1.5, 1.5)
+		# Optional small delay between projectiles.
+		await get_tree().create_timer(0.1).timeout
+	
+	play_spell_animation(base_direction)
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
 
 ##################################################
 # Helper Animation Functions
@@ -213,8 +283,21 @@ var attacks = [
 		\"function\": Callable(self, \"attack_throw_damage_potion_spread\"),
 		\"weight\": 2,
 		\"unlocked\": true
+	},
+	{
+		\"name\": \"attack_throw_heal_potion\",
+		\"function\": Callable(self, \"attack_throw_heal_potion\"),
+		\"weight\": 2,
+		\"unlocked\": true
+	},
+	{
+		\"name\": \"attack_throw_heal_potion_spread\",
+		\"function\": Callable(self, \"attack_throw_heal_potion_spread\"),
+		\"weight\": 1,
+		\"unlocked\": true
 	}
 ]
+
 
 func _start_random_attack_timer():
 	var wait_time = randf_range(min_attack_interval, max_attack_interval)
@@ -947,6 +1030,7 @@ collision_layer = 2
 collision_mask = 7
 script = SubResource("GDScript_kf6yr")
 damage_potion_scene = ExtResource("1_bd8l1")
+heal_potion_scene = ExtResource("2_uadid")
 move_speed = 200.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

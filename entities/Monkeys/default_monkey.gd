@@ -355,3 +355,19 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
 		_animated_sprite.stop()
 		queue_free()
+		
+func heal(amount: float) -> void:
+	# Increase current health but do not exceed max_health.
+	current_health = min(max_health, current_health + amount)
+	
+	# Update the health bar if it exists.
+	if health_bar:
+		health_bar.value = current_health
+		health_bar.health = current_health  # If you use a separate property for health
+	
+	# Apply a light blue tint to indicate healing.
+	_animated_sprite.modulate = Color(0.7, 0.7, 1, 1)  # Light blue tint
+	await get_tree().create_timer(0.5).timeout  # Wait 0.5 seconds
+	_animated_sprite.modulate = Color(1, 1, 1, 1)    # Reset to normal color
+	
+	print_debug("Monkey healed by ", amount, ". Current health: ", current_health)
