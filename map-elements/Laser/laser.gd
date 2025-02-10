@@ -10,7 +10,7 @@ func _ready() -> void:
 	animated_sprite.play("laser_on")
 	# Connect to the animation_finished signal
 	animated_sprite.animation_finished.connect(_on_animation_finished)
-	
+
 	# Create a StaticBody2D to hold a collision shape for the laser.
 	static_body = StaticBody2D.new()
 	add_child(static_body)
@@ -20,7 +20,7 @@ func _ready() -> void:
 func _on_animation_finished() -> void:
 	if not is_active and animated_sprite.animation == "laser_turn_off":
 		animated_sprite.play("laser_off")
-	
+
 func _physics_process(delta: float) -> void:
 	if is_active and body_in_laser:
 		if body_in_laser.is_in_group("player") or body_in_laser.is_in_group("troop"):
@@ -40,10 +40,10 @@ func _on_body_exited(body: Node2D) -> void:
 func deactivate_laser() -> void:
 	is_active = false
 	animated_sprite.play("laser_turn_off")
-	
+
 	# Disable the Area2D's collision shape.
 	$CollisionShape2D.set_deferred("disabled", true)
-	
+
 	# Disable the collision shape on the StaticBody2D.
 	if static_body and static_body.get_child_count() > 0:
 		static_body.get_child(0).set_deferred("disabled", true)

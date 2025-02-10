@@ -4,7 +4,7 @@ extends CharacterBody2D
 ## The turret will detect the player within a certain radius and shoot at them.
 
 # -- Shooting & detection properties
-@export var detect_radius := 400.0
+@export var detect_radius := 600.0
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var taser_scene := preload("res://projectiles/TaserProjectile/taser_projectile.tscn")
 @onready var health_bar := $HealthBar

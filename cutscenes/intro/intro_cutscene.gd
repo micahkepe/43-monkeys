@@ -11,7 +11,7 @@ func _ready():
 		create_frame(load("res://assets/exposition/intro/frame-2.png"), "Their secret research pushes ethical boundaries\nNo one knows what they're really doing to us"),
 		create_frame(load("res://assets/exposition/intro/frame-3.png"), "Days pass slowly in isolation\nWatching, waiting for a chance..."),
 		create_frame(load("res://assets/exposition/intro/frame-4.png"), "Until one day...\nA careless mistake changes everything"),
-		create_frame(load("res://assets/exposition/intro/frame-5.png"), "Now is my chance for freedom\nI mustn't waste it...")
+		create_frame(load("res://assets/exposition/intro/frame-5.png"), "Now is my chance for freedom\nI can't waste it...")
 	]
 
 	initialize(frame_data)
