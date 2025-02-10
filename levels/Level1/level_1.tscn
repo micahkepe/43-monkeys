@@ -502,7 +502,24 @@ position = Vector2(1195, -1642)
 
 [node name="Boid10" parent="ForegroundTiles/Boids" instance=ExtResource("10_4s8p6")]
 position = Vector2(4728, -1707)
-scale = Vector2(4.005, 4.005)
+
+[node name="Boid11" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(4840, -1413)
+
+[node name="Boid12" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(5003, -2000)
+
+[node name="Boid13" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(4495, -1893)
+
+[node name="Boid14" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(4514, -1187)
+
+[node name="Boid15" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(5089, -1683)
+
+[node name="Boid16" parent="ForegroundTiles/Boids" instance=ExtResource("13_d5kky")]
+position = Vector2(4954, -1190)
 
 [node name="Buttons" type="Node2D" parent="ForegroundTiles"]
 y_sort_enabled = true
@@ -514,16 +531,16 @@ position = Vector2(557.333, -1755.33)
 position = Vector2(804.667, -1755.33)
 
 [node name="Buttons3" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3523.33, -2265.33)
+position = Vector2(3524.67, -2086.67)
 
 [node name="Buttons4" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3187.33, -1966.67)
+position = Vector2(3385.33, -1958.67)
 
 [node name="Buttons5" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3868.66, -1994.67)
+position = Vector2(3678.67, -1962.67)
 
 [node name="Buttons6" parent="ForegroundTiles/Buttons" instance=ExtResource("10_311su")]
-position = Vector2(3530.66, -1687.33)
+position = Vector2(3532.67, -1818)
 
 [node name="Lasers" type="Node2D" parent="ForegroundTiles"]
 y_sort_enabled = true
