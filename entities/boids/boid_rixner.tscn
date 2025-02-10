@@ -1,9 +1,10 @@
-[gd_scene load_steps=76 format=3 uid="uid://b1rklqql28v4w"]
+[gd_scene load_steps=78 format=3 uid="uid://b1rklqql28v4w"]
 
 [ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_xktke"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_cp8rt"]
 [ext_resource type="Texture2D" uid="uid://bsecv0bnj4dvx" path="res://assets/sprites/characters/people/rixner.png" id="2_twwid"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/wilhelm-scream.ogg" id="4_no0u0"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_a8787"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wmjrs"]
 atlas = ExtResource("2_cp8rt")
@@ -535,7 +536,10 @@ radius = 9.05539
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uyxxe"]
 size = Vector2(28, 47)
 
-[node name="Boid" type="CharacterBody2D" groups=["boids", "enemies"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ml0l7"]
+bg_color = Color(0.600612, 0.161166, 0.305443, 1)
+
+[node name="BoidRixner" type="CharacterBody2D" groups=["boids", "enemies"]]
 y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
 collision_layer = 2
@@ -576,6 +580,15 @@ stream = ExtResource("4_no0u0")
 volume_db = -15.0
 mix_target = 1
 bus = &"SFX"
+
+[node name="HealthBar" parent="." instance=ExtResource("5_a8787")]
+offset_left = -7.86517
+offset_top = 24.3446
+offset_right = 10.1348
+offset_bottom = 28.3446
+theme_override_styles/fill = SubResource("StyleBoxFlat_ml0l7")
+max_value = 2.0
+value = 2.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

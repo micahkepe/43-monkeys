@@ -50,6 +50,9 @@ extends CharacterBody2D
 ## The animated sprite node for the boid.
 @onready var _anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+## The hit box area node for the boid.
+@onready var health_bar: ProgressBar = $HealthBar
+
 ## The right raycast node for wall avoidance.
 @onready var _ray_right: RayCast2D = $RayRight
 
@@ -95,12 +98,9 @@ func _ready() -> void:
 	# Set initial velocity
 	velocity = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * max_speed
 
-	# Connect the animation finished signal to the handler
-	_anim_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
-
-	$HitBox.connect("area_entered", Callable(self, "_on_hit_box_area_entered"))
-	$HitBox.connect("body_entered", Callable(self, "_on_hit_box_body_entered"))
-	$HitBox.connect("body_exited", Callable(self, "_on_hit_box_body_exited"))
+	# Initial health
+	health_bar.max_value = hits_to_kill
+	health_bar.value = hits_to_kill
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
@@ -351,6 +351,8 @@ func take_damage(amount: float) -> void:
 		else:
 			hits_to_kill -= 1
 
+		health_bar.value = hits_to_kill
+
 		print_debug("Hits to kill: ", hits_to_kill)
 
 		# kill off the boid if it has no more hits left
@@ -364,7 +366,9 @@ func take_damage(amount: float) -> void:
 
 ## Handles the boid's death.
 func _die():
+	# welp, this is it.
 	is_dead = true
+	health_bar.hide()
 
 	## Disable physics and processing
 	set_physics_process(false)
@@ -387,6 +391,8 @@ func _die():
 	# NOTE: The boid will be removed from the scene tree when the animation
 	## finishes
 
+
+## Handles the boid's hit box area entered signal.
 func _handle_hit(hit: Node) -> void:
 	if hit.is_in_group("projectiles"):
 		take_damage(1.0)

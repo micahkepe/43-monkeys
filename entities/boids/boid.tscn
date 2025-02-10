@@ -1,9 +1,10 @@
-[gd_scene load_steps=76 format=3 uid="uid://dd8b8qu4e6jme"]
+[gd_scene load_steps=78 format=3 uid="uid://dd8b8qu4e6jme"]
 
 [ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_j73er"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_eigla"]
 [ext_resource type="Texture2D" uid="uid://bodwmlsthyj68" path="res://assets/sprites/characters/people/scientist.png" id="2_mccus"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/wilhelm-scream.ogg" id="4_mkt5f"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_y6q0e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_768l2"]
 atlas = ExtResource("2_eigla")
@@ -535,6 +536,9 @@ radius = 9.05539
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8novc"]
 size = Vector2(21, 46)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddqh2"]
+bg_color = Color(0.600612, 0.161166, 0.305443, 1)
+
 [node name="Boid" type="CharacterBody2D" groups=["boids"]]
 y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
@@ -577,6 +581,13 @@ stream = ExtResource("4_mkt5f")
 volume_db = -15.0
 mix_target = 1
 bus = &"SFX"
+
+[node name="HealthBar" parent="." instance=ExtResource("5_y6q0e")]
+offset_left = -7.86517
+offset_top = 24.3446
+offset_right = 10.1348
+offset_bottom = 28.3446
+theme_override_styles/fill = SubResource("StyleBoxFlat_ddqh2")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

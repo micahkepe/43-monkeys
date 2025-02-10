@@ -7,12 +7,12 @@ extends CharacterBody2D
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 ## RayCast nodes for collision avoidance
-@onready var _raycast_front: RayCast2D = $RayCastFront
-@onready var _raycast_left: RayCast2D = $RayCastLeft
-@onready var _raycast_right: RayCast2D = $RayCastRight
+@onready var _raycast_front: RayCast2D = null
+@onready var _raycast_left: RayCast2D = null
+@onready var _raycast_right: RayCast2D = null
 
 ## Vision detection RayCast
-@onready var _raycast_vision: RayCast2D = $RayCastVision
+@onready var _raycast_vision: RayCast2D = null
 
 ## RayCast vision left (short)
 @onready var _raycast_vision_7_5_left: RayCast2D
@@ -86,11 +86,6 @@ func _ready() -> void:
 
 	# Setup RayCast for vision detection
 	_setup_vision_raycast()
-
-	# Connect the animation finished signal to the handler
-	_animated_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
-
-	self.connect("body_entered", Callable(self, "_on_body_entered"))
 
 
 ## Setup RayCasts for collision detection
