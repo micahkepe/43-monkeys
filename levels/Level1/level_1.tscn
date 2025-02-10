@@ -906,10 +906,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SwarmPosition" type="Label" parent="BackgroundTiles/Instructions"]
-offset_left = 1561.0
-offset_top = -2083.0
-offset_right = 1881.0
-offset_bottom = -1994.0
+offset_left = 1789.0
+offset_top = -1867.0
+offset_right = 2109.0
+offset_bottom = -1778.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_3rsmv")
 theme_override_font_sizes/font_size = 50
@@ -996,10 +996,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SwarmLock" type="Label" parent="BackgroundTiles/Instructions"]
-offset_left = 1885.0
-offset_top = -2082.0
-offset_right = 2205.0
-offset_bottom = -1993.0
+offset_left = 6224.0
+offset_top = -4859.0
+offset_right = 6544.0
+offset_bottom = -4770.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_3rsmv")
 theme_override_font_sizes/font_size = 50
@@ -1033,10 +1033,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SwarmReset" type="Label" parent="BackgroundTiles/Instructions"]
-offset_left = 2215.0
-offset_top = -2079.0
-offset_right = 2535.0
-offset_bottom = -1990.0
+offset_left = 2078.0
+offset_top = -1833.0
+offset_right = 2398.0
+offset_bottom = -1744.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_3rsmv")
 theme_override_font_sizes/font_size = 50
@@ -1070,10 +1070,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SwarmRotate" type="Label" parent="BackgroundTiles/Instructions"]
-offset_left = 1730.0
-offset_top = -1793.0
-offset_right = 2050.0
-offset_bottom = -1704.0
+offset_left = 5759.0
+offset_top = -1737.0
+offset_right = 6079.0
+offset_bottom = -1648.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_3rsmv")
 theme_override_font_sizes/font_size = 50
@@ -1106,10 +1106,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SwarmArea" type="Label" parent="BackgroundTiles/Instructions"]
-offset_left = 2075.0
-offset_top = -1847.0
-offset_right = 2411.0
-offset_bottom = -1758.0
+offset_left = 6229.0
+offset_top = -4573.0
+offset_right = 6565.0
+offset_bottom = -4484.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_3rsmv")
 theme_override_font_sizes/font_size = 40
