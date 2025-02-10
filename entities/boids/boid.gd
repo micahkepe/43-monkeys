@@ -359,7 +359,7 @@ func take_damage(amount: float) -> void:
 		if hits_to_kill == 0:
 			_die()
 
-		# momentarily recolor the monkey to indicate damage
+		# momentarily recolor the boid to indicate damage
 		_anim_sprite.modulate = Color(1, 0.5, 0.5, 1)
 		await get_tree().create_timer(0.5).timeout
 		_anim_sprite.modulate = Color(1, 1, 1, 1)

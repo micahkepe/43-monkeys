@@ -1,350 +1,11 @@
-[gd_scene load_steps=93 format=3 uid="uid://cp5du4n6j8tbm"]
+[gd_scene load_steps=95 format=3 uid="uid://cp5du4n6j8tbm"]
 
 [ext_resource type="PackedScene" uid="uid://cmt0k5vghfm35" path="res://projectiles/Potions/DamagePotion/DamagePotion.tscn" id="1_bd8l1"]
+[ext_resource type="Script" path="res://entities/Bosses/ChemistBoss/chemist_boss.gd" id="1_gnslh"]
 [ext_resource type="PackedScene" uid="uid://cm833e3rmrk2w" path="res://projectiles/Potions/HealPotion/HealPotion.tscn" id="2_uadid"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="5_tiwid"]
 [ext_resource type="Texture2D" uid="uid://mimnl2g76xwc" path="res://assets/sprites/characters/bosses/chemist_boss/chemist.png" id="6_usjmb"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="7_8xpwy"]
-
-[sub_resource type="GDScript" id="GDScript_kf6yr"]
-script/source = "extends CharacterBody2D
-
-@onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@export var damage_potion_scene: PackedScene 
-@export var heal_potion_scene: PackedScene
-
-
-@onready var health_bar = $HealthBar
-
-@export var max_health: int = 150  # Maximum health
-var current_health: int
-
-@export var min_attack_interval: float = 3.0  # Minimum interval between attacks
-@export var max_attack_interval: float = 8.0  # Maximum interval between attacks
-
-var current_target: Vector2 = Vector2.ZERO  # The current waypoint the boss is moving to
-@export var move_speed: float = 150.0         # Movement speed
-@export var proximity_threshold: float = 10.0   # How close to the target before picking a new one
-
-@export var min_wait_time: float = 0.8  # Minimum wait time between moves
-@export var max_wait_time: float = 2.5  # Maximum wait time between moves
-
-var last_animation: String = \"idle_down\"
-var is_attacking: bool = false  # Used to prevent movement animations from interrupting attack animations
-
-var attack_timer: Timer
-
-func _ready() -> void:
-	current_health = max_health
-	health_bar.init_health(current_health)
-	
-	move_to_next_waypoint()
-	
-	attack_timer = Timer.new()
-	attack_timer.one_shot = true
-	add_child(attack_timer)
-	attack_timer.connect(\"timeout\", Callable(self, \"_choose_and_execute_attack\"))
-	_start_random_attack_timer()
-
-func choose_random_waypoint() -> Vector2:
-	var min_x = 24 + 50
-	var max_x = 1133 - 50
-	var min_y = -800 + 50
-	var max_y = -51 - 50
-	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
-
-func move_to_next_waypoint():
-	current_target = choose_random_waypoint()
-
-func _physics_process(delta: float) -> void:
-	if current_target != Vector2.ZERO:
-		var direction = (current_target - global_position).normalized()
-		velocity = direction * move_speed
-		if not is_attacking:
-			if abs(direction.x) > abs(direction.y):
-				if direction.x > 0:
-					play_animation(\"walk_right\")
-				else:
-					play_animation(\"walk_left\")
-			else:
-				if direction.y > 0:
-					play_animation(\"walk_down\")
-				else:
-					play_animation(\"walk_up\")
-		move_and_slide()
-		if global_position.distance_to(current_target) <= proximity_threshold:
-			velocity = Vector2.ZERO
-			current_target = Vector2.ZERO
-			play_idle_animation()
-			start_wait_timer()
-	else:
-		velocity = Vector2.ZERO
-		play_idle_animation()
-
-func start_wait_timer():
-	var wait_time = randf_range(min_wait_time, max_wait_time)
-	await get_tree().create_timer(wait_time).timeout
-	move_to_next_waypoint()
-
-# Helper function to find the player.
-func get_player() -> Node2D:
-	var player = get_parent().get_node(\"ForegroundTiles/Player\")
-	if player:
-		return player
-	else:
-		print(\"Player not found!\")
-		return null
-
-# Adds a projectile to a container if available; otherwise adds it as a child.
-func add_projectile(projectile: Node) -> void:
-	var container = get_parent().get_node(\"ProjectileContainer\")
-	if container:
-		container.add_child(projectile)
-	else:
-		add_child(projectile)
-
-##################################################
-# ATTACK 1: Single Damage Potion Projectile
-##################################################
-func attack_throw_damage_potion() -> void:
-	if not damage_potion_scene:
-		print(\"DamagePotion scene not set!\")
-		return
-	var player = get_player()
-	if not player:
-		return
-	
-	is_attacking = true
-	
-	# Instantiate and add the damage potion projectile.
-	var projectile = damage_potion_scene.instantiate()
-	add_projectile(projectile)
-	projectile.global_position = global_position
-	
-	# Calculate the direction toward the player.
-	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.velocity = direction * 175 # Adjust speed of potion here
-	projectile.scale = Vector2(1.5, 1.5)
-	
-	# Play the appropriate attack animation.
-	play_spell_animation(direction)
-	await _animated_sprite.animation_finished
-	is_attacking = false
-
-##################################################
-# ATTACK 2: Spread of 3 Damage Potion Projectiles
-##################################################
-func attack_throw_damage_potion_spread() -> void:
-	if not damage_potion_scene:
-		print(\"DamagePotion scene not set!\")
-		return
-	var player = get_player()
-	if not player:
-		return
-	
-	is_attacking = true
-	
-	# Determine the base direction toward the player.
-	var base_direction: Vector2 = (player.global_position - global_position).normalized()
-	var base_angle: float = base_direction.angle()
-	
-	# Configure the spread: 3 projectiles with a total angular spread of 30° (PI/6 radians).
-	var spread_count: int = 3
-	var angle_range: float = PI / 6  
-	
-	# Spawn each projectile with an even angular offset.
-	for i in range(spread_count):
-		var t: float = float(i) / (spread_count - 1) if spread_count > 1 else 0.5
-		var offset_angle: float = lerp(-angle_range / 2, angle_range / 2, t)
-		var projectile_angle: float = base_angle + offset_angle
-		var projectile = damage_potion_scene.instantiate()
-		add_projectile(projectile)
-		projectile.global_position = global_position
-		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 175
-		projectile.scale = Vector2(1.5, 1.5)
-		# Small delay between each projectile (optional)
-		await get_tree().create_timer(0.1).timeout
-	
-	play_spell_animation(base_direction)
-	await _animated_sprite.animation_finished
-	is_attacking = false
-	
-##################################################
-# ATTACK 3: Single Heal Potion Projectile
-##################################################
-func attack_throw_heal_potion() -> void:
-	if not heal_potion_scene:
-		print(\"HealPotion scene not set!\")
-		return
-	var player = get_player()
-	if not player:
-		return
-	
-	is_attacking = true
-	
-	# Instantiate and add the heal potion projectile.
-	var projectile = heal_potion_scene.instantiate()
-	add_projectile(projectile)
-	projectile.global_position = global_position
-	
-	# Calculate the direction toward the player.
-	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.velocity = direction * 175  # Adjust speed as needed
-	projectile.scale = Vector2(1.5, 1.5)
-	
-	# Play the appropriate attack animation.
-	play_spell_animation(direction)
-	await _animated_sprite.animation_finished
-	is_attacking = false
-
-##################################################
-# ATTACK 4: Spread of 3 Heal Potion Projectiles
-##################################################
-func attack_throw_heal_potion_spread() -> void:
-	if not heal_potion_scene:
-		print(\"HealPotion scene not set!\")
-		return
-	var player = get_player()
-	if not player:
-		return
-	
-	is_attacking = true
-	
-	# Determine the base direction toward the player.
-	var base_direction: Vector2 = (player.global_position - global_position).normalized()
-	var base_angle: float = base_direction.angle()
-	
-	# Configure the spread: 3 projectiles with a total angular spread of 30° (PI/6 radians).
-	var spread_count: int = 3
-	var angle_range: float = PI / 6  # 30 degrees in radians
-	
-	# Spawn each projectile with an even angular offset.
-	for i in range(spread_count):
-		var t: float = float(i) / (spread_count - 1) if spread_count > 1 else 0.5
-		var offset_angle: float = lerp(-angle_range / 2, angle_range / 2, t)
-		var projectile_angle: float = base_angle + offset_angle
-		var projectile = heal_potion_scene.instantiate()
-		add_projectile(projectile)
-		projectile.global_position = global_position
-		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 175  # Same speed multiplier
-		projectile.scale = Vector2(1.5, 1.5)
-		# Optional small delay between projectiles.
-		await get_tree().create_timer(0.1).timeout
-	
-	play_spell_animation(base_direction)
-	await _animated_sprite.animation_finished
-	is_attacking = false
-
-
-##################################################
-# Helper Animation Functions
-##################################################
-func play_spell_animation(direction: Vector2) -> void:
-	if abs(direction.x) > abs(direction.y):
-		if direction.x > 0:
-			play_animation(\"slash_right\")
-		else:
-			play_animation(\"slash_left\")
-	else:
-		if direction.y > 0:
-			play_animation(\"slash_down\")
-		else:
-			play_animation(\"slash_up\")
-
-func play_animation(anim_name: String) -> void:
-	if _animated_sprite.animation != anim_name:
-		_animated_sprite.play(anim_name)
-		last_animation = anim_name
-
-func play_idle_animation() -> void:
-	if \"down\" in last_animation:
-		play_animation(\"idle_down\")
-	elif \"up\" in last_animation:
-		play_animation(\"idle_up\")
-	elif \"left\" in last_animation:
-		play_animation(\"idle_left\")
-	elif \"right\" in last_animation:
-		play_animation(\"idle_right\")
-	else:
-		play_animation(\"idle_down\")
-
-##################################################
-# ATTACK LOGIC (Only two attacks are used in this version)
-##################################################
-var attacks = [
-	{
-		\"name\": \"attack_throw_damage_potion\",
-		\"function\": Callable(self, \"attack_throw_damage_potion\"),
-		\"weight\": 3,
-		\"unlocked\": true
-	},
-	{
-		\"name\": \"attack_throw_damage_potion_spread\",
-		\"function\": Callable(self, \"attack_throw_damage_potion_spread\"),
-		\"weight\": 2,
-		\"unlocked\": true
-	},
-	{
-		\"name\": \"attack_throw_heal_potion\",
-		\"function\": Callable(self, \"attack_throw_heal_potion\"),
-		\"weight\": 2,
-		\"unlocked\": true
-	},
-	{
-		\"name\": \"attack_throw_heal_potion_spread\",
-		\"function\": Callable(self, \"attack_throw_heal_potion_spread\"),
-		\"weight\": 1,
-		\"unlocked\": true
-	}
-]
-
-
-func _start_random_attack_timer():
-	var wait_time = randf_range(min_attack_interval, max_attack_interval)
-	attack_timer.wait_time = wait_time
-	attack_timer.start()
-	print(\"Attack timer started, next attack in \", wait_time, \" seconds\")
-
-@export var quick_succession_chance: float = 0.25
-@export var quick_succession_delay: float = 0.8
-
-func _choose_and_execute_attack() -> void:
-	var available_attacks = []
-	for attack in attacks:
-		if attack.unlocked:
-			available_attacks.append(attack)
-	if available_attacks.size() == 0:
-		print(\"No available attacks!\")
-		_start_random_attack_timer()
-		return
-	var total_weight: float = 0.0
-	for attack in available_attacks:
-		total_weight += attack.weight
-	var random_value = randf() * total_weight
-	var cumulative_weight: float = 0.0
-	for attack in available_attacks:
-		cumulative_weight += attack.weight
-		if random_value <= cumulative_weight:
-			attack.function.call()
-			if randf() < quick_succession_chance:
-				print(\"Quick succession triggered!\")
-				await _perform_quick_succession_attack(available_attacks)
-			break
-	_start_random_attack_timer()
-
-func _perform_quick_succession_attack(available_attacks: Array) -> void:
-	await get_tree().create_timer(quick_succession_delay).timeout
-	var total_weight: float = 0.0
-	for attack in available_attacks:
-		total_weight += attack.weight
-	var random_value = randf() * total_weight
-	var cumulative_weight: float = 0.0
-	for attack in available_attacks:
-		cumulative_weight += attack.weight
-		if random_value <= cumulative_weight:
-			attack.function.call()
-			break
-"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0s22d"]
 radius = 10.0499
@@ -1025,13 +686,21 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enwfc"]
+bg_color = Color(0.326222, 0.696952, 0.315019, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jefyw"]
+size = Vector2(31.3483, 52.6966)
+
 [node name="ChemistBoss" type="CharacterBody2D" groups=["enemies"]]
+position = Vector2(640, 356)
+scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 7
-script = SubResource("GDScript_kf6yr")
+script = ExtResource("1_gnslh")
 damage_potion_scene = ExtResource("1_bd8l1")
 heal_potion_scene = ExtResource("2_uadid")
-move_speed = 200.0
+max_health = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -1040,7 +709,7 @@ shape = SubResource("CircleShape2D_0s22d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"slash_down"
+animation = &"spell_right"
 frame = 4
 frame_progress = 1.0
 
@@ -1049,3 +718,17 @@ offset_left = -22.0
 offset_top = -32.0
 offset_right = 23.0
 offset_bottom = -28.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_enwfc")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 31
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0.318352, -0.131086)
+shape = SubResource("RectangleShape2D_jefyw")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
