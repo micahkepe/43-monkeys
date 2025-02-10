@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var detect_radius := 400.0
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var taser_scene := preload("res://projectiles/TaserProjectile/taser_projectile.tscn")
+@onready var health_bar := $HealthBar
 
 # -- Health properties (hits required to kill)
 @export var hits_to_kill: int = 3
@@ -24,6 +25,9 @@ func _ready() -> void:
 	add_child(shoot_timer)
 	
 	animated_sprite.play("idle_right")
+	
+	health_bar.value = hits_to_kill
+	health_bar.max_value = hits_to_kill
 	
 	# Connect the turret's hitbox signals
 	if has_node("HitBox"):
@@ -110,6 +114,9 @@ func take_damage(amount: float) -> void:
 			hits_to_kill -= int(amount)
 		else:
 			hits_to_kill -= 1
+		
+		health_bar.value = hits_to_kill
+		
 			
 		print_debug("Hits to kill: ", hits_to_kill)
 		
@@ -131,6 +138,8 @@ func _die() -> void:
 	set_process(false)
 	collision_layer = 0
 	collision_mask = 0
+	
+	health_bar.hide()
 	
 	# Disable the hitbox to prevent further interactions
 	if is_instance_valid($HitBox):

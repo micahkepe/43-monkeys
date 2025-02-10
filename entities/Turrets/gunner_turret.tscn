@@ -111,15 +111,15 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_c0igy")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_52kb3")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle_die",
 "speed": 5.0
 }, {
@@ -217,24 +217,27 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_yrfq4"]
 
 [node name="GunnerTurret" type="CharacterBody2D"]
+y_sort_enabled = true
 scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 112
 script = ExtResource("1_y6i7i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_qg1ew")
-animation = &"die"
+animation = &"idle_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
+y_sort_enabled = true
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_1ioyq")
 
-[node name="HealthBar2" parent="." instance=ExtResource("2_5t4h7")]
-offset_left = -22.0
+[node name="HealthBar" parent="." instance=ExtResource("2_5t4h7")]
+offset_left = -14.3333
 offset_top = -24.0
-offset_right = 23.0
+offset_right = 12.6667
 offset_bottom = -20.0
 
 [node name="HitBox" type="Area2D" parent="."]
@@ -242,6 +245,5 @@ collision_layer = 2
 collision_mask = 114
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-z_index = 1
 position = Vector2(0, 5.66667)
 shape = SubResource("CircleShape2D_yrfq4")
