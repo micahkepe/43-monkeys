@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/TerminatorBoss/terminator_boss.tscn" id="15_837f7"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/ChemistBoss/chemist_boss.tscn" id="15_t51bk"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 
@@ -593,18 +593,17 @@ position = Vector2(1198, -2585.33)
 position = Vector2(1194, -2442)
 
 [node name="Player" parent="ForegroundTiles" instance=ExtResource("10_i5f2g")]
-position = Vector2(-592.667, 552.667)
+position = Vector2(-614.667, 527.333)
 scale = Vector2(0.499, 0.499)
 
 [node name="Camera2D" type="Camera2D" parent="ForegroundTiles/Player"]
 
-[node name="ChemistBoss" parent="ForegroundTiles" instance=ExtResource("15_837f7")]
-position = Vector2(4670.67, -629.333)
-scale = Vector2(1.78, 1.78)
-
 [node name="Splatters" type="TileMapLayer" parent="ForegroundTiles"]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_5mqfk")
+
+[node name="ChemistBoss" parent="." instance=ExtResource("15_t51bk")]
+position = Vector2(7072, -1000)
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -1
