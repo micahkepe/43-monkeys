@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=42 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="3_pcuto"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_qxfbq"]
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="5_3nb2r"]
-[ext_resource type="Texture2D" uid="uid://d0qqyigt4qf1b" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="6_y0wcx"]
+[ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="6_y0wcx"]
 [ext_resource type="Texture2D" uid="uid://c0w5ljun65vqq" path="res://assets/sprites/tilesets/lights.png" id="7_fa07u"]
 [ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
@@ -190,6 +190,18 @@ sources/1 = SubResource("TileSetAtlasSource_7x5iq")
 sources/4 = SubResource("TileSetAtlasSource_0efgg")
 sources/6 = SubResource("TileSetAtlasSource_6xns6")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b4rxo"]
+texture = ExtResource("6_y0wcx")
+0:4/size_in_atlas = Vector2i(4, 4)
+0:4/0 = 0
+6:6/size_in_atlas = Vector2i(4, 4)
+6:6/0 = 0
+6:10/size_in_atlas = Vector2i(4, 4)
+6:10/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5mqfk"]
+sources/0 = SubResource("TileSetAtlasSource_b4rxo")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
 texture = ExtResource("3_pcuto")
@@ -363,6 +375,8 @@ texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 2:0/size_in_atlas = Vector2i(2, 2)
 2:0/0 = 0
+0:2/size_in_atlas = Vector2i(2, 2)
+0:2/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cyejn"]
 texture = ExtResource("7_fa07u")
@@ -417,6 +431,8 @@ texture_region_size = Vector2i(32, 32)
 3:5/0 = 0
 3:3/size_in_atlas = Vector2i(2, 2)
 3:3/0 = 0
+0:2/size_in_atlas = Vector2i(2, 2)
+0:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_xfyfs"]
 sources/0 = SubResource("TileSetAtlasSource_704xv")
@@ -585,6 +601,11 @@ scale = Vector2(0.499, 0.499)
 [node name="ChemistBoss" parent="ForegroundTiles" instance=ExtResource("15_837f7")]
 position = Vector2(4670.67, -629.333)
 scale = Vector2(1.78, 1.78)
+
+[node name="Splatters" type="TileMapLayer" parent="ForegroundTiles"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAATAM7/AAAAAAQAAAAgAM7/AAAAAAQAAAA=")
+tile_set = SubResource("TileSet_5mqfk")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -1
@@ -1069,7 +1090,7 @@ horizontal_alignment = 1
 [node name="Splatters" type="TileMapLayer" parent="BackgroundTiles"]
 z_index = -1
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AACOACv/AAADAAUAAACtACz/AAADAAUAAACrACv/AAADAAUAAACkADj/AAADAAUAAACmADn/AAADAAUAAACTADj/AAADAAUAAACdAB//AAADAAUAAACfAB//AAADAAUAAACgAB7/AAADAAUAAACcAB7/AAADAAUAAACQACz/AAADAAUAAACQACv/AAADAAUAAACQADr/AAADAAUAAACXACX/AAADAAUAAACdACb/AAADAAUAAAAaABIAAAADAAUAAAAnABIAAAADAAUAAAAnAAwAAAADAAUAAADMAdv+AAADAAUAAADLAdv+AAADAAUAAAA=")
+tile_map_data = PackedByteArray("AACOACv/AAADAAUAAACtACz/AAADAAUAAACrACv/AAADAAUAAACkADj/AAADAAUAAACmADn/AAADAAUAAACTADj/AAADAAUAAACdAB//AAADAAUAAACfAB//AAADAAUAAACgAB7/AAADAAUAAACcAB7/AAADAAUAAACQACz/AAADAAUAAACQACv/AAADAAUAAACQADr/AAADAAUAAACXACX/AAADAAUAAACdACb/AAADAAUAAAAaABIAAAADAAUAAAAnABIAAAADAAUAAAAnAAwAAAADAAUAAADMAdv+AAADAAUAAADLAdv+AAADAAUAAAB4AKD/AAAAAAIAAACNAKD/AAAAAAIAAAA=")
 tile_set = SubResource("TileSet_xfyfs")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]

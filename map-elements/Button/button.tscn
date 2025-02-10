@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://4t4db1lpm8w4"]
 
 [ext_resource type="Script" path="res://map-elements/Button/button.gd" id="1_5qpy4"]
-[ext_resource type="Texture2D" uid="uid://d0qqyigt4qf1b" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="2_oh6hi"]
+[ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="2_oh6hi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iq7t4"]
 atlas = ExtResource("2_oh6hi")
