@@ -570,24 +570,32 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	var orth_vel = velocity - parallel
 
 	var final_vel = main_vel + (orth_vel * orth_factor)
-
 	projectile.velocity = final_vel
-
 	projectile.scale = Vector2(1.5, 1.5)
 
-	# CASE 1: standalone player node, no world --> spawn projectile in local space
-	if get_parent() == null or get_parent().get_parent() == null or get_parent().get_parent().get_node("Projectiles") == null:
-		print_debug("Projectiles node not found, projectile not spawned. Remember to add to projectile node to scene.")
-		return
-
-	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
-
+	var projectiles_node = find_node_recursive(get_tree().root, "Projectiles")
 	var local_spawn_pos = projectiles_node.to_local(spawn_global_position)
 	projectile.position = local_spawn_pos
 
 	projectiles_node.call_deferred("add_child", projectile)
 
+## Recursively searches for the target node starting from the given root node.
+## Returns the target node if found, otherwise returns null.
+## @param root: The root node to start the search from.
+## @param target: The name of the target node to search for.
+## @return The target node if found, otherwise null.
+func find_node_recursive(root: Node, target: String) -> Node:
+	if root.name == target:
+		return root
 
+	# Recursively search through all children
+	for child in root.get_children():
+		var result = find_node_recursive(child, target)
+		if result:
+			return result
+
+	# If no Player node is found, return null
+	return null
 ## Custom _sign function for float
 ## @param value: float - The value to determine the _sign of.
 func _sign(value: float) -> int:

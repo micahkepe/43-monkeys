@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 
 ## Called when the projectile collides with a body.
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("World") or body.name == "BackgroundTiles" or body.name == "ForegroundTilles":
+	if body.is_in_group("World") or body.name == "BackgroundTiles" or body.name == "ForegroundTiles":
 		queue_free()
 	elif body.is_in_group("Character") or body.is_in_group("boids"):
 		queue_free()
