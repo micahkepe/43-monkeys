@@ -540,6 +540,7 @@ size = Vector2(29, 50.5)
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
 
 [node name="BoidJoe" type="CharacterBody2D" groups=["boids", "enemies"]]
+z_index = 1
 y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
 collision_layer = 2

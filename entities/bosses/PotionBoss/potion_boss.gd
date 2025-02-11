@@ -171,10 +171,27 @@ func find_player_node(root: Node) -> Node:
 	return null
 
 
+## Recursively searches for a node with the given name starting from the
+## given root node. Returns the node if found, otherwise returns null.
+## @param root: The root node to start the search from.
+## @param target: The name of the node to search for.
+## @return The node with the given name if found, otherwise null.
+func find_node_recursive(root: Node, target: String) -> Node:
+	if root.name == target:
+		return root
+
+	for child in root.get_children():
+		var result = find_node_recursive(child, target)
+		if result:
+			return result
+
+	return null
+
+
 ## Adds a projectile to a container if available; otherwise adds it as a child.
 ## @param projectile Node The projectile to add.
 func add_projectile(projectile: Node) -> void:
-	var container = get_parent().get_node("Projectiles")
+	var container = find_node_recursive(get_tree().root, "Projectiles")
 	if container:
 		container.add_child(projectile)
 	else:

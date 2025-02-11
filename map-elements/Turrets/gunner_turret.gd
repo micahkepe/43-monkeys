@@ -164,20 +164,30 @@ func _die() -> void:
 # -------------------
 # Collision Handling
 # -------------------
+
+## Handles the hit detection for the turret.
 func _handle_hit(hit: Node) -> void:
 	if hit.is_in_group("projectiles"):
 		take_damage(1.0)
 		hit.queue_free()
 
+## Handles the area_entered signal for the HitBox.
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	_handle_hit(area)
 
+## Handles the body_entered signal for the HitBox.
 func _on_hit_box_body_entered(body: Node) -> void:
 	_handle_hit(body)
 
+## Handles the animation_finished signal for the AnimatedSprite2D.
 func _on_animated_sprite_2d_animation_finished() -> void:
 	# When the "die" animation finishes, switch to "idle_die" (and then stop the animation)
 	if animated_sprite.animation == "die" and not death_animation_complete:
 		death_animation_complete = true
 		animated_sprite.play("idle_die")
 		animated_sprite.stop()
+
+		# NOTE: change z-index to 0
+		# while the turret is alive,it lives on z-index 1 (same as player),
+		# when it dies, it should be behind the player (now just a crater)
+		z_index = 0

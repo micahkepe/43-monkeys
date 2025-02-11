@@ -12,14 +12,14 @@
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://bo8o2y5xink1l" path="res://map-elements/Turrets/gunner_turret.tscn" id="9_5aa5q"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_6m36m"]
-[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="10_4s8p6"]
+[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/Boids/boid_rixner.tscn" id="10_4s8p6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_311su"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
-[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="13_d5kky"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="16_h0w43"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/TerminatorBoss/terminator_boss.tscn" id="19_ud1lu"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
@@ -1015,11 +1015,62 @@ tile_set = SubResource("TileSet_46luf")
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="Turrets" type="Node2D" parent="World"]
+y_sort_enabled = true
+position = Vector2(75.0001, -123)
+scale = Vector2(1.5, 1.5)
+
+[node name="GunnerTurret" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(-473.333, -1370.67)
+
+[node name="GunnerTurret2" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(707.333, -2705.33)
+
+[node name="GunnerTurret3" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(1394.67, -2823.33)
+
+[node name="GunnerTurret4" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(1402, -2658)
+
+[node name="GunnerTurret5" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(1406, -2500)
+
+[node name="GunnerTurret6" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(1406, -2354.67)
+
+[node name="GunnerTurret7" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2317.33, -2721.33)
+
+[node name="GunnerTurret8" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2316, -2587.33)
+
+[node name="GunnerTurret9" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2324, -2454.67)
+
+[node name="GunnerTurret10" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2328.67, -2312)
+
+[node name="GunnerTurret11" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2832.67, -2686)
+
+[node name="GunnerTurret12" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2831.33, -2569.33)
+
+[node name="GunnerTurret13" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2835.33, -2464.67)
+
+[node name="GunnerTurret14" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(2840, -2326)
+
+[node name="GunnerTurret15" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
+position = Vector2(3913.33, -1664.67)
+
 [node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
-position = Vector2(-866, 568)
+position = Vector2(-847, 643)
 scale = Vector2(0.7485, 0.7485)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
+position = Vector2(4.00798, 5.34402)
 
 [node name="Boids" type="Node2D" parent="World"]
 y_sort_enabled = true
@@ -1073,55 +1124,8 @@ position = Vector2(5089, -1683)
 [node name="Boid16" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(4954, -1190)
 
-[node name="Turrets" type="Node2D" parent="World"]
-y_sort_enabled = true
-position = Vector2(75.0001, -123)
-scale = Vector2(1.5, 1.5)
-
-[node name="GunnerTurret" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(-473.333, -1370.67)
-
-[node name="GunnerTurret2" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(707.333, -2705.33)
-
-[node name="GunnerTurret3" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(1394.67, -2823.33)
-
-[node name="GunnerTurret4" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(1402, -2658)
-
-[node name="GunnerTurret5" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(1406, -2500)
-
-[node name="GunnerTurret6" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(1406, -2354.67)
-
-[node name="GunnerTurret7" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2317.33, -2721.33)
-
-[node name="GunnerTurret8" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2316, -2587.33)
-
-[node name="GunnerTurret9" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2324, -2454.67)
-
-[node name="GunnerTurret10" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2328.67, -2312)
-
-[node name="GunnerTurret11" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2832.67, -2686)
-
-[node name="GunnerTurret12" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2831.33, -2569.33)
-
-[node name="GunnerTurret13" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2835.33, -2464.67)
-
-[node name="GunnerTurret14" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(2840, -2326)
-
-[node name="GunnerTurret15" parent="World/Turrets" instance=ExtResource("9_5aa5q")]
-position = Vector2(3913.33, -1664.67)
+[node name="PotionBoss" parent="World" instance=ExtResource("16_h0w43")]
+position = Vector2(7014, -1047)
 
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
@@ -1196,9 +1200,6 @@ scale = Vector2(2.3, 2.3)
 [node name="Splatters" type="TileMapLayer" parent="ForegroundTiles"]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_5mqfk")
-
-[node name="ChemistBoss" parent="." instance=ExtResource("19_ud1lu")]
-position = Vector2(7115, -1004)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_wc88d")

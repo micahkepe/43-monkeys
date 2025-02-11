@@ -14,7 +14,7 @@ var state: int = PotionState.SPIN
 # CONFIGURABLE VARIABLES
 #------------------------------------------------------------------
 # Adjusted for a constant-velocity projectile.
-@export var initial_velocity: Vector2 = Vector2(0, 0)  # might be useless?
+@export var initial_velocity: Vector2 = Vector2(0, 0)  		 # might be useless?
 @export var max_distance: float = 400.0                    # Maximum travel distance before auto-splash
 @export var pool_linger_time: float = 5.0                  # How long the pool lingers before deletion
 
@@ -39,10 +39,10 @@ func _ready() -> void:
 	traveled_distance = 0.0
 	velocity = initial_velocity
 	animation_player.play("bottle_spin")
-	
+
 	_enable_bottle_shape()
 	_disable_all_pool_shapes()
-	
+
 	# Connect the root Area2D's body_entered signal.
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
 	print("PotionProjectile _ready: Fired with velocity ", velocity)
@@ -68,19 +68,9 @@ func _switch_to_splash() -> void:
 	print("PotionProjectile: Switching to SPLASH state.")
 	_disable_bottle_shape()
 	_disable_all_pool_shapes()
-	
-	## (Debug) Print the loop setting and computed length of "bottle_splash"
-	#if animation_player.sprite_frames.has_animation("bottle_splash"):
-		#var loop_setting = animation_player.sprite_frames.get_animation_loop("bottle_splash")
-		#var frame_count = animation_player.sprite_frames.get_frame_count("bottle_splash")
-		#var anim_speed = animation_player.sprite_frames.get_animation_speed("bottle_splash")
-		#var anim_length = frame_count / anim_speed
-		#print("bottle_splash loop =", loop_setting, "length =", anim_length)
-	#else:
-		#print("bottle_splash animation not found!")
-	
+
 	animation_player.animation_finished.connect(_on_splash_animation_finished)
-	
+
 	animation_player.stop()
 	animation_player.frame = 0  # Reset to the first frame
 	animation_player.play("bottle_splash")
@@ -103,7 +93,7 @@ func _switch_to_pool() -> void:
 	print("PotionProjectile: Chosen pool animation:", chosen_anim)
 	animation_player.stop()
 	animation_player.play(chosen_anim)
-	
+
 	_disable_bottle_shape()
 	# Explicitly check for each pool animation, enable specific pool shape accordingly:
 	if chosen_anim == "pool_1" or chosen_anim == "pool_2" or chosen_anim == "pool_3":
@@ -115,7 +105,7 @@ func _switch_to_pool() -> void:
 	else:
 		_enable_pool13_shape()
 		print("PotionProjectile: Unknown pool animation; defaulting to pool13 shape.")
-	
+
 	# Start a timer to remove the projectile after the pool lingers.
 	var pool_timer: Timer = Timer.new()
 	pool_timer.wait_time = pool_linger_time

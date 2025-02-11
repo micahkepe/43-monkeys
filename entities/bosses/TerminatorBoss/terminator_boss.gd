@@ -155,9 +155,36 @@ func find_player_node(root: Node) -> Node:
 	# If no Player node is found, return null
 	return null
 
+## Recursively searches for a node with the given name starting from the
+## given root node. Returns the node if found, otherwise returns null.
+## @param root: The root node to start the search from.
+## @param target: The name of the node to search for.
+## @return The node with the given name if found, otherwise null.
+func find_node_recursive(root: Node, target: String) -> Node:
+	if root.name == target:
+		return root
 
-func createTaserProj(projectile):
-	var taser_proj = get_parent().get_node("TaserProjectiles")
+	for child in root.get_children():
+		var result = find_node_recursive(child, target)
+		if result:
+			return result
+
+	return null
+
+
+## Create a new projectile node and add it to the Projectiles node.
+## Will print an error if the Projectiles node is not found in the scene.
+## @param projectile: The projectile node to add.
+func createTaserProj(projectile: Node) -> void:
+	var taser_proj = find_node_recursive(get_tree().root, "Projectiles")
+	if not taser_proj:
+		push_error("Projectiles node not found! Please add to scene:", get_tree().root)
+
+		# Add the projectile to the Projectiles node
+		taser_proj = Node2D.new()
+		taser_proj.name = "Projectiles"
+		get_tree().root.add_child(taser_proj)
+
 	taser_proj.add_child(projectile)
 
 
