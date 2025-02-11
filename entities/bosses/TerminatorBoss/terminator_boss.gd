@@ -64,6 +64,7 @@ var is_attacking: bool = false
 
 ## Initialize the boss
 func _ready() -> void:
+	print("TerminatorBoss was spawned at runtime!")
 	current_health = max_health
 	health_bar.init_health(current_health)
 

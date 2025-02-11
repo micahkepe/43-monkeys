@@ -499,3 +499,5 @@ func _on_hit_box_body_exited(body:Node2D) -> void:
 	# Reset the animation to the walk animation
 	_animated_sprite.play("walk_down")
 
+func _exit_tree():
+	print("ChemistBoss was removed from the scene!")

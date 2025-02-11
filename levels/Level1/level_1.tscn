@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=45 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/ChemistBoss/chemist_boss.tscn" id="19_ud1lu"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ir1du"]
@@ -655,8 +656,11 @@ position = Vector2(1194, -2442)
 y_sort_enabled = true
 tile_set = SubResource("TileSet_5mqfk")
 
+[node name="ChemistBoss" parent="." instance=ExtResource("19_ud1lu")]
+position = Vector2(7115, -1004)
+
 [node name="Player" parent="." instance=ExtResource("10_i5f2g")]
-position = Vector2(-859, 662)
+position = Vector2(6819, -631)
 scale = Vector2(0.7485, 0.7485)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
