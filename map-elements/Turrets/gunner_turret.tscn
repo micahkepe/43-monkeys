@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=3 uid="uid://bo8o2y5xink1l"]
 
 [ext_resource type="Texture2D" uid="uid://5k0yjhe66gap" path="res://assets/sprites/tilesets/lab_elements.png" id="1_6c0op"]
-[ext_resource type="Script" path="res://entities/Turrets/gunner_turret.gd" id="1_y6i7i"]
+[ext_resource type="Script" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_5t4h7"]
 [ext_resource type="Texture2D" uid="uid://cqmo2bvr247r6" path="res://assets/sprites/tilesets/explode_turret.png" id="2_flaso"]
 
@@ -217,14 +217,12 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_yrfq4"]
 
 [node name="GunnerTurret" type="CharacterBody2D"]
-y_sort_enabled = true
 scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 112
 script = ExtResource("1_y6i7i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_qg1ew")
 animation = &"idle_left"
 
