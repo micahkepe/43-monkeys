@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qk8jr"]
-radius = 43.1856
+radius = 43.185
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_spox5"]
 atlas = ExtResource("8_vswvm")

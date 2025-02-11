@@ -1125,7 +1125,7 @@ position = Vector2(5089, -1683)
 position = Vector2(4954, -1190)
 
 [node name="PotionBoss" parent="World" instance=ExtResource("16_h0w43")]
-position = Vector2(7014, -1047)
+position = Vector2(7025, -1019)
 
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
