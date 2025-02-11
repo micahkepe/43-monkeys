@@ -10,14 +10,13 @@ extends Area2D
 @export var speed: float = 800.0
 
 ## Damage dealt to the player on contact
-@export var damage: int = 10
+@export var damage: float = 1.0
 
 ## The lifetime of the projectile in seconds
 @export var lifetime: float = 3.0
 
 ## The projectile's velocity
 var velocity: Vector2 = Vector2.ZERO
-
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,11 +39,14 @@ func _physics_process(delta: float) -> void:
 
 
 ## Called when the projectile collides with a body.
+## If the body is in the "enemies" group, the body will take damage.
+## If the body is in the "BackgroundTiles" or "ForegroundTiles" group, the
+## projectile will be destroyed.
+## @param body: The body that the projectile collided with.
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("World") or body.name == "BackgroundTiles" or body.name == "ForegroundTiles":
+	if body.name == "BackgroundTiles" or body.name == "ForegroundTiles":
 		queue_free()
-	elif body.is_in_group("Character") or body.is_in_group("boids"):
-		queue_free()
-	elif body.name == "TaserBoss":
-		body.take_damage(1.0)
+	elif body.is_in_group("enemies") or body.is_in_group("boids"):
+		if body.has_method("take_damage"):
+			body.take_damage(damage)
 		queue_free()
