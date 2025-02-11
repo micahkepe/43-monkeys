@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://sh21oak337oi"]
+[gd_scene load_steps=31 format=4 uid="uid://sh21oak337oi"]
 
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="2_tk0je"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="3_lvlxt"]
@@ -9,9 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="8_g1m8a"]
 [ext_resource type="Script" path="res://entities/player/player.gd" id="9_x3jn7"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="10_v3dr4"]
+[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/Bosses/TaserBoss/electro_laser.tscn" id="11_h1sq7"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="11_rcuys"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="12_jssdb"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/ChemistBoss/chemist_boss.tscn" id="13_pygoe"]
+[ext_resource type="PackedScene" uid="uid://c05ne0go5hagf" path="res://projectiles/TaserProjectile/taser_projectile.tscn" id="12_k0g5g"]
+[ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="13_ytuad"]
+[ext_resource type="PackedScene" uid="uid://x1fgp3dswcoj" path="res://entities/Bosses/TaserBoss/electric_forcefield.tscn" id="14_161ug"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ir1du"]
 texture = ExtResource("2_tk0je")
@@ -394,6 +397,10 @@ position = Vector2(598.667, 810.667)
 
 [node name="ChemistBoss" parent="." instance=ExtResource("13_pygoe")]
 position = Vector2(615, 646)
+electro_laser_scene = ExtResource("11_h1sq7")
+taser_projectile_scene = ExtResource("12_k0g5g")
+button_scene = ExtResource("13_ytuad")
+electric_forcefield_scene = ExtResource("14_161ug")
 
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -1

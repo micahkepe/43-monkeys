@@ -36,6 +36,9 @@ var _can_advance: bool = false
 @onready var type_timer: Timer = Timer.new()
 @onready var frame_timer: Timer = Timer.new()
 
+@warning_ignore("unused_signal")
+signal cutscene_completed
+
 ## Called when the node enters the scene tree.
 func _ready() -> void:
 	_setup_timers()
@@ -142,10 +145,14 @@ func _end_cutscene() -> void:
 
 ## Defer switching to the transition scene to avoid freeing locked objects
 func _switch_to_transition_scene(transition):
-	if get_tree().current_scene:
-		get_tree().current_scene.queue_free()  # Use queue_free() for safety
-	get_tree().current_scene = transition
-	get_tree().root.add_child(transition)
+	# Ensure the transition is instantiated correctly
+	if transition == null:
+		push_error("Transition scene is NULL!")
+		return
+
+	# Add the transition to the scene tree
+	get_tree().get_root().add_child(transition)
+	queue_free()
 
 ## Load the next gameplay level after the transition (or immediately if no transition)
 func _on_transition_completed():

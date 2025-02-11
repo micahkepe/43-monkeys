@@ -708,9 +708,7 @@ shape = SubResource("CircleShape2D_0s22d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"spell_right"
-frame = 4
-frame_progress = 1.0
+animation = &"walk_up"
 
 [node name="HealthBar" parent="." instance=ExtResource("7_8xpwy")]
 offset_left = -22.0

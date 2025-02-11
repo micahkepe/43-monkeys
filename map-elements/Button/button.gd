@@ -3,6 +3,9 @@ extends Area2D
 ##
 ## The button will animate when pressed or unpressed. The button will also
 ## emit a signal when pressed or unpressed.
+
+## The signal emitted when the button is pressed or unpressed
+@warning_ignore("unused_signal")
 signal button_state_changed(is_pressed: bool)
 
 ## The AnimatedSprite2D node that will animate the button
