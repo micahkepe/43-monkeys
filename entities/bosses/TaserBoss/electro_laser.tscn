@@ -8,7 +8,6 @@
 size = Vector2(14, 28)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gfny5"]
-load_path = "res://.godot/imported/electro_laser.png-5f11bd9cfa481e45f2463786f58dc31a.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6kpd1"]
 atlas = SubResource("CompressedTexture2D_gfny5")
