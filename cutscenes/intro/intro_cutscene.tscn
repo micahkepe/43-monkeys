@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="4_dpys7"]
 [ext_resource type="Shader" path="res://shaders/vhs_post_processing.gdshader" id="7_i3u8b"]
 [ext_resource type="Texture2D" uid="uid://dt5ejgeb1v134" path="res://assets/sprites/textures/godot-logo.png" id="8_7ey3k"]
-[ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/type.wav" id="9_v8s4g"]
+[ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="9_v8s4g"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vlkf1"]
 frequency = 0.4015

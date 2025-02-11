@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_5t4h7"]
 [ext_resource type="Texture2D" uid="uid://cqmo2bvr247r6" path="res://assets/sprites/tilesets/explode_turret.png" id="2_flaso"]
-[ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/explosion.wav" id="5_3xp2b"]
+[ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/booms/explosion.wav" id="5_3xp2b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h7wdk"]
 atlas = ExtResource("2_flaso")

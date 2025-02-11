@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_j73er"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_eigla"]
 [ext_resource type="Texture2D" uid="uid://bodwmlsthyj68" path="res://assets/sprites/characters/people/scientist.png" id="2_mccus"]
-[ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/wilhelm-scream.ogg" id="4_mkt5f"]
+[ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_mkt5f"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_y6q0e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_768l2"]
@@ -544,7 +544,7 @@ z_index = 1
 y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
 collision_layer = 2
-collision_mask = 7
+collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_j73er")
 
@@ -567,7 +567,7 @@ target_position = Vector2(-62, 1)
 [node name="RayRight" type="RayCast2D" parent="."]
 target_position = Vector2(66, 0)
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="HitBox" type="Area2D" parent="." groups=["boids", "enemies"]]
 collision_layer = 2
 collision_mask = 31
 

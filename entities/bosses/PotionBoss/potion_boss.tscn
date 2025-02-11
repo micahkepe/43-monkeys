@@ -692,7 +692,7 @@ bg_color = Color(0.326222, 0.696952, 0.315019, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jefyw"]
 size = Vector2(31.3483, 52.6966)
 
-[node name="PotionBoss" type="CharacterBody2D"]
+[node name="PotionBoss" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
 collision_layer = 2

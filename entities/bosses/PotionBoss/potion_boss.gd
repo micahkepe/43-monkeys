@@ -24,7 +24,7 @@ extends CharacterBody2D
 @onready var health_bar = $HealthBar
 
 ## The ChemistBoss's maximum health value.
-@export var max_health: float = 10.0
+@export var max_health: float = 100.0
 
 ## The ChemistBoss's current health value.
 var current_health: float
@@ -489,19 +489,6 @@ func _die():
 	# NOTE: The boid will be removed from the scene tree when the animation
 	## finishes
 
-## Handles the boid's hit box area entered signal.
-func _handle_hit(hit: Node) -> void:
-	if hit.is_in_group("projectiles"):
-		take_damage(1.0)
-		hit.queue_free()
-
-func _on_hit_box_area_entered(area: Area2D) -> void:
-	_handle_hit(area)
-
-func _on_hit_box_body_entered(body: Node) -> void:
-	_handle_hit(body)
-
-
 ## Handles the animation finished signal for the boid.
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
@@ -515,6 +502,3 @@ func _on_hit_box_body_exited(body:Node2D) -> void:
 
 	# Reset the animation to the walk animation
 	_animated_sprite.play("walk_down")
-
-func _exit_tree():
-	print("ChemistBoss was removed from the scene!")

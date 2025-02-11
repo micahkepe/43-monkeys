@@ -394,11 +394,11 @@ func _die():
 
 ## Handles the boid's hit box area entered signal.
 func _handle_hit(hit: Node) -> void:
-	if hit.is_in_group("projectiles"):
-		take_damage(1.0)
-		hit.queue_free()
+	# NOTE: projectiles hitting the boid will invoke the boid's `take_damage`
+	# method, so we don't need to check for projectiles here.
 
-	elif attack_timer <= 0 and (hit.is_in_group("player") or hit.is_in_group("troop")):
+	# If the "hit" node is a player or troop, attack the target
+	if attack_timer <= 0 and (hit.is_in_group("player") or hit.is_in_group("troop")):
 		print_debug("Attacking target:", hit)
 		_play_attack_animation(hit)
 
@@ -407,9 +407,12 @@ func _handle_hit(hit: Node) -> void:
 			hit.take_damage(attack_damage)
 		attack_timer = attack_cooldown
 
+## Handles the boid's hit box area entered signal.
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	_handle_hit(area)
 
+
+## Handles the boid's hit box body entered signal.
 func _on_hit_box_body_entered(body: Node) -> void:
 	_handle_hit(body)
 

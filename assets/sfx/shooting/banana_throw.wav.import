@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://chwwls7n1u3rq"
-path="res://.godot/imported/banana_throw.wav-85749bd7d98f39e3ec5f0b1c42f90142.sample"
+path="res://.godot/imported/banana_throw.wav-21ccc47aef5d74f95961f4663e9302cc.sample"
 
 [deps]
 
-source_file="res://assets/sfx/banana_throw.wav"
-dest_files=["res://.godot/imported/banana_throw.wav-85749bd7d98f39e3ec5f0b1c42f90142.sample"]
+source_file="res://assets/sfx/shooting/banana_throw.wav"
+dest_files=["res://.godot/imported/banana_throw.wav-21ccc47aef5d74f95961f4663e9302cc.sample"]
 
 [params]
 

@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c5r4qcqooxih7"
-path="res://.godot/imported/laserShoot.wav-1a605b4c342dc8e7aa4dcc06fd21591c.sample"
+uid="uid://dpgu1lknmkro8"
+path="res://.godot/imported/coin.wav-5fba6af12c2ae88192a04f2c71eafd02.sample"
 
 [deps]
 
-source_file="res://assets/sfx/laserShoot.wav"
-dest_files=["res://.godot/imported/laserShoot.wav-1a605b4c342dc8e7aa4dcc06fd21591c.sample"]
+source_file="res://assets/sfx/items/coin.wav"
+dest_files=["res://.godot/imported/coin.wav-5fba6af12c2ae88192a04f2c71eafd02.sample"]
 
 [params]
 

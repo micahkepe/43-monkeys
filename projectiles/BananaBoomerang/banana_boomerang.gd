@@ -23,13 +23,13 @@ func _ready() -> void:
 	print("banana at:", global_position)
 	if $AnimationPlayer.has_animation("banana_spin"):
 		$AnimationPlayer.play("banana_spin")
-	self.connect("body_entered", Callable(self, "_on_body_entered"))
 
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
+## @param delta: The time in seconds it took to complete the last frame.
 func _physics_process(delta: float) -> void:
 	# Move the projectile based on its velocity
 	global_position += velocity * delta
@@ -50,3 +50,17 @@ func _on_body_entered(body: Node) -> void:
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
 		queue_free()
+
+
+## Handle entering the hit box areas of collidable objects.
+## If the object is an enemy, deal damage
+## @param area: The area that the projectile collided with.
+func _on_area_entered(area:Area2D) -> void:
+	# check if root node of the area is an enemy
+	if area.get_parent().is_in_group("enemies") or area.get_parent().is_in_group("boids"):
+		if area.get_parent().has_method("take_damage"):
+			area.get_parent().take_damage(damage)
+		queue_free()
+	else:
+		queue_free()
+

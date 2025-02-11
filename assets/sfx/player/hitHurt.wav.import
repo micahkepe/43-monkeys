@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://1cooba774omk"
-path="res://.godot/imported/Alarm1.wav-bde4ec3258c55256d7bf0a83462c70a2.sample"
+uid="uid://b4qkiy8s1r3un"
+path="res://.godot/imported/hitHurt.wav-4ba8e158de6ad602d7b3a74f9514d988.sample"
 
 [deps]
 
-source_file="res://assets/sfx/Alarm1.wav"
-dest_files=["res://.godot/imported/Alarm1.wav-bde4ec3258c55256d7bf0a83462c70a2.sample"]
+source_file="res://assets/sfx/player/hitHurt.wav"
+dest_files=["res://.godot/imported/hitHurt.wav-4ba8e158de6ad602d7b3a74f9514d988.sample"]
 
 [params]
 

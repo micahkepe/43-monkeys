@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="8_vswvm"]
 [ext_resource type="Shader" path="res://entities/Player/halo_glow_shader.gdshader" id="9_5qvqw"]
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
-[ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/hitHurt.wav" id="11_mqlhb"]
-[ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/banana_throw.wav" id="12_o6mwb"]
+[ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/player/hitHurt.wav" id="11_mqlhb"]
+[ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/shooting/banana_throw.wav" id="12_o6mwb"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 

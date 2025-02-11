@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_xktke"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_cp8rt"]
 [ext_resource type="Texture2D" uid="uid://bsecv0bnj4dvx" path="res://assets/sprites/characters/people/rixner.png" id="2_twwid"]
-[ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/wilhelm-scream.ogg" id="4_no0u0"]
+[ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_no0u0"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_a8787"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wmjrs"]

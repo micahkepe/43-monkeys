@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dfb523gvfv0vm"
-path="res://.godot/imported/electrical2.wav-b1a6e1c9d4dceace3486795c00e6a4d5.sample"
+uid="uid://1cooba774omk"
+path="res://.godot/imported/Alarm1.wav-9bd55ddcf0a91b6065ab642dbd091c02.sample"
 
 [deps]
 
-source_file="res://assets/sfx/electrical2.wav"
-dest_files=["res://.godot/imported/electrical2.wav-b1a6e1c9d4dceace3486795c00e6a4d5.sample"]
+source_file="res://assets/sfx/alarms/Alarm1.wav"
+dest_files=["res://.godot/imported/Alarm1.wav-9bd55ddcf0a91b6065ab642dbd091c02.sample"]
 
 [params]
 

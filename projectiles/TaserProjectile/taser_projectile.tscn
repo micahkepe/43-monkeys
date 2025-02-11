@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://projectiles/TaserProjectile/taser_projectile.gd" id="1_rocoa"]
 [ext_resource type="Texture2D" uid="uid://dt7nx4q85jmjn" path="res://assets/sprites/attacks/tasers/taser-ball.png" id="2_re2yc"]
-[ext_resource type="AudioStream" uid="uid://dfb523gvfv0vm" path="res://assets/sfx/electrical2.wav" id="3_807ca"]
+[ext_resource type="AudioStream" uid="uid://dfb523gvfv0vm" path="res://assets/sfx/items/electrical2.wav" id="3_807ca"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpoke"]
 size = Vector2(4, 4)

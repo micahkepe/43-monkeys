@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b7eoijde168st" path="res://ui/ui-pressed.png" id="4_o288i"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://ui/ui.png" id="5_ovtxt"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="6_c1yfi"]
-[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/click.wav" id="8_2r4mj"]
+[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/ui/click.wav" id="8_2r4mj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tuqm5"]
 texture = ExtResource("2_o4el6")
