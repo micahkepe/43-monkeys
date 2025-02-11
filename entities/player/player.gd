@@ -319,28 +319,33 @@ func _update_swarm_positions() -> void:
 			var direction = to_target.normalized()
 			monkey.velocity = direction * move_speed
 
-			if abs(direction.x) > abs(direction.y):
-				# Horizontal movement
-				if direction.x > 0:
-					if monkey.has_method("walk_right"):
-						#print_debug("Walk right")
-						monkey.walk_right()
-				else:
-					if monkey.has_method("walk_left"):
-						#print_debug("Walk left")
-						monkey.walk_left()
+			# Determine movement direction
+			if direction.x > 0 and direction.y < 0:
+					if monkey.has_method("walk_up_right"):
+							monkey.walk_up_right()
+			elif direction.x > 0 and direction.y > 0:
+					if monkey.has_method("walk_down_right"):
+							monkey.walk_down_right()
+			elif direction.x < 0 and direction.y < 0:
+					if monkey.has_method("walk_up_left"):
+							monkey.walk_up_left()
+			elif direction.x < 0 and direction.y > 0:
+					if monkey.has_method("walk_down_left"):
+							monkey.walk_down_left()
+			elif abs(direction.x) > abs(direction.y):
+					if direction.x > 0:
+							if monkey.has_method("walk_right"):
+									monkey.walk_right()
+					else:
+							if monkey.has_method("walk_left"):
+									monkey.walk_left()
 			else:
-				#print_debug("VERT MOVE")
-				# Vertical movement
-				if direction.y > 0:
-					if monkey.has_method("walk_down"):
-						#print_debug("Walk down")
-						monkey.walk_down()
-				else:
-					if monkey.has_method("walk_up"):
-						#print_debug("Walk up")
-						monkey.walk_up()
-
+					if direction.y > 0:
+							if monkey.has_method("walk_down"):
+									monkey.walk_down()
+					else:
+							if monkey.has_method("walk_up"):
+									monkey.walk_up()
 
 		monkey.move_and_slide()
 

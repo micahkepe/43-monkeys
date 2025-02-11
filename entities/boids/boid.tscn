@@ -539,7 +539,7 @@ size = Vector2(21, 46)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddqh2"]
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
 
-[node name="Boid" type="CharacterBody2D" groups=["boids"]]
+[node name="Boid" type="CharacterBody2D" groups=["boids", "enemies"]]
 y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
 collision_layer = 2

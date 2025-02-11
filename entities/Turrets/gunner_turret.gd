@@ -45,7 +45,7 @@ func _physics_process(_delta: float) -> void:
 	if is_dead:
 		return
 
-	var targets = get_tree().get_nodes_in_group("player") + get_tree().get_nodes_in_group("monkeys")
+	var targets = get_tree().get_nodes_in_group("player") + get_tree().get_nodes_in_group("troop")
 	var closest_target: Node2D = null
 	var closest_distance := INF
 
