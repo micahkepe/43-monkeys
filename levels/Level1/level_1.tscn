@@ -17,10 +17,10 @@
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="16_h0w43"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
@@ -1124,9 +1124,6 @@ position = Vector2(5089, -1683)
 [node name="Boid16" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(4954, -1190)
 
-[node name="PotionBoss" parent="World" instance=ExtResource("16_h0w43")]
-position = Vector2(7025, -1019)
-
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
 position = Vector2(75.0001, -123)
@@ -1213,3 +1210,6 @@ parameters/looping = true
 visible = false
 size_flags_horizontal = 6
 size_flags_vertical = 6
+
+[node name="PotionBoss" parent="." instance=ExtResource("21_qjt65")]
+position = Vector2(7046, -1016)
