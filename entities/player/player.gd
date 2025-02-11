@@ -139,7 +139,18 @@ func _ready() -> void:
 	_update_monkey_counter(_swarm_monkeys.size())
 
 
-# update the monkey group number
+## Called when there is an input event. The input event propagates up through
+## the node tree until a node consumes it.
+func _input(event):
+	if event.is_action_pressed("toggle_full_screen"):
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
+## Update the monkey group number
+## @param count: int - The number of monkeys in the group.
 func _update_monkey_counter(count: int) -> void:
 	if monkey_counter_label:
 		monkey_counter_label.text = "%d/43" % (count + 1)
@@ -150,9 +161,6 @@ func _update_monkey_counter(count: int) -> void:
 func _physics_process(_delta: float) -> void:
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
-
-	# Get current movement speed (base or sprint)
-	#var current_speed = speed * sprint_multiplier if Input.is_key_pressed(KEY_SHIFT) else speed
 	var current_speed = speed
 
 	# Movement input
@@ -207,9 +215,7 @@ func _physics_process(_delta: float) -> void:
 			_swarm_monkeys_walk_right()
 		elif input_velocity.x < 0:
 			_swarm_monkeys_walk_left()
-
 		swarm_modified = true
-
 	# If no movement keys pressed, stop monkey animations
 	elif not swarm_modified:
 		_swarm_monkeys_stop_walk()
@@ -224,6 +230,8 @@ func _physics_process(_delta: float) -> void:
 
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
 ## ellipse
+## @param existing_monkey: Node2D - The existing monkey to add to the swarm.
+## If null, a new monkey will be instantiated.
 func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 	var new_monkey: Node2D
 
@@ -281,9 +289,6 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 	print_debug("Monkey added to swarm! Total monkeys: ", _swarm_monkeys.size())
 
 
-
-
-
 ## Positions each monkey on the ellipse boundary using their angle, plus
 ## '_swarm_center_offset', plus Player.global_position
 func _update_swarm_positions() -> void:
@@ -321,34 +326,33 @@ func _update_swarm_positions() -> void:
 
 			# Determine movement direction
 			if direction.x > 0 and direction.y < 0:
-					if monkey.has_method("walk_up_right"):
-							monkey.walk_up_right()
+				if monkey.has_method("walk_up_right"):
+					monkey.walk_up_right()
 			elif direction.x > 0 and direction.y > 0:
-					if monkey.has_method("walk_down_right"):
-							monkey.walk_down_right()
+				if monkey.has_method("walk_down_right"):
+					monkey.walk_down_right()
 			elif direction.x < 0 and direction.y < 0:
-					if monkey.has_method("walk_up_left"):
-							monkey.walk_up_left()
+				if monkey.has_method("walk_up_left"):
+					monkey.walk_up_left()
 			elif direction.x < 0 and direction.y > 0:
-					if monkey.has_method("walk_down_left"):
-							monkey.walk_down_left()
+				if monkey.has_method("walk_down_left"):
+					monkey.walk_down_left()
 			elif abs(direction.x) > abs(direction.y):
-					if direction.x > 0:
-							if monkey.has_method("walk_right"):
-									monkey.walk_right()
+				if direction.x > 0:
+					if monkey.has_method("walk_right"):
+						monkey.walk_right()
 					else:
-							if monkey.has_method("walk_left"):
-									monkey.walk_left()
+						if monkey.has_method("walk_left"):
+							monkey.walk_left()
 			else:
-					if direction.y > 0:
-							if monkey.has_method("walk_down"):
-									monkey.walk_down()
+				if direction.y > 0:
+					if monkey.has_method("walk_down"):
+						monkey.walk_down()
 					else:
-							if monkey.has_method("walk_up"):
-									monkey.walk_up()
+						if monkey.has_method("walk_up"):
+							monkey.walk_up()
 
 		monkey.move_and_slide()
-
 
 
 ## Translates all monkeys by the same offset for WASD movement or swarm keys

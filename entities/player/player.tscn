@@ -365,8 +365,14 @@ collision_layer = 16
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_ieec4")
+speed = null
+sprint_multiplier = null
+shoot_cooldown_duration = null
 banana_boomerang_scene = ExtResource("2_yc2po")
 monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj")])
+initial_troop_amount = null
+ellipse_width_scale = null
+ellipse_height_scale = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
