@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://bo8o2y5xink1l"]
+[gd_scene load_steps=31 format=3 uid="uid://bo8o2y5xink1l"]
 
 [ext_resource type="Texture2D" uid="uid://5k0yjhe66gap" path="res://assets/sprites/tilesets/lab_elements.png" id="1_6c0op"]
 [ext_resource type="Script" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_5t4h7"]
 [ext_resource type="Texture2D" uid="uid://cqmo2bvr247r6" path="res://assets/sprites/tilesets/explode_turret.png" id="2_flaso"]
+[ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/explosion.wav" id="5_3xp2b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h7wdk"]
 atlas = ExtResource("2_flaso")
@@ -247,3 +248,7 @@ collision_mask = 114
 y_sort_enabled = true
 position = Vector2(0, 5.66667)
 shape = SubResource("CircleShape2D_yrfq4")
+
+[node name="BoomPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_3xp2b")
+bus = &"SFX"

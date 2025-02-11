@@ -154,6 +154,9 @@ func _die() -> void:
 
 	print_debug("Turret died", self)
 
+	if $BoomPlayer:
+		$BoomPlayer.play()
+
 	# Ensure the "die" animation does not loop so it can finish
 	animated_sprite.sprite_frames.set_animation_loop("die", false)
 	animated_sprite.play("die")

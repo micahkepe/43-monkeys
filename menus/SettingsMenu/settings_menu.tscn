@@ -785,6 +785,7 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="TroopMove" type="Label" parent="."]
+layout_mode = 0
 offset_left = 964.0
 offset_top = 152.0
 offset_right = 1264.0

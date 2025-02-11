@@ -1024,7 +1024,6 @@ scale = Vector2(0.7485, 0.7485)
 [node name="Boids" type="Node2D" parent="World"]
 y_sort_enabled = true
 position = Vector2(25, -13.0001)
-scale = Vector2(1, 1)
 
 [node name="Boid" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(-62, -916)
