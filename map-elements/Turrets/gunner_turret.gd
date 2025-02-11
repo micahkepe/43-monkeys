@@ -133,6 +133,8 @@ func take_damage(amount: float) -> void:
 		await get_tree().create_timer(0.5).timeout
 		animated_sprite.modulate = Color(1, 1, 1, 1)
 
+
+## Handles when the gunner is dead.
 func _die() -> void:
 	is_dead = true
 	death_animation_complete = false  # Reset death animation state

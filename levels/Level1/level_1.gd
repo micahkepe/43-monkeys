@@ -1,7 +1,7 @@
 extends Node2D
 
 # Get all buttons and lasers from the scene tree.
-@onready var buttons = $ForegroundTiles/Buttons.get_children()
+@onready var buttons = $World/Buttons.get_children()
 @onready var lasers = $ForegroundTiles/Lasers.get_children()
 
 # A dictionary to track the state of each button.
