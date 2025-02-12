@@ -725,7 +725,7 @@ func apply_blindness(duration: float) -> void:
 	
 	# Find your dedicated UI node (adjust the path as needed).
 	print(get_tree().get_root().name)
-	var ui_node = find_node_recursive(get_tree().get_root(), "TestUI")
+	var ui_node = find_node_recursive(get_tree().get_root(), "UI")
 	if ui_node:
 		print("ui node")
 		ui_node.add_child(overlay)
