@@ -319,10 +319,10 @@ vertical_alignment = 1
 
 [node name="AKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
-offset_left = -222.0
-offset_top = 28.0
-offset_right = -190.0
-offset_bottom = 60.0
+offset_left = -219.0
+offset_top = 29.0
+offset_right = -187.0
+offset_bottom = 61.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_g8bt5")
 texture_pressed = SubResource("AtlasTexture_uxxkl")
@@ -331,9 +331,9 @@ stretch_mode = 0
 [node name="WKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
 offset_left = -154.0
-offset_top = -41.0
+offset_top = -36.0
 offset_right = -122.0
-offset_bottom = -9.0
+offset_bottom = -4.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_d2hsc")
 texture_pressed = SubResource("AtlasTexture_6hqai")
@@ -342,9 +342,9 @@ stretch_mode = 0
 [node name="SKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
 offset_left = -154.0
-offset_top = 28.0
+offset_top = 29.0
 offset_right = -122.0
-offset_bottom = 60.0
+offset_bottom = 61.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_bugj3")
 texture_pressed = SubResource("AtlasTexture_j3nq6")
@@ -352,9 +352,9 @@ stretch_mode = 0
 
 [node name="DKeyButton" type="TextureButton" parent="MoveLabel"]
 layout_mode = 0
-offset_left = -83.0
+offset_left = -89.0
 offset_top = 28.0
-offset_right = -51.0
+offset_right = -57.0
 offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_ppmt5")
@@ -412,10 +412,10 @@ text = "Shoot"
 
 [node name="JKeyButton" type="TextureButton" parent="ShootLabel"]
 layout_mode = 0
-offset_left = -224.0
-offset_top = 30.0
-offset_right = -192.0
-offset_bottom = 62.0
+offset_left = -219.0
+offset_top = 28.0
+offset_right = -187.0
+offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -456,10 +456,10 @@ text = "K"
 
 [node name="LKeyButton" type="TextureButton" parent="ShootLabel"]
 layout_mode = 0
-offset_left = -83.0
-offset_top = 30.0
-offset_right = -51.0
-offset_bottom = 62.0
+offset_left = -89.0
+offset_top = 28.0
+offset_right = -57.0
+offset_bottom = 60.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_atbsr")
 texture_pressed = SubResource("AtlasTexture_oxoxq")
@@ -479,9 +479,9 @@ text = "L"
 [node name="IKeyButton" type="TextureButton" parent="ShootLabel"]
 layout_mode = 0
 offset_left = -154.0
-offset_top = -41.0
+offset_top = -36.0
 offset_right = -122.0
-offset_bottom = -9.0
+offset_bottom = -4.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -568,11 +568,12 @@ text = "Space"
 
 [node name="ExpandCollapseTroop" type="Label" parent="."]
 layout_mode = 0
-offset_left = 966.0
-offset_top = 318.0
-offset_right = 1266.0
-offset_bottom = 393.0
+offset_left = 911.0
+offset_top = 301.0
+offset_right = 1211.0
+offset_bottom = 404.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
+theme_override_constants/line_spacing = -12
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
 theme_override_font_sizes/font_size = 50
@@ -581,10 +582,10 @@ Troop"
 
 [node name="JKeyButton" type="TextureButton" parent="ExpandCollapseTroop"]
 layout_mode = 0
-offset_left = -220.0
-offset_top = 31.0
-offset_right = -188.0
-offset_bottom = 63.0
+offset_left = -215.0
+offset_top = 45.0
+offset_right = -183.0
+offset_bottom = 77.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -604,9 +605,9 @@ text = "J"
 [node name="KKeyButton" type="TextureButton" parent="ExpandCollapseTroop"]
 layout_mode = 0
 offset_left = -151.0
-offset_top = 32.0
+offset_top = 45.0
 offset_right = -119.0
-offset_bottom = 64.0
+offset_bottom = 77.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_wwqhy")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -625,10 +626,10 @@ text = "K"
 
 [node name="LKeyButton" type="TextureButton" parent="ExpandCollapseTroop"]
 layout_mode = 0
-offset_left = -80.0
-offset_top = 32.0
-offset_right = -48.0
-offset_bottom = 64.0
+offset_left = -86.0
+offset_top = 45.0
+offset_right = -54.0
+offset_bottom = 77.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_atbsr")
 texture_pressed = SubResource("AtlasTexture_oxoxq")
@@ -648,9 +649,9 @@ text = "L"
 [node name="ShiftKeyButton" type="TextureButton" parent="ExpandCollapseTroop"]
 layout_mode = 0
 offset_left = -412.0
-offset_top = 7.00001
+offset_top = 14.0
 offset_right = -348.0
-offset_bottom = 39.0
+offset_bottom = 46.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_x3s4t")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -670,9 +671,9 @@ text = "Shift"
 [node name="Label" type="Label" parent="ExpandCollapseTroop"]
 layout_mode = 0
 offset_left = -264.0
-offset_top = -2.0
+offset_top = 5.0
 offset_right = -224.0
-offset_bottom = 78.0
+offset_bottom = 85.0
 theme_override_colors/font_color = Color(0.788235, 0.623529, 0.486275, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
@@ -681,10 +682,10 @@ text = "+"
 
 [node name="IKeyButton" type="TextureButton" parent="ExpandCollapseTroop"]
 layout_mode = 0
-offset_left = -151.0
-offset_top = -35.0
-offset_right = -119.0
-offset_bottom = -3.0
+offset_left = -150.0
+offset_top = -19.0
+offset_right = -118.0
+offset_bottom = 13.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -793,15 +794,15 @@ offset_bottom = 255.0
 theme_override_colors/font_color = Color(0.78676, 0.625009, 0.484766, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_c1yfi")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 63
 text = "Move Troop"
 
 [node name="A" type="TextureButton" parent="TroopMove"]
 layout_mode = 0
-offset_left = -220.0
-offset_top = 31.0
-offset_right = -188.0
-offset_bottom = 63.0
+offset_left = -216.0
+offset_top = 34.0
+offset_right = -184.0
+offset_bottom = 66.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
@@ -821,9 +822,9 @@ text = "A"
 [node name="S" type="TextureButton" parent="TroopMove"]
 layout_mode = 0
 offset_left = -151.0
-offset_top = 32.0
+offset_top = 34.0
 offset_right = -119.0
-offset_bottom = 64.0
+offset_bottom = 66.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_wwqhy")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -842,10 +843,10 @@ text = "S"
 
 [node name="D" type="TextureButton" parent="TroopMove"]
 layout_mode = 0
-offset_left = -80.0
-offset_top = 32.0
-offset_right = -48.0
-offset_bottom = 64.0
+offset_left = -87.0
+offset_top = 34.0
+offset_right = -55.0
+offset_bottom = 66.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_atbsr")
 texture_pressed = SubResource("AtlasTexture_oxoxq")
@@ -865,9 +866,9 @@ text = "D"
 [node name="ShiftKeyButton" type="TextureButton" parent="TroopMove"]
 layout_mode = 0
 offset_left = -412.0
-offset_top = 7.00001
+offset_top = 3.0
 offset_right = -348.0
-offset_bottom = 39.0
+offset_bottom = 35.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_x3s4t")
 texture_pressed = SubResource("AtlasTexture_s3pnj")
@@ -899,9 +900,9 @@ text = "+"
 [node name="W" type="TextureButton" parent="TroopMove"]
 layout_mode = 0
 offset_left = -151.0
-offset_top = -35.0
+offset_top = -30.0
 offset_right = -119.0
-offset_bottom = -3.0
+offset_bottom = 2.0
 scale = Vector2(2.0456, 2.0456)
 texture_normal = SubResource("AtlasTexture_t1mpv")
 texture_pressed = SubResource("AtlasTexture_wlghe")
