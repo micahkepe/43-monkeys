@@ -141,7 +141,6 @@ func _ready() -> void:
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
 	
-	apply_blindness(100.0)
 
 
 ## Called when there is an input event. The input event propagates up through
