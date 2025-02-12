@@ -27,7 +27,7 @@ extends CharacterBody2D
 @export var separation_distance: float = 25.0
 
 ## The weight of the separation force.
-@export var weight_separation: float = 2.0
+@export var weight_separation: float = 10.0
 
 ## The weight of the alignment force.
 @export var weight_alignment: float = 1.0
