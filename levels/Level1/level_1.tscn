@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=51 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cu8al1h2iiuq6" path="res://assets/sprites/tilesets/shadows3.png" id="12_3ywx6"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
+[ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="19_fax7r"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 [ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
@@ -1255,6 +1256,11 @@ position = Vector2(3388, -1702)
 
 [node name="Buttons6" parent="World/Buttons" instance=ExtResource("10_311su")]
 position = Vector2(3272.67, -1598)
+
+[node name="Boxes" type="Node2D" parent="World"]
+
+[node name="Box" parent="World/Boxes" instance=ExtResource("19_fax7r")]
+position = Vector2(1184, -2583)
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="."]
 z_index = 1
