@@ -115,6 +115,11 @@ func spawn_caged_monkey() -> void:
 
 ## Open the cage door and release the monkey inside.
 func open_cage() -> void:
+	# Play hinge effect
+	var open_player = $OpenPlayer
+	if open_player:
+		open_player.play()
+
 	is_open = true  # Mark cage as opened
 	anim_sprite.play("cage_close_to_open")  # Play opening animation
 

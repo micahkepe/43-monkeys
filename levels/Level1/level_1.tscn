@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=50 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -12,18 +12,17 @@
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://bo8o2y5xink1l" path="res://map-elements/Turrets/gunner_turret.tscn" id="9_5aa5q"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_6m36m"]
-[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/boid_rixner.tscn" id="10_4s8p6"]
+[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/Boids/boid_rixner.tscn" id="10_4s8p6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_311su"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
-[ext_resource type="Texture2D" uid="uid://c3vft1x8o4r1s" path="res://assets/sprites/tilesets/shadows2.png" id="11_qfl6h"]
-[ext_resource type="Texture2D" uid="uid://0x6lpiaa35qd" path="res://assets/sprites/tilesets/shadows3.png" id="12_3ywx6"]
-[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="13_d5kky"]
+[ext_resource type="Texture2D" uid="uid://bx8djeyomc0oy" path="res://assets/sprites/tilesets/shadows2.png" id="11_qfl6h"]
+[ext_resource type="Texture2D" uid="uid://cu8al1h2iiuq6" path="res://assets/sprites/tilesets/shadows3.png" id="12_3ywx6"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
-[ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="24_yulms"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
@@ -1256,18 +1255,6 @@ position = Vector2(3388, -1702)
 
 [node name="Buttons6" parent="World/Buttons" instance=ExtResource("10_311su")]
 position = Vector2(3272.67, -1598)
-
-[node name="Boxes" type="Node2D" parent="World"]
-y_sort_enabled = true
-
-[node name="Box1" parent="World/Boxes" instance=ExtResource("24_yulms")]
-position = Vector2(1197, -2388)
-
-[node name="Box2" parent="World/Boxes" instance=ExtResource("24_yulms")]
-position = Vector2(5407, -2673)
-
-[node name="Box3" parent="World/Boxes" instance=ExtResource("24_yulms")]
-position = Vector2(5560, -2857)
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="."]
 z_index = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c1cqahrbs025d"]
+[gd_scene load_steps=22 format=3 uid="uid://c1cqahrbs025d"]
 
 [ext_resource type="Script" path="res://map-elements/MonkeyCage/monkey_cage.gd" id="2_12jvl"]
 [ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="2_h65kn"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="4_4gyj8"]
 [ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="5_g1bd5"]
 [ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="6_g1dgp"]
+[ext_resource type="AudioStream" uid="uid://bqjcofc7qx8ds" path="res://assets/sfx/items/iron-door.wav" id="8_o2rp2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_at7vg"]
 atlas = ExtResource("2_ocib3")
@@ -112,7 +113,6 @@ y_sort_enabled = true
 position = Vector2(658, 363)
 collision_mask = 31
 script = ExtResource("2_12jvl")
-open_distance = null
 monkey_scenes = Array[PackedScene]([ExtResource("2_h65kn"), ExtResource("3_0ii12"), ExtResource("4_4gyj8"), ExtResource("5_g1bd5"), ExtResource("6_g1dgp")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -139,3 +139,8 @@ shape = SubResource("RectangleShape2D_hl67n")
 
 [node name="MonkeyHolder" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="OpenPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_o2rp2")
+mix_target = 1
+bus = &"SFX"

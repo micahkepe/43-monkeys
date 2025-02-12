@@ -148,6 +148,7 @@ func _physics_process(delta: float) -> void:
 
 
 ## Returns the closest target node within the boid's view radius.
+## @returns Node2D - The closest target node within the boid's view radius.
 func _get_closest_target() -> Node2D:
 	var closest_target = null
 	var min_distance = INF
