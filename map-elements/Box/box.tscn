@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b58lxpspai3bw"]
+[gd_scene load_steps=9 format=4 uid="uid://b58lxpspai3bw"]
 
 [ext_resource type="Script" path="res://map-elements/Box/box.gd" id="1_8vi4n"]
 [ext_resource type="Texture2D" uid="uid://grtritlcbqa" path="res://assets/sprites/tilesets/crates_boxes.png" id="2_npcbq"]
+[ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="3_ppbpf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4haa"]
 atlas = ExtResource("2_npcbq")
@@ -19,9 +20,53 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbqgk"]
-size = Vector2(60, 60)
+size = Vector2(60, 41.5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ufus0"]
+texture = ExtResource("3_ppbpf")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qp8lw"]
+sources/0 = SubResource("TileSetAtlasSource_ufus0")
 
 [node name="Box" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
 scale = Vector2(2, 2)
 collision_layer = 8
 collision_mask = 31
@@ -32,4 +77,9 @@ sprite_frames = SubResource("SpriteFrames_7fiar")
 animation = &"banana_box"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9.25)
 shape = SubResource("RectangleShape2D_pbqgk")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD+/wIAAAACAAQAAAD+/wMAAAACAAUAAAD//wIAAAADAAQAAAD//wMAAAADAAUAAAAAAAIAAAACAAQAAAAAAAMAAAACAAUAAAABAAIAAAADAAQAAAABAAMAAAADAAUAAAA=")
+tile_set = SubResource("TileSet_qp8lw")
