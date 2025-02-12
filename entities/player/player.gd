@@ -41,6 +41,9 @@ var shoot_cooldown_duration: float = 0.25
 @export
 var banana_boomerang_scene: PackedScene
 
+@export
+var blindness_overlay_scene: PackedScene
+
 
 # -----------------------------------------------------------------
 # TROOP VARIABLES
@@ -106,10 +109,10 @@ var _damage_cooldown: float = 1.0
 var _current_cooldown: float = 0.0
 
 ## The UI container for the player's health display.
-@onready var hearts_container = $UI/HeartsContainer
+@onready var hearts_container = $PlayerUI/HeartsContainer
 
 # Monkey counter for number of monkeys in group, including the main monkey.
-@onready var monkey_counter_label: Label = $UI/MonkeyCounter
+@onready var monkey_counter_label: Label = $PlayerUI/MonkeyCounter
 signal monkey_count_changed(new_count: int)
 
 # -----------------------------------------------------------------
@@ -137,6 +140,8 @@ func _ready() -> void:
 
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
+	
+	apply_blindness(100.0)
 
 
 ## Called when there is an input event. The input event propagates up through
@@ -705,3 +710,29 @@ func heal(amount: float) -> void:
 	_animated_sprite.modulate = Color(1, 1, 1, 1)  # Reset to white
 
 	print_debug("Player healed by ", amount, ". Current health: ", _current_health)
+	
+
+func apply_blindness(duration: float) -> void:
+	print("APPLYING BLINDNESS")
+	# Prevent stacking multiple overlays (optional)
+	if get_node_or_null("BlindnessOverlay"):
+		print("Overlay already exists!")
+		return
+
+	# Preload and instantiate the overlay scene.
+	var overlay = blindness_overlay_scene.instantiate()
+	overlay.name = "BlindnessOverlay"
+	
+	# Find your dedicated UI node (adjust the path as needed).
+	print(get_tree().get_root().name)
+	var ui_node = find_node_recursive(get_tree().get_root(), "TestUI")
+	if ui_node:
+		print("ui node")
+		ui_node.add_child(overlay)
+	else:
+		print("fallback")
+		# Fallback: add to the scene root.
+		get_tree().get_root().add_child(overlay)
+	
+	# Start the overlay with the given duration.
+	overlay.start(duration)

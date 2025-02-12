@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://3kyps6qs6oo3"]
+
+[ext_resource type="Script" path="res://shaders/blindness_overlay.gd" id="1_0xaal"]
+[ext_resource type="Shader" path="res://shaders/BlindnessOverlay.gdshader" id="1_nmcmq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u5jbx"]
+shader = ExtResource("1_nmcmq")
+shader_parameter/circle_center = Vector2(200, 200)
+shader_parameter/hole_radius = 50.0
+shader_parameter/smoothness = 20.0
+shader_parameter/max_opacity = 0.8
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_0xaal")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_u5jbx")
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
