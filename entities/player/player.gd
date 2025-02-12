@@ -14,7 +14,7 @@ extends CharacterBody2D
 ##   X       => Rotate swarm slowly (clockwise)
 ##   Shift+X => Rotate swarm 90° instantly
 ##   Space   => Toggle swarm lock/unlock
-##   U/O/H/; => Translate swarm center up/down/left/right
+##   Shift+WASD => Translate swarm center up/down/left/right
 ##   Shift+I => Increase ellipse height
 ##   Shift+K => Decrease ellipse height
 ##   Shift+J => Decrease ellipse width
@@ -164,13 +164,13 @@ func _physics_process(_delta: float) -> void:
 	var current_speed = speed
 
 	# Movement input
-	if Input.is_action_pressed("ui_right") and not Input.is_key_pressed(KEY_SHIFT):
+	if Input.is_action_pressed("ui_right") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
 		input_velocity.x += 1
-	if Input.is_action_pressed("ui_left") and not Input.is_key_pressed(KEY_SHIFT):
+	if Input.is_action_pressed("ui_left") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
 		input_velocity.x -= 1
-	if Input.is_action_pressed("ui_up") and not Input.is_key_pressed(KEY_SHIFT):
+	if Input.is_action_pressed("ui_up") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
 		input_velocity.y -= 1
-	if Input.is_action_pressed("ui_down") and not Input.is_key_pressed(KEY_SHIFT):
+	if Input.is_action_pressed("ui_down") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
 		input_velocity.y += 1
 
 	# Normalize diagonal movement
@@ -422,20 +422,20 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_moved = true #maybe delete
 
 
-	# Manual Swarm Translation (U/O/H/;)
-	if Input.is_action_pressed("translate_up"):
+	# Manual Swarm Translation (Shift + WASD)
+	if Input.is_action_pressed("translate_up") and len(_swarm_monkeys) > 0:
 		_swarm_monkeys_walk_up()
 		_shift_swarm_position(Vector2(0, -1), 200.0 * _delta)
 		swarm_moved = true
-	if Input.is_action_pressed("translate_down"):
+	if Input.is_action_pressed("translate_down") and len(_swarm_monkeys) > 0:
 		_swarm_monkeys_walk_down()
 		_shift_swarm_position(Vector2(0, 1), 200.0 * _delta)
 		swarm_moved = true
-	if Input.is_action_pressed("translate_left"):
+	if Input.is_action_pressed("translate_left") and len(_swarm_monkeys) > 0:
 		_swarm_monkeys_walk_left()
 		_shift_swarm_position(Vector2(-1, 0), 200.0 * _delta)
 		swarm_moved = true
-	if Input.is_action_pressed("translate_right"):
+	if Input.is_action_pressed("translate_right") and len(_swarm_monkeys) > 0:
 		_swarm_monkeys_walk_right()
 		_shift_swarm_position(Vector2(1, 0), 200.0 * _delta)
 		swarm_moved = true
@@ -499,7 +499,6 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_moved = true
 
 		print_debug("Swarm reset: Position, size, rotation, and distribution updated.")
-
 
 	return swarm_moved
 
