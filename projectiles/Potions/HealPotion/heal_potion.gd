@@ -38,3 +38,4 @@ func _physics_process(delta: float) -> void:
 				if _is_target(body) and body.has_method("heal"):
 					print("HealPotion: Applying pool heal to ", body.name)
 					body.heal(pool_heal)
+					$HealSound.play()
