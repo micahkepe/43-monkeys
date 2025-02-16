@@ -134,15 +134,14 @@ func take_damage(amount: float) -> void:
 	print("ChemistBoss took ", amount, " damage!")
 	current_health -= amount
 	health_bar.value = current_health
+	
 	if current_health <= 0:
-		is_dead = true
-
-		# Trigger the death animation
-		print("ChemistBoss died!")
-
-		# FIX: "die" animation not playing properly on death, just remove from
-		# scene for now
-		queue_free()
+		_die()
+	else:
+		# momentarily recolor the boss to indicate damage
+		_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
+		await get_tree().create_timer(0.5).timeout
+		_animated_sprite.modulate = Color(1, 1, 1, 1)
 
 
 ## Start a timer to wait before moving to the next waypoint.
@@ -349,6 +348,8 @@ func attack_throw_heal_potion_spread() -> void:
 ## Play the appropriate spell animation based on the direction.
 ## @param direction Vector2 The direction to play the animation.
 func play_spell_animation(direction: Vector2) -> void:
+	if is_dead:
+		return
 	if abs(direction.x) > abs(direction.y):
 		if direction.x > 0:
 			play_animation("spell_right")
@@ -364,13 +365,18 @@ func play_spell_animation(direction: Vector2) -> void:
 ## Play the specified animation.
 ## @param anim_name String The name of the animation to play.
 func play_animation(anim_name: String) -> void:
+	if is_dead:
+		return
 	if _animated_sprite.animation != anim_name:
 		_animated_sprite.play(anim_name)
 		last_animation = anim_name
 
 
+
 ## Play the idle animation based on the last animation played.
 func play_idle_animation() -> void:
+	if is_dead:
+		return
 	if "down" in last_animation:
 		play_animation("idle_down")
 	elif "up" in last_animation:
@@ -470,6 +476,7 @@ func _perform_quick_succession_attack(available_attacks: Array) -> void:
 ## Handles the boid's death.
 func _die():
 	# welp, this is it.
+	is_dead = true
 	health_bar.hide()
 
 	## Disable physics and processing
@@ -478,25 +485,33 @@ func _die():
 	collision_layer = 0
 	collision_mask = 0
 
+	# Stop all movement and attacks
+	velocity = Vector2.ZERO
+	attack_timer.stop()
+	current_target = Vector2.ZERO
+	is_attacking = false
+
 	# Disable the hitbox to prevent further interactions
 	if is_instance_valid($HitBox):
 		$HitBox.set_deferred("monitoring", false)
 		$HitBox.set_deferred("monitorable", false)
 
-	print_debug("Boid died", self)
+	print("ChemistBoss died!")
 	_animated_sprite.play("die")
-
-	# NOTE: The boid will be removed from the scene tree when the animation
-	## finishes
+	# NOTE: The boss will be removed from the scene tree when the animation finishes
 
 ## Handles the animation finished signal for the boid.
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
 		_animated_sprite.stop()
 		queue_free()
+	elif _animated_sprite.animation.begins_with("spell"):
+		is_attacking = false
 
 ## Handles the hit box area entered signal.
 func _on_hit_box_body_exited(body:Node2D) -> void:
+	if is_dead:
+		return
 	print_debug("Boid hit box exited body: ", body)
 	is_attacking = false
 
