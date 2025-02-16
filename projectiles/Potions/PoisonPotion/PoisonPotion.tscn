@@ -153,7 +153,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"bottle_spin",
-"speed": 20.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -224,7 +224,8 @@ shape = SubResource("CapsuleShape2D_mtpxl")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.75)
 sprite_frames = SubResource("SpriteFrames_ueydh")
-animation = &"pool_4"
+animation = &"bottle_spin"
+frame_progress = 0.594705
 
 [node name="Pool13Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-2.38419e-07, 10)

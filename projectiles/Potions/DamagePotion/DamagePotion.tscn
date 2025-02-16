@@ -151,7 +151,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"bottle_spin",
-"speed": 20.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -226,7 +226,7 @@ script = ExtResource("1_h1onh")
 modulate = Color(1, 1, 1, 0.75)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_sq85o")
-animation = &"bottle_splash"
+animation = &"bottle_spin"
 
 [node name="BottleCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_mtpxl")
