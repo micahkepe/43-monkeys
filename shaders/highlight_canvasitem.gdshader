@@ -22,7 +22,7 @@ render_mode blend_premul_alpha;
 
 uniform float Line_Smoothness : hint_range(0, 0.1) = 0.045;
 uniform float Line_Width : hint_range(0, 0.2) = 0.09;
-uniform float Brightness = 3.0;
+uniform float Brightness = 1.0;
 uniform float Rotation_deg : hint_range(-90, 90) = 30;
 uniform float Distortion : hint_range(1, 2) = 1.8;
 uniform float Speed = 0.7;
