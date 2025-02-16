@@ -196,14 +196,29 @@ func _physics_process(_delta: float) -> void:
 	## Set animation based on movement direction
 	if input_velocity.y < 0:
 		_animated_sprite.play("walk_up")
+		if not _swarm_locked and len(_swarm_monkeys) > 0:
+			for entry in _swarm_monkeys:
+				entry["node"]._walk_up()
 	elif input_velocity.y > 0:
 		_animated_sprite.play("walk_down")
+		if not _swarm_locked and len(_swarm_monkeys) > 0:
+			for entry in _swarm_monkeys:
+				entry["node"]._walk_down()
 	elif input_velocity.x > 0:
 		_animated_sprite.play("walk_right")
+		if not _swarm_locked and len(_swarm_monkeys) > 0:
+			for entry in _swarm_monkeys:
+				entry["node"]._walk_right()
 	elif input_velocity.x < 0:
 		_animated_sprite.play("walk_left")
+		if not _swarm_locked and len(_swarm_monkeys) > 0:
+			for entry in _swarm_monkeys:
+				entry["node"]._walk_left()
 	else:
 		_animated_sprite.stop()
+		if not _swarm_locked and len(_swarm_monkeys) > 0:
+			for entry in _swarm_monkeys:
+				entry["node"]._stop_walk()
 
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
