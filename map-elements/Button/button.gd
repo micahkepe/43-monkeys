@@ -17,6 +17,7 @@ var is_pressed = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_animated_sprite.play("just_unpressed")
+	$AnimatedSprite2D/ColorRect.show()
 
 
 ## Handles the body_entered signal
@@ -25,6 +26,7 @@ func _on_body_entered(_body: Node2D) -> void:
 		is_pressed = true
 		_animated_sprite.play("unpressed_to_pressed")
 		_animated_sprite.play("just_pressed")
+		$AnimatedSprite2D/ColorRect.hide()
 		emit_signal("button_state_changed", true)
 
 ## Handles the body_exited signal
@@ -33,4 +35,5 @@ func _on_body_exited(_body: Node2D) -> void:
 		is_pressed = false
 		_animated_sprite.play("pressed_to_unpressed")
 		_animated_sprite.play("just_unpressed")
+		$AnimatedSprite2D/ColorRect.show()
 		emit_signal("button_state_changed", false)
