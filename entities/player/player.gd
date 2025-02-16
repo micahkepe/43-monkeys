@@ -340,33 +340,22 @@ func _update_swarm_positions() -> void:
 			var direction = to_target.normalized()
 			monkey.velocity = direction * move_speed
 
-			# Determine movement direction
-			if direction.x > 0 and direction.y < 0:
-				if monkey.has_method("walk_up_right"):
-					monkey.walk_up_right()
-			elif direction.x > 0 and direction.y > 0:
-				if monkey.has_method("walk_down_right"):
-					monkey.walk_down_right()
-			elif direction.x < 0 and direction.y < 0:
-				if monkey.has_method("walk_up_left"):
-					monkey.walk_up_left()
-			elif direction.x < 0 and direction.y > 0:
-				if monkey.has_method("walk_down_left"):
-					monkey.walk_down_left()
-			elif abs(direction.x) > abs(direction.y):
-				if direction.x > 0:
-					if monkey.has_method("walk_right"):
-						monkey.walk_right()
-					else:
-						if monkey.has_method("walk_left"):
-							monkey.walk_left()
+			# Determine movement direction for monkey animations
+			# Prioritize vertical movement for diagonals
+			if abs(direction.y) >= abs(direction.x):
+					if direction.y < 0:
+							if monkey.has_method("walk_up"):
+									monkey.walk_up()
+					elif direction.y > 0:
+							if monkey.has_method("walk_down"):
+									monkey.walk_down()
 			else:
-				if direction.y > 0:
-					if monkey.has_method("walk_down"):
-						monkey.walk_down()
-					else:
-						if monkey.has_method("walk_up"):
-							monkey.walk_up()
+					if direction.x > 0:
+							if monkey.has_method("walk_right"):
+									monkey.walk_right()
+					elif direction.x < 0:
+							if monkey.has_method("walk_left"):
+									monkey.walk_left()
 
 		monkey.move_and_slide()
 
@@ -404,12 +393,9 @@ func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
 		monkey.move_and_slide()
 
 
-##
-# Checks keys for ellipse rotation, resizing, lock toggle, and manual swarm
-# translation.
-# Returns 'true' if any translation or animation occured on the swarm in this
-# frame
-##
+## Checks keys for ellipse rotation, resizing, lock toggle, and manual swarm
+## translation. Returns 'true' if any translation or animation occurred on the
+## swarm in this frame
 func handle_swarm_input(_delta: float) -> bool:
 	var swarm_moved = false
 
@@ -438,23 +424,52 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_moved = true #maybe delete
 
 
-	# Manual Swarm Translation (Shift + WASD)
-	if Input.is_action_pressed("translate_up") and len(_swarm_monkeys) > 0:
-		_swarm_monkeys_walk_up()
-		_shift_swarm_position(Vector2(0, -1), 200.0 * _delta)
-		swarm_moved = true
-	if Input.is_action_pressed("translate_down") and len(_swarm_monkeys) > 0:
-		_swarm_monkeys_walk_down()
-		_shift_swarm_position(Vector2(0, 1), 200.0 * _delta)
-		swarm_moved = true
-	if Input.is_action_pressed("translate_left") and len(_swarm_monkeys) > 0:
-		_swarm_monkeys_walk_left()
-		_shift_swarm_position(Vector2(-1, 0), 200.0 * _delta)
-		swarm_moved = true
-	if Input.is_action_pressed("translate_right") and len(_swarm_monkeys) > 0:
-		_swarm_monkeys_walk_right()
-		_shift_swarm_position(Vector2(1, 0), 200.0 * _delta)
-		swarm_moved = true
+	# FIX: this works, but just for cardinal directions
+	 # Manual Swarm Translation (Shift + WASD)
+	if len(_swarm_monkeys) > 0:
+		# Cardinal directions
+		if Input.is_action_pressed("translate_up"):
+			_swarm_monkeys_walk_up()
+			_shift_swarm_position(Vector2(0, -1), 200.0 * _delta)
+			swarm_moved = true
+		elif Input.is_action_pressed("translate_down"):
+			_swarm_monkeys_walk_down()
+			_shift_swarm_position(Vector2(0, 1), 200.0 * _delta)
+			swarm_moved = true
+		elif Input.is_action_pressed("translate_left"):
+			_swarm_monkeys_walk_left()
+			_shift_swarm_position(Vector2(-1, 0), 200.0 * _delta)
+			swarm_moved = true
+		elif Input.is_action_pressed("translate_right"):
+			_swarm_monkeys_walk_right()
+			_shift_swarm_position(Vector2(1, 0), 200.0 * _delta)
+			swarm_moved = true
+
+	# TODO: this is better logic for handling diagonals, but somewhere the troop
+	# animations are being called twice and ruining the diagonal animation playing.
+	# if len(_swarm_monkeys) > 0:
+	# 	var move_input = Vector2.ZERO
+	# 	if Input.is_action_pressed("translate_up"):
+	# 		move_input.y -= 1
+	# 	if Input.is_action_pressed("translate_down"):
+	# 		move_input.y += 1
+	# 	if Input.is_action_pressed("translate_left"):
+	# 		move_input.x -= 1
+	# 	if Input.is_action_pressed("translate_right"):
+	# 		move_input.x += 1
+	# 	if move_input != Vector2.ZERO:
+	# 		move_input = move_input.normalized()
+	# 		if move_input.y < 0:
+	# 			_swarm_monkeys_walk_up()
+	# 		elif move_input.y > 0:
+	# 			_swarm_monkeys_walk_down()
+	# 		elif move_input.x > 0:
+	# 			_swarm_monkeys_walk_right()
+	# 		elif move_input.x < 0:
+	# 			_swarm_monkeys_walk_left()
+	#
+	# 		_shift_swarm_position(move_input, 200 * _delta)
+	# 		swarm_moved = true
 
 	# Ellipse resizing
 	if Input.is_action_pressed("inc_height_ellipse"):
@@ -523,15 +538,19 @@ func handle_swarm_input(_delta: float) -> bool:
 func _swarm_monkeys_stop_walk() -> void:
 	for entry in _swarm_monkeys:
 		entry["node"].stop_walk()
+
 func _swarm_monkeys_walk_up() -> void:
 	for entry in _swarm_monkeys:
 		entry["node"].walk_up()
+
 func _swarm_monkeys_walk_down() -> void:
 	for entry in _swarm_monkeys:
 		entry["node"].walk_down()
+
 func _swarm_monkeys_walk_left() -> void:
 	for entry in _swarm_monkeys:
 		entry["node"].walk_left()
+
 func _swarm_monkeys_walk_right() -> void:
 	for entry in _swarm_monkeys:
 		entry["node"].walk_right()

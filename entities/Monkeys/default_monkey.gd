@@ -178,7 +178,7 @@ func _physics_process(_delta: float) -> void:
 	# Check for enemy vision
 	_check_vision_detection()
 
-	# Manage attack cooldown
+	# Manage attack cool down
 	if attack_timer > 0:
 		attack_timer -= _delta
 
