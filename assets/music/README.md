@@ -2,7 +2,7 @@
 
 ## Tools Used
 
-- [BeepBox](https://www.beepbox.co/): For creating chiptune music in the browser
+- [BeepBox](https://www.beepbox.co/): For creating chip tune music in the browser
   for easy sharing and workflow. All song data is stored in the URL, so you can
   bookmark and share your songs with others.
 

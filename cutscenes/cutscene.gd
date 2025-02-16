@@ -160,4 +160,3 @@ func _on_transition_completed():
 		get_tree().change_scene_to_packed(next_level_scene)
 	else:
 		push_error("No next level scene specified after cutscene.")
-
