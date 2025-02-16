@@ -26,7 +26,7 @@ func on_effect_body_entered(body: Node) -> void:
 func _physics_process(delta: float) -> void:
 	# Call the base class _physics_process for movement and state changes.
 	super._physics_process(delta)
-	
+
 	# When in the POOL state, apply continuous healing using a timer.
 	if state == PotionState.POOL:
 		pool_heal_timer += delta
@@ -38,4 +38,6 @@ func _physics_process(delta: float) -> void:
 				if _is_target(body) and body.has_method("heal"):
 					print("HealPotion: Applying pool heal to ", body.name)
 					body.heal(pool_heal)
-					$HealSound.play()
+
+					if body.is_in_group("player"):
+						$HealSound.play()

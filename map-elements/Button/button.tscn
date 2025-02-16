@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://4t4db1lpm8w4"]
+[gd_scene load_steps=14 format=4 uid="uid://4t4db1lpm8w4"]
 
 [ext_resource type="Script" path="res://map-elements/Button/button.gd" id="1_5qpy4"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="2_oh6hi"]
+[ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="3_t4u4m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iq7t4"]
 atlas = ExtResource("2_oh6hi")
@@ -77,6 +78,48 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vo8xo"]
 size = Vector2(57, 47)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6rmje"]
+texture = ExtResource("3_t4u4m")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_opilk"]
+sources/0 = SubResource("TileSetAtlasSource_6rmje")
+
 [node name="Buttons" type="Area2D" groups=["button"]]
 show_behind_parent = true
 y_sort_enabled = true
@@ -92,6 +135,10 @@ animation = &"just_unpressed"
 y_sort_enabled = true
 position = Vector2(0.5, 3)
 shape = SubResource("RectangleShape2D_vo8xo")
+
+[node name="Shadow" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD//wIAAAADAAUAAAD+/wEAAAACAAQAAAD//wEAAAADAAQAAAAAAAEAAAACAAQAAAABAAEAAAADAAQAAAD+/wIAAAACAAUAAAAAAAIAAAACAAUAAAABAAIAAAADAAUAAAA=")
+tile_set = SubResource("TileSet_opilk")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

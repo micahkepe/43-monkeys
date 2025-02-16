@@ -20,7 +20,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbqgk"]
-size = Vector2(60, 41.5)
+size = Vector2(284.524, 12.4937)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ufus0"]
 texture = ExtResource("3_ppbpf")
@@ -64,22 +64,31 @@ texture = ExtResource("3_ppbpf")
 [sub_resource type="TileSet" id="TileSet_qp8lw"]
 sources/0 = SubResource("TileSetAtlasSource_ufus0")
 
-[node name="Box" type="CharacterBody2D"]
+[node name="Box" type="RigidBody2D"]
 z_index = 1
 y_sort_enabled = true
-scale = Vector2(2, 2)
 collision_layer = 8
 collision_mask = 31
+mass = 3.082
+gravity_scale = 0.0
+linear_damp = 0.2
 script = ExtResource("1_8vi4n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_7fiar")
 animation = &"banana_box"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9.25)
+position = Vector2(0, 36)
+rotation = 3.14159
+scale = Vector2(0.435787, 6.24313)
 shape = SubResource("RectangleShape2D_pbqgk")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD+/wIAAAACAAQAAAD+/wMAAAACAAUAAAD//wIAAAADAAQAAAD//wMAAAADAAUAAAAAAAIAAAACAAQAAAAAAAMAAAACAAUAAAABAAIAAAADAAQAAAABAAMAAAADAAUAAAA=")
+[node name="Shadow" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+position = Vector2(-4, 73)
+scale = Vector2(0.6, 0.6)
+tile_map_data = PackedByteArray("AAD7////AAADAAMAAAD7/wAAAAADAAQAAAD7/wEAAAADAAUAAAD8////AAADAAMAAAD8/wAAAAADAAQAAAD8/wEAAAADAAUAAAD9////AAACAAMAAAD9/wAAAAACAAQAAAD9/wEAAAACAAUAAAD+////AAADAAMAAAD+/wAAAAADAAQAAAD+/wEAAAADAAUAAAD/////AAACAAMAAAD//wAAAAACAAQAAAD//wEAAAACAAUAAAAAAP//AAADAAMAAAAAAAAAAAADAAQAAAAAAAEAAAADAAUAAAABAP//AAACAAMAAAABAAAAAAACAAQAAAABAAEAAAACAAUAAAACAP//AAADAAMAAAACAAAAAAADAAQAAAACAAEAAAADAAUAAAADAP//AAACAAMAAAADAAAAAAACAAQAAAADAAEAAAACAAUAAAAEAP//AAACAAMAAAAEAAAAAAACAAQAAAAEAAEAAAACAAUAAAAFAP//AAACAAMAAAAFAAAAAAACAAQAAAAFAAEAAAACAAUAAAAGAP//AAADAAMAAAAGAAAAAAADAAQAAAAGAAEAAAADAAUAAAD6////AAACAAMAAAD6/wAAAAACAAQAAAD6/wEAAAACAAUAAAA=")
 tile_set = SubResource("TileSet_qp8lw")

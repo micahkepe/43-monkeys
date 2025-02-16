@@ -270,7 +270,8 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ioyq"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yrfq4"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txf4j"]
+size = Vector2(25.6667, 25.6667)
 
 [node name="GunnerTurret" type="CharacterBody2D"]
 z_index = 1
@@ -283,7 +284,7 @@ script = ExtResource("1_y6i7i")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_qg1ew")
-animation = &"shoot_down"
+animation = &"idle_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -304,8 +305,8 @@ collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 y_sort_enabled = true
-position = Vector2(0, 5.66667)
-shape = SubResource("CircleShape2D_yrfq4")
+position = Vector2(1.5, -1.83333)
+shape = SubResource("RectangleShape2D_txf4j")
 
 [node name="BoomPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_3xp2b")

@@ -246,3 +246,4 @@ disabled = true
 
 [node name="HealSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ypecb")
+bus = &"SFX"

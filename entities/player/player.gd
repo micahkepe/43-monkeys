@@ -85,7 +85,7 @@ var _swarm_world_center: Vector2
 ## The rotation of the swarm ellipse
 var _swarm_rotation: float = 0.0
 
-# Store flag to indicate if a full ellipse recalc is needed
+# Store flag to indicate if a full ellipse recalculation is needed.
 var _needs_full_ellipse_recalc: bool = false
 
 ## Constant vector for upward world direction.
@@ -105,15 +105,27 @@ var _current_health: float = 6.0
 ## The time between damage ticks.
 var _damage_cooldown: float = 1.0
 
-## The current cooldown for taking damage.
+## The current cool down for taking damage.
 var _current_cooldown: float = 0.0
+
+## Flag for whether the troop is currently locked.
+var _troop_locked: bool = false
 
 ## The UI container for the player's health display.
 @onready var hearts_container = $PlayerUI/HeartsContainer
 
 # Monkey counter for number of monkeys in group, including the main monkey.
 @onready var monkey_counter_label: Label = $PlayerUI/MonkeyCounter
+
+# ------------------------------------------------
+# SIGNALS
+# ------------------------------------------------
+
+## Emitted when the count of the troop is altered.
 signal monkey_count_changed(new_count: int)
+
+## Emitted when the player locks the troop.
+signal troop_locked(troop_locked)
 
 # -----------------------------------------------------------------
 
@@ -140,7 +152,7 @@ func _ready() -> void:
 
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
-	
+
 
 
 ## Called when there is an input event. The input event propagates up through
@@ -197,7 +209,7 @@ func _physics_process(_delta: float) -> void:
 	velocity = input_velocity * current_speed
 	move_and_slide()
 
-	# Decrement the shoot cooldown
+	# Decrement the shoot cool down
 	if _current_shoot_cooldown > 0.0:
 		_current_shoot_cooldown -= _delta
 		if _current_shoot_cooldown < 0.0:
@@ -224,7 +236,7 @@ func _physics_process(_delta: float) -> void:
 	elif not swarm_modified:
 		_swarm_monkeys_stop_walk()
 
-	# If changed rotation/size, do angle recalc
+	# If changed rotation/size, do angle recalculation.
 	if _needs_full_ellipse_recalc:
 		_update_swarm_positions()
 
@@ -709,7 +721,7 @@ func heal(amount: float) -> void:
 	_animated_sprite.modulate = Color(1, 1, 1, 1)  # Reset to white
 
 	print_debug("Player healed by ", amount, ". Current health: ", _current_health)
-	
+
 
 func apply_blindness(duration: float) -> void:
 	print("APPLYING BLINDNESS")
@@ -721,7 +733,7 @@ func apply_blindness(duration: float) -> void:
 	# Preload and instantiate the overlay scene.
 	var overlay = blindness_overlay_scene.instantiate()
 	overlay.name = "BlindnessOverlay"
-	
+
 	# Find your dedicated UI node (adjust the path as needed).
 	print(get_tree().get_root().name)
 	var ui_node = find_node_recursive(get_tree().get_root(), "UI")
@@ -732,6 +744,6 @@ func apply_blindness(duration: float) -> void:
 		print("fallback")
 		# Fallback: add to the scene root.
 		get_tree().get_root().add_child(overlay)
-	
+
 	# Start the overlay with the given duration.
 	overlay.start(duration)

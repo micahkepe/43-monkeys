@@ -24,9 +24,11 @@ func start(_duration: float) -> void:
 	$Timer.wait_time = duration
 	$Timer.start()
 
-func _process(delta: float) -> void:
+## Called every frame.
+func _process(_delta: float) -> void:
 	# Find the player somewhere in the scene tree.
 	var player = find_player_node(get_tree().get_root())
+
 	if player:
 		print("PLAYER FOUND")
 		var camera = get_viewport().get_camera_2d()
@@ -34,11 +36,13 @@ func _process(delta: float) -> void:
 			# Get the viewport size (visible area in pixels).
 			var viewport_size = get_viewport().get_visible_rect().size
 			var screen_center = viewport_size / 2.0
+
 			# Calculate the player's offset from the camera center.
-			var offset = (player.global_position - camera.global_position) * camera.zoom
+			var player_offset = (player.global_position - camera.global_position) * camera.zoom
+
 			# Compute the player's screen position.
-			var screen_pos = screen_center + offset
-			
+			var screen_pos = screen_center + player_offset
+
 			# Update the shader parameters on the ColorRect's material.
 			$ColorRect.material.set_shader_parameter("circle_center", screen_pos)
 			$ColorRect.material.set_shader_parameter("hole_radius", hole_radius)
