@@ -35,7 +35,7 @@ extends CharacterBody2D
 ## The monkey's attack range
 @export var attack_range: float = 400.0
 
-## The monkey's attack cooldown
+## The monkey's attack cool down
 var attack_timer: float = 0.0
 
 ## The time (in seconds) between attacks; the effective cooldown period
@@ -72,13 +72,16 @@ var current_cooldown: float = 0.0
 ## Whether the monkey is currently caged.
 var is_caged: bool = false
 
+## Track the last velocity of the monkey to check for changes.
+var _last_velocity: Vector2 = Vector2.ZERO
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
 	health_bar.hide() # Hide the health bar initially
 
-	# Set initial animation to "walk_down"
+	# Set initial animation to "_walk_down"
 	_animated_sprite.play("idle")
 
 	# Setup RayCasts for collision avoidance
@@ -182,6 +185,24 @@ func _physics_process(_delta: float) -> void:
 	if attack_timer > 0:
 		attack_timer -= _delta
 
+	# Update the individual monkey's animation based on its own velocity.
+	if velocity == Vector2.ZERO:
+		# Only stop if the monkey was previously moving
+		if _last_velocity != Vector2.ZERO:
+			_stop_walk()
+	else:
+		# handle animation
+		if velocity.y > 0:
+			_walk_down()
+		elif velocity.y < 0:
+			_walk_up()
+		elif velocity.x < 0:
+			_walk_left()
+		elif velocity.x > 0:
+			_walk_right()
+
+	# Update last velocity
+	_last_velocity = velocity
 
 	# If an enemy is in sight, you can add attack logic here
 	if _enemy_in_sight and _current_enemy and attack_timer <= 0:
@@ -190,33 +211,57 @@ func _physics_process(_delta: float) -> void:
 	if current_cooldown > 0:
 		current_cooldown -= _delta
 
-
-## Called by the Player when the player is moving left
-func walk_left() -> void:
+## Utility method for the monkey to play the walk left animation and adjust its
+## raycasts accordingly.
+##
+## NOTE: Should not be called by the player. The individual monkey should be
+## responsible for its animations.
+func _walk_left() -> void:
 	_animated_sprite.play("walk_left")
 	_update_vision_rays(Vector2(-vision_range, 0))
 
 
-## Called by the Player when the player is moving right
-func walk_right() -> void:
+## Utility method for the monkey to play the walk right animation and adjust its
+## raycasts accordingly.
+##
+## NOTE: Should not be called by the player. The individual monkey should be
+## responsible for its animations.
+func _walk_right() -> void:
 	_animated_sprite.play("walk_right")
 	_update_vision_rays(Vector2(vision_range, 0))
 
 
-## Called by the Player when the player is moving up
-func walk_up() -> void:
+## Utility method for the monkey to play the walk up animation and adjust its
+## raycasts accordingly.
+##
+## NOTE: Should not be called by the player. The individual monkey should be
+## responsible for its animations.
+func _walk_up() -> void:
 	_animated_sprite.play("walk_up")
 	_update_vision_rays(Vector2(0, -vision_range))
 
 
-## Called by the Player when the player is moving down
-func walk_down() -> void:
-	#print("MONKEY WALKIN DOWQN!")
+## Utility method for the monkey to play the walk down animation and adjust its
+## raycasts accordingly.
+##
+## NOTE: Should not be called by the player. The individual monkey should be
+## responsible for its animations.
+func _walk_down() -> void:
 	_animated_sprite.play("walk_down")
 	_update_vision_rays(Vector2(0, vision_range))
 
 
-## Helper function to update all vision raycasts
+## Utility method for the monkey to stop animating. The monkey essentially is
+## visually frozen in place. Resets the monkey's last velocity to ZERO.
+##
+## NOTE: Should not be called by the player. The individual monkey should be
+## responsible for its animations.
+func _stop_walk() -> void:
+	_animated_sprite.pause()
+	_last_velocity = Vector2.ZERO
+
+
+## Helper function to update all vision ray casts
 func _update_vision_rays(direction: Vector2) -> void:
 	var angle_offsets = {
 		_raycast_vision: 0.0,
@@ -229,11 +274,6 @@ func _update_vision_rays(direction: Vector2) -> void:
 	# Update each raycast's target_position with its respective angle
 	for raycast in angle_offsets.keys():
 		raycast.target_position = direction.rotated(deg_to_rad(angle_offsets[raycast]))
-
-
-## Called by the Player when no swarm-translation key is pressed (monkey idle)
-func stop_walk() -> void:
-	_animated_sprite.stop()
 
 
 ## Handles monkey death. Plays the death animation and cleans the monkey from
@@ -355,19 +395,19 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
 		_animated_sprite.stop()
 		queue_free()
-		
+
 func heal(amount: float) -> void:
 	# Increase current health but do not exceed max_health.
 	current_health = min(max_health, current_health + amount)
-	
+
 	# Update the health bar if it exists.
 	if health_bar:
 		health_bar.value = current_health
 		health_bar.health = current_health  # If you use a separate property for health
-	
+
 	# Apply a light blue tint to indicate healing.
 	_animated_sprite.modulate = Color(0.7, 0.7, 1, 1)  # Light blue tint
 	await get_tree().create_timer(0.5).timeout  # Wait 0.5 seconds
 	_animated_sprite.modulate = Color(1, 1, 1, 1)    # Reset to normal color
-	
+
 	print_debug("Monkey healed by ", amount, ". Current health: ", current_health)
