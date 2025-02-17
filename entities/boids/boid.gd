@@ -14,7 +14,7 @@ extends CharacterBody2D
 ## The maximum speed of the boid.
 @export var max_speed: float = 125.0
 
-## The maxiumum force that can be applied to the boid.
+## The maximum force that can be applied to the boid.
 @export var max_force: float = 150.0
 
 ## The distance to which the boid can see in its range of view.
@@ -71,7 +71,7 @@ var attack_timer: float = 0.0
 ## The damage dealt by the boid's attack.
 @export var attack_damage: int = 1
 
-## The cooldown time between attacks (in seconds)
+## The cool down time between attacks (in seconds)
 @export var attack_cooldown: float = 1.5
 
 ## The probability of the boid screaming when unaliving.
@@ -371,13 +371,16 @@ func _die():
 	is_dead = true
 	health_bar.hide()
 
+	# Stop any currently playing animation
+	_anim_sprite.stop()
+
 	## Disable physics and processing
 	set_physics_process(false)
 	set_process(false)
 	collision_layer = 0
 	collision_mask = 0
 
-	# Disable the hitbox to prevent further interactions
+	# Disable the hit box to prevent further interactions
 	if is_instance_valid($HitBox):
 		$HitBox.set_deferred("monitoring", false)
 		$HitBox.set_deferred("monitorable", false)
@@ -407,6 +410,7 @@ func _handle_hit(hit: Node) -> void:
 			print_debug("Applying damage to target: ", hit.name)
 			hit.take_damage(attack_damage)
 		attack_timer = attack_cooldown
+
 
 ## Handles the boid's hit box area entered signal.
 func _on_hit_box_area_entered(area: Area2D) -> void:
