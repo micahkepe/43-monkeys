@@ -32,6 +32,7 @@ troop="The monkey troop that the main player can control."
 player="The main player's monkey to control."
 enemies="Enemies that deal damage to the player and/or troop."
 projectiles="Flying objects that deal damage to hit entities."
+moveables="Moveable objects in the level environment."
 
 [input]
 
@@ -172,6 +173,7 @@ toggle_full_screen={
 2d_physics/layer_3="Projectiles"
 2d_physics/layer_4="Troop"
 2d_physics/layer_5="Leader"
+2d_physics/layer_6="Moveables"
 
 [navigation]
 

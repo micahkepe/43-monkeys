@@ -546,7 +546,7 @@ scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_xktke")
-hits_to_kill = 8
+hits_to_kill = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5pjvm")

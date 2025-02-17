@@ -64,10 +64,10 @@ texture = ExtResource("3_ppbpf")
 [sub_resource type="TileSet" id="TileSet_qp8lw"]
 sources/0 = SubResource("TileSetAtlasSource_ufus0")
 
-[node name="Box" type="RigidBody2D"]
+[node name="Box" type="RigidBody2D" groups=["moveables"]]
 z_index = 1
 y_sort_enabled = true
-collision_layer = 8
+collision_layer = 32
 collision_mask = 31
 mass = 3.082
 gravity_scale = 0.0

@@ -134,10 +134,10 @@ texture = ExtResource("3_t4u4m")
 [sub_resource type="TileSet" id="TileSet_opilk"]
 sources/0 = SubResource("TileSetAtlasSource_6rmje")
 
-[node name="Buttons" type="Area2D" groups=["button"]]
+[node name="Button" type="Area2D" groups=["button"]]
 show_behind_parent = true
 y_sort_enabled = true
-collision_mask = 31
+collision_mask = 63
 script = ExtResource("1_5qpy4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -1,5 +1,6 @@
 extends PotionProjectile
 class_name DamagePotion
+## Represents a damage potion that can be thrown by an enemy.
 
 @export var immediate_damage: float = 1.0  # Damage dealt on immediate hit (in SPIN state)
 @export var pool_damage: float = 2.0         # Damage dealt each tick while in POOL state
@@ -24,7 +25,7 @@ func on_effect_body_entered(body: Node) -> void:
 func _physics_process(delta: float) -> void:
 	# Call the base class _physics_process for movement and state changes.
 	super._physics_process(delta)
-	
+
 	# When in the POOL state, apply continuous damage using a timer.
 	if state == PotionState.POOL:
 		pool_damage_timer += delta
