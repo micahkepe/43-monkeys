@@ -419,8 +419,6 @@ func handle_swarm_input(_delta: float) -> bool:
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
-
-
 	# Handle troop lock
 	# If the "toggle_lock" key is pressed, toggle the swarm lock state, NOT HELD
 	if Input.is_action_just_pressed("toggle_lock"):

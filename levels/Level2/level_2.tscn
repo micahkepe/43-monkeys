@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=3 format=3 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
+[ext_resource type="AudioStream" uid="uid://dndthokwu6e1m" path="res://assets/music/bospad-type-beat/bospad-type-beat.ogg" id="2_xwg0x"]
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_e5bne")
+
+[node name="BackgroundTiles" type="TileMapLayer" parent="."]
+z_index = -1
+
+[node name="World" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="ForegroundTiles" type="TileMapLayer" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_xwg0x")
+bus = &"Music"
