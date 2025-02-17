@@ -218,7 +218,7 @@ func attack_throw_damage_potion() -> void:
 
 	# Calculate the direction toward the player.
 	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.velocity = direction * 175 # Adjust speed of potion here
+	projectile.velocity = direction * 235 # Adjust speed of potion here
 	#projectile.scale = Vector2(1.5, 1.5)
 
 	# Play the appropriate attack animation.
@@ -258,7 +258,7 @@ func attack_throw_damage_potion_spread() -> void:
 		var projectile = damage_potion_scene.instantiate()
 		add_projectile(projectile)
 		projectile.global_position = global_position
-		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 175
+		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 235
 		#projectile.scale = Vector2(1.5, 1.5)
 		# Small delay between each projectile (optional)
 		await get_tree().create_timer(0.1).timeout
@@ -289,7 +289,7 @@ func attack_throw_heal_potion() -> void:
 
 	# Calculate the direction toward the player.
 	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.velocity = direction * 175  # Adjust speed as needed
+	projectile.velocity = direction * 235  # Adjust speed as needed
 	#projectile.scale = Vector2(1.5, 1.5)
 
 	# Play the appropriate attack animation.
@@ -330,7 +330,7 @@ func attack_throw_heal_potion_spread() -> void:
 		var projectile = heal_potion_scene.instantiate()
 		add_projectile(projectile)
 		projectile.global_position = global_position
-		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 175  # Same speed multiplier
+		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 235  # Same speed multiplier
 		#projectile.scale = Vector2(1.5, 1.5)
 		# Optional small delay between projectiles.
 		await get_tree().create_timer(0.1).timeout
@@ -362,7 +362,7 @@ func attack_throw_blindness_potion() -> void:
 
 	# Calculate the direction toward the player.
 	var direction: Vector2 = (player.global_position - global_position).normalized()
-	projectile.velocity = direction * 175  # Adjust speed as needed
+	projectile.velocity = direction * 235  # Adjust speed as needed
 	#projectile.scale = Vector2(1.5, 1.5)
 
 	# Play the appropriate attack animation.
@@ -403,7 +403,7 @@ func attack_throw_blindness_potion_spread() -> void:
 		var projectile = blindness_potion_scene.instantiate()
 		add_projectile(projectile)
 		projectile.global_position = global_position
-		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 175  # Same speed multiplier
+		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 235  # Same speed multiplier
 		#projectile.scale = Vector2(1.5, 1.5)
 		# Optional small delay between projectiles.
 		await get_tree().create_timer(0.1).timeout
