@@ -449,13 +449,13 @@ func handle_swarm_input(_delta: float) -> bool:
 	# animations are being called twice and ruining the diagonal animation playing.
 	if len(_swarm_monkeys) > 0:
 		var move_input = Vector2.ZERO
-		if Input.is_action_pressed("translate_up"):
+		if Input.is_action_pressed("translate_up") and Input.is_key_pressed(KEY_SHIFT):
 			move_input.y -= 1
-		if Input.is_action_pressed("translate_down"):
+		if Input.is_action_pressed("translate_down") and Input.is_key_pressed(KEY_SHIFT):
 			move_input.y += 1
-		if Input.is_action_pressed("translate_left"):
+		if Input.is_action_pressed("translate_left") and Input.is_key_pressed(KEY_SHIFT):
 			move_input.x -= 1
-		if Input.is_action_pressed("translate_right"):
+		if Input.is_action_pressed("translate_right") and Input.is_key_pressed(KEY_SHIFT):
 			move_input.x += 1
 		if move_input != Vector2.ZERO:
 			move_input = move_input.normalized()
