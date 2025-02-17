@@ -60,11 +60,11 @@ var initial_troop_amount: int = 0
 
 ## The scale of the troop ellipse along the x-axis
 @export
-var ellipse_width_scale: float = 100.0
+var ellipse_width_scale: float = 175.0
 
 ## The scale of the troop ellipse along the y-axis
 @export
-var ellipse_height_scale: float = 100.0
+var ellipse_height_scale: float = 175.0
 
 ## Whether swarm is "locked" (Does not move with player on WASD)
 var _troop_locked: bool = false
@@ -96,6 +96,9 @@ const WORLD_UP = Vector2(0, -1)
 
 ## Constant vector for downward world direction.
 const WORLD_RIGHT = Vector2(1, 0)
+
+var _current_rotation_speed_in_radians_per_sec: float = 0.0
+
 
 # Health variables.
 
@@ -171,6 +174,7 @@ func _update_monkey_counter(count: int) -> void:
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _physics_process(_delta: float) -> void:
+	var old_rotation = _swarm_rotation
 
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
@@ -232,13 +236,18 @@ func _physics_process(_delta: float) -> void:
 	_handle_shooting()
 
 	var swarm_modified = handle_swarm_input(_delta)
+	
+	var rotation_delta = _swarm_rotation - old_rotation
+	# 4) Convert that to "radians per second"
+	_current_rotation_speed_in_radians_per_sec = rotation_delta / _delta
+
 
 	# If swam unlocked, move with WASD as the player moves
 	if not _troop_locked and input_velocity != Vector2.ZERO:
 		swarm_modified = true
 
 	# If changed rotation/size, do angle recalculation.
-	if _needs_full_ellipse_recalc:
+	if _needs_full_ellipse_recalc or swarm_modified:
 		_update_swarm_positions()
 
 	if _current_cooldown > 0:
@@ -308,7 +317,6 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 
 ## Positions each monkey on the ellipse boundary using their angle, plus
 func _update_swarm_positions() -> void:
-	# Only update _swarm_world_center if the swarm is unlocked.
 	if not _troop_locked:
 		var center_offset = _swarm_center_offset.rotated(_swarm_rotation)
 		_swarm_world_center = global_position + center_offset
@@ -317,29 +325,42 @@ func _update_swarm_positions() -> void:
 		var angle = entry["angle"]
 		var monkey = entry["node"]
 
-		# Calculate target position on the ellipse.
+		# Compute target position on the ellipse.
 		var x_component = Vector2(1, 0).rotated(_swarm_rotation) * ellipse_width_scale * cos(angle)
 		var y_component = Vector2(0, 1).rotated(_swarm_rotation) * ellipse_height_scale * sin(angle)
 		var target_position = _swarm_world_center + x_component + y_component
 
 		if _troop_locked:
-			# When locked, snap monkeys to their target positions and zero their velocity.
 			monkey.global_position = target_position
 			monkey.velocity = Vector2.ZERO
 		else:
-			# Normal behavior: compute velocity so monkeys move toward target.
 			var to_target = target_position - monkey.global_position
 			if to_target.length() < 5.0:
 				monkey.velocity = Vector2.ZERO
 				if entry.has("transitioning"):
 					entry["transitioning"] = false
 			else:
-				var move_speed = speed
+				var base_speed = speed
 				if entry.has("transitioning") and entry["transitioning"]:
-					move_speed = speed * 0.75  # slower if transitioning
-				monkey.velocity = to_target.normalized() * move_speed
+					# maybe slower or faster if you want
+					base_speed *= 0.75
 
+				# How fast the ellipse is spinning this frame:
+				var angular_velocity = abs(_current_rotation_speed_in_radians_per_sec)
+
+				# Approximate radius:
+				var radius = (ellipse_width_scale + ellipse_height_scale) * 0.5
+
+				# The extra speed needed to keep up with rotation:
+				var rotation_chase_speed = angular_velocity * radius
+
+				# Final speed = base speed + chase speed, capped at max of 1k:
+				var final_speed = min(base_speed + rotation_chase_speed, 1000.0)
+				#var final_speed = base_speed + rotation_chase_speed
+
+				monkey.velocity = to_target.normalized() * final_speed
 			monkey.move_and_slide()
+
 
 
 
@@ -382,12 +403,17 @@ func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
 func handle_swarm_input(_delta: float) -> bool:
 	var swarm_moved = false
 
-	# Rotations keys
 	if Input.is_action_pressed("rotate_swarm_clockwise"):
-		var rotation_speed = 1.75 * _delta
+		# Rotate the transformation matrix
+		var rotation_speed = 1.5 * _delta
 		_swarm_rotation += rotation_speed
+
+		# Adjust the center offset to rotate around the player
+		#_swarm_center_offset = _swarm_center_offset.rotated(rotation_speed)
+
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
+
 
 
 	# Handle troop lock
@@ -449,44 +475,29 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_moved = true
 
 	if Input.is_action_pressed("reset_swarm"):
-		# Step 1: Reset swarm position using _shift_swarm_position
-		var reset_vector = global_position - _swarm_world_center
+			# Unlock the swarm so they chase instead of snap.
+			_troop_locked = false
+			_troop_lock_ui.hide()
 
-		# # Step 2: Play animations for all monkeys based on the reset direction
-		# var direction = reset_vector.normalized()  # Get normalized direction
-		# for monkey_entry in _swarm_monkeys:
-		# 	var monkey = monkey_entry["node"]
-		# 	if direction.angle_to(Vector2(0, 1)) < 0.25:  # Closest to down
-		# 		monkey.walk_down()
-		# 	elif direction.angle_to(Vector2(1, 0)) < 0.25:  # Closest to right
-		# 		monkey.walk_right()
-		# 	elif direction.angle_to(Vector2(0, -1)) < 0.25:  # Closest to up
-		# 		monkey.walk_up()
-		# 	elif direction.angle_to(Vector2(-1, 0)) < 0.25:  # Closest to left
-		# 		monkey.walk_left()
+			# Reset ellipse parameters
+			ellipse_width_scale = 175.0
+			ellipse_height_scale = 175.0
+			_swarm_rotation = 0.0
+			_swarm_center_offset = Vector2.ZERO
+			_swarm_world_center = global_position
 
-		_shift_swarm_position(reset_vector, reset_vector.length())
+			# Redistribute angles
+			var total = float(_swarm_monkeys.size())
+			for i in range(_swarm_monkeys.size()):
+				var fraction = float(i) / total
+				_swarm_monkeys[i]["angle"] = fraction * TAU
 
-		# Step 2: Reset ellipse size
-		ellipse_width_scale = 100.0  # Default width
-		ellipse_height_scale = 100.0  # Default height
+			# Mark for recalc so they'll walk to the new positions
+			_needs_full_ellipse_recalc = true
+			swarm_moved = true
+			_current_rotation_speed_in_radians_per_sec = 0.0
 
-		# Step 3: Reset swarm rotation and offset
-		_swarm_rotation = 0.0  # Reset rotation
-		_swarm_center_offset = Vector2.ZERO  # Reset any offset
-		_swarm_world_center = global_position  # Align with the player
-
-		# Step 4: Redistribute monkeys evenly around the ellipse
-		var total = float(_swarm_monkeys.size())
-		for i in range(_swarm_monkeys.size()):
-			var fraction = float(i) / total
-			_swarm_monkeys[i]["angle"] = fraction * TAU  # Evenly spaced angles
-
-		# Step 5: Mark for full recalculation of positions
-		_needs_full_ellipse_recalc = true
-		swarm_moved = true
-
-		print_debug("Swarm reset: Position, size, rotation, and distribution updated.")
+			print_debug("Swarm reset: Position, size, rotation, and distribution updated.")
 
 	return swarm_moved
 
