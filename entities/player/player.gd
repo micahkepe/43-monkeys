@@ -307,8 +307,8 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 
 
 ## Positions each monkey on the ellipse boundary using their angle, plus
-## '_swarm_center_offset', plus Player.global_position
 func _update_swarm_positions() -> void:
+	# Only update _swarm_world_center if the swarm is unlocked.
 	if not _troop_locked:
 		var center_offset = _swarm_center_offset.rotated(_swarm_rotation)
 		_swarm_world_center = global_position + center_offset
@@ -317,28 +317,30 @@ func _update_swarm_positions() -> void:
 		var angle = entry["angle"]
 		var monkey = entry["node"]
 
-		# Calculate target position on the ellipse:
+		# Calculate target position on the ellipse.
 		var x_component = Vector2(1, 0).rotated(_swarm_rotation) * ellipse_width_scale * cos(angle)
 		var y_component = Vector2(0, 1).rotated(_swarm_rotation) * ellipse_height_scale * sin(angle)
 		var target_position = _swarm_world_center + x_component + y_component
 
-		# Calculate how far the monkey is from its target:
-		var to_target = target_position - monkey.global_position
-		var _move_direction = to_target.normalized()
-
-		# If the monkey is close enough, stop its movement:
-		if to_target.length() < 5.0:
+		if _troop_locked:
+			# When locked, snap monkeys to their target positions and zero their velocity.
+			monkey.global_position = target_position
 			monkey.velocity = Vector2.ZERO
 		else:
-			# Use a slower speed if the monkey is transitioning
-			var move_speed = speed
-			if entry.has("transitioning") and entry["transitioning"]:
-				move_speed = speed * 0.75  # Adjust this multiplier as needed
+			# Normal behavior: compute velocity so monkeys move toward target.
+			var to_target = target_position - monkey.global_position
+			if to_target.length() < 5.0:
+				monkey.velocity = Vector2.ZERO
+				if entry.has("transitioning"):
+					entry["transitioning"] = false
+			else:
+				var move_speed = speed
+				if entry.has("transitioning") and entry["transitioning"]:
+					move_speed = speed * 0.75  # slower if transitioning
+				monkey.velocity = to_target.normalized() * move_speed
 
-			var direction = to_target.normalized()
-			monkey.velocity = direction * move_speed
+			monkey.move_and_slide()
 
-		monkey.move_and_slide()
 
 
 ## Translates all monkeys by the same offset for WASD movement or swarm keys
@@ -382,13 +384,8 @@ func handle_swarm_input(_delta: float) -> bool:
 
 	# Rotations keys
 	if Input.is_action_pressed("rotate_swarm_clockwise"):
-		# Rotate the transformation matrix
 		var rotation_speed = 1.75 * _delta
 		_swarm_rotation += rotation_speed
-
-		# Adjust the center offset to rotate around the player
-		_swarm_center_offset = _swarm_center_offset.rotated(rotation_speed)
-
 		_needs_full_ellipse_recalc = true
 		swarm_moved = true
 
@@ -396,19 +393,21 @@ func handle_swarm_input(_delta: float) -> bool:
 	# Handle troop lock
 	# If the "toggle_lock" key is pressed, toggle the swarm lock state, NOT HELD
 	if Input.is_action_just_pressed("toggle_lock"):
-		var was_locked = _troop_locked
 		_troop_locked = not _troop_locked
-
-		if was_locked and not _troop_locked:
-			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
-
-		# update the troop lock UI
-		if was_locked:
-			# hide the UI
-			_troop_lock_ui.hide()
+		if _troop_locked:
+			# When locking, freeze the current swarm center.
+			_swarm_world_center = global_position + _swarm_center_offset.rotated(_swarm_rotation)
 		else:
-			# show locked texture now
+			# When unlocking, recalc the offset so the swarm follows the player.
+			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
+		swarm_moved = true
+
+		# Update the troop lock UI
+		if _troop_locked:
 			_troop_lock_ui.show()
+		else:
+			_troop_lock_ui.hide()
+
 
 
 	# TODO: this is better logic for handling diagonals, but somewhere the troop
