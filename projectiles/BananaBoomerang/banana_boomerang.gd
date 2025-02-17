@@ -37,6 +37,9 @@ func _physics_process(delta: float) -> void:
 	if velocity.length() > 0:
 		rotation = velocity.angle()
 
+	# Ensure the shadow container does not rotate
+	$ShadowContainer.global_position = global_position
+
 
 ## Called when the projectile collides with a body.
 ## If the body is in the "enemies" group, the body will take damage.

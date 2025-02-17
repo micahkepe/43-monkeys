@@ -236,7 +236,7 @@ func _physics_process(_delta: float) -> void:
 	_handle_shooting()
 
 	var swarm_modified = handle_swarm_input(_delta)
-	
+
 	var rotation_delta = _swarm_rotation - old_rotation
 	# 4) Convert that to "radians per second"
 	_current_rotation_speed_in_radians_per_sec = rotation_delta / _delta
@@ -432,7 +432,7 @@ func handle_swarm_input(_delta: float) -> bool:
 			# When unlocking, recalculate the offset so the swarm follows the player.
 			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
 		swarm_moved = true
-		
+
 		# Update each monkey’s locked flag
 		for entry in _swarm_monkeys:
 			entry["node"].locked = _troop_locked
