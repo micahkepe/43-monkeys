@@ -3,6 +3,8 @@ extends CharacterBody2D
 ##
 ## Handles walking animation, collision avoidance, and enemy detection.
 
+var locked: bool = false
+
 ## The AnimatedSprite2D node that plays the monkey's walking animation.
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -186,20 +188,22 @@ func _physics_process(_delta: float) -> void:
 		attack_timer -= _delta
 
 	# Update the individual monkey's animation based on its own velocity.
-	if velocity == Vector2.ZERO:
-		# Only stop if the monkey was previously moving
-		if _last_velocity != Vector2.ZERO:
-			_stop_walk()
+	if locked:
+		_stop_walk()
 	else:
-		# handle animation
-		if velocity.y > 0:
-			_walk_down()
-		elif velocity.y < 0:
-			_walk_up()
-		elif velocity.x < 0:
-			_walk_left()
-		elif velocity.x > 0:
-			_walk_right()
+		# Update the individual monkey's animation based on its own velocity.
+		if velocity == Vector2.ZERO:
+			if _last_velocity != Vector2.ZERO:
+				_stop_walk()
+		else:
+			if velocity.y > 0:
+				_walk_down()
+			elif velocity.y < 0:
+				_walk_up()
+			elif velocity.x < 0:
+				_walk_left()
+			elif velocity.x > 0:
+				_walk_right()
 
 	# Update last velocity
 	_last_velocity = velocity

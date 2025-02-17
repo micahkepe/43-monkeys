@@ -331,8 +331,13 @@ func _update_swarm_positions() -> void:
 		var target_position = _swarm_world_center + x_component + y_component
 
 		if _troop_locked:
-			monkey.global_position = target_position
 			monkey.velocity = Vector2.ZERO
+			var to_target = target_position - monkey.global_position
+			if to_target.length() > 5.0:
+				monkey.velocity = to_target.normalized() * speed
+			else:
+				monkey.velocity = Vector2.ZERO
+			monkey.move_and_slide()
 		else:
 			var to_target = target_position - monkey.global_position
 			if to_target.length() < 5.0:
@@ -427,6 +432,10 @@ func handle_swarm_input(_delta: float) -> bool:
 			# When unlocking, recalculate the offset so the swarm follows the player.
 			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
 		swarm_moved = true
+		
+		# Update each monkey’s locked flag
+		for entry in _swarm_monkeys:
+			entry["node"].locked = _troop_locked
 
 		# Update the troop lock UI
 		if _troop_locked and _swarm_monkeys.size() > 0:
