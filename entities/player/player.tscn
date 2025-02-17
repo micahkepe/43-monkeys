@@ -1,9 +1,9 @@
-[gd_scene load_steps=64 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=66 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/Player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_yc2po"]
-[ext_resource type="PackedScene" uid="uid://3kyps6qs6oo3" path="res://shaders/BlindnessOverlay.tscn" id="3_0k4ps"]
+[ext_resource type="PackedScene" path="res://shaders/BlindnessOverlay.tscn" id="3_0k4ps"]
 [ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="3_73h8e"]
 [ext_resource type="PackedScene" uid="uid://duw8h7t4ye7j6" path="res://entities/Monkeys/pirate_monkey.tscn" id="4_xwpq6"]
 [ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="5_dvwff"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/shooting/banana_throw.wav" id="12_o6mwb"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
+[ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://ui/ui.png" id="15_g1xt3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qk8jr"]
 radius = 43.185
@@ -357,6 +358,10 @@ shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ebpfv"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1wth"]
+atlas = ExtResource("15_g1xt3")
+region = Rect2(96, 32, 16, 16)
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 self_modulate = Color(1, 1, 0.0980392, 1)
 z_index = 1
@@ -423,6 +428,16 @@ theme_override_font_sizes/font_size = 60
 text = "1/43"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="TroopLock" type="TextureButton" parent="PlayerUI"]
+visible = false
+offset_left = 975.0
+offset_top = 31.0
+offset_right = 996.0
+offset_bottom = 52.0
+scale = Vector2(3.5, 3.5)
+texture_normal = SubResource("AtlasTexture_q1wth")
+stretch_mode = 0
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_mqlhb")

@@ -67,10 +67,13 @@ var ellipse_width_scale: float = 100.0
 var ellipse_height_scale: float = 100.0
 
 ## Whether swarm is "locked" (Does not move with player on WASD)
-var _swarm_locked: bool = false
+var _troop_locked: bool = false
 
-## SwarmMonkeys root node
+## The root node to append the troop monkeys.
 @onready var _swarm_monkeys_root: Node2D = $SwarmMonkeys
+
+## The UI display for whether the troop is currently locked.
+@onready var _troop_lock_ui: TextureButton = $PlayerUI/TroopLock
 
 ## Additional offset from the player's position
 ## (Changed by U, O, H, ;)
@@ -108,9 +111,6 @@ var _damage_cooldown: float = 1.0
 ## The current cool down for taking damage.
 var _current_cooldown: float = 0.0
 
-## Flag for whether the troop is currently locked.
-var _troop_locked: bool = false
-
 ## The UI container for the player's health display.
 @onready var hearts_container = $PlayerUI/HeartsContainer
 
@@ -123,9 +123,6 @@ var _troop_locked: bool = false
 
 ## Emitted when the count of the troop is altered.
 signal monkey_count_changed(new_count: int)
-
-## Emitted when the player locks the troop.
-signal troop_locked(troop_locked)
 
 # -----------------------------------------------------------------
 
@@ -154,7 +151,6 @@ func _ready() -> void:
 	_update_monkey_counter(_swarm_monkeys.size())
 
 
-
 ## Called when there is an input event. The input event propagates up through
 ## the node tree until a node consumes it.
 func _input(event):
@@ -175,19 +171,21 @@ func _update_monkey_counter(count: int) -> void:
 ## Handles input and updates the player's position and animation.
 ## @param delta: float - The elapsed time since the previous frame in seconds.
 func _physics_process(_delta: float) -> void:
+
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
 	var current_speed = speed
 
-	# Movement input
-	if Input.is_action_pressed("ui_right") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
-		input_velocity.x += 1
-	if Input.is_action_pressed("ui_left") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
-		input_velocity.x -= 1
-	if Input.is_action_pressed("ui_up") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
-		input_velocity.y -= 1
-	if Input.is_action_pressed("ui_down") and (not Input.is_key_pressed(KEY_SHIFT) or len(_swarm_monkeys) == 0):
-		input_velocity.y += 1
+	# Player movement input (no SHIFT)
+	if not Input.is_key_pressed(KEY_SHIFT):
+		if Input.is_action_pressed("ui_right"):
+			input_velocity.x += 1
+		if Input.is_action_pressed("ui_left"):
+			input_velocity.x -= 1
+		if Input.is_action_pressed("ui_up"):
+			input_velocity.y -= 1
+		if Input.is_action_pressed("ui_down"):
+			input_velocity.y += 1
 
 	# Normalize diagonal movement
 	if input_velocity != Vector2.ZERO:
@@ -196,27 +194,27 @@ func _physics_process(_delta: float) -> void:
 	## Set animation based on movement direction
 	if input_velocity.y < 0:
 		_animated_sprite.play("walk_up")
-		if not _swarm_locked and len(_swarm_monkeys) > 0:
+		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_up()
 	elif input_velocity.y > 0:
 		_animated_sprite.play("walk_down")
-		if not _swarm_locked and len(_swarm_monkeys) > 0:
+		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_down()
 	elif input_velocity.x > 0:
 		_animated_sprite.play("walk_right")
-		if not _swarm_locked and len(_swarm_monkeys) > 0:
+		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_right()
 	elif input_velocity.x < 0:
 		_animated_sprite.play("walk_left")
-		if not _swarm_locked and len(_swarm_monkeys) > 0:
+		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_left()
 	else:
 		_animated_sprite.stop()
-		if not _swarm_locked and len(_swarm_monkeys) > 0:
+		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._stop_walk()
 
@@ -236,7 +234,7 @@ func _physics_process(_delta: float) -> void:
 	var swarm_modified = handle_swarm_input(_delta)
 
 	# If swam unlocked, move with WASD as the player moves
-	if not _swarm_locked and input_velocity != Vector2.ZERO:
+	if not _troop_locked and input_velocity != Vector2.ZERO:
 		swarm_modified = true
 
 	# If changed rotation/size, do angle recalculation.
@@ -311,7 +309,7 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 ## Positions each monkey on the ellipse boundary using their angle, plus
 ## '_swarm_center_offset', plus Player.global_position
 func _update_swarm_positions() -> void:
-	if not _swarm_locked:
+	if not _troop_locked:
 		var center_offset = _swarm_center_offset.rotated(_swarm_rotation)
 		_swarm_world_center = global_position + center_offset
 
@@ -398,13 +396,19 @@ func handle_swarm_input(_delta: float) -> bool:
 	# Handle troop lock
 	# If the "toggle_lock" key is pressed, toggle the swarm lock state, NOT HELD
 	if Input.is_action_just_pressed("toggle_lock"):
-		var was_locked = _swarm_locked
-		_swarm_locked = not _swarm_locked
+		var was_locked = _troop_locked
+		_troop_locked = not _troop_locked
 
-		if was_locked and not _swarm_locked:
+		if was_locked and not _troop_locked:
 			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
 
-		swarm_moved = true #maybe delete
+		# update the troop lock UI
+		if was_locked:
+			# hide the UI
+			_troop_lock_ui.hide()
+		else:
+			# show locked texture now
+			_troop_lock_ui.show()
 
 
 	# TODO: this is better logic for handling diagonals, but somewhere the troop
