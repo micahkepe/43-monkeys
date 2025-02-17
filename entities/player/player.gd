@@ -429,7 +429,7 @@ func handle_swarm_input(_delta: float) -> bool:
 		swarm_moved = true
 
 		# Update the troop lock UI
-		if _troop_locked:
+		if _troop_locked and _swarm_monkeys.size() > 0:
 			_troop_lock_ui.show()
 		else:
 			_troop_lock_ui.hide()
