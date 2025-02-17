@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://cp5du4n6j8tbm"]
+[gd_scene load_steps=98 format=3 uid="uid://cp5du4n6j8tbm"]
 
 [ext_resource type="Script" path="res://entities/Bosses/PotionBoss/potion_boss.gd" id="1_6ahq3"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_crlfk"]
@@ -7,9 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://mimnl2g76xwc" path="res://assets/sprites/characters/bosses/chemist_boss/chemist.png" id="3_uhaw2"]
 [ext_resource type="PackedScene" uid="uid://8co3a7en1acd" path="res://projectiles/Potions/BlindnessPotion/BlindnessPotion.tscn" id="4_i0d6i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="4_p0wom"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_0s22d"]
-radius = 10.0499
+[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="8_pol7v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5kv14"]
 atlas = ExtResource("2_crlfk")
@@ -687,11 +685,20 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0s22d"]
+radius = 10.0499
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enwfc"]
 bg_color = Color(0.326222, 0.696952, 0.315019, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jefyw"]
 size = Vector2(31.3483, 52.6966)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7ip3"]
+shader = ExtResource("8_pol7v")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0, 0, 0, 0.5)
 
 [node name="PotionBoss" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
@@ -703,17 +710,17 @@ damage_potion_scene = ExtResource("2_ku1rs")
 heal_potion_scene = ExtResource("3_ufr6h")
 blindness_potion_scene = ExtResource("4_i0d6i")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -22)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_vqgia")
+animation = &"walk_down"
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
 position = Vector2(1, 29)
 scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_0s22d")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -22)
-scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"die"
 
 [node name="HealthBar" parent="." instance=ExtResource("4_p0wom")]
 offset_left = -41.0
@@ -731,6 +738,13 @@ collision_mask = 31
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0.318352, -0.131086)
 shape = SubResource("RectangleShape2D_jefyw")
+
+[node name="Shadow" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_e7ip3")
+offset_left = -53.0
+offset_top = 29.0
+offset_right = 60.0
+offset_bottom = 74.0
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
