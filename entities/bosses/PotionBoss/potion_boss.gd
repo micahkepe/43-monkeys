@@ -23,7 +23,7 @@ extends CharacterBody2D
 @onready var health_bar = $HealthBar
 
 ## The ChemistBoss's maximum health value.
-@export var max_health: float = 100.0
+@export var max_health: float = 200.0
 
 ## The ChemistBoss's current health value.
 var current_health: float
@@ -481,7 +481,7 @@ var attacks = [
 	{
 		"name": "attack_throw_heal_potion",
 		"function": Callable(self, "attack_throw_heal_potion"),
-		"weight": 200,
+		"weight": 2,
 		"unlocked": true
 	},
 	{
@@ -493,7 +493,7 @@ var attacks = [
 	{
 		"name": "attack_throw_blindness_potion",
 		"function": Callable(self, "attack_throw_blindness_potion"),
-		"weight": 200,
+		"weight": 2,
 		"unlocked": true
 	},
 	{
