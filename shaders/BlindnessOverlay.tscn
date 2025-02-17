@@ -12,6 +12,7 @@ shader_parameter/max_opacity = 0.8
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_0xaal")
+hole_radius = 200.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_u5jbx")
