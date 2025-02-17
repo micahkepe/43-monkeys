@@ -424,7 +424,7 @@ func handle_swarm_input(_delta: float) -> bool:
 			# When locking, freeze the current swarm center.
 			_swarm_world_center = global_position + _swarm_center_offset.rotated(_swarm_rotation)
 		else:
-			# When unlocking, recalc the offset so the swarm follows the player.
+			# When unlocking, recalculate the offset so the swarm follows the player.
 			_swarm_center_offset = (_swarm_world_center - global_position).rotated(-_swarm_rotation)
 		swarm_moved = true
 
