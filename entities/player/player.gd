@@ -424,6 +424,10 @@ func handle_swarm_input(_delta: float) -> bool:
 	# Handle troop lock
 	# If the "toggle_lock" key is pressed, toggle the swarm lock state, NOT HELD
 	if Input.is_action_just_pressed("toggle_lock"):
+		# if no monkeys yet, get out of here
+		if not _swarm_monkeys.size() > 0:
+			return false
+
 		_troop_locked = not _troop_locked
 		if _troop_locked:
 			# When locking, freeze the current swarm center.
@@ -509,28 +513,6 @@ func handle_swarm_input(_delta: float) -> bool:
 			print_debug("Swarm reset: Position, size, rotation, and distribution updated.")
 
 	return swarm_moved
-
-
-## Utility to stop monkey animations if no movement keys pressed
-# func _swarm_monkeys_stop_walk() -> void:
-# 	for entry in _swarm_monkeys:
-# 		entry["node"].stop_walk()
-
-# func _swarm_monkeys_walk_up() -> void:
-# 	for entry in _swarm_monkeys:
-# 		entry["node"].walk_up()
-
-# func _swarm_monkeys_walk_down() -> void:
-# 	for entry in _swarm_monkeys:
-# 		entry["node"].walk_down()
-
-# func _swarm_monkeys_walk_left() -> void:
-# 	for entry in _swarm_monkeys:
-# 		entry["node"].walk_left()
-
-# func _swarm_monkeys_walk_right() -> void:
-# 	for entry in _swarm_monkeys:
-# 		entry["node"].walk_right()
 
 
 ## Handles shooting logic. Shoots in the direction of the pressed key.

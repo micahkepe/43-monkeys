@@ -1299,6 +1299,11 @@ position = Vector2(3913.33, -1664.67)
 [node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
 position = Vector2(-850, 672)
 scale = Vector2(0.7485, 0.7485)
+speed = null
+sprint_multiplier = null
+initial_troop_amount = null
+ellipse_width_scale = null
+ellipse_height_scale = null
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.00798, 5.34402)
