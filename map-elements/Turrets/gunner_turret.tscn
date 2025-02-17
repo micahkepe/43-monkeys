@@ -1,9 +1,10 @@
-[gd_scene load_steps=38 format=3 uid="uid://bo8o2y5xink1l"]
+[gd_scene load_steps=40 format=3 uid="uid://bo8o2y5xink1l"]
 
 [ext_resource type="Script" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_5t4h7"]
 [ext_resource type="Texture2D" uid="uid://bh53cubpuhh7j" path="res://assets/sprites/tilesets/turret.png" id="2_lanj3"]
 [ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/booms/explosion.wav" id="5_3xp2b"]
+[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="5_djatk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ynjw"]
 atlas = ExtResource("2_lanj3")
@@ -273,6 +274,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txf4j"]
 size = Vector2(25.6667, 25.6667)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y4vxf"]
+shader = ExtResource("5_djatk")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0, 0, 0, 0.5)
+
 [node name="GunnerTurret" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -282,6 +289,7 @@ collision_mask = 7
 script = ExtResource("1_y6i7i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_qg1ew")
 animation = &"idle_left"
@@ -311,3 +319,11 @@ shape = SubResource("RectangleShape2D_txf4j")
 [node name="BoomPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_3xp2b")
 bus = &"SFX"
+
+[node name="Shadow" type="ColorRect" parent="."]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_y4vxf")
+offset_left = -24.3333
+offset_top = -14.6667
+offset_right = 24.6667
+offset_bottom = 25.3333
