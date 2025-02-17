@@ -2,13 +2,14 @@ extends PotionProjectile
 class_name BlindnessPotion
 
 # Duration of the blindness effect in seconds.
-@export var blindness_duration: float = 5.0
+@export var blindness_duration: float = 10.0
 
 # Keep track of bodies that have already received the blindness effect.
 var blinded_bodies: Array = []
 
 # Override the base on_effect_body_entered to apply blindness.
 func on_effect_body_entered(body: Node) -> void:
+	print("===BLIND RAN")
 	# Only apply the effect if it hasn't been applied already.
 	if body in blinded_bodies:
 		return

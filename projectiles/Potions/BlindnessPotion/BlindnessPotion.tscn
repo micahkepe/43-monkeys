@@ -218,6 +218,8 @@ radius = 10.9995
 height = 29.9986
 
 [node name="BlindnessPotion" type="Area2D"]
+collision_layer = 4
+collision_mask = 27
 script = ExtResource("1_c2m83")
 
 [node name="BottleCollision" type="CollisionShape2D" parent="."]
@@ -225,10 +227,9 @@ shape = SubResource("CapsuleShape2D_mtpxl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.75)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_hf648")
 animation = &"bottle_spin"
-frame = 4
-frame_progress = 0.517853
 
 [node name="Pool13Collision" type="CollisionShape2D" parent="."]
 position = Vector2(-2.38419e-07, 10)

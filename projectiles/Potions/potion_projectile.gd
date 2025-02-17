@@ -39,6 +39,7 @@ func _ready() -> void:
 	traveled_distance = 0.0
 	velocity = initial_velocity
 	animation_player.play("bottle_spin")
+	self.scale = Vector2(1.75,1.75)
 
 	_enable_bottle_shape()
 	_disable_all_pool_shapes()
@@ -83,6 +84,7 @@ func _on_splash_animation_finished() -> void:
 		_switch_to_pool()
 
 func _switch_to_pool() -> void:
+	self.scale = Vector2(3,3)
 	if state != PotionState.SPLASH:
 		return
 	state = PotionState.POOL
