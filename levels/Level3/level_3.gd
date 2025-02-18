@@ -2,10 +2,10 @@ extends "res://levels/default_level.gd"
 ## Script for Level 3 logic
 
 ## All the buttons within the scene.
-@onready var buttons = $Buttons.get_children()
+@onready var buttons = $World/Buttons.get_children()
 
 ## All the lasers within the scene.
-@onready var lasers = $Lasers.get_children()
+@onready var lasers = $World/Lasers.get_children()
 
 ## Mapping to track each button's state
 var _button_states = {}
