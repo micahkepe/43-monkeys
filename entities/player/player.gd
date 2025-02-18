@@ -154,16 +154,6 @@ func _ready() -> void:
 	_update_monkey_counter(_swarm_monkeys.size())
 
 
-## Called when there is an input event. The input event propagates up through
-## the node tree until a node consumes it.
-func _input(event):
-	if event.is_action_pressed("toggle_full_screen"):
-		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-
-
 ## Update the monkey group number
 ## @param count: int - The number of monkeys in the group.
 func _update_monkey_counter(count: int) -> void:

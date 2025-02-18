@@ -1,4 +1,4 @@
-extends Control
+extends "res://menus/default_menu.gd"
 ## A pause menu that can be toggled to pause and resume the game.
 ##
 ## The pause menu has "Resume", "Main Menu", "Settings", and "Quit" Button

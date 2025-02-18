@@ -1,4 +1,4 @@
-extends Control
+extends "res://menus/default_menu.gd"
 ## A settings menu that can be toggled to show and hide the settings.
 ##
 ## The settings menu has "Music Volume", "SFX Volume", and "Back" Button

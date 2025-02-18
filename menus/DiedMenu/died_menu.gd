@@ -1,4 +1,4 @@
-extends Control
+extends "res://menus/default_menu.gd"
 ## The menu that appears when the player dies
 ##
 ## The died menu has "Restart", "Main Menu", and "Quit" Button elements that can

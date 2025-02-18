@@ -1,4 +1,4 @@
-extends Control
+extends "res://menus/default_menu.gd"
 ## The main menu for the game.
 ##
 ## The main menu has "Start", "Settings", and "Quit" Button elements that can be
