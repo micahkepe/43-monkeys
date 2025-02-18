@@ -106,7 +106,7 @@ animations = [{
 size = Vector2(94, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hl67n"]
-size = Vector2(41.5, 2.78413)
+size = Vector2(33.6377, 2.78413)
 
 [node name="MonkeyCage" type="StaticBody2D"]
 y_sort_enabled = true
@@ -127,13 +127,13 @@ shape = SubResource("RectangleShape2D_yc4u2")
 
 [node name="CollisionOpenLeft" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-position = Vector2(-65.8175, 34.8278)
+position = Vector2(-64.5564, 34.3231)
 rotation = -0.380706
 shape = SubResource("RectangleShape2D_hl67n")
 
 [node name="CollisionOpenRight" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-position = Vector2(64, 34)
+position = Vector2(61.6158, 33.0331)
 rotation = -2.75631
 shape = SubResource("RectangleShape2D_hl67n")
 
