@@ -21,6 +21,7 @@ extends CharacterBody2D
 ##   Shift+L => Increase ellipse width
 ##   I/K/J/L => Shoot up/down/left/right
 @onready var _animated_sprite = $AnimatedSprite2D
+@onready var ellipse_debug: Node2D = $EllipseDebug
 
 ## The base speed at which the player moves
 @export
@@ -355,6 +356,12 @@ func _update_swarm_positions() -> void:
 
 				monkey.velocity = to_target.normalized() * final_speed
 			monkey.move_and_slide()
+	ellipse_debug.ellipse_width_scale = ellipse_width_scale
+	ellipse_debug.ellipse_height_scale = ellipse_height_scale
+	ellipse_debug.swarm_rotation = _swarm_rotation
+	ellipse_debug.position = _swarm_center_offset.rotated(_swarm_rotation)  # Center the drawing on the ellipse center.
+	ellipse_debug.queue_redraw()
+
 
 
 
