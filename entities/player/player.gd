@@ -23,6 +23,8 @@ extends CharacterBody2D
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var ellipse_debug: Node2D = $EllipseDebug
 
+@export var show_ellipse_debug: bool = false
+
 ## The base speed at which the player moves
 @export
 var speed: float = 300.0
@@ -135,6 +137,12 @@ signal monkey_count_changed(new_count: int)
 func _ready() -> void:
 	## Set the player's initial position
 	_swarm_world_center = global_position
+
+	# Show ellipse or not
+	if show_ellipse_debug:
+		ellipse_debug.show()
+	else:
+		ellipse_debug.hide()
 
 	# Pre-spawn the entire troop at the start
 	for i in range(initial_troop_amount):
@@ -356,14 +364,13 @@ func _update_swarm_positions() -> void:
 
 				monkey.velocity = to_target.normalized() * final_speed
 			monkey.move_and_slide()
-	ellipse_debug.ellipse_width_scale = ellipse_width_scale
-	ellipse_debug.ellipse_height_scale = ellipse_height_scale
-	ellipse_debug.swarm_rotation = _swarm_rotation
-	ellipse_debug.position = _swarm_center_offset.rotated(_swarm_rotation)  # Center the drawing on the ellipse center.
-	ellipse_debug.queue_redraw()
 
-
-
+	if show_ellipse_debug:
+		ellipse_debug.ellipse_width_scale = ellipse_width_scale
+		ellipse_debug.ellipse_height_scale = ellipse_height_scale
+		ellipse_debug.swarm_rotation = _swarm_rotation
+		ellipse_debug.position = _swarm_center_offset.rotated(_swarm_rotation)  # Center the drawing on the ellipse center.
+		ellipse_debug.queue_redraw()
 
 
 ## Translates all monkeys by the same offset for WASD movement or swarm keys
