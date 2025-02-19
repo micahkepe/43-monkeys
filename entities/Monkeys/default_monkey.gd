@@ -415,3 +415,14 @@ func heal(amount: float) -> void:
 	_animated_sprite.modulate = Color(1, 1, 1, 1)    # Reset to normal color
 
 	print_debug("Monkey healed by ", amount, ". Current health: ", current_health)
+	
+	
+func apply_blindness(seconds: float) -> void:
+	var prev_range = attack_range
+	attack_range = 0
+	
+	# momentarily recolor the monkey to indicate damage
+	_animated_sprite.modulate = Color(1, 0.55, 0, 1)
+	await get_tree().create_timer(seconds).timeout
+	_animated_sprite.modulate = Color(1, 1, 1, 1)
+	attack_range = prev_range
