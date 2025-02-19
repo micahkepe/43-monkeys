@@ -1,8 +1,12 @@
-[gd_scene load_steps=9 format=4 uid="uid://b58lxpspai3bw"]
+[gd_scene load_steps=10 format=4 uid="uid://b58lxpspai3bw"]
 
 [ext_resource type="Script" path="res://map-elements/Box/box.gd" id="1_8vi4n"]
 [ext_resource type="Texture2D" uid="uid://grtritlcbqa" path="res://assets/sprites/tilesets/crates_boxes.png" id="2_npcbq"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="3_ppbpf"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hin3t"]
+rough = true
+absorbent = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g4haa"]
 atlas = ExtResource("2_npcbq")
@@ -68,9 +72,12 @@ sources/0 = SubResource("TileSetAtlasSource_ufus0")
 z_index = 1
 y_sort_enabled = true
 collision_layer = 32
-collision_mask = 31
-mass = 3.082
+collision_mask = 63
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_hin3t")
 gravity_scale = 0.0
+lock_rotation = true
+continuous_cd = 1
 linear_damp = 0.2
 script = ExtResource("1_8vi4n")
 
