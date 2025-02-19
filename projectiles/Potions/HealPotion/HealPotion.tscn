@@ -1,10 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://cm833e3rmrk2w"]
+[gd_scene load_steps=35 format=3 uid="uid://cm833e3rmrk2w"]
 
 [ext_resource type="Script" path="res://projectiles/Potions/HealPotion/heal_potion.gd" id="1_l3h7j"]
 [ext_resource type="Texture2D" uid="uid://4hvdi4p6dnji" path="res://assets/sprites/items/potions/lightblue_potion_spinning_in_air.png" id="1_qc7ce"]
 [ext_resource type="Texture2D" uid="uid://ctglrgd6rm86w" path="res://assets/sprites/items/potions/lightblue_potion_splashing.png" id="2_obuxo"]
 [ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_j1sg5"]
 [ext_resource type="AudioStream" uid="uid://dhg0x7l142x70" path="res://assets/sfx/player/health-recharge.wav" id="5_ypecb"]
+[ext_resource type="AudioStream" uid="uid://d4meu6ja7btph" path="res://assets/sfx/shooting/glass-bottle-smash.mp3" id="6_bl0ye"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtpxl"]
 height = 26.0
@@ -246,4 +247,9 @@ disabled = true
 
 [node name="HealSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ypecb")
+bus = &"SFX"
+
+[node name="BreakSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bl0ye")
+mix_target = 1
 bus = &"SFX"

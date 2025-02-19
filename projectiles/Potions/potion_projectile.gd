@@ -65,6 +65,14 @@ func _physics_process(delta: float) -> void:
 func _switch_to_splash() -> void:
 	if state != PotionState.SPIN:
 		return  # Already splashed or in pool state.
+
+	# play the break sound if there is a player attached
+	var break_sfx_player = $BreakSound
+	if break_sfx_player:
+		break_sfx_player.play()
+	else:
+		print_debug("Potion", self, "has no BreakSound node, skipping sfx...")
+
 	state = PotionState.SPLASH
 	print("PotionProjectile: Switching to SPLASH state.")
 	_disable_bottle_shape()

@@ -1205,15 +1205,14 @@ position = Vector2(2840, -2326)
 position = Vector2(3913.33, -1664.67)
 
 [node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
-position = Vector2(-850, 672)
+position = Vector2(-877, 589)
 scale = Vector2(0.7485, 0.7485)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.00798, 5.34402)
 
 [node name="PotionBoss" parent="World" instance=ExtResource("21_qjt65")]
-position = Vector2(7079, -1091)
-paralyze_potion_scene = null
+position = Vector2(7089, -1091)
 
 [node name="Boids" type="Node2D" parent="World"]
 y_sort_enabled = true
@@ -1261,6 +1260,15 @@ position = Vector2(-880, -553)
 [node name="Femoid3" parent="World/Boids" instance=ExtResource("20_pxof2")]
 position = Vector2(-1052, -717)
 
+[node name="BoidJoe" parent="World/Boids" instance=ExtResource("29_can7p")]
+position = Vector2(4898, -1364)
+
+[node name="Heisenboid2" parent="World/Boids" instance=ExtResource("19_mf03o")]
+position = Vector2(4406, -1853)
+
+[node name="Femoid4" parent="World/Boids" instance=ExtResource("21_lev10")]
+position = Vector2(129, -2221)
+
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
 position = Vector2(75.0001, -123)
@@ -1298,6 +1306,9 @@ position = Vector2(5535, -2611)
 
 [node name="Box4" parent="World/Boxes" instance=ExtResource("19_xg1rd")]
 position = Vector2(5612, -2681)
+
+[node name="Box5" parent="World/Boxes" instance=ExtResource("19_xg1rd")]
+position = Vector2(5895, -3177)
 
 [node name="FloorItems" type="TileMapLayer" parent="World"]
 y_sort_enabled = true
@@ -1364,15 +1375,3 @@ parameters/looping = true
 visible = false
 size_flags_horizontal = 6
 size_flags_vertical = 6
-
-[node name="Femoid2" parent="." instance=ExtResource("21_lev10")]
-position = Vector2(154, -2234)
-
-[node name="Box" parent="." instance=ExtResource("19_xg1rd")]
-position = Vector2(5895, -3177)
-
-[node name="BoidJoe" parent="." instance=ExtResource("29_can7p")]
-position = Vector2(4923, -1377)
-
-[node name="Heisenboid" parent="." instance=ExtResource("19_mf03o")]
-position = Vector2(4431, -1866)

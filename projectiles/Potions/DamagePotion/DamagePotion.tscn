@@ -1,9 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://cmt0k5vghfm35"]
+[gd_scene load_steps=34 format=3 uid="uid://cmt0k5vghfm35"]
 
 [ext_resource type="Script" path="res://projectiles/Potions/DamagePotion/damage_potion.gd" id="1_h1onh"]
 [ext_resource type="Texture2D" uid="uid://2st8jaogpaoc" path="res://assets/sprites/items/potions/damage_potion/potion_spinning_in_air.png" id="2_a6ka6"]
 [ext_resource type="Texture2D" uid="uid://bjhm335v3ydrc" path="res://assets/sprites/items/potions/damage_potion/potion_splashing.png" id="3_skdgs"]
 [ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="4_rg5pv"]
+[ext_resource type="AudioStream" uid="uid://d4meu6ja7btph" path="res://assets/sfx/shooting/glass-bottle-smash.mp3" id="5_icblr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wgdj2"]
 atlas = ExtResource("2_a6ka6")
@@ -242,3 +243,8 @@ position = Vector2(0, -2)
 rotation = -1.58045
 shape = SubResource("CapsuleShape2D_yjv6c")
 disabled = true
+
+[node name="BreakSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_icblr")
+mix_target = 1
+bus = &"SFX"
