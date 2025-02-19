@@ -77,6 +77,10 @@ var is_caged: bool = false
 ## Track the last velocity of the monkey to check for changes.
 var _last_velocity: Vector2 = Vector2.ZERO
 
+@export var paralyzed: bool = false
+var frozen_position: Vector2
+
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_health = max_health
@@ -178,8 +182,17 @@ func _check_vision_detection() -> void:
 ## Physics processing to handle collision avoidance and vision
 func _physics_process(_delta: float) -> void:
 	if is_caged:
+		velocity = Vector2.ZERO
+		_stop_walk()
 		return
-
+	
+	if paralyzed:
+		# Override any external movement:
+		global_position = frozen_position
+		velocity = Vector2.ZERO
+		_animated_sprite.pause()
+		return
+		
 	# Check for enemy vision
 	_check_vision_detection()
 
@@ -221,6 +234,8 @@ func _physics_process(_delta: float) -> void:
 ## NOTE: Should not be called by the player. The individual monkey should be
 ## responsible for its animations.
 func _walk_left() -> void:
+	if paralyzed:
+		return
 	_animated_sprite.play("walk_left")
 	_update_vision_rays(Vector2(-vision_range, 0))
 
@@ -231,6 +246,8 @@ func _walk_left() -> void:
 ## NOTE: Should not be called by the player. The individual monkey should be
 ## responsible for its animations.
 func _walk_right() -> void:
+	if paralyzed:
+		return
 	_animated_sprite.play("walk_right")
 	_update_vision_rays(Vector2(vision_range, 0))
 
@@ -241,6 +258,8 @@ func _walk_right() -> void:
 ## NOTE: Should not be called by the player. The individual monkey should be
 ## responsible for its animations.
 func _walk_up() -> void:
+	if paralyzed:
+		return
 	_animated_sprite.play("walk_up")
 	_update_vision_rays(Vector2(0, -vision_range))
 
@@ -251,6 +270,8 @@ func _walk_up() -> void:
 ## NOTE: Should not be called by the player. The individual monkey should be
 ## responsible for its animations.
 func _walk_down() -> void:
+	if paralyzed:
+		return
 	_animated_sprite.play("walk_down")
 	_update_vision_rays(Vector2(0, vision_range))
 
@@ -261,6 +282,8 @@ func _walk_down() -> void:
 ## NOTE: Should not be called by the player. The individual monkey should be
 ## responsible for its animations.
 func _stop_walk() -> void:
+	if paralyzed:
+		return
 	_animated_sprite.pause()
 	_last_velocity = Vector2.ZERO
 
@@ -426,3 +449,11 @@ func apply_blindness(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
 	_animated_sprite.modulate = Color(1, 1, 1, 1)
 	attack_range = prev_range
+	
+func paralyze(duration: float) -> void:
+	paralyzed = true
+	frozen_position = global_position  # Save the current position
+	_animated_sprite.modulate = Color(0.7, 0.7, 1, 1)  # Light blue tint
+	await get_tree().create_timer(duration).timeout
+	_animated_sprite.modulate = Color(1, 1, 1, 1)
+	paralyzed = false

@@ -18,6 +18,7 @@ extends CharacterBody2D
 @export var damage_potion_scene: PackedScene
 @export var heal_potion_scene: PackedScene
 @export var blindness_potion_scene: PackedScene
+@export var paralyze_potion_scene: PackedScene
 
 ## The ChemistBoss has a health bar that displays its current health.
 @onready var health_bar = $HealthBar
@@ -411,6 +412,78 @@ func attack_throw_blindness_potion_spread() -> void:
 	play_spell_animation(base_direction)
 	await _animated_sprite.animation_finished
 	is_attacking = false
+	
+##################################################
+# ATTACK 7: Single Paralyze Potion Projectile
+##################################################
+
+## Attack that throws a single heal potion projectile.
+func attack_throw_paralyze_potion() -> void:
+	if not blindness_potion_scene:
+		print("HealPotion scene not set!")
+		return
+	var player = find_player_node(get_tree().get_root())
+	if not player:
+		return
+
+	is_attacking = true
+
+	# Instantiate and add the heal potion projectile.
+	var projectile = paralyze_potion_scene.instantiate()
+	add_projectile(projectile)
+	projectile.global_position = global_position
+
+	# Calculate the direction toward the player.
+	var direction: Vector2 = (player.global_position - global_position).normalized()
+	projectile.velocity = direction * 235  # Adjust speed as needed
+	#projectile.scale = Vector2(1.5, 1.5)
+
+	# Play the appropriate attack animation.
+	play_spell_animation(direction)
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
+##################################################
+# ATTACK 8: Spread of 3 paralyze Potion Projectiles
+##################################################
+
+## Attack that throws a spread of 3 heal potion projectiles.
+func attack_throw_paralyze_potion_spread() -> void:
+	if not heal_potion_scene:
+		print("HealPotion scene not set!")
+		return
+
+	var player = find_player_node(get_tree().get_root())
+
+	if not player:
+		return
+
+	is_attacking = true
+
+	# Determine the base direction toward the player.
+	var base_direction: Vector2 = (player.global_position - global_position).normalized()
+	var base_angle: float = base_direction.angle()
+
+	# Configure the spread: 3 projectiles with a total angular spread of 30° (PI/6 radians).
+	var spread_count: int = 3
+	var angle_range: float = PI / 6  # 30 degrees in radians
+
+	# Spawn each projectile with an even angular offset.
+	for i in range(spread_count):
+		var t: float = float(i) / (spread_count - 1) if spread_count > 1 else 0.5
+		var offset_angle: float = lerp(-angle_range / 2, angle_range / 2, t)
+		var projectile_angle: float = base_angle + offset_angle
+		var projectile = paralyze_potion_scene.instantiate()
+		add_projectile(projectile)
+		projectile.global_position = global_position
+		projectile.velocity = Vector2.RIGHT.rotated(projectile_angle) * 235  # Same speed multiplier
+		#projectile.scale = Vector2(1.5, 1.5)
+		# Optional small delay between projectiles.
+		await get_tree().create_timer(0.1).timeout
+
+	play_spell_animation(base_direction)
+	await _animated_sprite.animation_finished
+	is_attacking = false
 
 
 ##################################################
@@ -499,6 +572,18 @@ var attacks = [
 	{
 		"name": "attack_throw_blindness_potion_spread",
 		"function": Callable(self, "attack_throw_blindness_potion_spread"),
+		"weight": 1,
+		"unlocked": true
+	},
+	{
+		"name": "attack_throw_paralyze_potion",
+		"function": Callable(self, "attack_throw_paralyze_potion"),
+		"weight": 2,
+		"unlocked": true
+	},
+	{
+		"name": "attack_throw_paralyze_potion_spread",
+		"function": Callable(self, "attack_throw_paralyze_potion_spread"),
 		"weight": 1,
 		"unlocked": true
 	}
