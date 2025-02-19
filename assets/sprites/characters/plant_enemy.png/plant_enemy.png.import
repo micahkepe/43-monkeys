@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnub553joybdm"
-path="res://.godot/imported/plantboss.png-62ebdab0335f058e183be0ae3285cb8f.ctex"
+path="res://.godot/imported/plant_enemy.png-5d4de759866f3ece40a6edaf13123d97.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/bosses/plantboss.png"
-dest_files=["res://.godot/imported/plantboss.png-62ebdab0335f058e183be0ae3285cb8f.ctex"]
+source_file="res://assets/sprites/characters/plant_enemy.png/plant_enemy.png"
+dest_files=["res://.godot/imported/plant_enemy.png-5d4de759866f3ece40a6edaf13123d97.ctex"]
 
 [params]
 
