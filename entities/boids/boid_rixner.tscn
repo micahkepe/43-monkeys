@@ -530,8 +530,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qfxij"]
-radius = 9.05539
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ibwn5"]
+radius = 4.49438
+height = 26.4644
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uyxxe"]
 size = Vector2(28, 47)
@@ -553,8 +554,9 @@ sprite_frames = SubResource("SpriteFrames_5pjvm")
 animation = &"slash_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 18)
-shape = SubResource("CircleShape2D_qfxij")
+position = Vector2(-0.374532, 22.0974)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ibwn5")
 
 [node name="RayUp" type="RayCast2D" parent="."]
 target_position = Vector2(0, -49)

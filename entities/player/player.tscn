@@ -19,8 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://ui/ui.png" id="15_g1xt3"]
 [ext_resource type="Script" path="res://entities/player/ellipse_debug.gd" id="18_f01y2"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qk8jr"]
-radius = 43.185
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dl0wg"]
+radius = 11.9979
+height = 57.8121
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_spox5"]
 atlas = ExtResource("8_vswvm")
@@ -379,8 +380,9 @@ monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(8, 20)
-shape = SubResource("CircleShape2D_qk8jr")
+position = Vector2(6, 46)
+rotation = 1.57284
+shape = SubResource("CapsuleShape2D_dl0wg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7, -1.99999)

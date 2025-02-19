@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_01vq4"]
 [ext_resource type="Script" path="res://entities/Bosses/PlantBoss/plant_boss.gd" id="1_j2ah2"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_flp2v"]
-[ext_resource type="Texture2D" uid="uid://bnub553joybdm" path="res://assets/sprites/characters/bosses/plantboss.png" id="6_hhtgi"]
+[ext_resource type="Texture2D" uid="uid://bnub553joybdm" path="res://assets/sprites/characters/bosses/plant_enemy/plant_enemy.png" id="6_hhtgi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0s22d"]
 radius = 10.0499

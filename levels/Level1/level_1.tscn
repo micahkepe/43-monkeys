@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=59 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -22,9 +22,13 @@
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
+[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/Boids/heisenboid.tscn" id="19_mf03o"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 [ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="19_xg1rd"]
+[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/Boids/femoid_1.tscn" id="20_pxof2"]
+[ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/Boids/femoid_2.tscn" id="21_lev10"]
 [ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
+[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/Boids/boid_joe.tscn" id="29_can7p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
@@ -1209,6 +1213,7 @@ position = Vector2(4.00798, 5.34402)
 
 [node name="PotionBoss" parent="World" instance=ExtResource("21_qjt65")]
 position = Vector2(7079, -1091)
+paralyze_potion_scene = null
 
 [node name="Boids" type="Node2D" parent="World"]
 y_sort_enabled = true
@@ -1229,14 +1234,8 @@ position = Vector2(-765, -765)
 [node name="Boid5" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(-713, -443)
 
-[node name="Boid6" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-1226, -704)
-
 [node name="Boid7" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(-104.147, -2334.51)
-
-[node name="Boid8" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(142, -2215)
 
 [node name="Boid9" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(1195, -1642)
@@ -1244,23 +1243,23 @@ position = Vector2(1195, -1642)
 [node name="Boid10" parent="World/Boids" instance=ExtResource("10_4s8p6")]
 position = Vector2(4728, -1707)
 
-[node name="Boid11" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(4840, -1413)
-
-[node name="Boid12" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(5003, -2000)
-
-[node name="Boid13" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(4495, -1893)
-
 [node name="Boid14" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(4514, -1187)
 
 [node name="Boid15" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(5089, -1683)
 
-[node name="Boid16" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(4954, -1190)
+[node name="Heisenboid" parent="World/Boids" instance=ExtResource("19_mf03o")]
+position = Vector2(-115, -1666)
+
+[node name="Femoid1" parent="World/Boids" instance=ExtResource("20_pxof2")]
+position = Vector2(4445, -1511)
+
+[node name="Femoid2" parent="World/Boids" instance=ExtResource("21_lev10")]
+position = Vector2(-880, -553)
+
+[node name="Femoid3" parent="World/Boids" instance=ExtResource("20_pxof2")]
+position = Vector2(-1052, -717)
 
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
@@ -1365,3 +1364,15 @@ parameters/looping = true
 visible = false
 size_flags_horizontal = 6
 size_flags_vertical = 6
+
+[node name="Femoid2" parent="." instance=ExtResource("21_lev10")]
+position = Vector2(154, -2234)
+
+[node name="Box" parent="." instance=ExtResource("19_xg1rd")]
+position = Vector2(5895, -3177)
+
+[node name="BoidJoe" parent="." instance=ExtResource("29_can7p")]
+position = Vector2(4923, -1377)
+
+[node name="Heisenboid" parent="." instance=ExtResource("19_mf03o")]
+position = Vector2(4431, -1866)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnub553joybdm"
-path="res://.godot/imported/plant_enemy.png-5d4de759866f3ece40a6edaf13123d97.ctex"
+uid="uid://bb6jnp7g8mxxt"
+path="res://.godot/imported/Screenshot 2025-02-19 at 5.12.43 PM.png-a5f651be5e6180486efc9029352568b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/plant_enemy.png/plant_enemy.png"
-dest_files=["res://.godot/imported/plant_enemy.png-5d4de759866f3ece40a6edaf13123d97.ctex"]
+source_file="res://entities/Bosses/PotionBoss/Screenshot 2025-02-19 at 5.12.43 PM.png"
+dest_files=["res://.godot/imported/Screenshot 2025-02-19 at 5.12.43 PM.png-a5f651be5e6180486efc9029352568b0.ctex"]
 
 [params]
 

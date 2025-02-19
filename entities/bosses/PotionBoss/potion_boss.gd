@@ -1,17 +1,17 @@
 extends CharacterBody2D
-## The ChemistBoss is a powerful enemy that can throw potions at the player.
+## The PotionBoss is a powerful enemy that can throw potions at the player.
 ##
-## The ChemistBoss has four different attacks:
+## The PotionBoss has four different attacks:
 ## 1. Single Damage Potion Projectile
 ## 2. Spread of 3 Damage Potion Projectiles
 ## 3. Single Heal Potion Projectile
 ## 4. Spread of 3 Heal Potion Projectiles
-## The ChemistBoss will randomly choose one of these attacks to perform.
+## The PotionBoss will randomly choose one of these attacks to perform.
 ##
-## The ChemistBoss will move to a random waypoint on the screen and wait for a
+## The PotionBoss will move to a random waypoint on the screen and wait for a
 ## random amount of time before moving to the next waypoint.
 
-## AnimatedSprite2D node for the ChemistBoss's sprite.
+## AnimatedSprite2D node for the PotionBoss's sprite.
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 ## Packed scene for the specific potions projs
@@ -20,13 +20,13 @@ extends CharacterBody2D
 @export var blindness_potion_scene: PackedScene
 @export var paralyze_potion_scene: PackedScene
 
-## The ChemistBoss has a health bar that displays its current health.
+## The PotionBoss has a health bar that displays its current health.
 @onready var health_bar = $HealthBar
 
-## The ChemistBoss's maximum health value.
+## The PotionBoss's maximum health value.
 @export var max_health: float = 200.0
 
-## The ChemistBoss's current health value.
+## The PotionBoss's current health value.
 var current_health: float
 
 ## Minimum interval between attacks
@@ -69,7 +69,7 @@ var is_dead: bool = false
 var attack_timer: Timer
 
 
-## Initialize the ChemistBoss.
+## Initialize the PotionBoss.
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
@@ -83,7 +83,7 @@ func _ready() -> void:
 	_start_random_attack_timer()
 
 
-## Choose a random waypoint for the ChemistBoss to move to.
+## Choose a random waypoint for the PotionBoss to move to.
 ## The waypoint is chosen within the bounds of the screen.
 ## @return Vector2 The random waypoint.
 func choose_random_waypoint() -> Vector2:
@@ -94,7 +94,7 @@ func choose_random_waypoint() -> Vector2:
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
 
 
-## Move the ChemistBoss to the next random waypoint.
+## Move the PotionBoss to the next random waypoint.
 func move_to_next_waypoint() -> void:
 	current_target = choose_random_waypoint()
 
@@ -131,10 +131,10 @@ func _physics_process(_delta: float) -> void:
 ## Take damage and update the health bar.
 ## @param amount float The amount of damage to take.
 func take_damage(amount: float) -> void:
-	print("ChemistBoss took ", amount, " damage!")
+	print("PotionBoss took ", amount, " damage!")
 	current_health -= amount
 	health_bar.value = current_health
-	
+
 	if current_health <= 0:
 		_die()
 	else:
@@ -339,8 +339,8 @@ func attack_throw_heal_potion_spread() -> void:
 	play_spell_animation(base_direction)
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
-	
+
+
 ##################################################
 # ATTACK 5: Single Blindness Potion Projectile
 ##################################################
@@ -412,7 +412,7 @@ func attack_throw_blindness_potion_spread() -> void:
 	play_spell_animation(base_direction)
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
+
 ##################################################
 # ATTACK 7: Single Paralyze Potion Projectile
 ##################################################
@@ -665,7 +665,7 @@ func _die():
 		$HitBox.set_deferred("monitoring", false)
 		$HitBox.set_deferred("monitorable", false)
 
-	print("ChemistBoss died!")
+	print("PotionBoss died!")
 	_animated_sprite.play("die")
 	# NOTE: The boss will be removed from the scene tree when the animation finishes
 

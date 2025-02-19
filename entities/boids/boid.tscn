@@ -206,41 +206,41 @@ region = Rect2(448, 582, 64, 64)
 atlas = ExtResource("2_mccus")
 region = Rect2(512, 582, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u26mx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtg4f"]
 atlas = ExtResource("2_mccus")
-region = Rect2(0, 582, 64, 64)
+region = Rect2(0, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v7b7y"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3euw4"]
 atlas = ExtResource("2_mccus")
-region = Rect2(64, 582, 64, 64)
+region = Rect2(64, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_maqdj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpgon"]
 atlas = ExtResource("2_mccus")
-region = Rect2(128, 582, 64, 64)
+region = Rect2(128, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cee1h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfmtw"]
 atlas = ExtResource("2_mccus")
-region = Rect2(192, 582, 64, 64)
+region = Rect2(192, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5n1q1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3cmb"]
 atlas = ExtResource("2_mccus")
-region = Rect2(256, 582, 64, 64)
+region = Rect2(256, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f3c0t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ngjk"]
 atlas = ExtResource("2_mccus")
-region = Rect2(320, 582, 64, 64)
+region = Rect2(320, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hcbj8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0fq2"]
 atlas = ExtResource("2_mccus")
-region = Rect2(384, 582, 64, 64)
+region = Rect2(384, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lc4as"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ao3b6"]
 atlas = ExtResource("2_mccus")
-region = Rect2(448, 582, 64, 64)
+region = Rect2(448, 708, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0qk7x"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g741w"]
 atlas = ExtResource("2_mccus")
-region = Rect2(512, 582, 64, 64)
+region = Rect2(512, 708, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u07s5"]
 atlas = ExtResource("2_mccus")
@@ -467,31 +467,31 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u26mx")
+"texture": SubResource("AtlasTexture_mtg4f")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v7b7y")
+"texture": SubResource("AtlasTexture_3euw4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_maqdj")
+"texture": SubResource("AtlasTexture_hpgon")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cee1h")
+"texture": SubResource("AtlasTexture_bfmtw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5n1q1")
+"texture": SubResource("AtlasTexture_i3cmb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f3c0t")
+"texture": SubResource("AtlasTexture_4ngjk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hcbj8")
+"texture": SubResource("AtlasTexture_p0fq2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lc4as")
+"texture": SubResource("AtlasTexture_ao3b6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0qk7x")
+"texture": SubResource("AtlasTexture_g741w")
 }],
 "loop": true,
 "name": &"walk_right",
@@ -530,11 +530,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qfxij"]
-radius = 9.05539
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vihv7"]
+radius = 4.49437
+height = 24.7222
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8novc"]
-size = Vector2(21, 46)
+size = Vector2(35.9551, 51.0899)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddqh2"]
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
@@ -551,11 +552,12 @@ hits_to_kill = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_5pjvm")
-animation = &"slash_right"
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 18)
-shape = SubResource("CircleShape2D_qfxij")
+position = Vector2(-2.98023e-08, 20.2247)
+rotation = 1.56867
+shape = SubResource("CapsuleShape2D_vihv7")
 
 [node name="RayUp" type="RayCast2D" parent="."]
 target_position = Vector2(0, -49)
@@ -573,7 +575,7 @@ collision_layer = 2
 collision_mask = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-0.5, 2)
+position = Vector2(0, 0.451311)
 shape = SubResource("RectangleShape2D_8novc")
 
 [node name="Sound" type="Node" parent="."]
