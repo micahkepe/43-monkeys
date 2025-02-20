@@ -18,6 +18,8 @@ shader_type canvas_item;
 // to "vec2 uv = warp(SCREEN_UV);" on line 98.
 uniform bool overlay = false;
 
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
 uniform float scanlines_opacity : hint_range(0.0, 1.0) = 0.4;
 uniform float scanlines_width : hint_range(0.0, 0.5) = 0.25;
 uniform float grille_opacity : hint_range(0.0, 1.0) = 0.3;
