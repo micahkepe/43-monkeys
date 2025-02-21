@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health_bar = $HealthBar
+@onready var grow_shrink_sound: AudioStreamPlayer = $Sound/GrowAndShrinkPlayer
+@onready var spawn_sound: AudioStreamPlayer = $Sound/SpawnPlayer
+@onready var attack_sound: AudioStreamPlayer = $Sound/AttackPlayer
 
 @export var max_health: float = 200.0
 var current_health: float
@@ -10,16 +13,15 @@ var current_health: float
 @export var max_attack_interval: float = 1.0
 @export var min_wait_time: float = 5.0
 @export var max_wait_time: float = 10.0
-@export var boid_plant_scene: PackedScene  # Export for boid plant scene
+@export var boid_plant_scene: PackedScene
 
 var last_animation: String = "idle_down"
 var is_attacking: bool = false
 var is_dead: bool = false
 var is_teleporting: bool = false
 var attack_timer: Timer
-var spawn_timer: Timer  # Timer for spawning boid plants
+var spawn_timer: Timer
 
-# Animation dictionaries
 var grow_animations := {
 	"up": "grow_up",
 	"down": "grow_down",
@@ -51,25 +53,21 @@ func _ready() -> void:
 		print("HitBox found and signals connected")
 		$HitBox.connect("area_entered", Callable(self, "_on_hit_box_area_entered"))
 		$HitBox.connect("body_entered", Callable(self, "_on_hit_box_body_entered"))
-	else:
-		print("No HitBox found!")
 	
-	# Attack timer setup
 	attack_timer = Timer.new()
 	attack_timer.one_shot = true
 	add_child(attack_timer)
 	attack_timer.connect("timeout", Callable(self, "_choose_and_execute_attack"))
 	
-	# Spawn timer setup
 	spawn_timer = Timer.new()
-	spawn_timer.wait_time = 10.0  # Spawn every 10 seconds
+	spawn_timer.wait_time = 10.0
 	spawn_timer.autostart = true
 	add_child(spawn_timer)
 	spawn_timer.connect("timeout", Callable(self, "_spawn_boid_plants"))
 	
 	_animated_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
 	
-	teleport_cycle()  # Start the teleport cycle as a coroutine
+	teleport_cycle()
 	_start_random_attack_timer()
 
 func teleport_cycle() -> void:
@@ -83,10 +81,16 @@ func teleport_cycle() -> void:
 		var direction = (new_target - global_position).normalized()
 		var animation_direction = get_direction_string(direction)
 		
+		# Play shrink sound
+		if grow_shrink_sound:
+			grow_shrink_sound.play()
 		play_animation(shrink_animations[animation_direction])
 		await _animated_sprite.animation_finished
 		
 		global_position = new_target
+		# Play grow sound
+		if grow_shrink_sound:
+			grow_shrink_sound.play()
 		play_animation(grow_animations[animation_direction])
 		await _animated_sprite.animation_finished
 		
@@ -112,26 +116,27 @@ func _spawn_boid_plants() -> void:
 		print("No player found for boid plant spawning!")
 		return
 	
+	# Play spawn sound
+	if spawn_sound:
+		spawn_sound.play()
+	
 	var player_pos = player.global_position
 	var spawn_positions = []
 	var attempts = 0
-	var max_attempts = 10  # Prevent infinite loop
+	var max_attempts = 10
 	
-	# Generate 3 unique spawn positions
 	while spawn_positions.size() < 3 and attempts < max_attempts:
 		var pos = choose_random_waypoint()
-		var too_close_to_player = pos.distance_to(player_pos) < 100.0  # Minimum distance from player
-		var too_close_to_existing = spawn_positions.any(func(p): return p.distance_to(pos) < 50.0)  # Avoid overlap
+		var too_close_to_player = pos.distance_to(player_pos) < 100.0
+		var too_close_to_existing = spawn_positions.any(func(p): return p.distance_to(pos) < 50.0)
 		
 		if not too_close_to_player and not too_close_to_existing:
 			spawn_positions.append(pos)
 		attempts += 1
 	
-	# Spawn boid plants at selected positions
 	for pos in spawn_positions:
 		var boid_plant = boid_plant_scene.instantiate()
 		boid_plant.global_position = pos
-		# Add to the parent node (e.g., level or root)
 		var parent_node = get_parent()
 		if parent_node:
 			parent_node.add_child(boid_plant)
@@ -188,12 +193,16 @@ func attack() -> void:
 		var animation_direction = get_direction_string(direction_to_player)
 		var attack_anim = "attack_" + animation_direction
 		print("Attempting to play attack animation: ", attack_anim)
+		
+		# Play attack sound
+		if attack_sound:
+			attack_sound.play()
+		
 		play_animation(attack_anim)
 		
 		await _animated_sprite.animation_finished
 		
-		# Check if player is within attack radius
-		var attack_radius = 100.0  # Adjust this value as needed
+		var attack_radius = 100.0
 		var distance_to_player = global_position.distance_to(player.global_position)
 		if distance_to_player <= attack_radius:
 			player.take_damage(1.0)
@@ -270,7 +279,7 @@ func _die() -> void:
 	collision_mask = 0
 	velocity = Vector2.ZERO
 	attack_timer.stop()
-	spawn_timer.stop()  # Stop spawning when dead
+	spawn_timer.stop()
 	is_attacking = false
 	is_teleporting = false
 	
@@ -306,9 +315,8 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	if is_dead:
 		return
 	print("RootBoss HitBox entered by area: ", area)
-	# Check if the area is a BananaBoomerang
 	if "BananaBoomerang" in str(area):
-		take_damage(1.0)  # Match BananaBoomerang's default damage
+		take_damage(1.0)
 	else:
 		print("Area not a BananaBoomerang!")
 

@@ -24,6 +24,7 @@
 
 - [Nostalgic MIDI Files](https://rosemck1.tripod.com/jukebox-nostalgia.html)
 - [Wintergatan - Marble Machine](https://onlinesequencer.net/1150968#)
+- [growing_plant.wav] by MaxDemianAGL -- https://freesound.org/s/131050/ -- License: Attribution 3.0
 
 ## Converting to .ogg
 
@@ -37,3 +38,4 @@ ffmpeg -i input.wav -c:a libvorbis output.ogg
 The OGG format is only needed for music that needs to be able to be looped.
 Godot will not allow for the looping of WAV files, so the OGG format is needed
 for that.
+
