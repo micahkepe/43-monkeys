@@ -10,12 +10,14 @@ var current_health: float
 @export var max_attack_interval: float = 1.0
 @export var min_wait_time: float = 5.0
 @export var max_wait_time: float = 10.0
+@export var boid_plant_scene: PackedScene  # Export for boid plant scene
 
 var last_animation: String = "idle_down"
 var is_attacking: bool = false
 var is_dead: bool = false
 var is_teleporting: bool = false
 var attack_timer: Timer
+var spawn_timer: Timer  # Timer for spawning boid plants
 
 # Animation dictionaries
 var grow_animations := {
@@ -52,10 +54,18 @@ func _ready() -> void:
 	else:
 		print("No HitBox found!")
 	
+	# Attack timer setup
 	attack_timer = Timer.new()
 	attack_timer.one_shot = true
 	add_child(attack_timer)
 	attack_timer.connect("timeout", Callable(self, "_choose_and_execute_attack"))
+	
+	# Spawn timer setup
+	spawn_timer = Timer.new()
+	spawn_timer.wait_time = 10.0  # Spawn every 10 seconds
+	spawn_timer.autostart = true
+	add_child(spawn_timer)
+	spawn_timer.connect("timeout", Callable(self, "_spawn_boid_plants"))
 	
 	_animated_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
 	
@@ -91,6 +101,43 @@ func choose_random_waypoint() -> Vector2:
 	var min_y = -1785 + 50
 	var max_y = -368 - 50
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+
+func _spawn_boid_plants() -> void:
+	if is_dead or not boid_plant_scene:
+		print("Cannot spawn boid plants: dead or scene not set!")
+		return
+	
+	var player = find_player_node(get_tree().root)
+	if not player:
+		print("No player found for boid plant spawning!")
+		return
+	
+	var player_pos = player.global_position
+	var spawn_positions = []
+	var attempts = 0
+	var max_attempts = 10  # Prevent infinite loop
+	
+	# Generate 3 unique spawn positions
+	while spawn_positions.size() < 3 and attempts < max_attempts:
+		var pos = choose_random_waypoint()
+		var too_close_to_player = pos.distance_to(player_pos) < 100.0  # Minimum distance from player
+		var too_close_to_existing = spawn_positions.any(func(p): return p.distance_to(pos) < 50.0)  # Avoid overlap
+		
+		if not too_close_to_player and not too_close_to_existing:
+			spawn_positions.append(pos)
+		attempts += 1
+	
+	# Spawn boid plants at selected positions
+	for pos in spawn_positions:
+		var boid_plant = boid_plant_scene.instantiate()
+		boid_plant.global_position = pos
+		# Add to the parent node (e.g., level or root)
+		var parent_node = get_parent()
+		if parent_node:
+			parent_node.add_child(boid_plant)
+		else:
+			get_tree().root.add_child(boid_plant)
+		print("Spawned boid plant at: ", pos)
 
 func get_direction_string(direction: Vector2) -> String:
 	if abs(direction.x) > abs(direction.y):
@@ -223,6 +270,7 @@ func _die() -> void:
 	collision_mask = 0
 	velocity = Vector2.ZERO
 	attack_timer.stop()
+	spawn_timer.stop()  # Stop spawning when dead
 	is_attacking = false
 	is_teleporting = false
 	
@@ -268,6 +316,6 @@ func _on_hit_box_body_entered(body: Node2D) -> void:
 	print("RootBoss HitBox entered by body: ", body)
 	if is_dead or not is_attacking:
 		return
-	if body.name == "Player":
+	if body.name == "Player" or body.is_in_group("troop"):
 		body.take_damage(1.0)
 		print("RootBoss dealt damage to player via HitBox!")

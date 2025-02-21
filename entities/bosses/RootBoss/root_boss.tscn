@@ -1,9 +1,10 @@
-[gd_scene load_steps=165 format=3 uid="uid://bl18cr6lscsw7"]
+[gd_scene load_steps=166 format=3 uid="uid://bl18cr6lscsw7"]
 
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="1_2iq8w"]
 [ext_resource type="Script" path="res://entities/bosses/RootBoss/root_boss.gd" id="1_2x2y2"]
 [ext_resource type="Texture2D" uid="uid://3ha5irboski0" path="res://assets/sprites/characters/bosses/root_boss/root_boss.png" id="1_s66s6"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_82vqk"]
+[ext_resource type="PackedScene" uid="uid://c6comk43qvny6" path="res://entities/boids/boid_plant.tscn" id="2_rdxv2"]
 [ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="3_gl2ao"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s2onh"]
@@ -1214,7 +1215,9 @@ size = Vector2(58, 58)
 [node name="RootBoss" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
+scale = Vector2(3, 3)
 script = ExtResource("1_2x2y2")
+boid_plant_scene = ExtResource("2_rdxv2")
 
 [node name="Shadow" type="ColorRect" parent="."]
 y_sort_enabled = true

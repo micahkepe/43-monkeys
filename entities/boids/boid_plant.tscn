@@ -1,7 +1,7 @@
 [gd_scene load_steps=86 format=3 uid="uid://c6comk43qvny6"]
 
-[ext_resource type="Script" path="res://entities/boids/boid.gd" id="1_kn7s5"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_p2njw"]
+[ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_rj20o"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_ahkrp"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_ck6s3"]
 [ext_resource type="Texture2D" uid="uid://bnub553joybdm" path="res://assets/sprites/characters/bosses/plant_enemy/plant_enemy.png" id="5_umqha"]
@@ -596,10 +596,12 @@ size = Vector2(34.0824, 51.3109)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kh2oa"]
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
 
-[node name="BoidPlant" type="CharacterBody2D"]
+[node name="BoidPlant" type="CharacterBody2D" groups=["boids", "enemies"]]
 z_index = 1
 y_sort_enabled = true
-script = ExtResource("1_kn7s5")
+scale = Vector2(3, 3)
+collision_mask = 3
+script = ExtResource("1_rj20o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_3vcsq")
@@ -645,3 +647,8 @@ offset_top = 24.3446
 offset_right = 10.1348
 offset_bottom = 28.3446
 theme_override_styles/fill = SubResource("StyleBoxFlat_kh2oa")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
