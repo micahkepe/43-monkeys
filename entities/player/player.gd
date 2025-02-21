@@ -741,3 +741,4 @@ func apply_blindness(duration: float) -> void:
 
 	# Start the overlay with the given duration.
 	overlay.start(duration)
+

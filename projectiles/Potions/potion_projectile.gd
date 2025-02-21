@@ -134,10 +134,10 @@ func _on_pool_timeout() -> void:
 #------------------------------------------------------------------
 func _enable_bottle_shape() -> void:
 	print("ENABLE BOTTLE SHAPE")
-	bottle_shape.disabled = false
+	bottle_shape.call_deferred("set", "disabled", false)
 
 func _disable_bottle_shape() -> void:
-	bottle_shape.disabled = true
+	bottle_shape.call_deferred("set", "disabled", true)
 
 func _disable_all_pool_shapes() -> void:
 	_disable_pool13_shape()
@@ -145,17 +145,17 @@ func _disable_all_pool_shapes() -> void:
 
 func _enable_pool13_shape() -> void:
 	print("ENABLE POOL13 SHAPE")
-	pool13_shape.disabled = false
+	pool13_shape.call_deferred("set", "disabled", false)
 
 func _disable_pool13_shape() -> void:
-	pool13_shape.disabled = true
+	pool13_shape.call_deferred("set", "disabled", true)
 
 func _enable_pool4_shape() -> void:
 	print("ENABLE POOL4 SHAPE")
-	pool4_shape.disabled = false
+	pool4_shape.call_deferred("set", "disabled", false)
 
 func _disable_pool4_shape() -> void:
-	pool4_shape.disabled = true
+	pool4_shape.call_deferred("set", "disabled", true)
 
 #------------------------------------------------------------------
 # Collision Callback (via the root Area2D signal)
