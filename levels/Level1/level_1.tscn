@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=61 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/Boids/femoid_1.tscn" id="20_pxof2"]
 [ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/Boids/femoid_2.tscn" id="21_lev10"]
 [ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
+[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/Boids/foreman_boid.tscn" id="24_ttfkr"]
+[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/Boids/house_boid.tscn" id="25_t845k"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/Boids/boid_joe.tscn" id="29_can7p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
@@ -1230,9 +1232,6 @@ position = Vector2(-1061, -391)
 [node name="Boid4" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(-765, -765)
 
-[node name="Boid5" parent="World/Boids" instance=ExtResource("13_d5kky")]
-position = Vector2(-713, -443)
-
 [node name="Boid7" parent="World/Boids" instance=ExtResource("13_d5kky")]
 position = Vector2(-104.147, -2334.51)
 
@@ -1268,6 +1267,12 @@ position = Vector2(4406, -1853)
 
 [node name="Femoid4" parent="World/Boids" instance=ExtResource("21_lev10")]
 position = Vector2(129, -2221)
+
+[node name="HouseBoid" parent="World/Boids" instance=ExtResource("25_t845k")]
+position = Vector2(-260, -2004)
+
+[node name="ForemanBoid" parent="World/Boids" instance=ExtResource("24_ttfkr")]
+position = Vector2(-741, -421)
 
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true

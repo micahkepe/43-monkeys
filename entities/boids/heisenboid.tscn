@@ -593,7 +593,7 @@ script = ExtResource("1_bs7l4")
 max_speed = 100.0
 hits_to_kill = 4
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wrom2")
 animation = &"slash_down"
 frame_progress = 0.421587
@@ -637,5 +637,6 @@ offset_right = 10.1348
 offset_bottom = 28.3446
 theme_override_styles/fill = SubResource("StyleBoxFlat_3yvaw")
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
