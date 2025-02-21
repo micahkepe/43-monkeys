@@ -6,8 +6,8 @@ extends CharacterBody2D
 @export var max_health: float = 200.0
 var current_health: float
 
-@export var min_attack_interval: float = 2.0
-@export var max_attack_interval: float = 4.0
+@export var min_attack_interval: float = 0.0
+@export var max_attack_interval: float = 1.0
 @export var min_wait_time: float = 5.0
 @export var max_wait_time: float = 10.0
 
@@ -44,6 +44,13 @@ var attacks = [
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
+	
+	if $HitBox:
+		print("HitBox found and signals connected")
+		$HitBox.connect("area_entered", Callable(self, "_on_hit_box_area_entered"))
+		$HitBox.connect("body_entered", Callable(self, "_on_hit_box_body_entered"))
+	else:
+		print("No HitBox found!")
 	
 	attack_timer = Timer.new()
 	attack_timer.one_shot = true
@@ -95,7 +102,6 @@ func play_animation(anim_name: String) -> void:
 		print("Animation blocked: dead")
 		return
 	
-	# Prevent non-teleport animations during teleporting, except attacks when not teleporting
 	if is_teleporting and not (anim_name.begins_with("shrink") or anim_name.begins_with("grow")):
 		return
 	if is_attacking and not anim_name.begins_with("attack"):
@@ -136,7 +142,15 @@ func attack() -> void:
 		var attack_anim = "attack_" + animation_direction
 		print("Attempting to play attack animation: ", attack_anim)
 		play_animation(attack_anim)
+		
 		await _animated_sprite.animation_finished
+		
+		# Check if player is within attack radius
+		var attack_radius = 100.0  # Adjust this value as needed
+		var distance_to_player = global_position.distance_to(player.global_position)
+		if distance_to_player <= attack_radius:
+			player.take_damage(1.0)
+			print("RootBoss dealt damage to player!")
 	else:
 		print("No player found for attack")
 	
@@ -187,9 +201,12 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		play_idle_animation()
 
 func take_damage(amount: float) -> void:
+	if is_dead:
+		return
+	print("RootBoss took ", amount, " damage!")
 	current_health -= amount
 	health_bar.value = current_health
-	
+
 	if current_health <= 0:
 		_die()
 	else:
@@ -224,6 +241,33 @@ func find_player_node(root: Node) -> Node:
 			return result
 	return null
 
+func find_node_recursive(root: Node, target: String) -> Node:
+	if root.name == target:
+		return root
+	for child in root.get_children():
+		var result = find_node_recursive(child, target)
+		if result:
+			return result
+	return null
+
 func _physics_process(_delta: float) -> void:
 	if not is_dead:
 		move_and_slide()
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	if is_dead:
+		return
+	print("RootBoss HitBox entered by area: ", area)
+	# Check if the area is a BananaBoomerang
+	if "BananaBoomerang" in str(area):
+		take_damage(1.0)  # Match BananaBoomerang's default damage
+	else:
+		print("Area not a BananaBoomerang!")
+
+func _on_hit_box_body_entered(body: Node2D) -> void:
+	print("RootBoss HitBox entered by body: ", body)
+	if is_dead or not is_attacking:
+		return
+	if body.name == "Player":
+		body.take_damage(1.0)
+		print("RootBoss dealt damage to player via HitBox!")

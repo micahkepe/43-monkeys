@@ -658,7 +658,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_down",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -684,7 +684,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_left",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -710,7 +710,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_right",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -736,7 +736,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_up",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -865,7 +865,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"grow_down",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -906,7 +906,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"grow_left",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -947,7 +947,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"grow_right",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -988,7 +988,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"grow_up",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1067,7 +1067,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shrink_down",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1111,7 +1111,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shrink_left",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1155,7 +1155,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shrink_right",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1202,7 +1202,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shrink_up",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g5ec2"]
@@ -1212,6 +1212,8 @@ radius = 15.0
 size = Vector2(58, 58)
 
 [node name="RootBoss" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_2x2y2")
 
 [node name="Shadow" type="ColorRect" parent="."]
@@ -1225,7 +1227,7 @@ offset_bottom = 47.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_5ayfn")
-animation = &"attack_right"
+animation = &"shrink_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 14)
