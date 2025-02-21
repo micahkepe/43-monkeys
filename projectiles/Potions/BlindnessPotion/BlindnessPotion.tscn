@@ -244,7 +244,7 @@ rotation = -1.58045
 shape = SubResource("CapsuleShape2D_kkrud")
 disabled = true
 
-[node name="BreakSound" type="AudioStreamPlayer" parent="."]
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_u50mc")
-mix_target = 1
+volume_db = -15.0
 bus = &"SFX"

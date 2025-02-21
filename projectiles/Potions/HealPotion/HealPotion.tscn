@@ -249,7 +249,7 @@ disabled = true
 stream = ExtResource("5_ypecb")
 bus = &"SFX"
 
-[node name="BreakSound" type="AudioStreamPlayer" parent="."]
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_bl0ye")
-mix_target = 1
+volume_db = -15.0
 bus = &"SFX"
