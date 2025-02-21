@@ -178,6 +178,13 @@ func _physics_process(_delta: float) -> void:
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
 	var current_speed = speed
+	
+	if Input.is_key_pressed(KEY_SHIFT):
+		show_ellipse_debug = true
+		ellipse_debug.show()
+	else:
+		show_ellipse_debug = false
+		ellipse_debug.hide()
 
 	# Player movement input (no SHIFT)
 	if not Input.is_key_pressed(KEY_SHIFT):

@@ -374,10 +374,12 @@ collision_layer = 16
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_ieec4")
+show_ellipse_debug = true
 shoot_cooldown_duration = 0.5
 banana_boomerang_scene = ExtResource("2_yc2po")
 blindness_overlay_scene = ExtResource("3_0k4ps")
 monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj")])
+initial_troop_amount = 42
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -453,4 +455,6 @@ stream = ExtResource("12_o6mwb")
 bus = &"SFX"
 
 [node name="EllipseDebug" type="Node2D" parent="."]
+z_index = -1
+y_sort_enabled = true
 script = ExtResource("18_f01y2")

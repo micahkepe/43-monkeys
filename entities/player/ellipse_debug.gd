@@ -2,20 +2,27 @@
 extends Node2D
 
 # These variables will be updated from the player.
-var ellipse_width_scale: float = 175.0
-var ellipse_height_scale: float = 175.0
-var swarm_rotation: float = 0.0
+@export var ellipse_width_scale: float = 175.0
+@export var ellipse_height_scale: float = 175.0
+@export var swarm_rotation: float = 0.0
+
+# Exported variables for line appearance
+@export var line_thickness: float = 8.0  # Increased thickness
+@export var line_color: Color = Color(0, 1, 0)  # Default green
 
 func _draw() -> void:
-	# Compute the major (red) and minor (blue) axes.
-	var major_axis = Vector2(ellipse_width_scale, 0).rotated(swarm_rotation)
-	var minor_axis = Vector2(0, ellipse_height_scale).rotated(swarm_rotation)
+	# Number of segments to approximate the ellipse
+	var segments = 64
+	var points = []
 	
-	# Draw the major axis in red.
-	draw_line(-major_axis, major_axis, Color(1, 0, 0), 2)
-	# Draw the minor axis in blue.
-	draw_line(-minor_axis, minor_axis, Color(0, 0, 1), 2)
+	for i in range(segments + 1):
+		var angle = (i / float(segments)) * TAU
+		# Calculate the point on the ellipse and rotate by swarm_rotation
+		var point = Vector2(ellipse_width_scale * cos(angle), ellipse_height_scale * sin(angle)).rotated(swarm_rotation)
+		points.append(point)
+	
+	# Draw the ellipse outline with the exported color and thickness
+	draw_polyline(points, line_color, line_thickness)
 
-# Optional: a helper function to force a redraw.
 func refresh() -> void:
 	queue_redraw()
