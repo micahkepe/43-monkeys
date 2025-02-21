@@ -535,7 +535,7 @@ radius = 4.49437
 height = 24.7222
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8novc"]
-size = Vector2(35.9551, 51.0899)
+size = Vector2(40.0749, 55.4307)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddqh2"]
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
@@ -575,7 +575,7 @@ collision_layer = 2
 collision_mask = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, 0.451311)
+position = Vector2(-0.187266, 0.749064)
 shape = SubResource("RectangleShape2D_8novc")
 
 [node name="Sound" type="Node" parent="."]

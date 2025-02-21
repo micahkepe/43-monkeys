@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://c6comk43qvny6"]
+[gd_scene load_steps=86 format=3 uid="uid://dvl7tkji14c6k"]
 
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_p2njw"]
 [ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_rj20o"]
@@ -591,7 +591,7 @@ radius = 4.49438
 height = 26.2172
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1gxa"]
-size = Vector2(34.0824, 51.3109)
+size = Vector2(39.4382, 59.4232)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kh2oa"]
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
@@ -630,7 +630,7 @@ collision_layer = 2
 collision_mask = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-0.936329, 2.43446)
+position = Vector2(-3.33333, -1)
 shape = SubResource("RectangleShape2D_q1gxa")
 
 [node name="Sound" type="Node" parent="."]
