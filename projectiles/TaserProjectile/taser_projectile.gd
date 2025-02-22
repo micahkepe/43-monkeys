@@ -7,7 +7,7 @@ extends Area2D
 @export var speed: float = 175.0
 
 ## Damage dealt by the taser on contact
-@export var damage: int = 15
+@export var damage: int = 1
 
 ## Lifetime of the taser projectile in seconds
 @export var lifetime: float = 8.0

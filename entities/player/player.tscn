@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=68 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/Player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
@@ -364,6 +364,9 @@ shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
 atlas = ExtResource("15_g1xt3")
 region = Rect2(96, 32, 16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aa0nn"]
+size = Vector2(82.7499, 130.313)
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 self_modulate = Color(1, 1, 0.0980392, 1)
 z_index = 1
@@ -457,3 +460,15 @@ bus = &"SFX"
 z_index = -1
 y_sort_enabled = true
 script = ExtResource("18_f01y2")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(6.625, -6.48959)
+shape = SubResource("RectangleShape2D_aa0nn")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://duw8h7t4ye7j6"]
+[gd_scene load_steps=54 format=3 uid="uid://duw8h7t4ye7j6"]
 
 [ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_8qukr"]
 [ext_resource type="Texture2D" uid="uid://ckxclganh2nrs" path="res://assets/sprites/characters/monkeys/pirate-monkey.png" id="1_m76bo"]
@@ -354,8 +354,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_y1y5n"]
-radius = 15.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wklgv"]
+radius = 5.33333
+height = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hq3as"]
+size = Vector2(35, 59.25)
 
 [node name="PirateMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
@@ -377,5 +381,18 @@ offset_bottom = -28.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, 14)
-shape = SubResource("CircleShape2D_y1y5n")
+position = Vector2(-2.30926e-14, 22.6667)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wklgv")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_hq3as")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]

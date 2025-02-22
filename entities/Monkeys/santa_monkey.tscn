@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://byjjnstxuhusk"]
+[gd_scene load_steps=54 format=3 uid="uid://byjjnstxuhusk"]
 
 [ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_iok2g"]
 [ext_resource type="Texture2D" uid="uid://dkutugit6rrcq" path="res://assets/sprites/characters/monkeys/santa-monkey.png" id="1_n0oss"]
@@ -354,8 +354,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_b1itq"]
-radius = 15.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bl2lv"]
+radius = 5.33333
+height = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7ks2"]
+size = Vector2(35, 59.25)
 
 [node name="SantaMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
@@ -376,5 +380,18 @@ offset_bottom = -28.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, 14)
-shape = SubResource("CircleShape2D_b1itq")
+position = Vector2(-2.30926e-14, 22.6667)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bl2lv")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_o7ks2")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]

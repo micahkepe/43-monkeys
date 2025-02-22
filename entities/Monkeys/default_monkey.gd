@@ -374,7 +374,11 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 	var projectile = banana_boomerang_scene.instantiate()
 	if projectile == null:
 		return
-
+	
+	# Tag the projectile as friendly
+	projectile.set_meta("friendly", true)
+	projectile.set_meta("owner", self)
+	
 	var shoot_direction = (target_position - global_position).normalized()
 	var offset_distance = 30.0
 	var spawn_offset = shoot_direction * offset_distance
@@ -457,3 +461,44 @@ func paralyze(duration: float) -> void:
 	await get_tree().create_timer(duration).timeout
 	_animated_sprite.modulate = Color(1, 1, 1, 1)
 	paralyzed = false
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	# Handle interactions with Area2D nodes (e.g., projectiles)
+	if area.is_in_group("projectiles"):
+		# Ignore friendly projectiles (those spawned by player or troop)
+		if area.get_meta("friendly", false):
+			return  # Skip damage from this monkey's own banana projectiles
+		# Apply damage from non-friendly (enemy) projectiles
+		var damage = 1.0  # Default damage if no specific value is provided
+		if area.has_method("get_damage"):
+			damage = area.get_damage()
+		elif "damage" in area:  # Check if the projectile has a damage property
+			damage = area.damage
+		take_damage(damage)
+		print_debug("Monkey hit by projectile area: ", area.name, " for damage: ", damage)
+		# Optionally remove the projectile after hitting
+		if area.has_method("queue_free"):
+			area.queue_free()
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	# Handle interactions with physics bodies (e.g., enemies)
+	if body.is_in_group("boids") and not body.is_dead:
+		# Enemy boid collision - take damage if it’s attacking
+		if body.is_attacking and body.has_method("get_attack_damage"):
+			take_damage(body.attack_damage)
+			print_debug("Monkey hit by boid: ", body.name)
+			health_bar.show()  # Show health bar when damaged
+	elif body.is_in_group("player") or body.is_in_group("troop"):
+		# Optional: Handle player or troop collision (e.g., ignore or push)
+		print_debug("Monkey collided with: ", body.name)
+
+func _on_hitbox_body_exited(body: Node2D) -> void:
+	# Handle when a body exits the hitbox
+	if body.is_in_group("boids"):
+		print_debug("Boid exited monkey hitbox: ", body.name)
+		# Optionally hide health bar if no enemies remain nearby
+		if not _enemy_in_sight:
+			health_bar.hide()
+	elif body.is_in_group("player") or body.is_in_group("troop"):
+		print_debug("Player or troop exited monkey hitbox: ", body.name)
