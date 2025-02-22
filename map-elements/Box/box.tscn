@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b58lxpspai3bw"]
+[gd_scene load_steps=11 format=4 uid="uid://b58lxpspai3bw"]
 
 [ext_resource type="Script" path="res://map-elements/Box/box.gd" id="1_8vi4n"]
 [ext_resource type="Texture2D" uid="uid://grtritlcbqa" path="res://assets/sprites/tilesets/crates_boxes.png" id="2_npcbq"]
@@ -68,6 +68,9 @@ texture = ExtResource("3_ppbpf")
 [sub_resource type="TileSet" id="TileSet_qp8lw"]
 sources/0 = SubResource("TileSetAtlasSource_ufus0")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yh3ly"]
+size = Vector2(124, 78)
+
 [node name="Box" type="RigidBody2D" groups=["moveables"]]
 z_index = 1
 y_sort_enabled = true
@@ -87,7 +90,7 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_7fiar")
 animation = &"banana_box"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["moveables"]]
 position = Vector2(0, 36)
 rotation = 3.14159
 scale = Vector2(0.435787, 6.24313)
@@ -99,3 +102,11 @@ position = Vector2(-4, 73)
 scale = Vector2(0.6, 0.6)
 tile_map_data = PackedByteArray("AAD7////AAADAAMAAAD7/wAAAAADAAQAAAD7/wEAAAADAAUAAAD8////AAADAAMAAAD8/wAAAAADAAQAAAD8/wEAAAADAAUAAAD9////AAACAAMAAAD9/wAAAAACAAQAAAD9/wEAAAACAAUAAAD+////AAADAAMAAAD+/wAAAAADAAQAAAD+/wEAAAADAAUAAAD/////AAACAAMAAAD//wAAAAACAAQAAAD//wEAAAACAAUAAAAAAP//AAADAAMAAAAAAAAAAAADAAQAAAAAAAEAAAADAAUAAAABAP//AAACAAMAAAABAAAAAAACAAQAAAABAAEAAAACAAUAAAACAP//AAADAAMAAAACAAAAAAADAAQAAAACAAEAAAADAAUAAAADAP//AAACAAMAAAADAAAAAAACAAQAAAADAAEAAAACAAUAAAAEAP//AAACAAMAAAAEAAAAAAACAAQAAAAEAAEAAAACAAUAAAAFAP//AAACAAMAAAAFAAAAAAACAAQAAAAFAAEAAAACAAUAAAAGAP//AAADAAMAAAAGAAAAAAADAAQAAAAGAAEAAAADAAUAAAD6////AAACAAMAAAD6/wAAAAACAAQAAAD6/wEAAAACAAUAAAA=")
 tile_set = SubResource("TileSet_qp8lw")
+
+[node name="BananaBlock" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BananaBlock"]
+position = Vector2(0, 36)
+shape = SubResource("RectangleShape2D_yh3ly")
