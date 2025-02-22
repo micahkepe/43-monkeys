@@ -280,7 +280,7 @@ shader_parameter/glow_spread = 0.5
 shader_parameter/glow_intensity = 1.5
 shader_parameter/glow_color = Color(0, 0, 0, 0.5)
 
-[node name="GunnerTurret" type="CharacterBody2D"]
+[node name="GunnerTurret" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
 scale = Vector2(3, 3)

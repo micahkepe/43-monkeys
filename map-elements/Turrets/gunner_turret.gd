@@ -68,7 +68,6 @@ func shoot_at_target(target: Node2D) -> void:
 	var deg_angle = rad_to_deg(angle)
 	var new_direction: String
 
-	# Determine which direction to face based on angle
 	if deg_angle >= -45 and deg_angle < 45:
 		new_direction = "right"
 	elif deg_angle >= 45 and deg_angle < 135:
@@ -78,27 +77,24 @@ func shoot_at_target(target: Node2D) -> void:
 	else:
 		new_direction = "left"
 
-	# Update animation if the turret needs to change direction
 	if new_direction != current_direction:
 		current_direction = new_direction
 		animated_sprite.play("shoot_" + current_direction)
 	else:
 		animated_sprite.play("shoot_" + current_direction)
 
-	# Spawn the taser projectile
 	var taser = taser_scene.instantiate()
 	taser.global_position = global_position
 	taser.velocity = shoot_direction * taser.speed
+	taser.set_meta("owner", self)  # Tag the taser with its owner
 	get_tree().current_scene.add_child(taser)
 
-	# Begin shoot cooldown
 	can_shoot = false
 	shoot_timer.start()
 
-	# Wait for the shooting animation to finish, then go idle
 	await animated_sprite.animation_finished
 	if is_dead:
-		return  # Do nothing if turret died during the animation
+		return
 	animated_sprite.play("idle_" + current_direction)
 
 func _on_shoot_timer_timeout() -> void:
@@ -167,7 +163,7 @@ func _die() -> void:
 
 ## Handles the hit detection for the turret.
 func _handle_hit(hit: Node) -> void:
-	if hit.is_in_group("projectiles"):
+	if hit.is_in_group("projectiles") and hit.get_meta("owner", null) != self:
 		take_damage(1.0)
 		hit.queue_free()
 

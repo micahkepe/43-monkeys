@@ -105,7 +105,7 @@ tile_set = SubResource("TileSet_qp8lw")
 
 [node name="BananaBlock" type="Area2D" parent="."]
 collision_layer = 32
-collision_mask = 6
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BananaBlock"]
 position = Vector2(0, 36)
