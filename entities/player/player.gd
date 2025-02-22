@@ -178,8 +178,8 @@ func _physics_process(_delta: float) -> void:
 	## The player's current velocity
 	var input_velocity = Vector2.ZERO
 	var current_speed = speed
-	
-	if Input.is_key_pressed(KEY_SHIFT):
+
+	if Input.is_key_pressed(KEY_SHIFT) and _swarm_monkeys.size() > 0:
 		show_ellipse_debug = true
 		ellipse_debug.show()
 	else:

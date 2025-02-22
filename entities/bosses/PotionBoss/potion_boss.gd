@@ -24,7 +24,7 @@ extends CharacterBody2D
 @onready var health_bar = $HealthBar
 
 ## The PotionBoss's maximum health value.
-@export var max_health: float = 200.0
+@export var max_health: float = 50.0
 
 ## The PotionBoss's current health value.
 var current_health: float
