@@ -51,3 +51,13 @@ func _on_body_entered(body: Node) -> void:
 		queue_free()  # Remove the taser projectile
 	else:
 		queue_free()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	# check if root node of the area is an enemy
+	if area.get_parent().is_in_group("player") or area.get_parent().is_in_group("troop"):
+		if area.get_parent().has_method("take_damage"):
+			area.get_parent().take_damage(damage)
+		queue_free()
+	else:
+		queue_free()

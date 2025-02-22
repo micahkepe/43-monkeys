@@ -71,3 +71,6 @@ pitch_scale = 0.74
 autoplay = true
 attenuation = 0.5
 bus = &"SFX"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
