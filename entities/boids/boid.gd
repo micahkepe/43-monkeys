@@ -24,10 +24,10 @@ extends CharacterBody2D
 @export var view_angle_degrees: float = 270.0
 
 ## The distance at which the boid will avoid other boids.
-@export var separation_distance: float = 25.0
+@export var separation_distance: float = 35.0
 
 ## The weight of the separation force.
-@export var weight_separation: float = 10.0
+@export var weight_separation: float = 15.0
 
 ## The weight of the alignment force.
 @export var weight_alignment: float = 1.0

@@ -497,8 +497,5 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 	# Handle when a body exits the hitbox
 	if body.is_in_group("boids"):
 		print_debug("Boid exited monkey hitbox: ", body.name)
-		# Optionally hide health bar if no enemies remain nearby
-		if not _enemy_in_sight:
-			health_bar.hide()
 	elif body.is_in_group("player") or body.is_in_group("troop"):
 		print_debug("Player or troop exited monkey hitbox: ", body.name)
