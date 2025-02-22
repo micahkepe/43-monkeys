@@ -109,9 +109,6 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 
-	if is_attacking or _anim_sprite.animation.begins_with("slash"):
-		return
-
 	attack_timer -= delta
 	var target = _get_closest_target()
 	var steering = Vector2.ZERO
@@ -144,8 +141,38 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.normalized() * max_speed
 
 	move_and_slide()
+
+	# Attack logic - Now checks for targets regardless of animation state
+	if not is_dead and attack_timer <= 0:
+		var overlapping_bodies = $HitBox.get_overlapping_bodies()
+		var targets = []
+		for body in overlapping_bodies:
+			if body.is_in_group("player") or body.is_in_group("troop"):
+				targets.append(body)
+		
+		if targets.size() > 0:
+			var closest_target = _get_closest_target_from_list(targets)
+			if closest_target:
+				_play_attack_animation(closest_target)
+				if closest_target.has_method("take_damage"):
+					closest_target.take_damage(attack_damage)
+				attack_timer = attack_cooldown
+
 	_update_animation()
 
+
+## Helper function to get the closest target from a list
+func _get_closest_target_from_list(target_list: Array) -> Node2D:
+	if target_list.is_empty():
+		return null
+	var closest_target = target_list[0]
+	var min_distance = global_position.distance_to(closest_target.global_position)
+	for target in target_list.slice(1):
+		var distance = global_position.distance_to(target.global_position)
+		if distance < min_distance:
+			closest_target = target
+			min_distance = distance
+	return closest_target
 
 ## Returns the closest target node within the boid's view radius.
 ## @returns Node2D - The closest target node within the boid's view radius.
@@ -223,13 +250,24 @@ func _update_animation() -> void:
 	if is_dead:
 		return
 
-	if is_attacking or _anim_sprite.animation.begins_with("slash"):
-		return
+	# If currently playing an attack animation, check if we should stop it
+	if _anim_sprite.animation.begins_with("slash"):
+		var overlapping_bodies = $HitBox.get_overlapping_bodies()
+		var has_valid_target = false
+		for body in overlapping_bodies:
+			if body.is_in_group("player") or body.is_in_group("troop"):
+				has_valid_target = true
+				break
+		
+		if not has_valid_target:
+			is_attacking = false
+			# Transition back to movement animation
+			if velocity.length() < minimum_speed:
+				_anim_sprite.play("walk_down")  # Default animation
+				return
 
-	# Ensure the boid is always moving and playing an animation
-	if velocity.length() < minimum_speed:
-		# If velocity is too low, set a default animation
-		# _anim_sprite.play("walk_down")
+	# Don't override attack animations that should continue
+	if is_attacking:
 		return
 
 	# Simple animation logic using cardinal directions
@@ -238,16 +276,16 @@ func _update_animation() -> void:
 
 	if abs_x > abs_y:
 		# Horizontal movement takes precedence
-			if velocity.x > 0:
-				_anim_sprite.play("walk_right")
-			else:
-				_anim_sprite.play("walk_left")
+		if velocity.x > 0:
+			_anim_sprite.play("walk_right")
+		else:
+			_anim_sprite.play("walk_left")
 	else:
 		# Vertical movement
-			if velocity.y > 0:
-				_anim_sprite.play("walk_down")
-			else:
-				_anim_sprite.play("walk_up")
+		if velocity.y > 0:
+			_anim_sprite.play("walk_down")
+		else:
+			_anim_sprite.play("walk_up")
 
 
 ## Returns an array of neighboring boids within the view radius and angle.
@@ -398,28 +436,17 @@ func _die():
 
 ## Handles the boid's hit box area entered signal.
 func _handle_hit(hit: Node) -> void:
-	# NOTE: projectiles hitting the boid will invoke the boid's `take_damage`
-	# method, so we don't need to check for projectiles here.
-
-	# If the "hit" node is a player or troop, attack the target
-	if attack_timer <= 0 and (hit.is_in_group("player") or hit.is_in_group("troop")):
-		print_debug("Attacking target:", hit)
-		_play_attack_animation(hit)
-
-		if hit.has_method("take_damage"):
-			print_debug("Applying damage to target: ", hit.name)
-			hit.take_damage(attack_damage)
-		attack_timer = attack_cooldown
+	pass # No longer need
 
 
 ## Handles the boid's hit box area entered signal.
 func _on_hit_box_area_entered(area: Area2D) -> void:
-	_handle_hit(area)
+	pass
 
 
 ## Handles the boid's hit box body entered signal.
 func _on_hit_box_body_entered(body: Node) -> void:
-	_handle_hit(body)
+	pass
 
 
 ## Handles the animation finished signal for the boid.
@@ -429,6 +456,11 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			await $Sound/ScreamPlayer.finished
 		_anim_sprite.stop()
 		queue_free()
+	elif _anim_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
+		print_debug("Attack animation finished. Resetting is_attacking.")
+		is_attacking = false
+		_update_animation()
+
 
 	elif _anim_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
 		print_debug("Attack animation finished. Resetting is_attacking.")
@@ -438,11 +470,4 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 ## Handles the hit box area entered signal.
 func _on_hit_box_body_exited(body:Node2D) -> void:
-	if is_dead:
-		return
-
-	print_debug("Boid hit box exited body: ", body)
-	is_attacking = false
-
-	# Reset the animation to the walk animation
-	_anim_sprite.play("walk_down")
+	pass

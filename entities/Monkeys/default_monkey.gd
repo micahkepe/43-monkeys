@@ -483,12 +483,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Handle interactions with physics bodies (e.g., enemies)
-	if body.is_in_group("boids") and not body.is_dead:
-		# Enemy boid collision - take damage if it’s attacking
-		if body.is_attacking and body.has_method("get_attack_damage"):
-			take_damage(body.attack_damage)
-			print_debug("Monkey hit by boid: ", body.name)
-			health_bar.show()  # Show health bar when damaged
+	if body.is_in_group("player") or body.is_in_group("troop"):
+		print_debug("Monkey collided with: ", body.name)
 	elif body.is_in_group("player") or body.is_in_group("troop"):
 		# Optional: Handle player or troop collision (e.g., ignore or push)
 		print_debug("Monkey collided with: ", body.name)

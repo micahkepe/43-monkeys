@@ -767,11 +767,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Handle interactions with physics bodies (e.g., enemies, troop members)
-	if body.is_in_group("boids") and not body.is_dead:
-		# Enemy boid collision - take damage if it’s attacking
-		if body.is_attacking and body.has_method("get_attack_damage"):
-			take_damage(body.attack_damage)
-			print_debug("Player hit by boid: ", body.name)
+	if body.is_in_group("troop") and body != self:
+		print_debug("Player collided with troop member: ", body.name)
 	elif body.is_in_group("troop") and body != self:
 		# Optional: Handle troop member collision (e.g., push away or ignore)
 		print_debug("Player collided with troop member: ", body.name)
