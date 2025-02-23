@@ -552,7 +552,7 @@ hits_to_kill = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_5pjvm")
-animation = &"walk_down"
+animation = &"slash_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.98023e-08, 20.2247)

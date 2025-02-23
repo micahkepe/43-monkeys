@@ -80,6 +80,12 @@ var _last_velocity: Vector2 = Vector2.ZERO
 @export var paralyzed: bool = false
 var frozen_position: Vector2
 
+## Whether the monkey is currently attacking
+var is_attacking: bool = false
+
+## The damage dealt by the monkey's slash attack
+@export var attack_damage: int = 1
+
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -87,14 +93,20 @@ func _ready() -> void:
 	health_bar.init_health(current_health)
 	health_bar.hide() # Hide the health bar initially
 
-	# Set initial animation to "_walk_down"
+	# Set initial animation to "idle"
 	_animated_sprite.play("idle")
+	print_debug("Initial animation set to idle, sprite frames: ", _animated_sprite.sprite_frames.get_animation_names())
 
 	# Setup RayCasts for collision avoidance
 	_setup_collision_raycasts()
 
 	# Setup RayCast for vision detection
 	_setup_vision_raycast()
+
+	# Ensure signal is connected
+	if not _animated_sprite.is_connected("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished")):
+		_animated_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
+		print_debug("Connected animation_finished signal")
 
 
 ## Setup RayCasts for collision detection
@@ -196,18 +208,114 @@ func _physics_process(_delta: float) -> void:
 	# Check for enemy vision
 	_check_vision_detection()
 
-	# Manage attack cool down
+	# Manage attack cooldown
 	if attack_timer > 0:
 		attack_timer -= _delta
 
-	# Update the individual monkey's animation based on its own velocity.
+	# Handle attack logic
+	if not locked and not is_attacking and attack_timer <= 0:
+		var overlapping_bodies = $Hitbox.get_overlapping_bodies()
+		var targets = []
+		for body in overlapping_bodies:
+			if body.is_in_group("boids"):  # Assuming boids are the enemies
+				targets.append(body)
+		
+		if targets.size() > 0:
+			var closest_target = _get_closest_target_from_list(targets)
+			if closest_target:
+				_play_attack_animation(closest_target)
+				if closest_target.has_method("take_damage"):
+					closest_target.take_damage(attack_damage)
+				attack_timer = attack_cooldown
+
+	# Banana throwing logic
+	if _enemy_in_sight and _current_enemy and attack_timer <= 0:
+		_throw_banana_at_position(_current_enemy)
+
+	# Update damage cooldown
+	if current_cooldown > 0:
+		current_cooldown -= _delta
+
+	# Update last velocity
+	_last_velocity = velocity
+
+	# Update animation state every frame
+	_update_animation()
+
+## Helper function to get the closest target from a list
+func _get_closest_target_from_list(target_list: Array) -> Node2D:
+	if target_list.is_empty():
+		return null
+	var closest_target = target_list[0]
+	var min_distance = global_position.distance_to(closest_target.global_position)
+	for target in target_list.slice(1):
+		var distance = global_position.distance_to(target.global_position)
+		if distance < min_distance:
+			closest_target = target
+			min_distance = distance
+	return closest_target
+
+## Plays the attack animation and applies damage to the target node
+func _play_attack_animation(target: Node2D) -> void:
+	var direction = (target.global_position - global_position).normalized()
+	#print_debug("Playing attack animation. Direction: ", direction)
+	#print_debug("Direction X: ", direction.x, " | Direction Y: ", direction.y)
+	#print_debug("Abs X: ", abs(direction.x), " | Abs Y: ", abs(direction.y))
+
+	_animated_sprite.stop()  # Reset any current animation
+	if abs(direction.x) > abs(direction.y):
+		# Horizontal attack
+		var anim = "slash_right" if direction.x > 0 else "slash_left"
+		_animated_sprite.play(anim)
+		#print_debug("Playing horizontal attack animation: ", anim)
+	else:
+		# Vertical attack
+		var anim = "slash_down" if direction.y > 0 else "slash_up"
+		_animated_sprite.play(anim)
+		#print_debug("Playing vertical attack animation: ", anim)
+
+	is_attacking = true
+	#print_debug("Set is_attacking to true, current animation: ", _animated_sprite.animation)
+	#print_debug("Animation frames: ", _animated_sprite.sprite_frames.get_frame_count(_animated_sprite.animation))
+	#print_debug("Animation speed: ", _animated_sprite.sprite_frames.get_animation_speed(_animated_sprite.animation))
+	#print_debug("Is playing: ", _animated_sprite.is_playing())
+	
+func _update_animation() -> void:
+	if paralyzed:
+		return
+
+	# If locked, stop animation
 	if locked:
 		_stop_walk()
-	else:
-		# Update the individual monkey's animation based on its own velocity.
+		return
+
+	# If currently attacking, check if we should continue or stop
+	if _animated_sprite.animation.begins_with("slash"):
+		var overlapping_bodies = $Hitbox.get_overlapping_bodies()
+		var has_valid_target = false
+		for body in overlapping_bodies:
+			if body.is_in_group("boids"):
+				has_valid_target = true
+				break
+		
+		if not has_valid_target:
+			is_attacking = false
+			print_debug("No valid targets, ending attack animation, switching to idle or movement")
+		else:
+			# Ensure the attack animation is playing
+			if not _animated_sprite.is_playing():
+				_animated_sprite.play(_animated_sprite.animation)
+				print_debug("Restarted attack animation due to not playing")
+			print_debug("Attack animation continuing, current animation: ", _animated_sprite.animation)
+			return
+
+	# Only update movement animations if not attacking
+	if not is_attacking:
 		if velocity == Vector2.ZERO:
 			if _last_velocity != Vector2.ZERO:
 				_stop_walk()
+				_animated_sprite.play("idle")  # Ensure we switch to idle
+				print_debug("Velocity zero, switching to idle")
 		else:
 			if velocity.y > 0:
 				_walk_down()
@@ -217,16 +325,7 @@ func _physics_process(_delta: float) -> void:
 				_walk_left()
 			elif velocity.x > 0:
 				_walk_right()
-
-	# Update last velocity
-	_last_velocity = velocity
-
-	# If an enemy is in sight, you can add attack logic here
-	if _enemy_in_sight and _current_enemy and attack_timer <= 0:
-		_throw_banana_at_position(_current_enemy)
-
-	if current_cooldown > 0:
-		current_cooldown -= _delta
+			print_debug("Playing movement animation: ", _animated_sprite.animation)
 
 ## Utility method for the monkey to play the walk left animation and adjust its
 ## raycasts accordingly.
@@ -426,6 +525,11 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
 		_animated_sprite.stop()
 		queue_free()
+		print_debug("Die animation finished, freeing monkey")
+	elif _animated_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
+		print_debug("Attack animation finished. Resetting is_attacking.")
+		is_attacking = false
+		_update_animation()
 
 func heal(amount: float) -> void:
 	# Increase current health but do not exceed max_health.
