@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c1cqahrbs025d"]
+[gd_scene load_steps=23 format=3 uid="uid://c1cqahrbs025d"]
 
 [ext_resource type="Script" path="res://map-elements/MonkeyCage/monkey_cage.gd" id="2_12jvl"]
 [ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="2_h65kn"]
@@ -108,6 +108,9 @@ size = Vector2(94, 7)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hl67n"]
 size = Vector2(33.6377, 2.78413)
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_o341v"]
+a = Vector2(0, -13)
+
 [node name="MonkeyCage" type="StaticBody2D"]
 y_sort_enabled = true
 position = Vector2(658, 363)
@@ -144,3 +147,11 @@ y_sort_enabled = true
 stream = ExtResource("8_o2rp2")
 mix_target = 1
 bus = &"SFX"
+
+[node name="BackRightStop" type="CollisionShape2D" parent="."]
+position = Vector2(45, 19)
+shape = SubResource("SegmentShape2D_o341v")
+
+[node name="BackLeftStop" type="CollisionShape2D" parent="."]
+position = Vector2(-46, 19)
+shape = SubResource("SegmentShape2D_o341v")

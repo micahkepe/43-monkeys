@@ -475,13 +475,13 @@ texture_region_size = Vector2i(32, 32)
 6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:5/size_in_atlas = Vector2i(3, 3)
 0:5/0 = 0
-0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-46.4923, 1.41421, 46.4923, 0, 47.5529, 28.9914, -45.7852, 29.6985)
+0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-47.5529, 10.6066, 45.7852, 9.54594, 45.7852, 49.4975, -49.6743, 49.1439)
 3:5/size_in_atlas = Vector2i(2, 3)
 3:5/0 = 0
-3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32.3501, 1.06065, 29.8753, 0.707108, 31.2895, 28.6378, -31.2895, 28.9914)
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-30.9359, 10.6066, 30.9359, 10.253, 29.5217, 48.0833, -33.7644, 49.4975)
 5:5/size_in_atlas = Vector2i(3, 3)
 5:5/0 = 0
-5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-46.4923, 1.41421, 46.4923, 0, 47.5529, 28.9914, -45.7852, 29.6985)
+5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-47.5529, 10.6066, 45.7852, 9.54594, 45.7852, 49.4975, -49.6743, 49.1439)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7x5iq"]
 texture = ExtResource("6_y0wcx")
@@ -1277,6 +1277,12 @@ position = Vector2(-260, -2004)
 
 [node name="ForemanBoid" parent="World/Boids" instance=ExtResource("24_ttfkr")]
 position = Vector2(-741, -421)
+
+[node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
+position = Vector2(-845, 568)
+
+[node name="Camera2D" type="Camera2D" parent="World/Player"]
+position = Vector2(4.00798, 5.34402)
 
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true

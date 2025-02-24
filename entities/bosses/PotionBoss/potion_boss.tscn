@@ -744,6 +744,7 @@ position = Vector2(-0.333333, -0.00748301)
 shape = SubResource("RectangleShape2D_jefyw")
 
 [node name="Shadow" type="ColorRect" parent="."]
+z_index = -1
 material = SubResource("ShaderMaterial_e7ip3")
 offset_left = -53.0
 offset_top = 29.0
