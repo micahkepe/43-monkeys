@@ -258,6 +258,8 @@ func _physics_process(_delta: float) -> void:
 
 	if _current_cooldown > 0:
 		_current_cooldown -= _delta
+		
+
 
 
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
@@ -376,7 +378,7 @@ func _update_swarm_positions() -> void:
 		ellipse_debug.ellipse_width_scale = ellipse_width_scale
 		ellipse_debug.ellipse_height_scale = ellipse_height_scale
 		ellipse_debug.swarm_rotation = _swarm_rotation
-		ellipse_debug.position = _swarm_center_offset.rotated(_swarm_rotation)  # Center the drawing on the ellipse center.
+		ellipse_debug.global_position = _swarm_center_offset.rotated(_swarm_rotation) + global_position
 		ellipse_debug.queue_redraw()
 
 
@@ -390,7 +392,7 @@ func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
 
 	# Update the swarm center offset for future calculations
 	_swarm_center_offset += shift_vector
-
+	
 	# Update each monkey's position based on the shift
 	for entry in _swarm_monkeys:
 		var monkey = entry["node"]

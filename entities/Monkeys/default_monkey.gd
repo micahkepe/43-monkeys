@@ -325,7 +325,7 @@ func _update_animation() -> void:
 				_walk_left()
 			elif velocity.x > 0:
 				_walk_right()
-			print_debug("Playing movement animation: ", _animated_sprite.animation)
+			#print_debug("Playing movement animation: ", _animated_sprite.animation)
 
 ## Utility method for the monkey to play the walk left animation and adjust its
 ## raycasts accordingly.
