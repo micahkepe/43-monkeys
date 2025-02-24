@@ -683,7 +683,8 @@ func update_hearts_display() -> void:
 
 ## Handles death logic for the player. Navigates to the "Died" menu.
 func _die() -> void:
-	get_tree().paused = false
+	if get_tree():
+		get_tree().paused = false
 	queue_free()
 	get_tree().change_scene_to_file("res://menus/DiedMenu/died_menu.tscn")
 

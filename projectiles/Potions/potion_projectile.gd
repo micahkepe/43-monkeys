@@ -174,7 +174,9 @@ func _on_body_entered(body: Node) -> void:
 		if state == PotionState.SPIN:
 			_switch_to_splash()
 
-# Helper: Returns true if the body belongs to target groups.
+## Returns true if the body belongs to target groups.
+## @param body Node to check
+## @returns bool whether the body belongs to the target group(s)
 func _is_target(body: Node) -> bool:
 	return body.is_in_group("player") or body.is_in_group("troop")
 

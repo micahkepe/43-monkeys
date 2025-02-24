@@ -42,8 +42,8 @@ func _physics_process(delta: float) -> void:
 
 ## Called when the taser collides with another body.
 func _on_body_entered(body: Node) -> void:
-	# Check if the body has a `take_damage` method and is not named "TaserBoss"
-	if body.has_method("take_damage") and body.name != "TaserBoss":
+	# Check if the body has a `take_damage` method and is an enemy
+	if body.has_method("take_damage") and not body.is_in_group("enemies"):
 		body.take_damage(0.5)  # Deal 0.5 damage
 		queue_free()  # Remove the taser projectile
 	else:

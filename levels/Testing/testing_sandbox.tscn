@@ -389,22 +389,24 @@ tile_set = SubResource("TileSet_yx7h7")
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="Boxes" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Box" parent="World/Boxes" instance=ExtResource("8_5unfj")]
+position = Vector2(441, 774)
+
+[node name="Buttons" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Button" parent="World/Buttons" instance=ExtResource("9_kx71c")]
+position = Vector2(469, 626)
+
 [node name="Player" parent="World" instance=ExtResource("7_74lj2")]
 position = Vector2(645, 845)
 scale = Vector2(0.7485, 0.7485)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.00798, 5.34402)
-
-[node name="Boxes" type="Node2D" parent="World"]
-
-[node name="Box" parent="World/Boxes" instance=ExtResource("8_5unfj")]
-position = Vector2(441, 774)
-
-[node name="Buttons" type="Node2D" parent="World"]
-
-[node name="Button" parent="World/Buttons" instance=ExtResource("9_kx71c")]
-position = Vector2(469, 626)
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="."]
 z_index = 1

@@ -47,7 +47,8 @@ func _physics_process(delta: float) -> void:
 ## projectile will be destroyed.
 ## @param body: The body that the projectile collided with.
 func _on_body_entered(body: Node) -> void:
-	if body.name == "BackgroundTiles" or body.name == "ForegroundTiles":
+	if body.name == "BackgroundTiles" or body.name == "ForegroundTiles" or body.name == "Boundaries":
+		print("In body entered, collided with", body.name)
 		queue_free()
 	elif body.is_in_group("enemies") or body.is_in_group("boids"):
 		if body.has_method("take_damage"):
@@ -65,4 +66,5 @@ func _on_area_entered(area:Area2D) -> void:
 			area.get_parent().take_damage(damage)
 		queue_free()
 	else:
+		print("In area entered, collided with", area.name)
 		queue_free()

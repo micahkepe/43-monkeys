@@ -396,6 +396,7 @@ sprite_frames = SubResource("SpriteFrames_rp06w")
 animation = &"walk_down"
 
 [node name="HaloEffect" type="Polygon2D" parent="."]
+z_index = -1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_ntnfs")
 position = Vector2(-70, -5)
