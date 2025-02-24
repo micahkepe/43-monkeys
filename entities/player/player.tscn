@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://chsvjhv0uagub"]
+[gd_scene load_steps=68 format=3 uid="uid://chsvjhv0uagub"]
 
 [ext_resource type="Script" path="res://entities/Player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
@@ -364,8 +364,6 @@ shader_parameter/glow_color = Color(0.900057, 0.979847, 0.285628, 1)
 atlas = ExtResource("15_g1xt3")
 region = Rect2(96, 32, 16, 16)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lyo3r"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa0nn"]
 size = Vector2(82.7499, 130.313)
 
@@ -461,7 +459,6 @@ bus = &"SFX"
 [node name="EllipseDebug" type="Node2D" parent="."]
 z_index = -1
 y_sort_enabled = true
-material = SubResource("ShaderMaterial_lyo3r")
 script = ExtResource("18_f01y2")
 
 [node name="Hitbox" type="Area2D" parent="."]
