@@ -146,6 +146,8 @@ func get_troop() -> Array:
 # Monkey counter for number of monkeys in group, including the main monkey.
 @onready var monkey_counter_label: Label = $PlayerUI/MonkeyCounter
 
+
+@onready var animation_tree  = $AnimatedSprite2D/AnimationTree
 # ------------------------------------------------
 # SIGNALS
 # ------------------------------------------------
