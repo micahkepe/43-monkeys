@@ -6,15 +6,6 @@ extends Node2D
 @export var line_thickness: float = 10.0
 @export var line_color: Color = Color(1, 1, 0, 1)  # Yellow
 
-func _ready():
-	# Ensure the node has a material assigned
-	if material and material is ShaderMaterial:
-		print("======RAHHAHAH")
-		# Set the 'glow_color' parameter to yellow
-		material.set_shader_parameter("glow_color", line_color)
-	else:
-		print("ShaderMaterial not found on this node.")
-
 func _draw() -> void:
 	var segments = 64
 	var points = []
