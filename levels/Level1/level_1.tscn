@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=70 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -595,6 +595,42 @@ sources/1 = SubResource("TileSetAtlasSource_7x5iq")
 sources/4 = SubResource("TileSetAtlasSource_0efgg")
 sources/6 = SubResource("TileSetAtlasSource_6xns6")
 
+[sub_resource type="Gradient" id="Gradient_ewgfl"]
+offsets = PackedFloat32Array(0.0745921, 0.680653)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_16i6w"]
+gradient = SubResource("Gradient_ewgfl")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_10bc1"]
+offsets = PackedFloat32Array(0, 0.783217)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_70g02"]
+gradient = SubResource("Gradient_10bc1")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_p4ov3"]
+offsets = PackedFloat32Array(0, 0.787879)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5f1iw"]
+gradient = SubResource("Gradient_p4ov3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_6fdpi"]
+offsets = PackedFloat32Array(0, 0.645688)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8ddn1"]
+gradient = SubResource("Gradient_6fdpi")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5y854"]
 texture = ExtResource("6_y0wcx")
 texture_region_size = Vector2i(32, 32)
@@ -626,6 +662,11 @@ distance = -168.0
 [node name="Level1" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_bim7o")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+color = Color(0.4475, 0.317838, 0.140405, 1)
+energy = 0.35
+blend_mode = 1
 
 [node name="Projectiles" type="Node2D" parent="."]
 position = Vector2(50, -110)
@@ -1208,6 +1249,125 @@ scale = Vector2(1.75, 1.75)
 position = Vector2(3274.67, -1531.33)
 scale = Vector2(2.3, 2.3)
 
+[node name="Lights" type="Node2D" parent="ForegroundTiles"]
+y_sort_enabled = true
+position = Vector2(-50, 81.3333)
+scale = Vector2(0.666667, 0.666667)
+
+[node name="PointLight2D" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-473, 763)
+scale = Vector2(4.125, 2.39453)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D7" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(4278, -2173)
+scale = Vector2(4.125, 2.39453)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D8" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(4413, -869)
+scale = Vector2(4.125, 2.39453)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D2" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-1245.47, -892.094)
+scale = Vector2(5.07715, 3.52832)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D5" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-714, -1956)
+scale = Vector2(5.07715, 3.52832)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D4" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-1245.47, -892.094)
+scale = Vector2(5.07715, 3.52832)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D3" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(897, -4487)
+scale = Vector2(6.00733, 5.23291)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D9" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(3143, -3680)
+scale = Vector2(6.00733, 5.23291)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_16i6w")
+
+[node name="PointLight2D6" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(-541, -2568)
+color = Color(0.856147, 0.917322, 0.995759, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_70g02")
+
+[node name="PointLight2D10" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(565, -492)
+color = Color(0.364706, 0.745098, 0.321569, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_5f1iw")
+
+[node name="PointLight2D11" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(-325, -1762)
+color = Color(0.364706, 0.745098, 0.321569, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_5f1iw")
+
+[node name="PointLight2D12" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(-304, -1763)
+color = Color(0.364706, 0.745098, 0.321569, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_5f1iw")
+
+[node name="PointLight2D13" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(-308, -1784)
+color = Color(0.364706, 0.745098, 0.321569, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_5f1iw")
+
+[node name="PointLight2D14" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(581, -477)
+color = Color(0.55123, 0.0347662, 0.0462557, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_8ddn1")
+
+[node name="PointLight2D15" type="PointLight2D" parent="ForegroundTiles/Lights"]
+position = Vector2(616, -472)
+color = Color(0.55123, 0.0347662, 0.0462557, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_8ddn1")
+
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -1331,9 +1491,6 @@ position = Vector2(-260, -2004)
 [node name="ForemanBoid" parent="World/Boids" instance=ExtResource("24_ttfkr")]
 position = Vector2(-741, -421)
 
-[node name="Player2" parent="World" instance=ExtResource("10_i5f2g")]
-position = Vector2(-845, 568)
-
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
 position = Vector2(75.0001, -123)
@@ -1378,7 +1535,7 @@ position = Vector2(5895, -3177)
 [node name="FloorItems" type="TileMapLayer" parent="World"]
 y_sort_enabled = true
 position = Vector2(-1409, 261)
-tile_map_data = PackedByteArray("AAByALT/AAAFAAUAAABxALP/AAAFAAUAAABuALT/AAAFAAUAAABEAH//AAAAAAAAAABDAID/AAAAAAAAAABFAIH/AAAAAAAAAAArAHf/AAAFAAUAAABtAFL/AAAFAAUAAABsAFT/AAAFAAUAAACoAEv/AAAFAAUAAACpAEz/AAAFAAUAAACnAFH/AAAFAAUAAACpAFL/AAAFAAUAAABLAdX+AAAFAAUAAABJAdT+AAAFAAUAAAA7ACMAAAACAAAAAAB7AND/AAAAAAAAAAB8ANH/AAACAAAAAAB+ANH/AAACAAAAAACOAAP/AQAHAAAAAACOAP/+AQAHAAAAAACOAPv+AQAHAAAAAACLAAT/AQAGAAMAAACJAAT/AQAGAAMAAACKANX+AQAEAAAAAACQANX+AQAEAAAAAACWANX+AQAEAAAAAACOAPf+AQAHAAAAAACOAPP+AQAHAAAAAACOAO/+AQAHAAAAAACNAOz+AQAGAAMAAACJAOz+AQAGAAMAAAA=")
+tile_map_data = PackedByteArray("AAByALT/AAAFAAUAAABxALP/AAAFAAUAAABuALT/AAAFAAUAAABEAH//AAAAAAAAAABDAID/AAAAAAAAAABFAIH/AAAAAAAAAAArAHf/AAAFAAUAAABtAFL/AAAFAAUAAABsAFT/AAAFAAUAAACoAEv/AAAFAAUAAACpAEz/AAAFAAUAAACnAFH/AAAFAAUAAACpAFL/AAAFAAUAAABLAdX+AAAFAAUAAABJAdT+AAAFAAUAAAA7ACMAAAACAAAAAAB7AND/AAAAAAAAAAB8ANH/AAACAAAAAAB+ANH/AAACAAAAAACOAAP/AQAHAAAAAACOAP/+AQAHAAAAAACOAPv+AQAHAAAAAACLAAT/AQAGAAMAAACJAAT/AQAGAAMAAACOAPf+AQAHAAAAAACOAPP+AQAHAAAAAACOAO/+AQAHAAAAAACNAOz+AQAGAAMAAACJAOz+AQAGAAMAAACJANH+AQAGAAMAAACJANP+AQAGAAMAAACJANX+AQAGAAMAAACNANX+AQAGAAMAAACNANP+AQAGAAMAAACNANH+AQAGAAMAAACRANH+AQAGAAMAAACRANP+AQAGAAMAAACRANX+AQAGAAMAAACJANf+AQAGAAMAAACJANn+AQAGAAMAAACNANn+AQAGAAMAAACNANf+AQAGAAMAAACRANf+AQAGAAMAAACRANn+AQAGAAMAAACVANn+AQAGAAMAAACVANf+AQAGAAMAAACVANX+AQAGAAMAAACVANP+AQAGAAMAAACVANH+AQAGAAMAAAA=")
 tile_set = SubResource("TileSet_j6s0s")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]

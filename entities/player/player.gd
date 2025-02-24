@@ -591,7 +591,7 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	var shot_dir = shoot_direction.normalized()
 	var main_vel = shot_dir * bullet_speed
 
-	# only add perpindicular portion of players velocity onto shot velocity
+	# only add perpendicular portion of players velocity onto shot velocity
 	# so if you're walking up while shooting up, it won't slow or speed up the bullet.
 	# But if you're walking right while shooting up, the bullet goes diagonal.
 	var orth_factor = 0.75
