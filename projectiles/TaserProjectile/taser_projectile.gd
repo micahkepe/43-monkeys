@@ -15,7 +15,6 @@ extends Area2D
 ## Velocity of the taser projectile
 var velocity: Vector2 = Vector2.ZERO
 
-
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print("taser spawned at:", global_position)
@@ -24,13 +23,13 @@ func _ready() -> void:
 	if $AnimationPlayer.has_animation("taser_spin"):
 		$AnimationPlayer.play("taser_spin")
 
-	# Connect the body_entered signal
-	self.connect("body_entered", Callable(self, "_on_body_entered"))
+	# Only connect if not already connected
+	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
+		connect("body_entered", Callable(self, "_on_body_entered"))
 
 	# Schedule projectile destruction after its lifetime expires
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()
-
 
 ## Called every frame. Handles movement and rotation.
 func _physics_process(delta: float) -> void:
@@ -41,10 +40,8 @@ func _physics_process(delta: float) -> void:
 	if velocity.length() > 0:
 		rotation = velocity.angle()
 
-
 ## Called when the taser collides with another body.
 func _on_body_entered(body: Node) -> void:
-
 	# Check if the body has a `take_damage` method and is not named "TaserBoss"
 	if body.has_method("take_damage") and body.name != "TaserBoss":
 		body.take_damage(0.5)  # Deal 0.5 damage
@@ -52,9 +49,8 @@ func _on_body_entered(body: Node) -> void:
 	else:
 		queue_free()
 
-
 func _on_area_entered(area: Area2D) -> void:
-	# check if root node of the area is an enemy
+	# Check if root node of the area is an enemy
 	if area.get_parent().is_in_group("player") or area.get_parent().is_in_group("troop"):
 		if area.get_parent().has_method("take_damage"):
 			area.get_parent().take_damage(damage)

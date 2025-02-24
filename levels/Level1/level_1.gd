@@ -18,10 +18,15 @@ var _button_states = {}
 ## Tracker for whether the lasers 1, 2, 3 are deactivated (first button puzzle)
 var _lasers_1_2_3_deactivated: bool = false
 
-
-## Tracker for whether the lasers 1, 2, 3 are deactivated (first button puzzle)
+## Tracker for whether the laser 4 is deactivated (second button puzzle)
 var _laser_4_deactivated: bool = false
 
+## Scene for level transition to level 2.
+@export var transition_scene: PackedScene = preload("res://cutscenes/LevelTransition/level_transition.tscn")
+@export var next_level_scene: PackedScene = preload("res://levels/Level2/level_2.tscn")
+
+## Track the boss.
+@onready var potion_boss = $World/PotionBoss
 
 #############
 
@@ -68,7 +73,6 @@ func deactivate_lasers_1_2_3() -> void:
 	# already done
 	if _lasers_1_2_3_deactivated:
 		return
-
 	for laser in lasers:
 		if laser.name in ["Laser1", "Laser2", "Laser3"]:
 			laser.deactivate_laser()
@@ -78,7 +82,41 @@ func deactivate_laser_4() -> void:
 	# you already completed this, no need to deactivate again
 	if _laser_4_deactivated:
 		return
-
 	for laser in lasers:
 		if laser.name == "Laser4":
 			laser.deactivate_laser()
+
+## Called every frame. '_delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	check_boss_death()
+
+## Check if the boss is dead and transition to the next level.
+func check_boss_death() -> void:
+	if potion_boss and potion_boss.is_dead:
+		var player = $World/Player
+		var troop_count = player.get_troop_count() if player else 6
+		var monkey_health = []
+		if player:
+			for monkey in player.get_troop():
+				monkey_health.append(monkey.health if "health" in monkey else 6.0)
+		
+		var troop_data = {
+			"count": troop_count,
+			"player_health": player.health if player else 6.0,
+			"monkey_health": monkey_health
+		}
+		
+		if player:
+			player.heal(player.max_health - player.health)
+			for monkey in player.get_troop():
+				if "health" in monkey and "max_health" in monkey:
+					monkey.health = monkey.max_health
+		
+		var transition_instance = transition_scene.instantiate()
+		transition_instance.next_level_scene = next_level_scene
+		transition_instance.level_number = 2  # Set the level number explicitly
+		transition_instance.level_title = "The Next Challenge"  # Just the subtitle
+		transition_instance.set_troop_data(troop_data)
+		get_tree().root.add_child(transition_instance)
+		get_tree().current_scene.queue_free()
+		get_tree().current_scene = transition_instance

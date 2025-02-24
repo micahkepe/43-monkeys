@@ -8,6 +8,9 @@ extends Node2D
 @export var typing_speed: float = 0.05            # Speed of typewriter effect
 @export var punctuation_pause: float = 0.2        # Pause for punctuation marks
 
+# Troop data to pass to next level
+var troop_data: Dictionary = {}
+
 # Node references
 @onready var label: Label = get_node("Label")
 @onready var fade_rect: ColorRect = get_node("FadeRect")
@@ -32,7 +35,7 @@ func _ready():
 	var viewport_size = get_viewport_rect().size
 	fade_rect.set_deferred("size", viewport_size)
 	label.set_deferred("position", Vector2(viewport_size.x / 2 - label.size.x / 2,
-	                         viewport_size.y / 2 - label.size.y / 2))
+							 viewport_size.y / 2 - label.size.y / 2))
 
 	# Start fade-in
 	fade_rect.modulate.a = 1.0
@@ -90,11 +93,18 @@ func fade_out():
 func _on_fade_out_complete():
 	print_debug("Transition completed, loading next level.")
 
-	# Load the next level directly from here
+	# Load the next level with troop data
 	if next_level_scene:
-		get_tree().change_scene_to_packed(next_level_scene)
+		var next_level = next_level_scene.instantiate()
+		if next_level.has_method("set_troop_data") and not troop_data.is_empty():
+			next_level.set_troop_data(troop_data)
+		get_tree().root.add_child(next_level)
+		get_tree().current_scene = next_level
 	else:
 		push_error("No next level scene specified.")
 
-	queue_free()  # Optionally free the transition scene
+	queue_free()  # Remove the transition scene
 
+# Setter for troop data
+func set_troop_data(data: Dictionary) -> void:
+	troop_data = data

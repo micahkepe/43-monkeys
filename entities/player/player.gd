@@ -117,6 +117,23 @@ var _damage_cooldown: float = 1.0
 ## The current cool down for taking damage.
 var _current_cooldown: float = 0.0
 
+## Getter method for player health.
+var health: float:
+	get:
+		return _current_health
+	set(value):
+		_current_health = clamp(value, 0, max_health)
+		update_hearts_display()
+
+## Getter method for the troop count.
+func get_troop_count() -> int:
+	print("Troop size:", _swarm_monkeys.size())
+	return _swarm_monkeys.size()
+
+# Add this method to get troop monkeys (for health reset)
+func get_troop() -> Array:
+	return _swarm_monkeys.map(func(entry): return entry["node"])
+
 ## The UI container for the player's health display.
 @onready var hearts_container = $PlayerUI/HeartsContainer
 
@@ -308,7 +325,9 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 	_swarm_monkeys.append({
 		"node": new_monkey,
 		"angle": new_angle,
-		"transitioning": true  # This flag can be used to control movement speed.
+		"transitioning": true,
+		"health": max_health,
+		"max_health": max_health
 	})
 
 	# Recalculate angles for an even distribution.
@@ -790,3 +809,8 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 		print_debug("Boid exited player hitbox: ", body.name)
 	elif body.is_in_group("troop"):
 		print_debug("Troop member exited player hitbox: ", body.name)
+
+func heal_troop() -> void:
+	for entry in _swarm_monkeys:
+		if "health" in entry and "max_health" in entry:
+			entry["health"] = entry["max_health"]

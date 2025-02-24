@@ -10,10 +10,6 @@ script = ExtResource("1_we6ay")
 level_number = -1
 level_title = "Debugging"
 next_level_scene = ExtResource("2_ujoxu")
-display_duration = null
-fade_duration = null
-typing_speed = null
-punctuation_pause = null
 
 [node name="FadeRect" type="ColorRect" parent="."]
 modulate = Color(0, 0, 0, 1)
