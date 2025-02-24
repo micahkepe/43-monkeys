@@ -40,7 +40,7 @@ var _current_shoot_cooldown: float
 @export
 var shoot_cooldown_duration: float = 0.25
 
-## Bannana boomerang scene
+## Banana boomerang scene
 @export
 var banana_boomerang_scene: PackedScene
 
@@ -568,10 +568,7 @@ func _handle_shooting() -> void:
 ## @param shoot_direction: Vector2 - The direction in which to shoot the
 ## projectile.
 func spawn_projectile(shoot_direction: Vector2) -> void:
-	if banana_boomerang_scene == null:
-		return
-
-	if not banana_boomerang_scene.can_instantiate():
+	if banana_boomerang_scene == null or not banana_boomerang_scene.can_instantiate():
 		return
 
 	var projectile = banana_boomerang_scene.instantiate()
@@ -686,6 +683,7 @@ func update_hearts_display() -> void:
 
 ## Handles death logic for the player. Navigates to the "Died" menu.
 func _die() -> void:
+	get_tree().paused = false
 	queue_free()
 	get_tree().change_scene_to_file("res://menus/DiedMenu/died_menu.tscn")
 
