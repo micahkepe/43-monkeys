@@ -4,7 +4,7 @@ extends Node2D
 @export var ellipse_height_scale: float = 175.0
 @export var swarm_rotation: float = 0.0
 @export var line_thickness: float = 10.0
-@export var line_color: Color = Color(1, 1, 0, 1)  # Yellow
+@export var line_color: Color = Color(1, 1, 0, 0.5)  # Yellow
 @export var glow_thickness: float = 15.0  # Thickness of the glow
 @export var glow_intensity: float = 2.0  # How strong the glow is
 

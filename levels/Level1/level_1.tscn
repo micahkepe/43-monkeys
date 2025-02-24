@@ -1213,6 +1213,7 @@ position = Vector2(3913.33, -1664.67)
 
 [node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
 position = Vector2(-845, 568)
+initial_troop_amount = 5
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.00798, 5.34402)

@@ -13,19 +13,22 @@ var state: int = PotionState.SPIN
 #------------------------------------------------------------------
 # CONFIGURABLE VARIABLES
 #------------------------------------------------------------------
-# Adjusted for a constant-velocity projectile.
-@export var initial_velocity: Vector2 = Vector2(0, 0)  		 # might be useless?
-@export var max_distance: float = 400.0                    # Maximum travel distance before auto-splash
-@export var pool_linger_time: float = 5.0                  # How long the pool lingers before deletion
+
+## Maximum travel distance before auto-splash
+@export var max_distance: float = 400.0
+
+## How long the pool lingers before deletion
+@export var pool_linger_time: float = 5.0
 
 # Internal variables
-var traveled_distance: float = 0.0
+var _traveled_distance: float = 0.0
 var velocity: Vector2 = Vector2.ZERO
-var has_triggered_effect: bool = false
+var _has_triggered_effect: bool = false
 
 #------------------------------------------------------------------
 # NODE REFERENCES
 #------------------------------------------------------------------
+## The animation player for playing animations.
 @onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 
 # The collision zones are defined by CollisionShape2D nodes.
@@ -33,11 +36,11 @@ var has_triggered_effect: bool = false
 @onready var pool13_shape: CollisionShape2D = $Pool13Collision
 @onready var pool4_shape: CollisionShape2D = $Pool4Collision
 
+## Call upon scene entrance. Contains all initialization logic.
 func _ready() -> void:
 	# Initialize state and start the bottle_spin animation.
 	state = PotionState.SPIN
-	traveled_distance = 0.0
-	velocity = initial_velocity
+	_traveled_distance = 0.0
 	animation_player.play("bottle_spin")
 	self.scale = Vector2(1.75,1.75)
 
@@ -48,14 +51,16 @@ func _ready() -> void:
 	self.connect("body_entered", Callable(self, "_on_body_entered"))
 	print("PotionProjectile _ready: Fired with velocity ", velocity)
 
+## Called every frame.
+## @param delta the ellapsed time since the last frame.
 func _physics_process(delta: float) -> void:
 	if state == PotionState.SPIN:
 		# Move in a straight line at constant velocity.
 		var displacement: Vector2 = velocity * delta
 		position += displacement
-		traveled_distance += displacement.length()
+		_traveled_distance += displacement.length()
 		# If the projectile has traveled its maximum distance, switch to splash.
-		if traveled_distance >= max_distance:
+		if _traveled_distance >= max_distance:
 			print("PotionProjectile _physics_process: Max distance reached.")
 			_switch_to_splash()
 
@@ -164,7 +169,7 @@ func _on_body_entered(body: Node) -> void:
 	if _is_target(body):
 		print("PotionProjectile: Collision detected with ", body.name)
 		on_effect_body_entered(body)
-		has_triggered_effect = true
+		_has_triggered_effect = true
 		# If the projectile is still in flight, switch immediately to splash.
 		if state == PotionState.SPIN:
 			_switch_to_splash()

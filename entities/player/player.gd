@@ -179,6 +179,8 @@ func _physics_process(_delta: float) -> void:
 	var input_velocity = Vector2.ZERO
 	var current_speed = speed
 
+	# Conditionally display the troop ellipse.
+	# TODO: only call this on ellipse resizing, not in all shift cases.
 	if Input.is_key_pressed(KEY_SHIFT) and _swarm_monkeys.size() > 0:
 		show_ellipse_debug = true
 		ellipse_debug.show()
@@ -258,8 +260,6 @@ func _physics_process(_delta: float) -> void:
 
 	if _current_cooldown > 0:
 		_current_cooldown -= _delta
-		
-
 
 
 ## Instantiates a new DefaultMonkey and evenly distributes the group across the
@@ -392,7 +392,7 @@ func _shift_swarm_position(global_dir: Vector2, delta: float) -> void:
 
 	# Update the swarm center offset for future calculations
 	_swarm_center_offset += shift_vector
-	
+
 	# Update each monkey's position based on the shift
 	for entry in _swarm_monkeys:
 		var monkey = entry["node"]
@@ -457,8 +457,6 @@ func handle_swarm_input(_delta: float) -> bool:
 			_troop_lock_ui.show()
 		else:
 			_troop_lock_ui.hide()
-
-
 
 	# TODO: this is better logic for handling diagonals, but somewhere the troop
 	# animations are being called twice and ruining the diagonal animation playing.
@@ -561,11 +559,11 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 
 	if projectile == null:
 		return
-		
+
 	# Tag the projectile as friendly to distinguish it from enemy projectiles
 	projectile.set_meta("friendly", true)
 	projectile.set_meta("owner", self)
-	
+
 	$BananaSound.play()
 
 	var offset_distance = 30.0
@@ -622,6 +620,8 @@ func find_node_recursive(root: Node, target: String) -> Node:
 
 	# If no Player node is found, return null
 	return null
+
+
 ## Custom _sign function for float
 ## @param value: float - The value to determine the _sign of.
 func _sign(value: float) -> int:
@@ -665,7 +665,7 @@ func update_hearts_display() -> void:
 			heart.play("empty")  # Empty heart
 
 
-## If the player's health falls below zero.
+## Handles death logic for the player. Navigates to the "Died" menu.
 func _die() -> void:
 	queue_free()
 	get_tree().change_scene_to_file("res://menus/DiedMenu/died_menu.tscn")
@@ -707,7 +707,8 @@ func remove_monkey(monkey: Node) -> void:
 	print_debug("Monkey removed. Remaining monkeys:", _swarm_monkeys.size())
 
 
-## Heals the monkey
+## Heals the monkey by the given amount.
+## @param amount float value to heal the monkey
 func heal(amount: float) -> void:
 	# Increase current health but do not exceed max_health.
 	_current_health = min(max_health, _current_health + amount)
@@ -723,6 +724,9 @@ func heal(amount: float) -> void:
 	print_debug("Player healed by ", amount, ". Current health: ", _current_health)
 
 
+
+## Applies the blindness overlay to the scene.
+## @param duration float time in seconds to apply the overlay
 func apply_blindness(duration: float) -> void:
 	print("APPLYING BLINDNESS")
 	# Prevent stacking multiple overlays (optional)
@@ -749,6 +753,7 @@ func apply_blindness(duration: float) -> void:
 	overlay.start(duration)
 
 
+## Handles the hitbox being entered by another area.
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	# Handle interactions with Area2D nodes (e.g., projectiles, enemy attacks)
 	if area.is_in_group("projectiles"):
@@ -767,6 +772,8 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		if area.has_method("queue_free"):
 			area.queue_free()
 
+
+## When a body enters the HitBox.
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Handle interactions with physics bodies (e.g., enemies, troop members)
 	if body.is_in_group("troop") and body != self:
@@ -775,6 +782,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		# Optional: Handle troop member collision (e.g., push away or ignore)
 		print_debug("Player collided with troop member: ", body.name)
 
+
+## Handles when a body exits the HitBox.
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	# Handle when a body exits the hitbox
 	if body.is_in_group("boids"):
