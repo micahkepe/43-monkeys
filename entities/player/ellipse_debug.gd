@@ -25,8 +25,7 @@ func _create_lines() -> void:
 	glow_line.width = line_thickness + glow_thickness
 	glow_line.default_color = Color(line_color.r, line_color.g, line_color.b, 0.5)  # Semi-transparent
 
-	add_child(glow_line)  
-	add_child(line) 
+	add_child(glow_line)
 
 func _update_ellipse() -> void:
 	var segments = 64
@@ -40,9 +39,9 @@ func _update_ellipse() -> void:
 		).rotated(swarm_rotation)
 		points.append(point)
 
-	line.points = points 
-	glow_line.points = points 
-	glow_line.width = line_thickness + glow_thickness 
+	line.points = points
+	glow_line.points = points
+	glow_line.width = line_thickness + glow_thickness
 
 func _process(_delta: float) -> void:
-	_update_ellipse() 
+	_update_ellipse()

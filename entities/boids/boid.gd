@@ -434,21 +434,6 @@ func _die():
 	## finishes
 
 
-## Handles the boid's hit box area entered signal.
-func _handle_hit(hit: Node) -> void:
-	pass # No longer need
-
-
-## Handles the boid's hit box area entered signal.
-func _on_hit_box_area_entered(area: Area2D) -> void:
-	pass
-
-
-## Handles the boid's hit box body entered signal.
-func _on_hit_box_body_entered(body: Node) -> void:
-	pass
-
-
 ## Handles the animation finished signal for the boid.
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if _anim_sprite.animation == "die":
@@ -466,8 +451,3 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		print_debug("Attack animation finished. Resetting is_attacking.")
 		is_attacking = false
 		_update_animation()
-
-
-## Handles the hit box area entered signal.
-func _on_hit_box_body_exited(body:Node2D) -> void:
-	pass
