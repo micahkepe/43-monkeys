@@ -604,15 +604,6 @@ gradient = SubResource("Gradient_ewgfl")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_10bc1"]
-offsets = PackedFloat32Array(0, 0.783217)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_70g02"]
-gradient = SubResource("Gradient_10bc1")
-fill = 2
-fill_from = Vector2(0.5, 0.5)
-
 [sub_resource type="Gradient" id="Gradient_p4ov3"]
 offsets = PackedFloat32Array(0, 0.787879)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -629,6 +620,15 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8ddn1"]
 gradient = SubResource("Gradient_6fdpi")
 fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_10bc1"]
+offsets = PackedFloat32Array(0, 0.783217)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_70g02"]
+gradient = SubResource("Gradient_10bc1")
+fill = 2
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5y854"]
@@ -1270,7 +1270,6 @@ y_sort_enabled = true
 position = Vector2(4278, -2173)
 scale = Vector2(4.125, 2.39453)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
 texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D8" type="PointLight2D" parent="ForegroundTiles/Lights"]
@@ -1320,14 +1319,15 @@ y_sort_enabled = true
 position = Vector2(3143, -3680)
 scale = Vector2(6.00733, 5.23291)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
 texture = SubResource("GradientTexture2D_16i6w")
 
-[node name="PointLight2D6" type="PointLight2D" parent="ForegroundTiles/Lights"]
-position = Vector2(-541, -2568)
-color = Color(0.856147, 0.917322, 0.995759, 1)
-energy = 1.2
-texture = SubResource("GradientTexture2D_70g02")
+[node name="PointLight2D16" type="PointLight2D" parent="ForegroundTiles/Lights"]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(5179, -4526)
+scale = Vector2(6.00733, 5.23291)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D10" type="PointLight2D" parent="ForegroundTiles/Lights"]
 position = Vector2(565, -492)
@@ -1364,6 +1364,14 @@ position = Vector2(616, -472)
 color = Color(0.55123, 0.0347662, 0.0462557, 1)
 range_z_max = -1
 texture = SubResource("GradientTexture2D_8ddn1")
+
+[node name="ScreenLights" type="Node2D" parent="ForegroundTiles/Lights"]
+
+[node name="Screen1" type="PointLight2D" parent="ForegroundTiles/Lights/ScreenLights"]
+position = Vector2(-541, -2568)
+color = Color(0.856147, 0.917322, 0.995759, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_70g02")
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
