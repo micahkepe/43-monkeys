@@ -147,7 +147,7 @@ func get_troop() -> Array:
 @onready var monkey_counter_label: Label = $PlayerUI/MonkeyCounter
 
 
-@onready var animation_tree  = $AnimatedSprite2D/AnimationTree
+@onready var animation_tree  = $AnimationTree
 # ------------------------------------------------
 # SIGNALS
 # ------------------------------------------------
@@ -229,28 +229,37 @@ func _physics_process(_delta: float) -> void:
 		input_velocity = input_velocity.normalized()
 
 	## Set animation based on movement direction
+	if input_velocity == Vector2.ZERO:
+		animation_tree.get("parameters/playback").travel("Idle")
+	else:
+		animation_tree.get("parameters/playback").travel("Walk")
+		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
+		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
+
+	
+	
 	if input_velocity.y < 0:
-		_animated_sprite.play("walk_up")
+		#_animated_sprite.play("walk_up")
 		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_up()
 	elif input_velocity.y > 0:
-		_animated_sprite.play("walk_down")
+		#_animated_sprite.play("walk_down")
 		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_down()
 	elif input_velocity.x > 0:
-		_animated_sprite.play("walk_right")
+		#_animated_sprite.play("walk_right")
 		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_right()
 	elif input_velocity.x < 0:
-		_animated_sprite.play("walk_left")
+		#_animated_sprite.play("walk_left")
 		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._walk_left()
 	else:
-		_animated_sprite.stop()
+		#_animated_sprite.stop()
 		if not _troop_locked and len(_swarm_monkeys) > 0:
 			for entry in _swarm_monkeys:
 				entry["node"]._stop_walk()
