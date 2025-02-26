@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="5_3nb2r"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="6_y0wcx"]
 [ext_resource type="Texture2D" uid="uid://c0w5ljun65vqq" path="res://assets/sprites/tilesets/lights.png" id="7_fa07u"]
-[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
+[ext_resource type="Texture2D" uid="uid://bk0217lqr5uyn" path="res://assets/sprites/tilesets/side-desk.png" id="8_5y8y1"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://bo8o2y5xink1l" path="res://map-elements/Turrets/gunner_turret.tscn" id="9_5aa5q"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_6m36m"]
@@ -665,7 +665,7 @@ script = ExtResource("1_bim7o")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(0.4475, 0.317838, 0.140405, 1)
-energy = 0.35
+energy = 0.8
 blend_mode = 1
 
 [node name="Projectiles" type="Node2D" parent="."]
