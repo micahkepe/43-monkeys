@@ -7,6 +7,7 @@ var locked: bool = false
 
 ## The AnimatedSprite2D node that plays the monkey's walking animation.
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_tree = $AnimationTree
 
 ## RayCast nodes for collision avoidance
 @onready var _raycast_front: RayCast2D = null
@@ -326,6 +327,24 @@ func _update_animation() -> void:
 			elif velocity.x > 0:
 				_walk_right()
 			#print_debug("Playing movement animation: ", _animated_sprite.animation)
+
+func animate_walk(input_velocity: Vector2) -> void:
+	if paralyzed or is_attacking:
+		return
+	
+	if input_velocity == Vector2.ZERO:
+		animation_tree.get("parameters/playback").travel("Idle")
+	else:
+		animation_tree.get("parameters/playback").travel("Walk")
+		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
+		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
+		
+	
+	
+
+
+
+
 
 ## Utility method for the monkey to play the walk left animation and adjust its
 ## raycasts accordingly.

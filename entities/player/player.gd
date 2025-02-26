@@ -236,33 +236,9 @@ func _physics_process(_delta: float) -> void:
 		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
 		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 
-	
-	
-	if input_velocity.y < 0:
-		#_animated_sprite.play("walk_up")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_up()
-	elif input_velocity.y > 0:
-		#_animated_sprite.play("walk_down")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_down()
-	elif input_velocity.x > 0:
-		#_animated_sprite.play("walk_right")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_right()
-	elif input_velocity.x < 0:
-		#_animated_sprite.play("walk_left")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_left()
-	else:
-		#_animated_sprite.stop()
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._stop_walk()
+	if not _troop_locked and len(_swarm_monkeys) > 0:
+		for entry in _swarm_monkeys:
+			entry["node"].animate_walk(input_velocity)
 
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
@@ -323,8 +299,9 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 			print_debug("No monkey scenes available!")
 			return
 
-		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
-		new_monkey = new_monkey_scene.instantiate()
+		#var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
+		#new_monkey = new_monkey_scene.instantiate()
+		new_monkey = monkey_scenes[0].instantiate()
 		new_monkey.scale = Vector2(2.5, 2.5)
 		print_debug("Spawning a new monkey for the swarm!")
 		_swarm_monkeys_root.add_child(new_monkey)
