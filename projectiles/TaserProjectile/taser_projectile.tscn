@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c05ne0go5hagf"]
+[gd_scene load_steps=10 format=3 uid="uid://c05ne0go5hagf"]
 
 [ext_resource type="Script" path="res://projectiles/TaserProjectile/taser_projectile.gd" id="1_rocoa"]
 [ext_resource type="Texture2D" uid="uid://dt7nx4q85jmjn" path="res://assets/sprites/attacks/tasers/taser-ball.png" id="2_re2yc"]
@@ -45,6 +45,18 @@ _data = {
 "taser_spin": SubResource("Animation_shuyp")
 }
 
+[sub_resource type="Gradient" id="Gradient_8mq50"]
+offsets = PackedFloat32Array(0.0582751, 0.741259)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2xy3m"]
+gradient = SubResource("Gradient_8mq50")
+width = 32
+height = 32
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="TaserProjectile" type="Area2D" groups=["projectiles"]]
 z_index = 3
 scale = Vector2(4, 4)
@@ -71,6 +83,12 @@ pitch_scale = 0.74
 autoplay = true
 attenuation = 0.5
 bus = &"SFX"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+color = Color(0.14902, 1, 1, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_2xy3m")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

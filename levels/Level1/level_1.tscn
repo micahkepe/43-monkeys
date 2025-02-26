@@ -596,7 +596,7 @@ sources/4 = SubResource("TileSetAtlasSource_0efgg")
 sources/6 = SubResource("TileSetAtlasSource_6xns6")
 
 [sub_resource type="Gradient" id="Gradient_ewgfl"]
-offsets = PackedFloat32Array(0.0745921, 0.680653)
+offsets = PackedFloat32Array(0.0745921, 0.731935)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_16i6w"]
@@ -667,6 +667,7 @@ script = ExtResource("1_bim7o")
 color = Color(0.4475, 0.317838, 0.140405, 1)
 energy = 0.8
 blend_mode = 1
+shadow_enabled = true
 
 [node name="Projectiles" type="Node2D" parent="."]
 position = Vector2(50, -110)
@@ -1260,7 +1261,7 @@ y_sort_enabled = true
 position = Vector2(-473, 763)
 scale = Vector2(4.125, 2.39453)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
+shadow_enabled = true
 texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D7" type="PointLight2D" parent="ForegroundTiles/Lights"]
@@ -1278,7 +1279,6 @@ y_sort_enabled = true
 position = Vector2(4413, -869)
 scale = Vector2(4.125, 2.39453)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
 texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D2" type="PointLight2D" parent="ForegroundTiles/Lights"]
@@ -1296,7 +1296,6 @@ y_sort_enabled = true
 position = Vector2(-714, -1956)
 scale = Vector2(5.07715, 3.52832)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
 texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D4" type="PointLight2D" parent="ForegroundTiles/Lights"]
@@ -1305,7 +1304,6 @@ y_sort_enabled = true
 position = Vector2(-1245.47, -892.094)
 scale = Vector2(5.07715, 3.52832)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
 texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D3" type="PointLight2D" parent="ForegroundTiles/Lights"]
@@ -1314,7 +1312,6 @@ y_sort_enabled = true
 position = Vector2(897, -4487)
 scale = Vector2(6.00733, 5.23291)
 color = Color(0.529412, 0.909804, 0.447059, 1)
-range_z_max = -1
 texture = SubResource("GradientTexture2D_16i6w")
 
 [node name="PointLight2D9" type="PointLight2D" parent="ForegroundTiles/Lights"]
