@@ -236,9 +236,9 @@ func _physics_process(_delta: float) -> void:
 		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
 		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 
-	if not _troop_locked and len(_swarm_monkeys) > 0:
-		for entry in _swarm_monkeys:
-			entry["node"].animate_walk(input_velocity)
+	#if not _troop_locked and len(_swarm_monkeys) > 0:
+		#for entry in _swarm_monkeys:
+			#entry["node"].animate_walk(input_velocity)
 
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
