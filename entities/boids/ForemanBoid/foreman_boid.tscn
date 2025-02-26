@@ -1,6 +1,6 @@
 [gd_scene load_steps=78 format=3 uid="uid://rv57qx2kxxrq"]
 
-[ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_oeri3"]
+[ext_resource type="Script" path="res://entities/Boids/ForemanBoid/foreman_boid.gd" id="1_4f714"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_y6bg1"]
 [ext_resource type="Texture2D" uid="uid://dh1wv8igsbggi" path="res://assets/sprites/characters/people/foreman-boid.png" id="3_1nqkt"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="3_xkvp0"]
@@ -546,8 +546,7 @@ y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_oeri3")
-hits_to_kill = 3
+script = ExtResource("1_4f714")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_f48pw")

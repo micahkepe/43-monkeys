@@ -1,6 +1,6 @@
 [gd_scene load_steps=86 format=3 uid="uid://bfa1h2v2fi08b"]
 
-[ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_i3cvp"]
+[ext_resource type="Script" path="res://entities/Boids/HouseBoid/house_boid.gd" id="1_5ktbu"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_moek1"]
 [ext_resource type="Texture2D" uid="uid://d326avnqv4xfx" path="res://assets/sprites/characters/people/house-boid.png" id="3_dum4h"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="5_wbpdm"]
@@ -602,7 +602,7 @@ y_sort_enabled = true
 scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_i3cvp")
+script = ExtResource("1_5ktbu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_584yd")

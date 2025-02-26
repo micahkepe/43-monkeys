@@ -1,7 +1,7 @@
 [gd_scene load_steps=86 format=3 uid="uid://dvl7tkji14c6k"]
 
+[ext_resource type="Script" path="res://entities/Boids/BoidPlant/boid_plant.gd" id="1_3e0m8"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_p2njw"]
-[ext_resource type="Script" path="res://entities/Boids/boid.gd" id="1_rj20o"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_ahkrp"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_ck6s3"]
 [ext_resource type="Texture2D" uid="uid://bnub553joybdm" path="res://assets/sprites/characters/bosses/plant_enemy/plant_enemy.png" id="5_umqha"]
@@ -601,7 +601,7 @@ z_index = 1
 y_sort_enabled = true
 scale = Vector2(3, 3)
 collision_mask = 3
-script = ExtResource("1_rj20o")
+script = ExtResource("1_3e0m8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_3vcsq")
