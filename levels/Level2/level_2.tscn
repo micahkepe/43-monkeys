@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=22 format=4 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_5nw5w"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="5_hw5yd"]
 [ext_resource type="Texture2D" uid="uid://bq1iptccykk36" path="res://assets/sprites/tilesets/level2_walls.png" id="5_sfd4i"]
+[ext_resource type="PackedScene" uid="uid://bosg5oeaw8eqj" path="res://entities/Boids/BroccoliBoid/broccoli_boid.tscn" id="9_rjxle"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8si7"]
 texture = ExtResource("2_jhhqm")
@@ -438,6 +439,12 @@ scale = Vector2(0.74, 0.74)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.008, 5.344)
+
+[node name="Boids" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="BroccoliBoid" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(-1629, -2593)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xwg0x")
