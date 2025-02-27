@@ -553,7 +553,7 @@ scream_probability = 0.3
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6kiy8")
 animation = &"slash_down"
-frame_progress = 0.969742
+frame_progress = 0.814057
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 22.4719)

@@ -446,6 +446,12 @@ y_sort_enabled = true
 [node name="BroccoliBoid" parent="World/Boids" instance=ExtResource("9_rjxle")]
 position = Vector2(-1629, -2593)
 
+[node name="BroccoliBoid2" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(-1516, -2379)
+
+[node name="BroccoliBoid3" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(-1384, -2568)
+
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xwg0x")
 autoplay = true

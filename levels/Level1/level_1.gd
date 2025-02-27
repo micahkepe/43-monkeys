@@ -99,19 +99,19 @@ func check_boss_death() -> void:
 		if player:
 			for monkey in player.get_troop():
 				monkey_health.append(monkey.health if "health" in monkey else 6.0)
-		
+
 		var troop_data = {
 			"count": troop_count,
 			"player_health": player.health if player else 6.0,
 			"monkey_health": monkey_health
 		}
-		
+
 		if player:
 			player.heal(player.max_health - player.health)
 			for monkey in player.get_troop():
 				if "health" in monkey and "max_health" in monkey:
 					monkey.health = monkey.max_health
-		
+
 		var transition_instance = transition_scene.instantiate()
 		transition_instance.next_level_scene = next_level_scene
 		transition_instance.level_number = 2  # Set the level number explicitly
