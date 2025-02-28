@@ -571,6 +571,7 @@ sources/1 = SubResource("TileSetAtlasSource_xol5g")
 sources/4 = SubResource("TileSetAtlasSource_t4ikr")
 
 [node name="Level3" type="Node2D" groups=["boids"]]
+y_sort_enabled = true
 position = Vector2(494, 564)
 script = ExtResource("1_3vp1w")
 

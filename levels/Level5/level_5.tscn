@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_1hmkw"]
 
 [node name="Level5" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_tjie2")
 
 [node name="UI" type="CanvasLayer" parent="."]
