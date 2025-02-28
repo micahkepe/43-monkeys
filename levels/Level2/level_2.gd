@@ -16,24 +16,24 @@ func initialize_from_troop_data() -> void:
 	var player = $World/Player
 	if player and not troop_data.is_empty():
 		player.health = troop_data["player_health"]
-		
+
 		# Recreate troop
 		var current_count = player.get_troop_count()
 		var target_count = troop_data["count"]
 		var monkey_health = troop_data.get("monkey_health", [])
-		
+
 		# Remove excess monkeys if any
 		while current_count > target_count:
 			if player._swarm_monkeys.size() > 0:
 				var monkey = player._swarm_monkeys.pop_back()["node"]
 				monkey.queue_free()
 			current_count -= 1
-		
+
 		# Add missing monkeys
 		while current_count < target_count:
 			player.add_monkey_to_swarm()
 			current_count += 1
-		
+
 		# Restore monkey health if tracked
 		if not monkey_health.is_empty():
 			for i in range(min(player._swarm_monkeys.size(), monkey_health.size())):

@@ -10,7 +10,7 @@ func _input(event):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		
+
 		# Reset all input actions to prevent "stuck" keys
 		reset_input_actions()
 

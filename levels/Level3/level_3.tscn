@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_xsrua"]
 [ext_resource type="AudioStream" uid="uid://dbyf0cjg3na6o" path="res://assets/music/something-flutey/something-flutey.ogg" id="6_y5rmm"]
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="7_suumw"]
-[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="8_6sl07"]
+[ext_resource type="Texture2D" uid="uid://bk0217lqr5uyn" path="res://assets/sprites/tilesets/side-desk.png" id="8_6sl07"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="9_lxlag"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_q1d5o"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_pcrwo"]
