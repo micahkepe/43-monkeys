@@ -8,6 +8,9 @@ extends "res://levels/default_level.gd"
 @onready var buttons = $World/Buttons.get_children()
 @onready var lasers = $ForegroundTiles/Lasers.get_children()
 
+# Get door from the scene tree.
+@onready var door = $World/Doors/Door
+
 ## A dictionary to track the state of each button.
 var _button_states = {}
 
@@ -92,7 +95,16 @@ func _process(_delta: float) -> void:
 
 ## Check if the boss is dead and transition to the next level.
 func check_boss_death() -> void:
-	if potion_boss and potion_boss.is_dead:
+	# move this logic to occur when the player enters the trigger area.
+	if potion_boss and potion_boss.is_dead and door and door.is_active:
+		door.open_door()
+		
+
+## Called when a body enters the trigger area for next level.
+func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		#transiition to next level
+		# move above logic here
 		var player = $World/Player
 		var troop_count = player.get_troop_count() if player else 6
 		var monkey_health = []

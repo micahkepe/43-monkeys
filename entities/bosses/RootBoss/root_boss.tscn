@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://entities/bosses/RootBoss/root_boss.gd" id="1_2x2y2"]
 [ext_resource type="Texture2D" uid="uid://3ha5irboski0" path="res://assets/sprites/characters/bosses/root_boss/root_boss.png" id="1_s66s6"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_82vqk"]
-[ext_resource type="PackedScene" uid="uid://dvl7tkji14c6k" path="res://entities/Boids/BoidPlant/boid_plant.tscn" id="2_rdxv2"]
+[ext_resource type="PackedScene" uid="uid://dvl7tkji14c6k" path="res://entities/boids/BoidPlant/boid_plant.tscn" id="2_rdxv2"]
 [ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="3_gl2ao"]
 [ext_resource type="AudioStream" uid="uid://drcfudctw2uqc" path="res://assets/sfx/enemies/growing_plant.wav" id="7_036ap"]
 [ext_resource type="AudioStream" uid="uid://bvg676jqt421i" path="res://assets/sfx/enemies/chomp.ogg" id="8_sq1r5"]
@@ -1215,10 +1215,10 @@ radius = 15.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7psd1"]
 size = Vector2(58, 58)
 
-[node name="RootBoss" type="CharacterBody2D"]
+[node name="RootBoss" type="CharacterBody2D" groups=["boids", "enemies"]]
 z_index = 1
 y_sort_enabled = true
-scale = Vector2(5, 5)
+scale = Vector2(4, 4)
 script = ExtResource("1_2x2y2")
 boid_plant_scene = ExtResource("2_rdxv2")
 

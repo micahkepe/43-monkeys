@@ -2,10 +2,16 @@ extends "res://levels/default_level.gd"
 
 var troop_data: Dictionary = {}
 
+@export var root_boss_scene: PackedScene  # Assign res://entities/bosses/RootBoss/root_boss.tscn in the editor
+var boss_spawned: bool = false
+var boss_instance: Node = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not troop_data.is_empty():
 		initialize_from_troop_data()
+	if has_node("World/BossTrigger"):
+		$World/BossTrigger.connect("body_entered", Callable(self, "_on_boss_trigger_body_entered"))
 
 ## Set the troop data for this level.
 func set_troop_data(data: Dictionary) -> void:
@@ -43,3 +49,22 @@ func initialize_from_troop_data() -> void:
 ## Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+## Called when a body enters the boss trigger area.
+func _on_boss_trigger_body_entered(body: Node) -> void:
+	if body.is_in_group("player") and not boss_spawned:
+		spawn_root_boss()
+		boss_spawned = true
+		
+## Spawn the RootBoss at a specific position.
+func spawn_root_boss() -> void:
+	if not root_boss_scene:
+		print("Error: RootBoss scene not set!")
+		return
+	
+	boss_instance = root_boss_scene.instantiate()
+	# Set the spawn position (e.g., center of the room)
+	var room_center = Vector2((-2094 + -903) / 2, (-498 + 731) / 2)  # (-1498.5, 116.5)
+	boss_instance.global_position = room_center
+	$World.add_child(boss_instance)
+	print("RootBoss spawned at: ", boss_instance.global_position)

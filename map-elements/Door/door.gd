@@ -30,7 +30,7 @@ func _on_body_exited(body: Node2D) -> void:
 	pass
 
 # This method permanently opens the door.
-func deactivate_laser() -> void:
+func open_door() -> void:
 	is_active = false
 	animated_sprite.play("door_open")
 

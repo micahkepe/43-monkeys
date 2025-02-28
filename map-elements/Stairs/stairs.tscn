@@ -19,5 +19,5 @@ animations = [{
 
 [node name="Stairs" type="AnimatedSprite2D"]
 rotation = 4.71239
-scale = Vector2(4, 4)
+scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_gk1hx")
