@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://oothsg3bxj8u"]
+
+[ext_resource type="Script" path="res://map-elements/Lights/FlickeringScreen/flickering_screen.gd" id="1_snx20"]
+
+[sub_resource type="Gradient" id="Gradient_10bc1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0m2ix"]
+gradient = SubResource("Gradient_10bc1")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[node name="FlickeringScreen" type="PointLight2D"]
+color = Color(0.509804, 0.917647, 0.996078, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_0m2ix")
+script = ExtResource("1_snx20")

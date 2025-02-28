@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=69 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/Boids/ForemanBoid/foreman_boid.tscn" id="24_ttfkr"]
 [ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/Boids/HouseBoid/house_boid.tscn" id="25_t845k"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/Boids/BoidJoe/boid_joe.tscn" id="29_can7p"]
+[ext_resource type="PackedScene" uid="uid://oothsg3bxj8u" path="res://map-elements/Lights/FlickeringScreen/flickering_screen.tscn" id="32_w40f5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
@@ -620,15 +621,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8ddn1"]
 gradient = SubResource("Gradient_6fdpi")
 fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_10bc1"]
-offsets = PackedFloat32Array(0, 0.783217)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_70g02"]
-gradient = SubResource("Gradient_10bc1")
-fill = 2
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5y854"]
@@ -1367,11 +1359,22 @@ texture = SubResource("GradientTexture2D_8ddn1")
 
 [node name="ScreenLights" type="Node2D" parent="ForegroundTiles/Lights"]
 
-[node name="Screen1" type="PointLight2D" parent="ForegroundTiles/Lights/ScreenLights"]
-position = Vector2(-541, -2568)
-color = Color(0.856147, 0.917322, 0.995759, 1)
-energy = 1.2
-texture = SubResource("GradientTexture2D_70g02")
+[node name="FlickeringScreen" parent="ForegroundTiles/Lights/ScreenLights" instance=ExtResource("32_w40f5")]
+position = Vector2(-539, -2569)
+scale = Vector2(1, 1)
+
+[node name="FlickeringScreen3" parent="ForegroundTiles/Lights/ScreenLights" instance=ExtResource("32_w40f5")]
+position = Vector2(1092, -4588)
+scale = Vector2(1, 1)
+color = Color(0.509804, 0.917647, 0.996078, 1)
+
+[node name="FlickeringScreen2" parent="ForegroundTiles/Lights/ScreenLights" instance=ExtResource("32_w40f5")]
+position = Vector2(-758, -985.999)
+scale = Vector2(1, 1)
+color = Color(0.917647, 0.917647, 0.996078, 1)
+
+[node name="FlickeringScreen4" parent="ForegroundTiles/Lights/ScreenLights" instance=ExtResource("32_w40f5")]
+position = Vector2(6036, -1226)
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
