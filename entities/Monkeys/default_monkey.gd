@@ -312,21 +312,22 @@ func _update_animation() -> void:
 
 	# Only update movement animations if not attacking
 	if not is_attacking:
-		animate_walk()
+		animate_walk(velocity)
 
-func animate_walk() -> void:
+func animate_walk(input_velocity: Vector2) -> void:
+	print("ANIMATE WALK CALL!")
+	
 	if paralyzed or is_attacking:
 		return
 	
-	if velocity == Vector2.ZERO:
-		print("==== IDLING")
+	if input_velocity == Vector2.ZERO:
+		print("==== IDLING WITH VELOCITY: ", input_velocity)
 		animation_tree.get("parameters/playback").travel("Idle")
 	else:
-		print("==== WALKING")
+		print("==== WALKING WITH VELOCITY: ", input_velocity)
 		animation_tree.get("parameters/playback").travel("Walk")
-		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", velocity)
-		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", velocity)
-		
+		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
+		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 	
 	
 

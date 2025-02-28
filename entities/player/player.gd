@@ -236,13 +236,13 @@ func _physics_process(_delta: float) -> void:
 		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
 		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 
-	#if not _troop_locked and len(_swarm_monkeys) > 0:
-		#for entry in _swarm_monkeys:
-			#entry["node"].animate_walk(input_velocity)
-
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
 	move_and_slide()
+	if not _troop_locked and len(_swarm_monkeys) > 0:
+		for entry in _swarm_monkeys:
+			entry["node"].animate_walk(input_velocity)
+		
 
 	# Decrement the shoot cool down
 	if _current_shoot_cooldown > 0.0:
@@ -362,10 +362,34 @@ func _update_swarm_positions() -> void:
 		else:
 			var to_target = target_position - monkey.global_position
 			if to_target.length() < 5.0:
+				print("=== THRESHOLD!")
 				monkey.velocity = Vector2.ZERO
+				
+				var base_speed = speed
+				# How fast the ellipse is spinning this frame:
+				var angular_velocity = abs(_current_rotation_speed_in_radians_per_sec)
+
+				# Approximate radius:
+				var radius = (ellipse_width_scale + ellipse_height_scale) * 0.5
+
+				# The extra speed needed to keep up with rotation:
+				var rotation_chase_speed = angular_velocity * radius
+
+				# Final speed = base speed + chase speed, capped at max of 1k:
+				var final_speed = min(base_speed + rotation_chase_speed, 1000.0)
+				#var final_speed = base_speed + rotation_chase_speed
+				var factor = to_target.length() / 5.0
+				if factor < 0.01:
+					factor = 0
+				monkey.velocity = to_target.normalized() * final_speed * factor
+				
+				
+				
+				
 				if entry.has("transitioning"):
 					entry["transitioning"] = false
 			else:
+				print("=== IM GOONING!")
 				var base_speed = speed
 				if entry.has("transitioning") and entry["transitioning"]:
 					# maybe slower or faster if you want
