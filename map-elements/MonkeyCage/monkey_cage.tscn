@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c1cqahrbs025d"]
+[gd_scene load_steps=25 format=3 uid="uid://c1cqahrbs025d"]
 
 [ext_resource type="Script" path="res://map-elements/MonkeyCage/monkey_cage.gd" id="2_12jvl"]
 [ext_resource type="PackedScene" uid="uid://c5nx4jcpdcmuy" path="res://entities/Monkeys/formal_monkey.tscn" id="2_h65kn"]
@@ -111,6 +111,15 @@ size = Vector2(33.6377, 2.78413)
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_o341v"]
 a = Vector2(0, -13)
 
+[sub_resource type="Gradient" id="Gradient_s7p5s"]
+offsets = PackedFloat32Array(0.11655, 0.871795)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gtl86"]
+gradient = SubResource("Gradient_s7p5s")
+fill = 1
+fill_from = Vector2(0.532051, 0.519231)
+
 [node name="MonkeyCage" type="StaticBody2D"]
 y_sort_enabled = true
 position = Vector2(658, 363)
@@ -155,3 +164,9 @@ shape = SubResource("SegmentShape2D_o341v")
 [node name="BackLeftStop" type="CollisionShape2D" parent="."]
 position = Vector2(-46, 19)
 shape = SubResource("SegmentShape2D_o341v")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-1, 21)
+scale = Vector2(2.96875, 1)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_gtl86")

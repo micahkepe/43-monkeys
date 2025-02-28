@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://magcl27gfs7r"]
+
+[ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="1_g2b7w"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mmkos"]
+radius = 18.0
+height = 61.3333
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wwy1e"]
+size = Vector2(60, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtx3e"]
+atlas = ExtResource("1_g2b7w")
+region = Rect2(0, 0, 64, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_awjxr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtx3e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_vshwl"]
+offsets = PackedFloat32Array(0.0629371, 0.972028, 0.990676)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gx6ks"]
+gradient = SubResource("Gradient_vshwl")
+fill = 1
+fill_from = Vector2(0.508547, 0.247863)
+
+[sub_resource type="Gradient" id="Gradient_ewgfl"]
+offsets = PackedFloat32Array(0.0745921, 0.731935)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6ewff"]
+gradient = SubResource("Gradient_ewgfl")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Vat" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+scale = Vector2(1.5, 1.5)
+collision_mask = 63
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 48)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_mmkos")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(2.84512e-06, 38.6667)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_wwy1e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_awjxr")
+
+[node name="Shadow" type="PointLight2D" parent="."]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(0, 71)
+scale = Vector2(1.10962, 0.973929)
+blend_mode = 1
+range_z_max = -1
+texture = SubResource("GradientTexture2D_gx6ks")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(5.96046e-08, 52)
+scale = Vector2(2.85417, 1.65682)
+color = Color(0.529412, 0.909804, 0.447059, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_6ewff")
