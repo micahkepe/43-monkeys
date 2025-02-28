@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdmuj5y2xhj1j"]
+
+[ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="1_1hkln"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hiov7"]
+atlas = ExtResource("1_1hkln")
+region = Rect2(0, 95, 32, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gk1hx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hiov7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Stairs" type="AnimatedSprite2D"]
+rotation = 4.71239
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_gk1hx")
