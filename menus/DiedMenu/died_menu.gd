@@ -37,7 +37,7 @@ func _on_restart_pressed() -> void:
 	var tree = get_tree()
 	if tree == null:
 		return
-	tree.change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
+	tree.change_scene_to_file("res://levels/Level1/level_1.tscn")
 
 ## Handle the press event on the main menu button. Changes the scene to the
 ## main menu.

@@ -20,10 +20,16 @@ extends CharacterBody2D
 ##   Shift+J => Decrease ellipse width
 ##   Shift+L => Increase ellipse width
 ##   I/K/J/L => Shoot up/down/left/right
+
+## The animated sprite for the player.
 @onready var _animated_sprite = $AnimatedSprite2D
+
+## The troop debug ellipse.
 @onready var ellipse_debug: Node2D = $EllipseDebug
 
-@export var show_ellipse_debug: bool = false
+## Whether to show the troop debug ellipse or not.
+@export
+var show_ellipse_debug: bool = false
 
 ## The base speed at which the player moves
 @export
