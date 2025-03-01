@@ -1,0 +1,137 @@
+[gd_scene load_steps=18 format=3 uid="uid://44nnscag3bhv"]
+
+[ext_resource type="Texture2D" uid="uid://cxs573mydl5ul" path="res://assets/sprites/items/stapler/stapler_animation.png" id="1_bjtar"]
+[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="2_ru3ky"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pxpuk"]
+radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdj5p"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84bfu"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p04ru"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xpc8"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63w5s"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6sth"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emecm"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axp77"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyv3l"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxnsg"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgred"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oovx1"]
+atlas = ExtResource("1_bjtar")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fy1x3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdj5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84bfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p04ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xpc8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63w5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6sth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emecm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axp77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyv3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxnsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgred")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oovx1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rvlma"]
+shader = ExtResource("2_ru3ky")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
+
+[node name="StaplerProjectile" type="StaticBody2D"]
+scale = Vector2(1.5, 1.5)
+collision_layer = 4
+collision_mask = 35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pxpuk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fy1x3")
+frame_progress = 0.622766
+
+[node name="ShadowContainer" type="Node2D" parent="."]
+top_level = true
+
+[node name="Shadow" type="ColorRect" parent="ShadowContainer"]
+material = SubResource("ShaderMaterial_rvlma")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 24.0
+offset_right = 20.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
