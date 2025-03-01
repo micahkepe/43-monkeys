@@ -1,16 +1,22 @@
-[gd_scene load_steps=23 format=4 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=29 format=4 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
 [ext_resource type="AudioStream" uid="uid://dndthokwu6e1m" path="res://assets/music/bospad-type-beat/bospad-type-beat.ogg" id="2_xwg0x"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="3_raq3w"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="4_2lluf"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="4_krnvu"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="4_krnvu"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_5nw5w"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="5_hw5yd"]
 [ext_resource type="Texture2D" uid="uid://bq1iptccykk36" path="res://assets/sprites/tilesets/level2_walls.png" id="5_sfd4i"]
-[ext_resource type="PackedScene" uid="uid://bosg5oeaw8eqj" path="res://entities/boids/BroccoliBoid/broccoli_boid.tscn" id="9_rjxle"]
+[ext_resource type="PackedScene" uid="uid://bosg5oeaw8eqj" path="res://entities/Boids/BroccoliBoid/broccoli_boid.tscn" id="9_rjxle"]
+[ext_resource type="PackedScene" uid="uid://magcl27gfs7r" path="res://map-elements/Vat/vat.tscn" id="10_g8bd1"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="10_hs6h0"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="11_gn2fk"]
+[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/Boids/Femoid1/femoid_1.tscn" id="11_ur5m1"]
+[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/Boids/Heisenboid/heisenboid.tscn" id="12_6uqxu"]
+[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/Boids/HouseBoid/house_boid.tscn" id="13_cxc8n"]
+[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/Boids/ForemanBoid/foreman_boid.tscn" id="14_jcsp7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8si7"]
 texture = ExtResource("2_jhhqm")
@@ -448,11 +454,65 @@ y_sort_enabled = true
 [node name="BroccoliBoid" parent="World/Boids" instance=ExtResource("9_rjxle")]
 position = Vector2(-1629, -2593)
 
+[node name="BroccoliBoid4" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(188, -2777)
+
+[node name="BroccoliBoid5" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(-1763, -232)
+
+[node name="BroccoliBoid6" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(-1876, 155)
+
+[node name="BroccoliBoid7" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(-1199, 435)
+
+[node name="BroccoliBoid8" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(2010, 129)
+
+[node name="BroccoliBoid9" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(2030, -937)
+
+[node name="BroccoliBoid10" parent="World/Boids" instance=ExtResource("9_rjxle")]
+position = Vector2(2009, -1708)
+
 [node name="BroccoliBoid2" parent="World/Boids" instance=ExtResource("9_rjxle")]
 position = Vector2(-1516, -2379)
 
 [node name="BroccoliBoid3" parent="World/Boids" instance=ExtResource("9_rjxle")]
 position = Vector2(-1384, -2568)
+
+[node name="Boid" parent="World/Boids" instance=ExtResource("10_hs6h0")]
+position = Vector2(-747, -1372)
+
+[node name="Femoid1" parent="World/Boids" instance=ExtResource("11_ur5m1")]
+position = Vector2(-2546, 96)
+
+[node name="Heisenboid" parent="World/Boids" instance=ExtResource("12_6uqxu")]
+position = Vector2(739, 59)
+
+[node name="HouseBoid" parent="World/Boids" instance=ExtResource("13_cxc8n")]
+position = Vector2(958, -2582)
+
+[node name="ForemanBoid" parent="World/Boids" instance=ExtResource("14_jcsp7")]
+position = Vector2(-574, 1305)
+
+[node name="Vats" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Vat" parent="World/Vats" instance=ExtResource("10_g8bd1")]
+position = Vector2(2248, 837)
+
+[node name="Vat2" parent="World/Vats" instance=ExtResource("10_g8bd1")]
+position = Vector2(2256, 1894)
+
+[node name="Vat3" parent="World/Vats" instance=ExtResource("10_g8bd1")]
+position = Vector2(2186, 1951)
+
+[node name="Vat4" parent="World/Vats" instance=ExtResource("10_g8bd1")]
+position = Vector2(324, 1253)
+
+[node name="Vat5" parent="World/Vats" instance=ExtResource("10_g8bd1")]
+position = Vector2(-223, -1539)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xwg0x")
