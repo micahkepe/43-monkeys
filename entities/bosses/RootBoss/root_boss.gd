@@ -100,10 +100,10 @@ func teleport_cycle() -> void:
 		await get_tree().create_timer(wait_time).timeout
 
 func choose_random_waypoint() -> Vector2:
-	var min_x = -2094 + 50
-	var max_x = -903 - 50
-	var min_y = -498 + 50
-	var max_y = 731 - 50
+	var min_x = 1779 + 50  # Top left X + margin
+	var max_x = 3016 - 50  # Top right X - margin
+	var min_y = -3798 + 50  # Top left Y + margin
+	var max_y = -2446 - 50  # Bottom left Y - margin
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
 
 func _spawn_boid_plants() -> void:

@@ -50,12 +50,6 @@ func initialize_from_troop_data() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-## Called when a body enters the boss trigger area.
-func _on_boss_trigger_body_entered(body: Node) -> void:
-	if body.is_in_group("player") and not boss_spawned:
-		spawn_root_boss()
-		boss_spawned = true
-
 ## Spawn the RootBoss at a specific position.
 func spawn_root_boss() -> void:
 	if not root_boss_scene:
@@ -66,8 +60,14 @@ func spawn_root_boss() -> void:
 
 	# Set the spawn position (e.g., center of the room)
 	@warning_ignore("integer_division")
-	var room_center = Vector2((-2094 + -903) / 2, (-498 + 731) / 2)  # (-1498.5, 116.5)
+	var room_center = Vector2((1779 + 3016) / 2, (-3798 + -2446) / 2)  # (2397.5, -3122)
 
 	boss_instance.global_position = room_center
 	$World.add_child(boss_instance)
 	print("RootBoss spawned at: ", boss_instance.global_position)
+
+## Called when a body enters the boss trigger area.
+func _on_boss_trigger_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player") and not boss_spawned:
+		spawn_root_boss()
+		boss_spawned = true
