@@ -600,7 +600,8 @@ bg_color = Color(0.600612, 0.161166, 0.305443, 1)
 z_index = 1
 y_sort_enabled = true
 scale = Vector2(3, 3)
-collision_mask = 3
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_3e0m8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
@@ -626,6 +627,8 @@ target_position = Vector2(-62, 1)
 target_position = Vector2(66, 0)
 
 [node name="HitBox" type="Area2D" parent="." groups=["boids", "enemies"]]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 31
 

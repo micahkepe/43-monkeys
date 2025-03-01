@@ -1219,6 +1219,8 @@ size = Vector2(58, 58)
 z_index = 1
 y_sort_enabled = true
 scale = Vector2(4, 4)
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_2x2y2")
 boid_plant_scene = ExtResource("2_rdxv2")
 
