@@ -1215,7 +1215,7 @@ radius = 15.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7psd1"]
 size = Vector2(58, 58)
 
-[node name="RootBoss" type="CharacterBody2D" groups=["boids", "enemies"]]
+[node name="RootBoss" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
 scale = Vector2(4, 4)

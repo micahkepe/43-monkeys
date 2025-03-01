@@ -63,7 +63,7 @@ func spawn_root_boss() -> void:
 	var room_center = Vector2((1779 + 3016) / 2, (-3798 + -2446) / 2)  # (2397.5, -3122)
 
 	boss_instance.global_position = room_center
-	$World.add_child(boss_instance)
+	$World.call_deferred("add_child", boss_instance)
 	print("RootBoss spawned at: ", boss_instance.global_position)
 
 ## Called when a body enters the boss trigger area.

@@ -51,8 +51,6 @@ func _ready() -> void:
 	
 	if $HitBox:
 		print("HitBox found and signals connected")
-		$HitBox.connect("area_entered", Callable(self, "_on_hit_box_area_entered"))
-		$HitBox.connect("body_entered", Callable(self, "_on_hit_box_body_entered"))
 	
 	attack_timer = Timer.new()
 	attack_timer.one_shot = true
@@ -139,9 +137,9 @@ func _spawn_boid_plants() -> void:
 		boid_plant.global_position = pos
 		var parent_node = get_parent()
 		if parent_node:
-			parent_node.add_child(boid_plant)
+			parent_node.call_deferred("add_child", boid_plant)
 		else:
-			get_tree().root.add_child(boid_plant)
+			get_tree().root.call_deferred("add_child", boid_plant)
 		print("Spawned boid plant at: ", pos)
 
 func get_direction_string(direction: Vector2) -> String:
@@ -221,21 +219,21 @@ func _choose_and_execute_attack() -> void:
 		return
 	
 	attack_timer.stop()
-	var available_attacks = attacks.filter(func(attack): return attack.unlocked)
+	var available_attacks = attacks.filter(func(atk): return atk.unlocked)
 	if available_attacks.is_empty():
 		print("No available attacks")
 		_start_random_attack_timer()
 		return
 	
-	var total_weight = available_attacks.reduce(func(acc, attack): return acc + attack.weight, 0.0)
+	var total_weight = available_attacks.reduce(func(acc, atk): return acc + atk.weight, 0.0)
 	var random_value = randf() * total_weight
 	var cumulative_weight = 0.0
 	
-	for attack in available_attacks:
-		cumulative_weight += attack.weight
+	for atk in available_attacks:
+		cumulative_weight += atk.weight
 		if random_value <= cumulative_weight:
-			print("Executing attack: ", attack.name)
-			attack.function.call()
+			print("Executing attack: ", atk.name)
+			atk.function.call()
 			break
 
 func _start_random_attack_timer() -> void:
