@@ -127,7 +127,7 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 		var transition_instance = transition_scene.instantiate()
 		transition_instance.next_level_scene = next_level_scene
 		transition_instance.level_number = 2  # Set the level number explicitly
-		transition_instance.level_title = "The Next Challenge"  # Just the subtitle
+		transition_instance.level_title = "Bioscience Center"  # Just the subtitle
 		transition_instance.set_troop_data(troop_data)
 		get_tree().root.add_child(transition_instance)
 		get_tree().current_scene.queue_free()
