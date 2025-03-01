@@ -72,10 +72,12 @@ range_z_max = -1
 texture = SubResource("GradientTexture2D_gx6ks")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+show_behind_parent = true
 z_index = -1
 y_sort_enabled = true
 position = Vector2(5.96046e-08, 52)
 scale = Vector2(2.85417, 1.65682)
 color = Color(0.529412, 0.909804, 0.447059, 1)
+energy = 0.9
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_6ewff")
