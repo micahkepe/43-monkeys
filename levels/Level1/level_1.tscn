@@ -1538,7 +1538,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
-position = Vector2(-892, 756)
+position = Vector2(640, 1038)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries"]
 shape = SubResource("WorldBoundaryShape2D_lcbv5")
