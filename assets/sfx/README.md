@@ -13,3 +13,7 @@
 | Sound File | Permalink |
 | ---------- | --------- |
 |            |           |
+
+Zombie/Monster roars, growls, grunts, devouring sounds (juicy) by umnachtung -- https://freesound.org/s/533165/ -- License: Attribution 4.0
+
+https://www.soundsnap.com/foley_dirt_debris_drop_short_plastic_01

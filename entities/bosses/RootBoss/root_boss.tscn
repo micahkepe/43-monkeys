@@ -8,7 +8,7 @@
 [ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="3_gl2ao"]
 [ext_resource type="AudioStream" uid="uid://drcfudctw2uqc" path="res://assets/sfx/enemies/growing_plant.wav" id="7_036ap"]
 [ext_resource type="AudioStream" uid="uid://bvg676jqt421i" path="res://assets/sfx/enemies/chomp.ogg" id="8_sq1r5"]
-[ext_resource type="AudioStream" uid="uid://dt2i4gkc6m7de" path="res://assets/sfx/enemies/spawn.wav" id="8_y4q6i"]
+[ext_resource type="AudioStream" uid="uid://di2wnlow6ak1l" path="res://assets/sfx/enemies/spawn.ogg" id="8_t0ary"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s2onh"]
 shader = ExtResource("3_gl2ao")
@@ -1261,10 +1261,12 @@ shape = SubResource("RectangleShape2D_7psd1")
 stream = ExtResource("7_036ap")
 
 [node name="SpawnPlayer" type="AudioStreamPlayer" parent="Sound"]
-stream = ExtResource("8_y4q6i")
+stream = ExtResource("8_t0ary")
+volume_db = 10.0
 
 [node name="AttackPlayer" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("8_sq1r5")
+volume_db = -15.0
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
