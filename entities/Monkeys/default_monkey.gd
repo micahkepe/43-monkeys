@@ -36,7 +36,7 @@ var locked: bool = false
 @export var banana_boomerang_scene: PackedScene
 
 ## The monkey's attack range
-@export var attack_range: float = 400 #400.0
+@export var attack_range: float = 400.0
 
 ## The monkey's attack cool down
 var attack_timer: float = 0.0
@@ -289,12 +289,15 @@ func animate_walk(input_velocity: Vector2) -> void:
 	if input_velocity == Vector2.ZERO and not is_input_pressed():
 		#print("==== IDLING WITH VELOCITY: ", input_velocity)
 		animation_tree.get("parameters/playback").travel("Idle")
+		var blend_dir: Vector2 = animation_tree.get("parameters/Idle/BlendSpace2D/blend_position")
+		_update_vision_rays(blend_dir)
 	else:
 		#print("==== WALKING WITH VELOCITY: ", input_velocity)
 		if input_velocity != Vector2.ZERO:
 			animation_tree.get("parameters/playback").travel("Walk")
 			animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
 			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
+			_update_vision_rays(input_velocity)
 	
 	
 func is_input_pressed() -> bool:
@@ -366,6 +369,7 @@ func _stop_walk() -> void:
 
 ## Helper function to update all vision ray casts
 func _update_vision_rays(direction: Vector2) -> void:
+	# Define the angle offsets (in degrees) for each vision raycast.
 	var angle_offsets = {
 		_raycast_vision: 0.0,
 		_raycast_vision_7_5_left: -7.5,
@@ -373,10 +377,16 @@ func _update_vision_rays(direction: Vector2) -> void:
 		_raycast_vision_15_left: -15.0,
 		_raycast_vision_15_right: 15.0
 	}
-
-	# Update each raycast's target_position with its respective angle
+	
+	# Normalize the direction vector to avoid scaling issues.
+	var norm_direction = direction.normalized()
+	
+	# Update each raycast's target_position by rotating the normalized direction by the angle offset
+	# and then scaling by vision_range.
 	for raycast in angle_offsets.keys():
-		raycast.target_position = direction.rotated(deg_to_rad(angle_offsets[raycast]))
+		var offset_radians = deg_to_rad(angle_offsets[raycast])
+		raycast.target_position = norm_direction.rotated(offset_radians) * vision_range
+
 
 
 ## Handles monkey death. Plays the death animation and cleans the monkey from
