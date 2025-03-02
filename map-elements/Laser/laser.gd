@@ -1,6 +1,9 @@
 extends Area2D
+## A laser that can be deactivated. Casts a red light on the surroundings
+## (including entities.)
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var point_light = $PointLight2D
 
 var static_body: StaticBody2D
 var is_active: bool = true
@@ -20,6 +23,7 @@ func _ready() -> void:
 func _on_animation_finished() -> void:
 	if not is_active and animated_sprite.animation == "laser_turn_off":
 		animated_sprite.play("laser_off")
+		point_light.hide()
 
 func _physics_process(delta: float) -> void:
 	if is_active and body_in_laser:
