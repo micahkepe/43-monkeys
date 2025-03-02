@@ -299,9 +299,9 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 			print_debug("No monkey scenes available!")
 			return
 
-		#var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
-		#new_monkey = new_monkey_scene.instantiate()
-		new_monkey = monkey_scenes[0].instantiate()
+		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
+		new_monkey = new_monkey_scene.instantiate()
+		#new_monkey = monkey_scenes[0].instantiate()
 		new_monkey.scale = Vector2(2.5, 2.5)
 		print_debug("Spawning a new monkey for the swarm!")
 		_swarm_monkeys_root.add_child(new_monkey)
