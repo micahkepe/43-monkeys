@@ -94,10 +94,6 @@ func _ready() -> void:
 	health_bar.init_health(current_health)
 	health_bar.hide() # Hide the health bar initially
 
-	# Set initial animation to "idle"
-	_animated_sprite.play("idle")
-	print_debug("Initial animation set to idle, sprite frames: ", _animated_sprite.sprite_frames.get_animation_names())
-
 	# Setup RayCasts for collision avoidance
 	_setup_collision_raycasts()
 
