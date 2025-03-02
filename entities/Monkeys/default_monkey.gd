@@ -315,22 +315,25 @@ func _update_animation() -> void:
 		animate_walk(velocity)
 
 func animate_walk(input_velocity: Vector2) -> void:
-	print("ANIMATE WALK CALL!")
+	#print("ANIMATE WALK CALL!")
 	
 	if paralyzed or is_attacking:
 		return
 	
-	if input_velocity == Vector2.ZERO:
-		print("==== IDLING WITH VELOCITY: ", input_velocity)
+	if input_velocity == Vector2.ZERO and not is_input_pressed():
+		#print("==== IDLING WITH VELOCITY: ", input_velocity)
 		animation_tree.get("parameters/playback").travel("Idle")
 	else:
-		print("==== WALKING WITH VELOCITY: ", input_velocity)
-		animation_tree.get("parameters/playback").travel("Walk")
-		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
-		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
+		#print("==== WALKING WITH VELOCITY: ", input_velocity)
+		if input_velocity != Vector2.ZERO:
+			animation_tree.get("parameters/playback").travel("Walk")
+			animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
+			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 	
 	
-
+func is_input_pressed() -> bool:
+	return (Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left") or
+	Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_up"))
 
 
 

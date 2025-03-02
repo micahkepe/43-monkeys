@@ -362,7 +362,6 @@ func _update_swarm_positions() -> void:
 		else:
 			var to_target = target_position - monkey.global_position
 			if to_target.length() < 5.0:
-				print("=== THRESHOLD!")
 				monkey.velocity = Vector2.ZERO
 				
 				var base_speed = speed
@@ -389,7 +388,6 @@ func _update_swarm_positions() -> void:
 				if entry.has("transitioning"):
 					entry["transitioning"] = false
 			else:
-				print("=== IM GOONING!")
 				var base_speed = speed
 				if entry.has("transitioning") and entry["transitioning"]:
 					# maybe slower or faster if you want
