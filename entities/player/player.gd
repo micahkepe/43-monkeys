@@ -146,6 +146,8 @@ func get_troop() -> Array:
 # Monkey counter for number of monkeys in group, including the main monkey.
 @onready var monkey_counter_label: Label = $PlayerUI/MonkeyCounter
 
+
+@onready var animation_tree  = $AnimationTree
 # ------------------------------------------------
 # SIGNALS
 # ------------------------------------------------
@@ -227,35 +229,20 @@ func _physics_process(_delta: float) -> void:
 		input_velocity = input_velocity.normalized()
 
 	## Set animation based on movement direction
-	if input_velocity.y < 0:
-		_animated_sprite.play("walk_up")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_up()
-	elif input_velocity.y > 0:
-		_animated_sprite.play("walk_down")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_down()
-	elif input_velocity.x > 0:
-		_animated_sprite.play("walk_right")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_right()
-	elif input_velocity.x < 0:
-		_animated_sprite.play("walk_left")
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._walk_left()
+	if input_velocity == Vector2.ZERO:
+		animation_tree.get("parameters/playback").travel("Idle")
 	else:
-		_animated_sprite.stop()
-		if not _troop_locked and len(_swarm_monkeys) > 0:
-			for entry in _swarm_monkeys:
-				entry["node"]._stop_walk()
+		animation_tree.get("parameters/playback").travel("Walk")
+		animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
+		animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 
 	## Set the velocity and move the character
 	velocity = input_velocity * current_speed
 	move_and_slide()
+	if not _troop_locked and len(_swarm_monkeys) > 0:
+		for entry in _swarm_monkeys:
+			entry["node"].animate_walk(input_velocity)
+		
 
 	# Decrement the shoot cool down
 	if _current_shoot_cooldown > 0.0:
@@ -314,6 +301,7 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 
 		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
 		new_monkey = new_monkey_scene.instantiate()
+		#new_monkey = monkey_scenes[0].instantiate()
 		new_monkey.scale = Vector2(2.5, 2.5)
 		print_debug("Spawning a new monkey for the swarm!")
 		_swarm_monkeys_root.add_child(new_monkey)
@@ -375,6 +363,28 @@ func _update_swarm_positions() -> void:
 			var to_target = target_position - monkey.global_position
 			if to_target.length() < 5.0:
 				monkey.velocity = Vector2.ZERO
+				
+				var base_speed = speed
+				# How fast the ellipse is spinning this frame:
+				var angular_velocity = abs(_current_rotation_speed_in_radians_per_sec)
+
+				# Approximate radius:
+				var radius = (ellipse_width_scale + ellipse_height_scale) * 0.5
+
+				# The extra speed needed to keep up with rotation:
+				var rotation_chase_speed = angular_velocity * radius
+
+				# Final speed = base speed + chase speed, capped at max of 1k:
+				var final_speed = min(base_speed + rotation_chase_speed, 1000.0)
+				#var final_speed = base_speed + rotation_chase_speed
+				var factor = to_target.length() / 5.0
+				if factor < 0.01:
+					factor = 0
+				monkey.velocity = to_target.normalized() * final_speed * factor
+				
+				
+				
+				
 				if entry.has("transitioning"):
 					entry["transitioning"] = false
 			else:
