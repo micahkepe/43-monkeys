@@ -736,7 +736,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_1ffl7"]
 resource_name = "slash_down"
 length = 0.7
-loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -766,7 +765,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_v4su1"]
 resource_name = "slash_left"
 length = 0.7
-loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -796,7 +794,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_d0wlk"]
 resource_name = "slash_right"
 length = 0.7
-loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -826,7 +823,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_jy2mv"]
 resource_name = "slash_up"
 length = 0.7
-loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1085,6 +1081,7 @@ node_connections = [&"output", 0, &"BlendSpace2D"]
 animation = &"die"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_e2qy6"]
+switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sjv62"]
@@ -1101,6 +1098,8 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h81jq"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6gll0"]
+switch_mode = 2
+advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_otboj"]
 
@@ -1162,7 +1161,7 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_b52xh")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Attack/BlendSpace2D/blend_position = Vector2(0, 0)
+parameters/Attack/BlendSpace2D/blend_position = Vector2(0.37232, 0.065963)
 parameters/Idle/BlendSpace2D/blend_position = Vector2(0, 0)
 parameters/Walk/BlendSpace2D/blend_position = Vector2(-0.554289, -0.330397)
 
@@ -1170,3 +1169,4 @@ parameters/Walk/BlendSpace2D/blend_position = Vector2(-0.554289, -0.330397)
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]

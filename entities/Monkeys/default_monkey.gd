@@ -36,7 +36,7 @@ var locked: bool = false
 @export var banana_boomerang_scene: PackedScene
 
 ## The monkey's attack range
-@export var attack_range: float = 400.0
+@export var attack_range: float = 400 #400.0
 
 ## The monkey's attack cool down
 var attack_timer: float = 0.0
@@ -224,6 +224,7 @@ func _physics_process(_delta: float) -> void:
 		if targets.size() > 0:
 			var closest_target = _get_closest_target_from_list(targets)
 			if closest_target:
+				is_attacking = true
 				_play_attack_animation(closest_target)
 				if closest_target.has_method("take_damage"):
 					closest_target.take_damage(attack_damage)
@@ -259,27 +260,13 @@ func _get_closest_target_from_list(target_list: Array) -> Node2D:
 ## Plays the attack animation and applies damage to the target node
 func _play_attack_animation(target: Node2D) -> void:
 	var direction = (target.global_position - global_position).normalized()
-	#print_debug("Playing attack animation. Direction: ", direction)
-	#print_debug("Direction X: ", direction.x, " | Direction Y: ", direction.y)
-	#print_debug("Abs X: ", abs(direction.x), " | Abs Y: ", abs(direction.y))
-
-	_animated_sprite.stop()  # Reset any current animation
-	if abs(direction.x) > abs(direction.y):
-		# Horizontal attack
-		var anim = "slash_right" if direction.x > 0 else "slash_left"
-		_animated_sprite.play(anim)
-		#print_debug("Playing horizontal attack animation: ", anim)
-	else:
-		# Vertical attack
-		var anim = "slash_down" if direction.y > 0 else "slash_up"
-		_animated_sprite.play(anim)
-		#print_debug("Playing vertical attack animation: ", anim)
-
+	print("==DIRECTION:", direction)
+	# Set blend parameter based on the direction vector.
+	# (Assumes you've added a Vector2 blend parameter in your state machine called "attack_blend")
+	animation_tree.get("parameters/playback").travel("Attack")
+	animation_tree.set("parameters/Attack/BlendSpace2D/blend_position", direction)
+	# Transition to the attack state.
 	is_attacking = true
-	#print_debug("Set is_attacking to true, current animation: ", _animated_sprite.animation)
-	#print_debug("Animation frames: ", _animated_sprite.sprite_frames.get_frame_count(_animated_sprite.animation))
-	#print_debug("Animation speed: ", _animated_sprite.sprite_frames.get_animation_speed(_animated_sprite.animation))
-	#print_debug("Is playing: ", _animated_sprite.is_playing())
 	
 func _update_animation() -> void:
 	if paralyzed:
@@ -290,25 +277,8 @@ func _update_animation() -> void:
 		_stop_walk()
 		return
 
-	# If currently attacking, check if we should continue or stop
-	if _animated_sprite.animation.begins_with("slash"):
-		var overlapping_bodies = $Hitbox.get_overlapping_bodies()
-		var has_valid_target = false
-		for body in overlapping_bodies:
-			if body.is_in_group("boids"):
-				has_valid_target = true
-				break
-		
-		if not has_valid_target:
-			is_attacking = false
-			print_debug("No valid targets, ending attack animation, switching to idle or movement")
-		else:
-			# Ensure the attack animation is playing
-			if not _animated_sprite.is_playing():
-				_animated_sprite.play(_animated_sprite.animation)
-				print_debug("Restarted attack animation due to not playing")
-			print_debug("Attack animation continuing, current animation: ", _animated_sprite.animation)
-			return
+	if is_attacking:
+		return
 
 	# Only update movement animations if not attacking
 	if not is_attacking:
@@ -443,14 +413,7 @@ func _die() -> void:
 	if parent:
 		parent.get_parent().remove_monkey(self)
 
-	# Try to play death animation
-	if _animated_sprite.sprite_frames.has_animation("die"):
-			print_debug("Found die animation, attempting to play")
-			_animated_sprite.stop()
-			_animated_sprite.play("die")
-	else:
-			print_debug("ERROR: No die animation found!")
-			queue_free()
+	animation_tree.get("parameters/playback").travel("die")
 
 
 ## Takes the specified amount of damage from the monkey's health.
@@ -529,18 +492,18 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 	# Play attack animation or effects if needed
 	print("Banana thrown at position:", target_position)
 
-
-## Called when the monkey's AnimatedSprite2D node finishes playing an animation.
-## If the animation is "die", the monkey is queued for deletion.
-func _on_animated_sprite_2d_animation_finished() -> void:
-	if _animated_sprite.animation == "die":
-		_animated_sprite.stop()
-		queue_free()
-		print_debug("Die animation finished, freeing monkey")
-	elif _animated_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
-		print_debug("Attack animation finished. Resetting is_attacking.")
-		is_attacking = false
-		_update_animation()
+### Called when the monkey's AnimatedSprite2D node finishes playing an animation.
+### If the animation is "die", the monkey is queued for deletion.
+#func _on_animated_sprite_2d_animation_finished() -> void:
+	#print("===I GOT CALLED")
+	#if _animated_sprite.animation == "die":
+		#_animated_sprite.stop()
+		#queue_free()
+		#print_debug("Die animation finished, freeing monkey")
+	#elif _animated_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
+		#print_debug("Attack animation finished. Resetting is_attacking.")
+		#is_attacking = false
+		#_update_animation()
 
 func heal(amount: float) -> void:
 	# Increase current health but do not exceed max_health.
@@ -610,3 +573,9 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 		print_debug("Boid exited monkey hitbox: ", body.name)
 	elif body.is_in_group("player") or body.is_in_group("troop"):
 		print_debug("Player or troop exited monkey hitbox: ", body.name)
+
+func _on_animation_tree_animation_finished(anim_name):
+	if "slash" in anim_name:
+		is_attacking = false
+	if "die" in anim_name:
+		queue_free()
