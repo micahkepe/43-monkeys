@@ -22,7 +22,6 @@ func initialize_from_troop_data() -> void:
 	var player = $World/Player
 	if player and not troop_data.is_empty():
 		player.health = troop_data["player_health"]
-
 		# Recreate troop
 		var current_count = player.get_troop_count()
 		var target_count = troop_data["count"]
@@ -43,15 +42,17 @@ func initialize_from_troop_data() -> void:
 		# Restore monkey health if tracked
 		if not monkey_health.is_empty():
 			for i in range(min(player._swarm_monkeys.size(), monkey_health.size())):
-				if "health" in player._swarm_monkeys[i]:
-					var monkey = player._swarm_monkeys[i]["node"]
+				var monkey = player._swarm_monkeys[i]["node"]
+				if "current_health" in monkey and "health_bar" in monkey:
 					monkey.current_health = monkey_health[i]
 					
 					# Ensure the health bar is properly initialized and visible
-					if monkey.has_node("HealthBar"):
+					if monkey.health_bar:
 						monkey.health_bar.value = monkey.current_health
 						monkey.health_bar.health = monkey.current_health
-						monkey.health_bar.show()
+						monkey.health_bar.show()  # Always show health bar, regardless of health value
+					
+					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
 
 ## Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

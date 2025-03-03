@@ -104,13 +104,13 @@ func check_boss_death() -> void:
 func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		#transiition to next level
-		# move above logic here
 		var player = $World/Player
 		var troop_count = player.get_troop_count() if player else 6
 		var monkey_health = []
 		if player:
 			for monkey in player.get_troop():
-				monkey_health.append(monkey.health if "health" in monkey else 6.0)
+				# Use current_health instead of health
+				monkey_health.append(monkey.current_health if "current_health" in monkey else 6.0)
 
 		var troop_data = {
 			"count": troop_count,
@@ -120,9 +120,6 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 
 		if player:
 			player.heal(player.max_health - player.health)
-			for monkey in player.get_troop():
-				if "health" in monkey and "max_health" in monkey:
-					monkey.health = monkey.max_health
 
 		var transition_instance = transition_scene.instantiate()
 		transition_instance.next_level_scene = next_level_scene

@@ -73,8 +73,21 @@ var damage_cooldown: float = 1.5
 var current_cooldown: float = 0.0
 
 ## Whether the monkey is currently caged.
-var is_caged: bool = false
+var _is_caged: bool = false
 
+## Getter/setter for is_caged property
+var is_caged: bool:
+	get:
+		return _is_caged
+	set(value):
+		_is_caged = value
+		# When cage state changes, update health bar visibility
+		if health_bar:
+			if value: # If being caged
+				health_bar.hide()
+			else: # If being released from cage
+				health_bar.show()
+				
 ## Track the last velocity of the monkey to check for changes.
 var _last_velocity: Vector2 = Vector2.ZERO
 
@@ -92,8 +105,10 @@ var is_attacking: bool = false
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
-	health_bar.hide() # Hide the health bar initially
-
+	
+	# Hide health bar initially - will be shown when monkey joins the troop
+	health_bar.hide()
+	
 	# Setup RayCasts for collision avoidance
 	_setup_collision_raycasts()
 
@@ -193,6 +208,8 @@ func _physics_process(_delta: float) -> void:
 	if is_caged:
 		velocity = Vector2.ZERO
 		_stop_walk()
+		if health_bar:
+			health_bar.hide()
 		return
 	
 	if paralyzed:
@@ -436,13 +453,12 @@ func take_damage(amount: float) -> void:
 
 		if health_bar:
 			health_bar.value = current_health
+			health_bar.health = current_health
+			health_bar.show()  # Ensure health bar is always visible when damaged
 
 		if current_health <= 0:
 			print_debug("Health <= 0, calling _die()")
 			_die()
-
-		health_bar.health = current_health
-
 
 ## Function to throw a banana at a specific position
 ## Function to throw a banana at a specific position
