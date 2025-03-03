@@ -1156,7 +1156,7 @@ shape = SubResource("RectangleShape2D_gaxor")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_y0boo")
+&"": SubResource("AnimationLibrary_y0boo")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

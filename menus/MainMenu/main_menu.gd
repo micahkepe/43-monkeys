@@ -39,20 +39,35 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_is_first_focus = false
 
+func _input(event):
+	if event.is_action_pressed("ui_accept") and visible:
+		var focused_node = get_viewport().gui_get_focus_owner()
+		if focused_node == $VBoxContainer/StartButton:
+			if !select_sfx_player.playing:
+				select_sfx_player.play()
+			theme_player.stop()
+			get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
+		elif focused_node == $VBoxContainer/SettingsButton:
+			if !select_sfx_player.playing:
+				select_sfx_player.play()
+			if settings_menu:
+				settings_menu.show_settings()
+		elif focused_node == $VBoxContainer/QuitButton:
+			if !select_sfx_player.playing:
+				select_sfx_player.play()
+			get_tree().quit()
+	# Call parent _input for fullscreen toggle
+	super._input(event)
 
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
+	# NOTE: Remove sound playback from here; handled in _input
 	theme_player.stop()
-	# Only play the sound effect once
-	if !select_sfx_player.playing:
-		select_sfx_player.play()
 	get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
 
 
 ## Handle the press event on the settings button. Currently does nothing.
 func _on_settings_button_pressed() -> void:
-	if !select_sfx_player.playing:
-		select_sfx_player.play()
 	if settings_menu:
 		settings_menu.show_settings()
 
@@ -60,8 +75,6 @@ func _on_settings_button_pressed() -> void:
 ## Handle the press event on the quit button. Quits the node tree to exit the
 ## game.
 func _on_quit_button_pressed() -> void:
-	if !select_sfx_player.playing:
-		select_sfx_player.play()
 	get_tree().quit()
 
 

@@ -3,19 +3,20 @@ extends Control
 
 ## Called when there is an input event. The input event propagates up through
 ## the node tree until a node consumes it.
-func _input(event):
+## @param event InputEvent
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_full_screen"):
 		# Toggle fullscreen mode
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		
+
 		# Reset all input actions to prevent "stuck" keys
 		reset_input_actions()
 
 ## Helper function to release all actions that might be held down
-func reset_input_actions():
+func reset_input_actions() -> void:
 	# Comprehensive list of actions from player.gd and standard UI actions
 	var actions = [
 		# Player movement

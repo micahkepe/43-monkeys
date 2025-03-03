@@ -71,10 +71,10 @@ autoplay = true
 bus = &"Music"
 parameters/looping = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_dpys7")]
+[node name="PauseMenu" parent="UI" instance=ExtResource("4_dpys7")]
 visible = false
 metadata/_edit_use_anchors_ = true
 

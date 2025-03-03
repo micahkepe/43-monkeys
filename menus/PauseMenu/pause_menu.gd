@@ -26,7 +26,6 @@ var _pause_menu_visible: bool = false
 ## playing the navigate sound effect when the scene is first loaded.
 var _is_first_focus: bool = true
 
-
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	if !settings_menu:
@@ -36,12 +35,10 @@ func _ready():
 
 	hide()
 
-
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"): # Escape key is "ui_cancel" by default
 		toggle_pause_menu()
-
 
 ## Called when the user presses 'esc'. If the user is in the pause menu, then 'esc' closes the
 ## pause scene; otherwise, it opens.

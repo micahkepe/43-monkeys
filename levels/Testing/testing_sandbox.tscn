@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_whftn"]
 [ext_resource type="Texture2D" uid="uid://c0w5ljun65vqq" path="res://assets/sprites/tilesets/lights.png" id="6_ahkm3"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="7_74lj2"]
-[ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="8_5unfj"]
 [ext_resource type="Texture2D" uid="uid://bk0217lqr5uyn" path="res://assets/sprites/tilesets/side-desk.png" id="8_dh2vp"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="9_kx71c"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="9_mxanj"]
+[ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_rmb4c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b24tw"]
 resource_name = "blank-tiles"
@@ -392,9 +392,6 @@ y_sort_enabled = true
 [node name="Boxes" type="Node2D" parent="World"]
 y_sort_enabled = true
 
-[node name="Box" parent="World/Boxes" instance=ExtResource("8_5unfj")]
-position = Vector2(441, 774)
-
 [node name="Buttons" type="Node2D" parent="World"]
 y_sort_enabled = true
 
@@ -403,10 +400,39 @@ position = Vector2(469, 626)
 
 [node name="Player" parent="World" instance=ExtResource("7_74lj2")]
 position = Vector2(645, 845)
-scale = Vector2(0.7485, 0.7485)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.00798, 5.34402)
+
+[node name="Cages" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="MonkeyCage" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(921, 1107)
+
+[node name="MonkeyCage2" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(715, 1109)
+
+[node name="MonkeyCage3" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(501, 1109)
+
+[node name="MonkeyCage4" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(282, 1116)
+
+[node name="MonkeyCage5" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(278, 1267)
+
+[node name="MonkeyCage6" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(530, 1273)
+
+[node name="MonkeyCage7" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(744, 1266)
+
+[node name="MonkeyCage8" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(965, 1278)
+
+[node name="MonkeyCage9" parent="World/Cages" instance=ExtResource("9_rmb4c")]
+position = Vector2(965, 1278)
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="."]
 z_index = 1

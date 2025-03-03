@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb384ke5alglv"]
+[gd_scene load_steps=4 format=3 uid="uid://cb384ke5alglv"]
 
 [ext_resource type="Script" uid="uid://clnigb1wmfn1c" path="res://cutscenes/cutscene.gd" id="1_5ubd8"]
 [ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="2_j6yx1"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="3_8kmls"]
 
 [node name="CutsceneBase" type="Node2D"]
 script = ExtResource("1_5ubd8")
@@ -15,3 +16,8 @@ offset_bottom = 23.0
 [node name="KeyStrokePlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_j6yx1")
 volume_db = -30.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("3_8kmls")]
+visible = false
