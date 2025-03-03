@@ -448,7 +448,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x1844")
 }],
-"loop": false,
+"loop": true,
 "name": &"slash_left",
 "speed": 8.0
 }, {
@@ -690,7 +690,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1tgm"]
-radius = 4.0
+radius = 7.33333
 height = 17.3333
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jefyw"]
@@ -712,6 +712,10 @@ damage_potion_scene = ExtResource("2_ku1rs")
 heal_potion_scene = ExtResource("3_ufr6h")
 blindness_potion_scene = ExtResource("4_i0d6i")
 paralyze_potion_scene = ExtResource("5_tpowr")
+max_health = 75.0
+min_attack_interval = 2.0
+quick_succession_chance = 0.5
+move_speed = 175.0
 
 [node name="HealthBar" parent="." instance=ExtResource("4_p0wom")]
 offset_left = -62.0
@@ -724,11 +728,11 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_enwfc")
 position = Vector2(1, -22)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"walk_down"
+animation = &"slash_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(-1, 47)
+position = Vector2(0, 44)
 rotation = 1.5708
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_g1tgm")
