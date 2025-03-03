@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://magcl27gfs7r"]
+[gd_scene load_steps=11 format=3 uid="uid://magcl27gfs7r"]
 
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="1_g2b7w"]
 
@@ -42,6 +42,10 @@ gradient = SubResource("Gradient_ewgfl")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uuoan"]
+radius = 49.0
+height = 184.0
+
 [node name="Vat" type="StaticBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -83,3 +87,10 @@ color = Color(0.529412, 0.909804, 0.447059, 1)
 energy = 0.9
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_6ewff")
+
+[node name="ProjectileBlock" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBlock"]
+position = Vector2(-2, 2)
+shape = SubResource("CapsuleShape2D_uuoan")
