@@ -308,6 +308,14 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		# new_monkey will be positioned based on its scene settings.
 
 	new_monkey.scale = Vector2(2.5, 2.5)
+	
+	# Show the monkey's health bar now that it's part of the troop
+	if "health_bar" in new_monkey and new_monkey.health_bar:
+		new_monkey.health_bar.show()
+		
+	# Update is_caged flag to false now that the monkey is in the troop
+	if "is_caged" in new_monkey:
+		new_monkey.is_caged = false
 
 	# Determine a new angle for the monkey in the swarm.
 	var count = _swarm_monkeys.size()
@@ -319,9 +327,8 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 	_swarm_monkeys.append({
 		"node": new_monkey,
 		"angle": new_angle,
-		"transitioning": true,
-		"health": max_health,
-		"max_health": max_health
+		"transitioning": true
+		# Removed health and max_health from here - they should be properties of the monkey instance itself
 	})
 
 	# Recalculate angles for an even distribution.
@@ -827,5 +834,12 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 
 func heal_troop() -> void:
 	for entry in _swarm_monkeys:
-		if "health" in entry and "max_health" in entry:
-			entry["health"] = entry["max_health"]
+		var monkey = entry["node"]
+		if "current_health" in monkey and "max_health" in monkey:
+			monkey.current_health = monkey.max_health
+			
+			# Update health bar if it exists
+			if "health_bar" in monkey and monkey.health_bar:
+				monkey.health_bar.value = monkey.current_health
+				monkey.health_bar.health = monkey.current_health
+				monkey.health_bar.show()  # Always keep health bar visible
