@@ -65,6 +65,9 @@ func _ready() -> void:
 	
 	_animated_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
 	
+	# Set initial velocity to zero
+	velocity = Vector2.ZERO
+	
 	teleport_cycle()
 	_start_random_attack_timer()
 
@@ -86,6 +89,9 @@ func teleport_cycle() -> void:
 		await _animated_sprite.animation_finished
 		
 		global_position = new_target
+		# Reset velocity to prevent sliding
+		velocity = Vector2.ZERO
+		
 		# Play grow sound
 		if grow_shrink_sound:
 			grow_shrink_sound.play()
@@ -307,7 +313,10 @@ func find_node_recursive(root: Node, target: String) -> Node:
 
 func _physics_process(_delta: float) -> void:
 	if not is_dead:
-		move_and_slide()
+		# Only call move_and_slide when we actually want to move
+		# Since this is a teleporting boss, we don't need move_and_slide for most cases
+		if velocity != Vector2.ZERO:
+			move_and_slide()
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if is_dead:
