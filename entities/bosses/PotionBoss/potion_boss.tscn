@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://csy06uv6hwuoj" path="res://projectiles/Potions/ParalyzePotion/ParalyzePotion.tscn" id="5_tpowr"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="8_pol7v"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enwfc"]
+bg_color = Color(0.326222, 0.696952, 0.315019, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5kv14"]
 atlas = ExtResource("2_crlfk")
 region = Rect2(64, 0, 64, 64)
@@ -690,9 +693,6 @@ animations = [{
 radius = 4.0
 height = 17.3333
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enwfc"]
-bg_color = Color(0.326222, 0.696952, 0.315019, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jefyw"]
 size = Vector2(32.6592, 56.6816)
 
@@ -713,6 +713,13 @@ heal_potion_scene = ExtResource("3_ufr6h")
 blindness_potion_scene = ExtResource("4_i0d6i")
 paralyze_potion_scene = ExtResource("5_tpowr")
 
+[node name="HealthBar" parent="." instance=ExtResource("4_p0wom")]
+offset_left = -62.0
+offset_top = -126.0
+offset_right = 62.0
+offset_bottom = -98.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_enwfc")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -22)
 scale = Vector2(3, 3)
@@ -725,13 +732,6 @@ position = Vector2(-1, 47)
 rotation = 1.5708
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_g1tgm")
-
-[node name="HealthBar" parent="." instance=ExtResource("4_p0wom")]
-offset_left = -41.0
-offset_top = -113.0
-offset_right = 41.0
-offset_bottom = -103.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_enwfc")
 
 [node name="HitBox" type="Area2D" parent="."]
 position = Vector2(1, -22)

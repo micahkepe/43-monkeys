@@ -4,10 +4,10 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mmkos"]
 radius = 18.0
-height = 61.3333
+height = 62.6667
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wwy1e"]
-size = Vector2(60, 24)
+size = Vector2(63.3333, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gtx3e"]
 atlas = ExtResource("1_g2b7w")
@@ -24,12 +24,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_vshwl"]
+[sub_resource type="Gradient" id="Gradient_uuoan"]
 offsets = PackedFloat32Array(0.0629371, 0.972028, 0.990676)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_gx6ks"]
-gradient = SubResource("Gradient_vshwl")
+gradient = SubResource("Gradient_uuoan")
 fill = 1
 fill_from = Vector2(0.508547, 0.247863)
 
@@ -45,21 +45,23 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Vat" type="StaticBody2D"]
 z_index = 1
 y_sort_enabled = true
-scale = Vector2(1.5, 1.5)
 collision_mask = 63
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 48)
+position = Vector2(0, 73)
 rotation = 1.5708
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_mmkos")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(2.84512e-06, 38.6667)
+position = Vector2(-0.499998, 54)
 rotation = -3.14159
+scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_wwy1e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_awjxr")
 
 [node name="Shadow" type="PointLight2D" parent="."]
@@ -75,7 +77,7 @@ texture = SubResource("GradientTexture2D_gx6ks")
 show_behind_parent = true
 z_index = -1
 y_sort_enabled = true
-position = Vector2(5.96046e-08, 52)
+position = Vector2(-1.06581e-14, 75)
 scale = Vector2(2.85417, 1.65682)
 color = Color(0.529412, 0.909804, 0.447059, 1)
 energy = 0.9

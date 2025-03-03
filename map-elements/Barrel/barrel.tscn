@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://iw1ex7053soc"]
+
+[ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="1_hr7u4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hr7u4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_466tm"]
+radius = 18.0
+height = 40.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjrw6"]
+atlas = ExtResource("1_hr7u4")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_awq5m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjrw6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Barrel" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+collision_mask = 63
+physics_material_override = SubResource("PhysicsMaterial_hr7u4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 21)
+rotation = 1.5708
+scale = Vector2(1.5, 1.5)
+shape = SubResource("CapsuleShape2D_466tm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_awq5m")
