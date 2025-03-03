@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=4 uid="uid://8cuycqhvypgw"]
 
-[ext_resource type="Script" path="res://menus/MainMenu/main_menu.gd" id="1_2ke84"]
+[ext_resource type="Script" uid="uid://bqvbw1y2c5vbe" path="res://menus/MainMenu/main_menu.gd" id="1_2ke84"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://ui/ui.png" id="2_cfnyu"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="3_4oq2b"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="4_wfbt0"]
@@ -109,10 +109,10 @@ layout_mode = 2
 focus_neighbor_left = NodePath("../SettingsButton")
 focus_neighbor_top = NodePath("../QuitButton")
 theme_override_colors/font_hover_color = Color(0.624822, 0.175097, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0.857103, 0.253716, 1.92523e-07, 1)
-theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_focus_color = Color(0.857103, 0.253716, 1.92523e-07, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("3_4oq2b")
 theme_override_font_sizes/font_size = 75
@@ -133,10 +133,10 @@ alignment = 0
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
-theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("3_4oq2b")
 theme_override_font_sizes/font_size = 75
@@ -158,10 +158,10 @@ alignment = 0
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../StartButton")
 theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
-theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("3_4oq2b")
 theme_override_font_sizes/font_size = 75

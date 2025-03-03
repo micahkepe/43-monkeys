@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cb384ke5alglv"]
 
-[ext_resource type="Script" path="res://cutscenes/cutscene.gd" id="1_5ubd8"]
+[ext_resource type="Script" uid="uid://clnigb1wmfn1c" path="res://cutscenes/cutscene.gd" id="1_5ubd8"]
 [ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="2_j6yx1"]
 
 [node name="CutsceneBase" type="Node2D"]

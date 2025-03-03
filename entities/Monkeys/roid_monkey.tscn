@@ -1,6 +1,6 @@
 [gd_scene load_steps=124 format=3 uid="uid://cdbs8ve7uh1wk"]
 
-[ext_resource type="Script" path="res://entities/Monkeys/default_monkey.gd" id="1_asx4p"]
+[ext_resource type="Script" uid="uid://dcwcnknvr4h23" path="res://entities/Monkeys/default_monkey.gd" id="1_asx4p"]
 [ext_resource type="Texture2D" uid="uid://24vuoclcgt7s" path="res://assets/sprites/characters/monkeys/roid-monkey.png" id="1_e85bf"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_islym"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_e5rgt"]
@@ -975,20 +975,20 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y0boo"]
 _data = {
-"RESET": SubResource("Animation_ygi1o"),
-"die": SubResource("Animation_irftt"),
-"idle_down": SubResource("Animation_ww51s"),
-"idle_left": SubResource("Animation_wbi3m"),
-"idle_right": SubResource("Animation_aoakp"),
-"idle_up": SubResource("Animation_sorvj"),
-"slash_down": SubResource("Animation_0gnet"),
-"slash_left": SubResource("Animation_lfvbt"),
-"slash_right": SubResource("Animation_oopsu"),
-"slash_up": SubResource("Animation_q8xjl"),
-"walk_down": SubResource("Animation_tkgne"),
-"walk_left": SubResource("Animation_wrk65"),
-"walk_right": SubResource("Animation_6noh7"),
-"walk_up": SubResource("Animation_skugj")
+&"RESET": SubResource("Animation_ygi1o"),
+&"die": SubResource("Animation_irftt"),
+&"idle_down": SubResource("Animation_ww51s"),
+&"idle_left": SubResource("Animation_wbi3m"),
+&"idle_right": SubResource("Animation_aoakp"),
+&"idle_up": SubResource("Animation_sorvj"),
+&"slash_down": SubResource("Animation_0gnet"),
+&"slash_left": SubResource("Animation_lfvbt"),
+&"slash_right": SubResource("Animation_oopsu"),
+&"slash_up": SubResource("Animation_q8xjl"),
+&"walk_down": SubResource("Animation_tkgne"),
+&"walk_left": SubResource("Animation_wrk65"),
+&"walk_right": SubResource("Animation_6noh7"),
+&"walk_up": SubResource("Animation_skugj")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4p0mn"]

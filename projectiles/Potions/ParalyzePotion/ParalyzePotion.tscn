@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://csy06uv6hwuoj"]
 
-[ext_resource type="Script" path="res://projectiles/Potions/ParalyzePotion/paralyze_potion.gd" id="1_75ng7"]
+[ext_resource type="Script" uid="uid://siyx0dvkw1ch" path="res://projectiles/Potions/ParalyzePotion/paralyze_potion.gd" id="1_75ng7"]
 [ext_resource type="Texture2D" uid="uid://dmwiamrcldtsr" path="res://assets/sprites/items/potions/yellow_potion_spinning_in_air.png" id="1_k2m4e"]
 [ext_resource type="Texture2D" uid="uid://bc6s7yfupkihm" path="res://assets/sprites/items/potions/yellow_potion_splashing.png" id="2_ky7a8"]
 [ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_mcduy"]

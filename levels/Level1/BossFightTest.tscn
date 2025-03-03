@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="5_tkqy8"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="6_jg1lh"]
 [ext_resource type="Texture2D" uid="uid://c0w5ljun65vqq" path="res://assets/sprites/tilesets/lights.png" id="7_3xosg"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="8_oab55"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/PotionBoss/potion_boss.tscn" id="9_qphrq"]
-[ext_resource type="Texture2D" uid="uid://bmlf6igdwao6r" path="res://assets/sprites/tilesets/side-desk.png" id="10_tlwlo"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="8_oab55"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="9_qphrq"]
+[ext_resource type="Texture2D" uid="uid://bk0217lqr5uyn" path="res://assets/sprites/tilesets/side-desk.png" id="10_tlwlo"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="11_i33d5"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="12_fq8jj"]
 

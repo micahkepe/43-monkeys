@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://c6hqssagt75up"]
 
-[ext_resource type="Script" path="res://projectiles/BananaBoomerang/banana_boomerang.gd" id="1_g21ix"]
+[ext_resource type="Script" uid="uid://cfirxptqatr55" path="res://projectiles/BananaBoomerang/banana_boomerang.gd" id="1_g21ix"]
 [ext_resource type="Texture2D" uid="uid://db8jtvki4pwdd" path="res://assets/sprites/attacks/bananas/banana_boomerang.png" id="1_q0566"]
-[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="3_wqwfh"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="3_wqwfh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqhhy"]
 size = Vector2(30, 30)
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_60j8u"]
 _data = {
-"RESET": SubResource("Animation_8oi5l"),
-"banana_spin": SubResource("Animation_pejof")
+&"RESET": SubResource("Animation_8oi5l"),
+&"banana_spin": SubResource("Animation_pejof")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cx8vx"]

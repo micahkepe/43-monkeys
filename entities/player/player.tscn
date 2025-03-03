@@ -1,6 +1,6 @@
 [gd_scene load_steps=99 format=3 uid="uid://chsvjhv0uagub"]
 
-[ext_resource type="Script" path="res://entities/Player/player.gd" id="1_ieec4"]
+[ext_resource type="Script" uid="uid://cys15peufgn36" path="res://entities/Player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_yc2po"]
 [ext_resource type="PackedScene" uid="uid://3kyps6qs6oo3" path="res://overlays/BlindnessOverlay/blindness_overlay.tscn" id="3_0k4ps"]
@@ -10,14 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="6_ghmbx"]
 [ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="7_facpj"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="8_vswvm"]
-[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="9_5qvqw"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="9_5qvqw"]
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
 [ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/player/hitHurt.wav" id="11_mqlhb"]
 [ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/shooting/banana_throw.wav" id="12_o6mwb"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://ui/ui.png" id="15_g1xt3"]
-[ext_resource type="Script" path="res://entities/player/ellipse_debug.gd" id="18_f01y2"]
+[ext_resource type="Script" uid="uid://dbbeyk612atjl" path="res://entities/player/ellipse_debug.gd" id="18_f01y2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dl0wg"]
 radius = 11.9979
@@ -681,16 +681,16 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_snq2t"]
 _data = {
-"RESET": SubResource("Animation_yu1cq"),
-"die": SubResource("Animation_pp4pp"),
-"idle_down": SubResource("Animation_d6dyp"),
-"idle_left": SubResource("Animation_nmo4r"),
-"idle_right": SubResource("Animation_p5ahw"),
-"idle_up": SubResource("Animation_xebo1"),
-"walk_down": SubResource("Animation_bikfi"),
-"walk_left": SubResource("Animation_uoxku"),
-"walk_right": SubResource("Animation_ayflr"),
-"walk_up": SubResource("Animation_ns6vx")
+&"RESET": SubResource("Animation_yu1cq"),
+&"die": SubResource("Animation_pp4pp"),
+&"idle_down": SubResource("Animation_d6dyp"),
+&"idle_left": SubResource("Animation_nmo4r"),
+&"idle_right": SubResource("Animation_p5ahw"),
+&"idle_up": SubResource("Animation_xebo1"),
+&"walk_down": SubResource("Animation_bikfi"),
+&"walk_left": SubResource("Animation_uoxku"),
+&"walk_right": SubResource("Animation_ayflr"),
+&"walk_up": SubResource("Animation_ns6vx")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3ajo8"]

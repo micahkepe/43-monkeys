@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://3kyps6qs6oo3"]
 
-[ext_resource type="Script" path="res://overlays/BlindnessOverlay/blindness_overlay.gd" id="1_5sk51"]
-[ext_resource type="Shader" path="res://shaders/blindness_overlay.gdshader" id="2_m84vr"]
+[ext_resource type="Script" uid="uid://c6i0toxtse15q" path="res://overlays/BlindnessOverlay/blindness_overlay.gd" id="1_5sk51"]
+[ext_resource type="Shader" uid="uid://cg5iocmf1a3b7" path="res://shaders/blindness_overlay.gdshader" id="2_m84vr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u5jbx"]
 shader = ExtResource("2_m84vr")

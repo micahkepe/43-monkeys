@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://oothsg3bxj8u"]
 
-[ext_resource type="Script" path="res://map-elements/Lights/FlickeringScreen/flickering_screen.gd" id="1_snx20"]
+[ext_resource type="Script" uid="uid://dk2n6fu62bph6" path="res://map-elements/Lights/FlickeringScreen/flickering_screen.gd" id="1_snx20"]
 
 [sub_resource type="Gradient" id="Gradient_10bc1"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)

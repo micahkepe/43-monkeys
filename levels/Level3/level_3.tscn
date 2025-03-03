@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=4 uid="uid://cscspmt2tgh5x"]
 
-[ext_resource type="Script" path="res://levels/Level3/level_3.gd" id="1_3vp1w"]
+[ext_resource type="Script" uid="uid://bt3flh8rvkg4o" path="res://levels/Level3/level_3.gd" id="1_3vp1w"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="2_4ox51"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="3_7bl8f"]
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="4_mll7v"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_q1d5o"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_pcrwo"]
 [ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="12_8y3f8"]
-[ext_resource type="Script" path="res://entities/Bosses/TaserBoss/taser_boss.gd" id="13_0v6xr"]
+[ext_resource type="Script" uid="uid://bhg4l7edm3p6e" path="res://entities/Bosses/TaserBoss/taser_boss.gd" id="13_0v6xr"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="14_boakj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bu8l"]

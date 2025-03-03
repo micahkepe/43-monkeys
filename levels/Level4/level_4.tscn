@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://be7wrppisnvnq"]
 
-[ext_resource type="Script" path="res://levels/Level4/level_4.gd" id="1_er7rx"]
+[ext_resource type="Script" uid="uid://cocr7iolsjp1e" path="res://levels/Level4/level_4.gd" id="1_er7rx"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_dl5vy"]
 
 [node name="Level4" type="Node2D"]

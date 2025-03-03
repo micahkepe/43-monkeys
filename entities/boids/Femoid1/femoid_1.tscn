@@ -1,7 +1,7 @@
 [gd_scene load_steps=78 format=3 uid="uid://dqyd0yop0ww12"]
 
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_6ojkm"]
-[ext_resource type="Script" path="res://entities/Boids/Femoid1/femoid_1.gd" id="1_pw85h"]
+[ext_resource type="Script" uid="uid://bhs13suvwq66a" path="res://entities/Boids/Femoid1/femoid_1.gd" id="1_pw85h"]
 [ext_resource type="Texture2D" uid="uid://dlv51uq82ewd3" path="res://assets/sprites/characters/people/femoid-1.png" id="2_kmmyr"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_a58ao"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_ike7h"]

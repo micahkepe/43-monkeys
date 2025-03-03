@@ -1,6 +1,6 @@
 [gd_scene load_steps=86 format=3 uid="uid://dvl7tkji14c6k"]
 
-[ext_resource type="Script" path="res://entities/Boids/BoidPlant/boid_plant.gd" id="1_3e0m8"]
+[ext_resource type="Script" uid="uid://dt4vbt6n35ydh" path="res://entities/Boids/BoidPlant/boid_plant.gd" id="1_3e0m8"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_p2njw"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_ahkrp"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="5_ck6s3"]

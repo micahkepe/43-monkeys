@@ -1,6 +1,6 @@
 [gd_scene load_steps=78 format=3 uid="uid://rv57qx2kxxrq"]
 
-[ext_resource type="Script" path="res://entities/Boids/ForemanBoid/foreman_boid.gd" id="1_4f714"]
+[ext_resource type="Script" uid="uid://wci4jpuyvilg" path="res://entities/Boids/ForemanBoid/foreman_boid.gd" id="1_4f714"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_y6bg1"]
 [ext_resource type="Texture2D" uid="uid://dh1wv8igsbggi" path="res://assets/sprites/characters/people/foreman-boid.png" id="3_1nqkt"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="3_xkvp0"]

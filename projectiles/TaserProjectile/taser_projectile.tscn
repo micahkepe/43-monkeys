@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://c05ne0go5hagf"]
 
-[ext_resource type="Script" path="res://projectiles/TaserProjectile/taser_projectile.gd" id="1_rocoa"]
+[ext_resource type="Script" uid="uid://bctpt842lja3" path="res://projectiles/TaserProjectile/taser_projectile.gd" id="1_rocoa"]
 [ext_resource type="Texture2D" uid="uid://dt7nx4q85jmjn" path="res://assets/sprites/attacks/tasers/taser-ball.png" id="2_re2yc"]
 [ext_resource type="AudioStream" uid="uid://dfb523gvfv0vm" path="res://assets/sfx/items/electrical2.wav" id="3_807ca"]
 
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1wf57"]
 _data = {
-"RESET": SubResource("Animation_83i8j"),
-"taser_spin": SubResource("Animation_shuyp")
+&"RESET": SubResource("Animation_83i8j"),
+&"taser_spin": SubResource("Animation_shuyp")
 }
 
 [sub_resource type="Gradient" id="Gradient_8mq50"]

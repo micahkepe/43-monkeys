@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dslihxqo30x7k"]
 
-[ext_resource type="Script" path="res://levels/Level5/level_5.gd" id="1_tjie2"]
+[ext_resource type="Script" uid="uid://beo8r1shlik02" path="res://levels/Level5/level_5.gd" id="1_tjie2"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_1hmkw"]
 
 [node name="Level5" type="Node2D"]

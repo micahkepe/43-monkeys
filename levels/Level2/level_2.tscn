@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=4 uid="uid://csn51rpfa4db3"]
 
-[ext_resource type="Script" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
+[ext_resource type="Script" uid="uid://c84qq2gb5de8x" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
 [ext_resource type="PackedScene" uid="uid://bl18cr6lscsw7" path="res://entities/Bosses/RootBoss/root_boss.tscn" id="2_udhy0"]
 [ext_resource type="AudioStream" uid="uid://dndthokwu6e1m" path="res://assets/music/bospad-type-beat/bospad-type-beat.ogg" id="2_xwg0x"]

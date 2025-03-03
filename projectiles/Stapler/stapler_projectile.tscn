@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://44nnscag3bhv"]
 
 [ext_resource type="Texture2D" uid="uid://cxs573mydl5ul" path="res://assets/sprites/items/stapler/stapler_animation.png" id="1_bjtar"]
-[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="2_ru3ky"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="2_ru3ky"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pxpuk"]
 radius = 16.0

@@ -1,10 +1,10 @@
 [gd_scene load_steps=40 format=3 uid="uid://bo8o2y5xink1l"]
 
-[ext_resource type="Script" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
+[ext_resource type="Script" uid="uid://dukh43axgdcq6" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_5t4h7"]
 [ext_resource type="Texture2D" uid="uid://bh53cubpuhh7j" path="res://assets/sprites/tilesets/turret.png" id="2_lanj3"]
 [ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/booms/explosion.wav" id="5_3xp2b"]
-[ext_resource type="Shader" path="res://shaders/halo_glow_shader.gdshader" id="5_djatk"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="5_djatk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ynjw"]
 atlas = ExtResource("2_lanj3")

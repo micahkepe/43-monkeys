@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://cm833e3rmrk2w"]
 
-[ext_resource type="Script" path="res://projectiles/Potions/HealPotion/heal_potion.gd" id="1_l3h7j"]
+[ext_resource type="Script" uid="uid://b42rcanc4inup" path="res://projectiles/Potions/HealPotion/heal_potion.gd" id="1_l3h7j"]
 [ext_resource type="Texture2D" uid="uid://4hvdi4p6dnji" path="res://assets/sprites/items/potions/lightblue_potion_spinning_in_air.png" id="1_qc7ce"]
 [ext_resource type="Texture2D" uid="uid://ctglrgd6rm86w" path="res://assets/sprites/items/potions/lightblue_potion_splashing.png" id="2_obuxo"]
 [ext_resource type="Texture2D" uid="uid://dad6s0kvjh4vi" path="res://assets/sprites/tilesets/spilled_potions.png" id="3_j1sg5"]

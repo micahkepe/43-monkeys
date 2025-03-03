@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://b58lxpspai3bw"]
 
-[ext_resource type="Script" path="res://map-elements/Box/box.gd" id="1_8vi4n"]
+[ext_resource type="Script" uid="uid://cmxg1shy3by50" path="res://map-elements/Box/box.gd" id="1_8vi4n"]
 [ext_resource type="Texture2D" uid="uid://grtritlcbqa" path="res://assets/sprites/tilesets/crates_boxes.png" id="2_npcbq"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="3_ppbpf"]
 

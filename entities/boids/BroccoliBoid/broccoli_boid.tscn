@@ -1,6 +1,6 @@
 [gd_scene load_steps=78 format=3 uid="uid://bosg5oeaw8eqj"]
 
-[ext_resource type="Script" path="res://entities/Boids/BroccoliBoid/broccoli_boid.gd" id="1_njlat"]
+[ext_resource type="Script" uid="uid://xsayx2sybb3k" path="res://entities/Boids/BroccoliBoid/broccoli_boid.gd" id="1_njlat"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_61ugq"]
 [ext_resource type="Texture2D" uid="uid://bifok7yg7ghwe" path="res://assets/sprites/characters/people/broccoli-boid.png" id="3_dge5u"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_82wgh"]
