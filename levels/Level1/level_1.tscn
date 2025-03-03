@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/Boids/BoidRixner/boid_rixner.tscn" id="10_4s8p6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_311su"]
 [ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
-[ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://ui/ui.png" id="10_ssgax"]
+[ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="10_ssgax"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
 [ext_resource type="Texture2D" uid="uid://bx8djeyomc0oy" path="res://assets/sprites/tilesets/shadows2.png" id="11_qfl6h"]
 [ext_resource type="Texture2D" uid="uid://cu8al1h2iiuq6" path="res://assets/sprites/tilesets/shadows3.png" id="12_3ywx6"]
