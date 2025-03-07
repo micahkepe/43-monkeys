@@ -1,6 +1,6 @@
 [gd_scene load_steps=78 format=3 uid="uid://bosg5oeaw8eqj"]
 
-[ext_resource type="Script" uid="uid://xsayx2sybb3k" path="res://entities/Boids/BroccoliBoid/broccoli_boid.gd" id="1_njlat"]
+[ext_resource type="Script" uid="uid://xsayx2sybb3k" path="res://entities/boids/BroccoliBoid/broccoli_boid.gd" id="1_njlat"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_61ugq"]
 [ext_resource type="Texture2D" uid="uid://bifok7yg7ghwe" path="res://assets/sprites/characters/people/broccoli-boid.png" id="3_dge5u"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_82wgh"]
@@ -547,7 +547,7 @@ scale = Vector2(2.67, 2.67)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_njlat")
-hits_to_kill = 5
+hits_to_kill = 8
 scream_probability = 0.3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -129,7 +129,7 @@ func _spawn_boid_plants() -> void:
 	var attempts = 0
 	var max_attempts = 10
 	
-	while spawn_positions.size() < 3 and attempts < max_attempts:
+	while spawn_positions.size() < 10 and attempts < max_attempts:
 		var pos = choose_random_waypoint()
 		var too_close_to_player = pos.distance_to(player_pos) < 100.0
 		var too_close_to_existing = spawn_positions.any(func(p): return p.distance_to(pos) < 50.0)

@@ -603,6 +603,7 @@ scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_3e0m8")
+hits_to_kill = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["boids", "enemies"]]
 sprite_frames = SubResource("SpriteFrames_3vcsq")
