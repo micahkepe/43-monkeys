@@ -157,14 +157,15 @@ size = Vector2(189, 16)
 
 [node name="Door" type="Area2D"]
 y_sort_enabled = true
-scale = Vector2(1.4, 1.4)
 collision_mask = 63
 script = ExtResource("1_t88dl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.4, 1.4)
 sprite_frames = SubResource("SpriteFrames_0cmvc")
-animation = &"opened"
+animation = &"closed"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
+scale = Vector2(1.4, 1.4)
 shape = SubResource("RectangleShape2D_eyo04")
