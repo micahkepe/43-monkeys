@@ -10,6 +10,8 @@ extends "res://levels/default_level.gd"
 
 # Get door from the scene tree.
 @onready var door = $World/Doors/Door
+@onready var background_music = $BackgroundMusic
+@onready var boss_music = $BossMusic
 
 ## A dictionary to track the state of each button.
 var _button_states = {}
@@ -30,10 +32,12 @@ var _laser_4_deactivated: bool = false
 
 ## Track the boss.
 @onready var potion_boss = $World/PotionBoss
+@onready var boss_dead = false
 
 #############
 
 func _ready() -> void:
+	background_music.play()
 	for button in buttons:
 		# Initialize each button's state as false (not pressed)
 		_button_states[button] = false
@@ -98,6 +102,10 @@ func check_boss_death() -> void:
 	# move this logic to occur when the player enters the trigger area.
 	if potion_boss and potion_boss.is_dead and door and door.is_active:
 		door.open_door()
+		boss_music.stop()
+		background_music.play()
+		boss_dead = true
+		
 		
 
 ## Called when a body enters the trigger area for next level.
@@ -129,3 +137,9 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 		get_tree().root.add_child(transition_instance)
 		get_tree().current_scene.queue_free()
 		get_tree().current_scene = transition_instance
+
+
+func _on_boss_music_trigger_body_entered(body: Node2D) -> void:
+	if background_music.playing and not boss_dead:
+		background_music.stop()
+		boss_music.play()
