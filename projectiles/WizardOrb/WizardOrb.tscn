@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpwxrusy6rt0i"]
+
+[ext_resource type="Texture2D" uid="uid://cnr1hwibg0ene" path="res://assets/sprites/attacks/wizardMonkeyAttacks/wizard_ball.png" id="1_wqih5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0b7aq"]
+size = Vector2(12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_av1i2"]
+atlas = ExtResource("1_wqih5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7v4g3"]
+atlas = ExtResource("1_wqih5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5llpl"]
+atlas = ExtResource("1_wqih5")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm8pa"]
+atlas = ExtResource("1_wqih5")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gc0xq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_av1i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7v4g3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5llpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fm8pa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="WizardOrb" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0b7aq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gc0xq")
+frame_progress = 0.459399

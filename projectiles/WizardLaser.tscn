@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbjj0fdoyubvd"]
+
+[ext_resource type="Texture2D" uid="uid://cvg8k203vtha5" path="res://assets/sprites/attacks/wizardMonkeyAttacks/wizard_laser.png" id="1_wfaxo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23eps"]
+atlas = ExtResource("1_wfaxo")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3y2m"]
+atlas = ExtResource("1_wfaxo")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djcy2"]
+atlas = ExtResource("1_wfaxo")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7k0c"]
+atlas = ExtResource("1_wfaxo")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1r0i"]
+atlas = ExtResource("1_wfaxo")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvl8n"]
+atlas = ExtResource("1_wfaxo")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n5vm7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23eps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3y2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djcy2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7k0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1r0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvl8n")
+}],
+"loop": true,
+"name": &"LaserMove",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_im84d"]
+size = Vector2(64, 16)
+
+[node name="WizardLaser" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n5vm7")
+animation = &"LaserMove"
+frame_progress = 0.0319705
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_im84d")
