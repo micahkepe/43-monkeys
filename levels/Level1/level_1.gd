@@ -105,13 +105,12 @@ func check_boss_death() -> void:
 		boss_music.stop()
 		background_music.play()
 		boss_dead = true
-		
-		
+
 
 ## Called when a body enters the trigger area for next level.
 func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		#transiition to next level
+		# Transition to next level
 		var player = $World/Player
 		var troop_count = player.get_troop_count() if player else 6
 		var monkey_health = []
@@ -139,7 +138,7 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 		get_tree().current_scene = transition_instance
 
 
-func _on_boss_music_trigger_body_entered(body: Node2D) -> void:
+func _on_boss_music_trigger_body_entered(_body: Node2D) -> void:
 	if background_music.playing and not boss_dead:
 		background_music.stop()
 		boss_music.play()
