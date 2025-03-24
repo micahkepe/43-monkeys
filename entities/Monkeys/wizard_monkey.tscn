@@ -567,11 +567,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gs70g"]
-radius = 5.33333
-height = 24.0
+radius = 9.0
+height = 48.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0kf3p"]
-size = Vector2(35, 59.25)
+size = Vector2(70.5, 131.906)
 
 [sub_resource type="Animation" id="Animation_ygi1o"]
 length = 0.001
@@ -1128,21 +1128,22 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_xsyrx")
-banana_boomerang_scene = ExtResource("2_aqovo")
+default_projectile_scene = ExtResource("2_aqovo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_8c6rb")
 animation = &"idle_down"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_x3rfr")]
-offset_left = -16.0
-offset_top = -35.0
-offset_right = 17.0
-offset_bottom = -31.0
+offset_left = -24.0
+offset_top = -77.0
+offset_right = 24.0
+offset_bottom = -70.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(-2.30926e-14, 22.6667)
+position = Vector2(-2.30926e-14, 45)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_gs70g")
 
@@ -1151,7 +1152,6 @@ collision_layer = 8
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_0kf3p")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

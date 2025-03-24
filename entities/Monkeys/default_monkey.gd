@@ -32,8 +32,8 @@ var locked: bool = false
 ## The HealthBar node to display the monkey's health
 @onready var health_bar = $HealthBar
 
-## The PackedScene for the banana boomerang projectile
-@export var banana_boomerang_scene: PackedScene
+## The PackedScene for the monkey's default projectile
+@export var default_projectile_scene: PackedScene
 
 ## The monkey's attack range
 @export var attack_range: float = 400.0
@@ -87,7 +87,7 @@ var is_caged: bool:
 				health_bar.hide()
 			else: # If being released from cage
 				health_bar.show()
-				
+
 ## Track the last velocity of the monkey to check for changes.
 var _last_velocity: Vector2 = Vector2.ZERO
 
@@ -105,10 +105,10 @@ var is_attacking: bool = false
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
-	
+
 	# Hide health bar initially - will be shown when monkey joins the troop
 	health_bar.hide()
-	
+
 	# Setup RayCasts for collision avoidance
 	_setup_collision_raycasts()
 
@@ -211,14 +211,14 @@ func _physics_process(_delta: float) -> void:
 		if health_bar:
 			health_bar.hide()
 		return
-	
+
 	if paralyzed:
 		# Override any external movement:
 		global_position = frozen_position
 		velocity = Vector2.ZERO
 		_animated_sprite.pause()
 		return
-		
+
 	# Check for enemy vision
 	_check_vision_detection()
 
@@ -233,7 +233,7 @@ func _physics_process(_delta: float) -> void:
 		for body in overlapping_bodies:
 			if body.is_in_group("boids"):  # Assuming boids are the enemies
 				targets.append(body)
-		
+
 		if targets.size() > 0:
 			var closest_target = _get_closest_target_from_list(targets)
 			if closest_target:
@@ -280,7 +280,7 @@ func _play_attack_animation(target: Node2D) -> void:
 	animation_tree.set("parameters/Attack/BlendSpace2D/blend_position", direction)
 	# Transition to the attack state.
 	is_attacking = true
-	
+
 func _update_animation() -> void:
 	if paralyzed:
 		return
@@ -299,10 +299,10 @@ func _update_animation() -> void:
 
 func animate_walk(input_velocity: Vector2) -> void:
 	#print("ANIMATE WALK CALL!")
-	
+
 	if paralyzed or is_attacking:
 		return
-	
+
 	if input_velocity == Vector2.ZERO and not is_input_pressed():
 		#print("==== IDLING WITH VELOCITY: ", input_velocity)
 		animation_tree.get("parameters/playback").travel("Idle")
@@ -315,8 +315,8 @@ func animate_walk(input_velocity: Vector2) -> void:
 			animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", input_velocity)
 			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", input_velocity)
 			_update_vision_rays(input_velocity)
-	
-	
+
+
 func is_input_pressed() -> bool:
 	return (Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left") or
 	Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_up"))
@@ -394,10 +394,10 @@ func _update_vision_rays(direction: Vector2) -> void:
 		_raycast_vision_15_left: -15.0,
 		_raycast_vision_15_right: 15.0
 	}
-	
+
 	# Normalize the direction vector to avoid scaling issues.
 	var norm_direction = direction.normalized()
-	
+
 	# Update each raycast's target_position by rotating the normalized direction by the angle offset
 	# and then scaling by vision_range.
 	for raycast in angle_offsets.keys():
@@ -463,17 +463,17 @@ func take_damage(amount: float) -> void:
 ## Function to throw a banana at a specific position
 ## Function to throw a banana at a specific position
 func _throw_banana_at_position(target_position: Vector2) -> void:
-	if banana_boomerang_scene == null:
+	if default_projectile_scene == null:
 		return
 
-	var projectile = banana_boomerang_scene.instantiate()
+	var projectile = default_projectile_scene.instantiate()
 	if projectile == null:
 		return
-	
+
 	# Tag the projectile as friendly
 	projectile.set_meta("friendly", true)
 	projectile.set_meta("owner", self)
-	
+
 	var shoot_direction = (target_position - global_position).normalized()
 	var offset_distance = 30.0
 	var spawn_offset = shoot_direction * offset_distance
@@ -542,18 +542,18 @@ func heal(amount: float) -> void:
 	_animated_sprite.modulate = Color(1, 1, 1, 1)    # Reset to normal color
 
 	print_debug("Monkey healed by ", amount, ". Current health: ", current_health)
-	
-	
+
+
 func apply_blindness(seconds: float) -> void:
 	var prev_range = attack_range
 	attack_range = 0
-	
+
 	# momentarily recolor the monkey to indicate damage
 	_animated_sprite.modulate = Color(1, 0.55, 0, 1)
 	await get_tree().create_timer(seconds).timeout
 	_animated_sprite.modulate = Color(1, 1, 1, 1)
 	attack_range = prev_range
-	
+
 func paralyze(duration: float) -> void:
 	paralyzed = true
 	frozen_position = global_position  # Save the current position

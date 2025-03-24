@@ -563,11 +563,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wklgv"]
-radius = 5.33333
-height = 24.0
+radius = 9.0
+height = 52.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hq3as"]
-size = Vector2(35, 59.25)
+size = Vector2(72.75, 114.812)
 
 [sub_resource type="Animation" id="Animation_ygi1o"]
 length = 0.001
@@ -1121,25 +1121,25 @@ graph_offset = Vector2(66.4799, -8.49253)
 
 [node name="PirateMonkey" type="CharacterBody2D" groups=["troop"]]
 y_sort_enabled = true
-scale = Vector2(0.75, 0.75)
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_8qukr")
-banana_boomerang_scene = ExtResource("2_t2inc")
+default_projectile_scene = ExtResource("2_t2inc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_nh1ph")
 animation = &"idle_down"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_1ny1a")]
-offset_left = -16.0
-offset_top = -32.0
-offset_right = 17.0
-offset_bottom = -28.0
+offset_left = -25.0
+offset_top = -69.0
+offset_right = 25.0
+offset_bottom = -62.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(-2.30926e-14, 22.6667)
+position = Vector2(0, 45)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_wklgv")
 
@@ -1148,7 +1148,6 @@ collision_layer = 8
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_hq3as")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

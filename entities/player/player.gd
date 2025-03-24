@@ -242,7 +242,7 @@ func _physics_process(_delta: float) -> void:
 	if not _troop_locked and len(_swarm_monkeys) > 0:
 		for entry in _swarm_monkeys:
 			entry["node"].animate_walk(input_velocity)
-		
+
 
 	# Decrement the shoot cool down
 	if _current_shoot_cooldown > 0.0:
@@ -301,18 +301,15 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 
 		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
 		new_monkey = new_monkey_scene.instantiate()
-		#new_monkey = monkey_scenes[0].instantiate()
-		new_monkey.scale = Vector2(2.5, 2.5)
 		print_debug("Spawning a new monkey for the swarm!")
 		_swarm_monkeys_root.add_child(new_monkey)
 		# new_monkey will be positioned based on its scene settings.
 
-	new_monkey.scale = Vector2(2.5, 2.5)
-	
+
 	# Show the monkey's health bar now that it's part of the troop
 	if "health_bar" in new_monkey and new_monkey.health_bar:
 		new_monkey.health_bar.show()
-		
+
 	# Update is_caged flag to false now that the monkey is in the troop
 	if "is_caged" in new_monkey:
 		new_monkey.is_caged = false
@@ -370,7 +367,7 @@ func _update_swarm_positions() -> void:
 			var to_target = target_position - monkey.global_position
 			if to_target.length() < 5.0:
 				monkey.velocity = Vector2.ZERO
-				
+
 				var base_speed = speed
 				# How fast the ellipse is spinning this frame:
 				var angular_velocity = abs(_current_rotation_speed_in_radians_per_sec)
@@ -388,10 +385,10 @@ func _update_swarm_positions() -> void:
 				if factor < 0.01:
 					factor = 0
 				monkey.velocity = to_target.normalized() * final_speed * factor
-				
-				
-				
-				
+
+
+
+
 				if entry.has("transitioning"):
 					entry["transitioning"] = false
 			else:
@@ -837,7 +834,7 @@ func heal_troop() -> void:
 		var monkey = entry["node"]
 		if "current_health" in monkey and "max_health" in monkey:
 			monkey.current_health = monkey.max_health
-			
+
 			# Update health bar if it exists
 			if "health_bar" in monkey and monkey.health_bar:
 				monkey.health_bar.value = monkey.current_health

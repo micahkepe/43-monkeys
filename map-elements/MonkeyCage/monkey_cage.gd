@@ -92,10 +92,6 @@ func spawn_caged_monkey() -> void:
 	# Set global position correctly
 	new_monkey.position = Vector2(0, -5)
 
-	# Set global scale correctly
-	var desired_global_scale = Vector2(1.87125, 1.87125)
-	new_monkey.scale = desired_global_scale / monkey_holder.global_scale
-
 	# Add monkey as a child of MonkeyHolder
 	monkey_holder.add_child(new_monkey)
 
@@ -109,8 +105,7 @@ func spawn_caged_monkey() -> void:
 	if caged_monkey and caged_monkey.is_in_group("troop"):
 		caged_monkey.remove_from_group("troop")
 
-	print("Monkey spawned inside the cage with correct global scale!")
-	print("Monkey spawned inside cage at:", caged_monkey.global_position)
+	print_debug("Monkey spawned inside cage at:", caged_monkey.global_position)
 
 
 ## Open the cage door and release the monkey inside.
