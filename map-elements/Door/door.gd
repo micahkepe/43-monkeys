@@ -34,6 +34,9 @@ func open_door() -> void:
 	is_active = false
 	animated_sprite.play("door_open")
 
+	if $UnlockSound:
+		$UnlockSound.play()
+
 	# Disable the Area2D's collision shape.
 	$CollisionShape2D.set_deferred("disabled", true)
 

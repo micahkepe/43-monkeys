@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://cnb3ai5pql4is"]
+[gd_scene load_steps=24 format=3 uid="uid://cnb3ai5pql4is"]
 
 [ext_resource type="Script" uid="uid://cngkdw0rtk4a4" path="res://map-elements/Door/door.gd" id="1_t88dl"]
 [ext_resource type="Texture2D" uid="uid://br0fg4kf2hopl" path="res://assets/sprites/tilesets/door_animation.png" id="2_637g4"]
+[ext_resource type="AudioStream" uid="uid://cv2ww370fisny" path="res://assets/sfx/items/doors/door-unlock.wav" id="3_oa06f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oskrp"]
 atlas = ExtResource("2_637g4")
@@ -169,3 +170,8 @@ animation = &"closed"
 position = Vector2(-0.5, 0)
 scale = Vector2(1.4, 1.4)
 shape = SubResource("RectangleShape2D_eyo04")
+
+[node name="UnlockSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_oa06f")
+volume_db = -10.0
+bus = &"SFX"

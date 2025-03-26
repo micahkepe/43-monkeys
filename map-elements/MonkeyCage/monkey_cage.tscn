@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://byjjnstxuhusk" path="res://entities/Monkeys/santa_monkey.tscn" id="5_g1bd5"]
 [ext_resource type="PackedScene" uid="uid://dlv2gwbsq0ljg" path="res://entities/Monkeys/wizard_monkey.tscn" id="6_g1dgp"]
 [ext_resource type="PackedScene" uid="uid://b8v4eyt7ey3dn" path="res://entities/Monkeys/roman_monkey.tscn" id="7_y2v3c"]
-[ext_resource type="AudioStream" uid="uid://bqjcofc7qx8ds" path="res://assets/sfx/items/iron-door.wav" id="8_o2rp2"]
+[ext_resource type="AudioStream" uid="uid://bqjcofc7qx8ds" path="res://assets/sfx/items/doors/iron-door.wav" id="8_o2rp2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_at7vg"]
 atlas = ExtResource("2_ocib3")

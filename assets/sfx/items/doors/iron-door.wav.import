@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bqjcofc7qx8ds"
-path="res://.godot/imported/iron-door.wav-13917a07be5d09235eb329dace72819f.sample"
+path="res://.godot/imported/iron-door.wav-6881a171b648b11158981ec3b27e7b11.sample"
 
 [deps]
 
-source_file="res://assets/sfx/items/iron-door.wav"
-dest_files=["res://.godot/imported/iron-door.wav-13917a07be5d09235eb329dace72819f.sample"]
+source_file="res://assets/sfx/items/doors/iron-door.wav"
+dest_files=["res://.godot/imported/iron-door.wav-6881a171b648b11158981ec3b27e7b11.sample"]
 
 [params]
 
