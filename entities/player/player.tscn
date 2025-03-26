@@ -795,7 +795,6 @@ blindness_overlay_scene = ExtResource("3_0k4ps")
 monkey_scenes = Array[PackedScene]([ExtResource("3_73h8e"), ExtResource("4_xwpq6"), ExtResource("5_dvwff"), ExtResource("6_ghmbx"), ExtResource("7_facpj"), ExtResource("9_p3y6h")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 1
 position = Vector2(0, 38)
 rotation = 1.57284
 shape = SubResource("CapsuleShape2D_dl0wg")

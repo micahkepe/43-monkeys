@@ -20,6 +20,9 @@ extends CharacterBody2D
 @export var blindness_potion_scene: PackedScene
 @export var paralyze_potion_scene: PackedScene
 
+## Distance to start avoiding obstacles
+@export var avoid_distance: float = 100.0
+
 ## The PotionBoss has a health bar that displays its current health.
 @onready var health_bar = $HealthBar
 
@@ -50,11 +53,11 @@ var current_target: Vector2 = Vector2.ZERO
 ## How close to the target before picking a new one
 @export var proximity_threshold: float = 10.0
 
-## Minimum wait time between moves
-@export var min_wait_time: float = 0.8
+## Minimum wait time between moves (in seconds)
+@export var min_wait_time: float = 0.5
 
-## Maximum wait time between moves
-@export var max_wait_time: float = 2.5
+## Maximum wait time between moves (in seconds)
+@export var max_wait_time: float = 2
 
 ## Track the last animation played
 var last_animation: String = "idle_down"
@@ -90,10 +93,9 @@ func _ready() -> void:
 ## The waypoint is chosen within the bounds of the screen.
 ## @return Vector2 The random waypoint.
 func choose_next_waypoint() -> Vector2:
-
-	# TODO: make movement smarter, not random
-	# - check for collisions
-	# - dodge incoming projectiles
+	var max_attempts = 10
+	var attempts = 0
+	var waypoint = Vector2.ZERO
 
 	# Level bounds
 	var min_x = 6562 + 50
@@ -101,7 +103,29 @@ func choose_next_waypoint() -> Vector2:
 	var min_y = -1785 + 50
 	var max_y = -368 - 50
 
-	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+	while attempts < max_attempts:
+		var target = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsRayQueryParameters2D.create(global_position, target, 1) # Mask for layer 1
+		var result = space_state.intersect_ray(query)
+
+		if result:
+			var distance_to_obstacle = global_position.distance_to(result.position)
+			print("Raycast hit at: ", result.position, " Distance: ", distance_to_obstacle)
+			if distance_to_obstacle < avoid_distance:
+				attempts += 1
+				continue
+		else:
+			print("Raycast found no obstacles to ", target)
+
+		waypoint = target
+		break
+
+	if waypoint == Vector2.ZERO:  # Fallback if all attempts fail
+		print("Warning: Could not find clear waypoint after ", max_attempts, " attempts")
+		waypoint = Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
+
+	return waypoint
 
 
 ## Move the PotionBoss to the next random waypoint.
@@ -110,7 +134,7 @@ func move_to_next_waypoint() -> void:
 
 ## Called every frame. Handles movement and attack logic.
 func _physics_process(_delta: float) -> void:
-	if is_dead:
+	if is_dead or current_target == Vector2.ZERO:
 		return
 
 	# Update animation
@@ -129,6 +153,27 @@ func _physics_process(_delta: float) -> void:
 				_play_attack_animation(closest_target)
 				if closest_target.has_method("take_damage"):
 					closest_target.take_damage(slash_damage)
+	else:
+		# Move toward target with obstacle avoidance
+		var direction = (current_target - global_position).normalized()
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsRayQueryParameters2D.create(global_position, global_position + direction * avoid_distance, 1)
+		var result = space_state.intersect_ray(query)
+
+		if result and global_position.distance_to(result.position) < avoid_distance:
+			# Obstacle detected, adjust direction
+			var normal = result.normal
+			direction = direction.slide(normal).normalized()
+			print("Adjusting direction to avoid obstacle: ", direction)
+
+		velocity = direction * move_speed
+		move_and_slide()
+
+		if global_position.distance_to(current_target) <= proximity_threshold:
+			velocity = Vector2.ZERO
+			current_target = Vector2.ZERO
+			start_wait_timer()
+
 
 ## Helper function to get the closest target from a list
 func _get_closest_target_from_list(target_list: Array) -> Node2D:
@@ -177,7 +222,7 @@ func _update_boss_animation() -> void:
 				else:
 					play_animation("walk_up")
 
-		move_and_slide()
+		# move_and_slide()
 
 		if global_position.distance_to(current_target) <= proximity_threshold:
 			velocity = Vector2.ZERO
