@@ -1,24 +1,25 @@
-[gd_scene load_steps=34 format=4 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=35 format=4 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" uid="uid://c84qq2gb5de8x" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
-[ext_resource type="PackedScene" uid="uid://bl18cr6lscsw7" path="res://entities/Bosses/RootBoss/root_boss.tscn" id="2_udhy0"]
+[ext_resource type="PackedScene" uid="uid://bl18cr6lscsw7" path="res://entities/bosses/RootBoss/root_boss.tscn" id="2_udhy0"]
 [ext_resource type="AudioStream" uid="uid://dndthokwu6e1m" path="res://assets/music/bospad-type-beat/bospad-type-beat.ogg" id="2_xwg0x"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="3_raq3w"]
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="4_2lluf"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="4_krnvu"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="4_krnvu"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_5nw5w"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="5_hw5yd"]
 [ext_resource type="Texture2D" uid="uid://bq1iptccykk36" path="res://assets/sprites/tilesets/level2_walls.png" id="5_sfd4i"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_137nh"]
-[ext_resource type="PackedScene" uid="uid://bosg5oeaw8eqj" path="res://entities/Boids/BroccoliBoid/broccoli_boid.tscn" id="9_rjxle"]
+[ext_resource type="PackedScene" uid="uid://bosg5oeaw8eqj" path="res://entities/boids/BroccoliBoid/broccoli_boid.tscn" id="9_rjxle"]
 [ext_resource type="PackedScene" uid="uid://magcl27gfs7r" path="res://map-elements/Vat/vat.tscn" id="10_g8bd1"]
-[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="10_hs6h0"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="10_hs6h0"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="11_gn2fk"]
-[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/Boids/Femoid1/femoid_1.tscn" id="11_ur5m1"]
-[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/Boids/Heisenboid/heisenboid.tscn" id="12_6uqxu"]
-[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/Boids/HouseBoid/house_boid.tscn" id="13_cxc8n"]
-[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/Boids/ForemanBoid/foreman_boid.tscn" id="14_jcsp7"]
+[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/boids/Femoid1/femoid_1.tscn" id="11_ur5m1"]
+[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/boids/Heisenboid/heisenboid.tscn" id="12_6uqxu"]
+[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/boids/HouseBoid/house_boid.tscn" id="13_cxc8n"]
+[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/boids/ForemanBoid/foreman_boid.tscn" id="14_jcsp7"]
+[ext_resource type="AudioStream" uid="uid://bk8gj2gogrhq3" path="res://assets/music/boss-music/bosslevel2.mp3" id="20_80t53"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8si7"]
 texture = ExtResource("2_jhhqm")
@@ -654,7 +655,6 @@ tile_set = SubResource("TileSet_qbeh1")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xwg0x")
-autoplay = true
 bus = &"Music"
 parameters/looping = true
 
@@ -662,5 +662,9 @@ parameters/looping = true
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("11_gn2fk")]
 visible = false
+
+[node name="BossMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_80t53")
+parameters/looping = false
 
 [connection signal="body_entered" from="World/BossTrigger" to="." method="_on_boss_spawn_trigger_body_entered"]

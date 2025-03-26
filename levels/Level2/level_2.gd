@@ -5,9 +5,14 @@ var troop_data: Dictionary = {}
 @export var root_boss_scene: PackedScene  # Assign res://entities/bosses/RootBoss/root_boss.tscn in the editor
 var boss_spawned: bool = false
 var boss_instance: Node = null
+@onready var boss_dead = false
+
+@onready var background_music = $BackgroundMusic
+@onready var boss_music = $BossMusic
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	background_music.play()
 	if not troop_data.is_empty():
 		initialize_from_troop_data()
 	if has_node("World/BossTrigger"):
@@ -56,8 +61,19 @@ func initialize_from_troop_data() -> void:
 
 ## Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	check_boss_death()
 
+## Check if the boss is dead and transition to the next level.
+func check_boss_death() -> void:
+	# move this logic to occur when the player enters the trigger area.
+	# Add door later
+	#if boss_instance and boss_instance.is_dead and door and door.is_active:
+		#door.open_door()
+	if boss_instance and boss_instance.is_dead:
+		boss_music.stop()
+		background_music.play()
+		boss_dead = true
+		
 ## Spawn the RootBoss at a specific position.
 func spawn_root_boss() -> void:
 	if not root_boss_scene:
@@ -80,3 +96,6 @@ func _on_boss_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and not boss_spawned:
 		spawn_root_boss()
 		boss_spawned = true
+	if background_music.playing and not boss_dead:
+		background_music.stop()
+		boss_music.play()
