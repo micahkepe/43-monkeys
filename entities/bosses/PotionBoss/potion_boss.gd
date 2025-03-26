@@ -68,6 +68,9 @@ var is_dead: bool = false
 ## Timer for random attacks
 var attack_timer: Timer
 
+## Slash damage
+var slash_damage: int = 1
+
 
 ## Initialize the PotionBoss.
 func _ready() -> void:
@@ -83,26 +86,82 @@ func _ready() -> void:
 	_start_random_attack_timer()
 
 
-## Choose a random waypoint for the PotionBoss to move to.
+## Choose a waypoint for the PotionBoss to move to.
 ## The waypoint is chosen within the bounds of the screen.
 ## @return Vector2 The random waypoint.
-func choose_random_waypoint() -> Vector2:
+func choose_next_waypoint() -> Vector2:
+
+	# TODO: make movement smarter, not random
+	# - check for collisions
+	# - dodge incoming projectiles
+
+	# Level bounds
 	var min_x = 6562 + 50
 	var max_x = 7560 - 50
 	var min_y = -1785 + 50
 	var max_y = -368 - 50
+
 	return Vector2(randf_range(min_x, max_x), randf_range(min_y, max_y))
 
 
 ## Move the PotionBoss to the next random waypoint.
 func move_to_next_waypoint() -> void:
-	current_target = choose_random_waypoint()
+	current_target = choose_next_waypoint()
 
 ## Called every frame. Handles movement and attack logic.
 func _physics_process(_delta: float) -> void:
 	if is_dead:
 		return
 
+	# Update animation
+	_update_boss_animation()
+
+	# Check for colliding monkeys to attack
+	var overlapping_bodies = $HitBox.get_overlapping_bodies()
+	var targets = []
+	for body in overlapping_bodies:
+		if body.is_in_group("player") or body.is_in_group("troop"):
+				targets.append(body)
+
+	if targets.size() > 0:
+			var closest_target = _get_closest_target_from_list(targets)
+			if closest_target:
+				_play_attack_animation(closest_target)
+				if closest_target.has_method("take_damage"):
+					closest_target.take_damage(slash_damage)
+
+## Helper function to get the closest target from a list
+func _get_closest_target_from_list(target_list: Array) -> Node2D:
+	if target_list.is_empty():
+		return null
+	var closest_target = target_list[0]
+	var min_distance = global_position.distance_to(closest_target.global_position)
+	for target in target_list.slice(1):
+		var distance = global_position.distance_to(target.global_position)
+		if distance < min_distance:
+			closest_target = target
+			min_distance = distance
+	return closest_target
+
+## Plays the attack animation and applies damage to the target node.
+## @param target: Node2D - The target node to attack.
+func _play_attack_animation(target: Node2D) -> void:
+	var direction = (target.global_position - global_position).normalized()
+	print_debug("Playing attack animation. Direction: ", direction)
+
+	if abs(direction.x) > abs(direction.y):
+		# Horizontal attack
+		_animated_sprite.play("slash_right" if direction.x > 0 else "slash_left")
+		print_debug("Playing horizontal attack animation: ", "slash_right" if direction.x > 0 else "slash_left")
+	else:
+		# Vertical attack
+		_animated_sprite.play("slash_down" if direction.y > 0 else "slash_up")
+		print_debug("Playing vertical attack animation: ", "slash_down" if direction.y > 0 else "slash_up")
+
+	is_attacking = true
+
+
+func _update_boss_animation() -> void:
 	if current_target != Vector2.ZERO:
 		var direction = (current_target - global_position).normalized()
 		velocity = direction * move_speed
@@ -117,7 +176,9 @@ func _physics_process(_delta: float) -> void:
 					play_animation("walk_down")
 				else:
 					play_animation("walk_up")
+
 		move_and_slide()
+
 		if global_position.distance_to(current_target) <= proximity_threshold:
 			velocity = Vector2.ZERO
 			current_target = Vector2.ZERO
