@@ -141,4 +141,3 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 func _on_boss_music_trigger_body_entered(_body: Node2D) -> void:
 	if background_music.playing and not boss_dead:
 		fade_between_tracks(background_music, boss_music)
-
