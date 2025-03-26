@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpwxrusy6rt0i"]
+[gd_scene load_steps=11 format=3 uid="uid://dpwxrusy6rt0i"]
 
+[ext_resource type="Script" uid="uid://dwt0c4v2em35t" path="res://projectiles/WizardOrb/wizard_orb.gd" id="1_0b7aq"]
 [ext_resource type="Texture2D" uid="uid://cnr1hwibg0ene" path="res://assets/sprites/attacks/wizardMonkeyAttacks/wizard_ball.png" id="1_wqih5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0b7aq"]
@@ -37,15 +38,39 @@ animations = [{
 "texture": SubResource("AtlasTexture_fm8pa")
 }],
 "loop": true,
-"name": &"default",
+"name": &"orb_pulse",
 "speed": 8.0
 }]
 
-[node name="WizardOrb" type="Area2D"]
+[sub_resource type="Gradient" id="Gradient_8mq50"]
+offsets = PackedFloat32Array(0.0582751, 0.741259)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0b7aq"]
+gradient = SubResource("Gradient_8mq50")
+width = 32
+height = 32
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="WizardOrb" type="Area2D" groups=["projectiles"]]
+collision_layer = 4
+collision_mask = 35
+script = ExtResource("1_0b7aq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0b7aq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gc0xq")
-frame_progress = 0.459399
+animation = &"orb_pulse"
+frame_progress = 0.140373
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+color = Color(0.586942, 0.392552, 0.958609, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_0b7aq")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

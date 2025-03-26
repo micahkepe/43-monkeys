@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bumdf8v27ed33" path="res://assets/sprites/characters/monkeys/wizard-monkey.png" id="1_c10kj"]
 [ext_resource type="Script" uid="uid://dcwcnknvr4h23" path="res://entities/Monkeys/default_monkey.gd" id="1_xsyrx"]
-[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_aqovo"]
+[ext_resource type="PackedScene" uid="uid://dpwxrusy6rt0i" path="res://projectiles/WizardOrb/WizardOrb.tscn" id="2_m7k48"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_7lncv"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="3_x3rfr"]
 
@@ -1128,7 +1128,7 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_xsyrx")
-default_projectile_scene = ExtResource("2_aqovo")
+default_projectile_scene = ExtResource("2_m7k48")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
