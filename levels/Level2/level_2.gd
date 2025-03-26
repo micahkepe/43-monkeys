@@ -9,9 +9,16 @@ var boss_instance: Node = null
 
 @onready var background_music = $BackgroundMusic
 @onready var boss_music = $BossMusic
+@export var fade_duration: float = 1.0  # Duration of fade in seconds
+var _current_fade_tween: Tween = null
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("Audio nodes check - Background music exists:", background_music != null)
+	print("Audio nodes check - Boss music exists:", boss_music != null)
+	print("Audio stream check - Background music has stream:", background_music.stream != null)
+	print("Audio stream check - Boss music has stream:", boss_music.stream != null)
 	background_music.play()
 	if not troop_data.is_empty():
 		initialize_from_troop_data()
@@ -65,13 +72,12 @@ func _process(_delta: float) -> void:
 
 ## Check if the boss is dead and transition to the next level.
 func check_boss_death() -> void:
-	# move this logic to occur when the player enters the trigger area.
-	# Add door later
-	#if boss_instance and boss_instance.is_dead and door and door.is_active:
-		#door.open_door()
-	if boss_instance and boss_instance.is_dead:
-		boss_music.stop()
-		background_music.play()
+	if boss_instance and boss_instance.is_dead and not boss_dead:
+		print("Boss death detected - transitioning music")
+		
+		# Simple fade transition with safeguards
+		simple_fade_transition(boss_music, background_music)
+		
 		boss_dead = true
 		
 ## Spawn the RootBoss at a specific position.
@@ -97,5 +103,76 @@ func _on_boss_trigger_body_entered(body: Node2D) -> void:
 		spawn_root_boss()
 		boss_spawned = true
 	if background_music.playing and not boss_dead:
-		background_music.stop()
-		boss_music.play()
+		fade_between_tracks(background_music, boss_music)
+		
+func fade_between_tracks(from_track: AudioStreamPlayer, to_track: AudioStreamPlayer) -> void:
+	print("Starting fade from:", from_track.name, "to:", to_track.name)
+	print("Initial states - From track playing:", from_track.playing, "volume:", from_track.volume_db)
+	print("Initial states - To track playing:", to_track.playing, "volume:", to_track.volume_db)
+	
+	# Cancel any existing fade tween
+	if _current_fade_tween:
+		_current_fade_tween.kill()
+		print("Killed existing tween")
+	
+	# Store original volumes
+	var from_volume_db = from_track.volume_db
+	var to_volume_db = to_track.volume_db if to_track.volume_db > -70.0 else 0.0  # Use 0.0 as default if too quiet
+	
+	print("Original volumes - From:", from_volume_db, "To:", to_volume_db)
+	
+	# Explicitly handle the transition
+	to_track.volume_db = -80.0
+	to_track.play()
+	print("Started to_track:", to_track.name, "playing:", to_track.playing)
+	
+	# Create a new tween for fading
+	_current_fade_tween = create_tween()
+	
+	# Fade out from_track
+	_current_fade_tween.tween_property(from_track, "volume_db", -80.0, fade_duration)
+	print("Started fade out of:", from_track.name)
+	
+	# After fade out completes
+	_current_fade_tween.tween_callback(func():
+		print("Fade out complete for:", from_track.name)
+		from_track.stop()
+		from_track.volume_db = from_volume_db
+		print("Reset volume for:", from_track.name, "to:", from_volume_db)
+	)
+	
+	# Create a separate tween for fading in (don't make it parallel to avoid timing issues)
+	var fade_in_tween = create_tween()
+	fade_in_tween.tween_property(to_track, "volume_db", to_volume_db, fade_duration)
+	print("Started fade in of:", to_track.name, "to target volume:", to_volume_db)
+	
+	# After fade in completes
+	fade_in_tween.tween_callback(func():
+		print("Fade in complete for:", to_track.name)
+		print("Final states - To track playing:", to_track.playing, "volume:", to_track.volume_db)
+	)
+
+# A simplified, more robust fade transition function
+func simple_fade_transition(from_track: AudioStreamPlayer, to_track: AudioStreamPlayer) -> void:
+	print("Starting simplified fade transition")
+	
+	# Make sure the destination track is ready
+	to_track.volume_db = -40.0  # Start at a very quiet level
+	to_track.play()
+	
+	# Create separate tweens for fade-out and fade-in to avoid dependencies
+	var fade_out = create_tween()
+	fade_out.tween_property(from_track, "volume_db", -40.0, fade_duration)
+	fade_out.tween_callback(func():
+		from_track.stop()
+	)
+	
+	# Small delay before starting fade-in to ensure they don't conflict
+	await get_tree().create_timer(0.1).timeout
+	
+	# Now handle fade-in separately
+	var fade_in = create_tween()
+	fade_in.tween_property(to_track, "volume_db", 0.0, fade_duration)
+	fade_in.tween_callback(func():
+		print("Fade transition complete")
+	)
