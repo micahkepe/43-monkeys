@@ -149,7 +149,7 @@ func _physics_process(delta: float) -> void:
 		for body in overlapping_bodies:
 			if body.is_in_group("player") or body.is_in_group("troop"):
 				targets.append(body)
-		
+
 		if targets.size() > 0:
 			var closest_target = _get_closest_target_from_list(targets)
 			if closest_target:
@@ -258,7 +258,7 @@ func _update_animation() -> void:
 			if body.is_in_group("player") or body.is_in_group("troop"):
 				has_valid_target = true
 				break
-		
+
 		if not has_valid_target:
 			is_attacking = false
 			# Transition back to movement animation

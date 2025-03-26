@@ -384,7 +384,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_abace")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle_down",
 "speed": 5.0
 }, {
@@ -392,7 +392,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gehxo")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle_left",
 "speed": 5.0
 }, {
@@ -400,7 +400,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tgsgw")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle_right",
 "speed": 5.0
 }, {
@@ -408,7 +408,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dlrdq")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle_up",
 "speed": 5.0
 }, {
@@ -428,9 +428,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n76pa")
 }],
-"loop": false,
+"loop": true,
 "name": &"slash_down",
-"speed": 8.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -450,7 +450,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"slash_left",
-"speed": 8.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -468,9 +468,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7olau")
 }],
-"loop": false,
+"loop": true,
 "name": &"slash_right",
-"speed": 8.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -488,9 +488,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6b7oj")
 }],
-"loop": false,
+"loop": true,
 "name": &"slash_up",
-"speed": 8.0
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -690,7 +690,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1tgm"]
-radius = 7.33333
+radius = 5.33333
 height = 17.3333
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jefyw"]
@@ -728,11 +728,12 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_enwfc")
 position = Vector2(1, -22)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_vqgia")
-animation = &"slash_right"
+animation = &"slash_down"
+frame = 1
+frame_progress = 0.576363
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-z_index = 1
-position = Vector2(0, 44)
+position = Vector2(-1, 45)
 rotation = 1.5708
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_g1tgm")
