@@ -769,12 +769,18 @@ func _die():
 
 	print("PotionBoss died!")
 	_animated_sprite.play("die")
+
+	if $DieSFX:
+		$DieSFX.play()
+
 	# NOTE: The boss will be removed from the scene tree when the animation finishes
 
 ## Handles the animation finished signal for the boid.
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
 		_animated_sprite.stop()
+		if $DieSFX.playing:
+			await $DieSFX.finished
 		queue_free()
 	elif _animated_sprite.animation.begins_with("spell"):
 		is_attacking = false

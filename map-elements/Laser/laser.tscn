@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0jfylax23b4g"]
+[gd_scene load_steps=18 format=3 uid="uid://d0jfylax23b4g"]
 
 [ext_resource type="Texture2D" uid="uid://bmjhrqdnqpmi5" path="res://assets/sprites/tilesets/laser.png" id="1_rdxdw"]
 [ext_resource type="Script" uid="uid://bycqikmc2fsee" path="res://map-elements/Laser/laser.gd" id="1_y8frr"]
+[ext_resource type="AudioStream" uid="uid://cv2ww370fisny" path="res://assets/sfx/items/doors/door-unlock.wav" id="3_syb8g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mcgpk"]
 atlas = ExtResource("1_rdxdw")
@@ -126,3 +127,8 @@ position = Vector2(4.47035e-07, 1)
 scale = Vector2(3.78125, 0.984375)
 color = Color(0.65, 0.1365, 0.1365, 1)
 texture = SubResource("GradientTexture2D_8f0xv")
+
+[node name="PowerOff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_syb8g")
+volume_db = -10.0
+bus = &"SFX"

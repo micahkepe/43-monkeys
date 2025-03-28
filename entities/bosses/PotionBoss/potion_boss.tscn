@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://cp5du4n6j8tbm"]
+[gd_scene load_steps=100 format=3 uid="uid://cp5du4n6j8tbm"]
 
 [ext_resource type="Script" uid="uid://bqwsf28i8p8o" path="res://entities/Bosses/PotionBoss/potion_boss.gd" id="1_6ahq3"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_crlfk"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="4_p0wom"]
 [ext_resource type="PackedScene" uid="uid://csy06uv6hwuoj" path="res://projectiles/Potions/ParalyzePotion/ParalyzePotion.tscn" id="5_tpowr"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="8_pol7v"]
+[ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/booms/explosion.wav" id="10_gd8un"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enwfc"]
 bg_color = Color(0.326222, 0.696952, 0.315019, 1)
@@ -755,6 +756,11 @@ offset_left = -53.0
 offset_top = 29.0
 offset_right = 60.0
 offset_bottom = 74.0
+
+[node name="DieSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_gd8un")
+volume_db = -5.0
+bus = &"SFX"
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

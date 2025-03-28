@@ -270,9 +270,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ioyq"]
+radius = 38.0132
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txf4j"]
-size = Vector2(25.6667, 25.6667)
+size = Vector2(103, 98.2084)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y4vxf"]
 shader = ExtResource("5_djatk")
@@ -283,21 +284,20 @@ shader_parameter/glow_color = Color(0, 0, 0, 0.5)
 [node name="GunnerTurret" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
-scale = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_y6i7i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
-scale = Vector2(0.6, 0.6)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_qg1ew")
 animation = &"idle_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(0, 6)
+position = Vector2(-2, 15)
 shape = SubResource("CircleShape2D_1ioyq")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_5t4h7")]
@@ -313,7 +313,7 @@ collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 y_sort_enabled = true
-position = Vector2(1.5, -1.83333)
+position = Vector2(5, -6.89579)
 shape = SubResource("RectangleShape2D_txf4j")
 
 [node name="BoomPlayer" type="AudioStreamPlayer" parent="."]
@@ -323,7 +323,7 @@ bus = &"SFX"
 [node name="Shadow" type="ColorRect" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_y4vxf")
-offset_left = -24.3333
-offset_top = -14.6667
-offset_right = 24.6667
-offset_bottom = 25.3333
+offset_left = -70.0
+offset_top = -7.0
+offset_right = 78.0
+offset_bottom = 73.0

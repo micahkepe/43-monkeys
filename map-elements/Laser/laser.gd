@@ -45,6 +45,9 @@ func deactivate_laser() -> void:
 	is_active = false
 	animated_sprite.play("laser_turn_off")
 
+	if $PowerOff:
+		$PowerOff.play()
+
 	# Disable the Area2D's collision shape.
 	$CollisionShape2D.set_deferred("disabled", true)
 
