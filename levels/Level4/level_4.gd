@@ -1,4 +1,5 @@
 extends "res://levels/default_level.gd"
+
 ## Script for Level 4 logic
 
 # Called when the node enters the scene tree for the first time.
