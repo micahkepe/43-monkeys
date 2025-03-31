@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbjj0fdoyubvd"]
+[gd_scene load_steps=13 format=3 uid="uid://dbjj0fdoyubvd"]
 
 [ext_resource type="Texture2D" uid="uid://cvg8k203vtha5" path="res://assets/sprites/attacks/wizardMonkeyAttacks/wizard_laser.png" id="1_ms8bh"]
+[ext_resource type="Script" uid="uid://umyr25dlbnad" path="res://projectiles/WizardLaser/wizard_laser.gd" id="1_x06h6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_23eps"]
 atlas = ExtResource("1_ms8bh")
@@ -55,13 +56,41 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_im84d"]
 size = Vector2(64, 16)
 
+[sub_resource type="Gradient" id="Gradient_8mq50"]
+offsets = PackedFloat32Array(0.0582751, 0.741259)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x06h6"]
+gradient = SubResource("Gradient_8mq50")
+width = 32
+height = 32
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="WizardLaser" type="Area2D"]
+modulate = Color(1, 1, 1, 0.506)
+top_level = true
+collision_layer = 4
+collision_mask = 35
+script = ExtResource("1_x06h6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_n5vm7")
 animation = &"LaserMove"
-frame_progress = 0.614084
+frame_progress = 0.895433
+centered = false
+offset = Vector2(0, -25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(32, 6)
 shape = SubResource("RectangleShape2D_im84d")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+position = Vector2(32, 6)
+scale = Vector2(3, 0.75)
+color = Color(0.586942, 0.392552, 0.958609, 1)
+energy = 0.65
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_x06h6")

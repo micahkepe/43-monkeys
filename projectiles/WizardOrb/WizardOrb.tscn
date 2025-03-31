@@ -42,12 +42,12 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_8mq50"]
+[sub_resource type="Gradient" id="Gradient_0b7aq"]
 offsets = PackedFloat32Array(0.0582751, 0.741259)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0b7aq"]
-gradient = SubResource("Gradient_8mq50")
+gradient = SubResource("Gradient_0b7aq")
 width = 32
 height = 32
 use_hdr = true
@@ -55,6 +55,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="WizardOrb" type="Area2D" groups=["projectiles"]]
+z_index = 1
 collision_layer = 4
 collision_mask = 35
 script = ExtResource("1_0b7aq")
@@ -74,3 +75,4 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_0b7aq")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
