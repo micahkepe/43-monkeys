@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://4umu3kvj8266"]
+
+[ext_resource type="Texture2D" uid="uid://bl27m5rk4c0kh" path="res://assets/sprites/tilesets/gear.png" id="1_ourqy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_586tf"]
+rough = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ha5el"]
+atlas = ExtResource("1_ourqy")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvsi6"]
+atlas = ExtResource("1_ourqy")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbotw"]
+atlas = ExtResource("1_ourqy")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1hk56"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ha5el")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvsi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbotw")
+}],
+"loop": true,
+"name": &"spin_right",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ourqy"]
+radius = 45.0999
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_586tf"]
+radius = 8.06226
+
+[node name="GearWithAxis" type="Node2D"]
+y_sort_enabled = true
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+node_a = NodePath("../Gear")
+node_b = NodePath("../RotationAxis")
+
+[node name="Gear" type="RigidBody2D" parent="."]
+collision_layer = 32
+collision_mask = 63
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_586tf")
+gravity_scale = 0.0
+angular_damp = 32.884
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gear"]
+sprite_frames = SubResource("SpriteFrames_1hk56")
+animation = &"spin_right"
+frame_progress = 0.245055
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gear"]
+shape = SubResource("CircleShape2D_ourqy")
+
+[node name="RotationAxis" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotationAxis"]
+shape = SubResource("CircleShape2D_586tf")
