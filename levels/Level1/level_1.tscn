@@ -12,25 +12,25 @@
 [ext_resource type="Texture2D" uid="uid://drjt35675rwwv" path="res://assets/sprites/tilesets/Walls.png" id="9_0vf7p"]
 [ext_resource type="PackedScene" uid="uid://bo8o2y5xink1l" path="res://map-elements/Turrets/gunner_turret.tscn" id="9_5aa5q"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_6m36m"]
-[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/Boids/BoidRixner/boid_rixner.tscn" id="10_4s8p6"]
+[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/BoidRixner/boid_rixner.tscn" id="10_4s8p6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="10_311su"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="10_i5f2g"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="10_i5f2g"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="10_ssgax"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="11_lybpb"]
 [ext_resource type="Texture2D" uid="uid://bx8djeyomc0oy" path="res://assets/sprites/tilesets/shadows2.png" id="11_qfl6h"]
 [ext_resource type="Texture2D" uid="uid://cu8al1h2iiuq6" path="res://assets/sprites/tilesets/shadows3.png" id="12_3ywx6"]
-[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_d5kky"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="13_d5kky"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="18_5jmpx"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="19_fnnia"]
-[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/Boids/Heisenboid/heisenboid.tscn" id="19_mf03o"]
+[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/boids/Heisenboid/heisenboid.tscn" id="19_mf03o"]
 [ext_resource type="AudioStream" uid="uid://d0mhjj52tkj43" path="res://assets/music/not-stranger-things/not-stranger-things.ogg" id="19_wc88d"]
 [ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="19_xg1rd"]
-[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/Boids/Femoid1/femoid_1.tscn" id="20_pxof2"]
-[ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/Boids/Femoid2/femoid_2.tscn" id="21_lev10"]
-[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/Bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
-[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/Boids/ForemanBoid/foreman_boid.tscn" id="24_ttfkr"]
-[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/Boids/HouseBoid/house_boid.tscn" id="25_t845k"]
-[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/Boids/BoidJoe/boid_joe.tscn" id="29_can7p"]
+[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/boids/Femoid1/femoid_1.tscn" id="20_pxof2"]
+[ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/boids/Femoid2/femoid_2.tscn" id="21_lev10"]
+[ext_resource type="PackedScene" uid="uid://cp5du4n6j8tbm" path="res://entities/bosses/PotionBoss/potion_boss.tscn" id="21_qjt65"]
+[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/boids/ForemanBoid/foreman_boid.tscn" id="24_ttfkr"]
+[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/boids/HouseBoid/house_boid.tscn" id="25_t845k"]
+[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/BoidJoe/boid_joe.tscn" id="29_can7p"]
 [ext_resource type="PackedScene" uid="uid://bdmuj5y2xhj1j" path="res://map-elements/Stairs/stairs.tscn" id="31_pgfjg"]
 [ext_resource type="PackedScene" uid="uid://cnb3ai5pql4is" path="res://map-elements/Door/door.tscn" id="32_1o5ot"]
 [ext_resource type="PackedScene" uid="uid://oothsg3bxj8u" path="res://map-elements/Lights/FlickeringScreen/flickering_screen.tscn" id="32_w40f5"]
@@ -1399,8 +1399,7 @@ position = Vector2(2840, -2326)
 position = Vector2(3913.33, -1664.67)
 
 [node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
-position = Vector2(6905, -803)
-initial_troop_amount = 10
+position = Vector2(-883, 494)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(-1.33333, 2.66669)
