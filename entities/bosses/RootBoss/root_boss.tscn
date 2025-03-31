@@ -1225,6 +1225,7 @@ script = ExtResource("1_2x2y2")
 min_wait_time = 3.0
 max_wait_time = 8.0
 boid_plant_scene = ExtResource("2_rdxv2")
+max_spawned_minions = 10
 
 [node name="Shadow" type="ColorRect" parent="."]
 z_index = -1

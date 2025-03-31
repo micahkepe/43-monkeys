@@ -257,23 +257,11 @@ func start_wait_timer() -> void:
 	move_to_next_waypoint()
 
 
-## Recursively searches for the Player node starting from the given root node.
 ## Returns the Player node if found, otherwise returns null.
 ## @param root: The root node to start the search from.
 ## @return The Player node if found, otherwise null.
-func find_player_node(root: Node) -> Node:
-	# Check if the current node is the Player
-	if root.name == "Player":
-		return root
-
-	# Recursively search through all children
-	for child in root.get_children():
-		var result = find_player_node(child)
-		if result:
-			return result
-
-	# If no Player node is found, return null
-	return null
+func find_player_node() -> Node:
+	return get_tree().get_first_node_in_group("player")
 
 
 ## Recursively searches for a node with the given name starting from the
@@ -312,7 +300,7 @@ func attack_throw_damage_potion() -> void:
 	if not damage_potion_scene:
 		print("DamagePotion scene not set!")
 		return
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 	if not player:
 		return
 
@@ -342,7 +330,7 @@ func attack_throw_damage_potion_spread() -> void:
 	if not damage_potion_scene:
 		print("DamagePotion scene not set!")
 		return
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 	if not player:
 		return
 
@@ -382,7 +370,7 @@ func attack_throw_heal_potion() -> void:
 	if not heal_potion_scene:
 		print("HealPotion scene not set!")
 		return
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 	if not player:
 		return
 
@@ -412,7 +400,7 @@ func attack_throw_heal_potion_spread() -> void:
 		print("HealPotion scene not set!")
 		return
 
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 
 	if not player:
 		return
@@ -454,7 +442,7 @@ func attack_throw_blindness_potion() -> void:
 	if not blindness_potion_scene:
 		print("HealPotion scene not set!")
 		return
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 	if not player:
 		return
 
@@ -484,7 +472,7 @@ func attack_throw_blindness_potion_spread() -> void:
 		print("HealPotion scene not set!")
 		return
 
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 
 	if not player:
 		return
@@ -525,7 +513,7 @@ func attack_throw_paralyze_potion() -> void:
 	if not blindness_potion_scene:
 		print("HealPotion scene not set!")
 		return
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 	if not player:
 		return
 
@@ -555,7 +543,7 @@ func attack_throw_paralyze_potion_spread() -> void:
 		print("HealPotion scene not set!")
 		return
 
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 
 	if not player:
 		return

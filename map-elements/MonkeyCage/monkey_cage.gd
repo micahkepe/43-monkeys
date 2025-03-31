@@ -50,28 +50,16 @@ func _ready():
 		collision_open_right.set_deferred("disabled", true)  # Initially disabled
 
 	# Get player node from parent scene
-	player = find_player_node(get_tree().root)
+	player = find_player_node()
 
 	# Spawn the monkey immediately inside the cage
 	spawn_caged_monkey()
 
-## Recursively searches for the Player node starting from the given root node.
 ## Returns the Player node if found, otherwise returns null.
 ## @param root: The root node to start the search from.
 ## @return The Player node if found, otherwise null.
-func find_player_node(root: Node) -> Node:
-	# Check if the current node is the Player
-	if root.name == "Player":
-		return root
-
-	# Recursively search through all children
-	for child in root.get_children():
-		var result = find_player_node(child)
-		if result:
-			return result
-
-	# If no Player node is found, return null
-	return null
+func find_player_node() -> Node:
+	return get_tree().get_first_node_in_group("player")
 
 ## Process the cage opening when the player is near.
 func _process(_delta: float):

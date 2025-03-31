@@ -9,14 +9,8 @@ func _ready() -> void:
 	$Timer.timeout.connect(Callable(self, "_on_Timer_timeout"))
 	set_process(true)
 
-func find_player_node(root: Node) -> Node:
-	if root.name == "Player":
-		return root
-	for child in root.get_children():
-		var result = find_player_node(child)
-		if result:
-			return result
-	return null
+func find_player_node() -> Node:
+	return get_tree().get_first_node_in_group("player")
 
 func start(_duration: float) -> void:
 	print("=====STARTING!! WITH DURATION ", _duration)
@@ -27,7 +21,7 @@ func start(_duration: float) -> void:
 ## Called every frame.
 func _process(_delta: float) -> void:
 	# Find the player somewhere in the scene tree.
-	var player = find_player_node(get_tree().get_root())
+	var player = find_player_node()
 
 	if player:
 		print("PLAYER FOUND")

@@ -498,7 +498,7 @@ position = Vector2(-428, 926)
 y_sort_enabled = true
 
 [node name="Player" parent="World" instance=ExtResource("4_krnvu")]
-position = Vector2(-2308, -2569)
+position = Vector2(-2316, -2525)
 scale = Vector2(0.74, 0.74)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]

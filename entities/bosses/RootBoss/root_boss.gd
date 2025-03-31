@@ -15,6 +15,9 @@ var current_health: float
 @export var max_wait_time: float = 10.0
 @export var boid_plant_scene: PackedScene
 
+## The maximum amount of spawned plant minions at any point.
+@export var max_spawned_minions: int = 20
+
 var last_animation: String = "idle_down"
 var is_attacking: bool = false
 var is_dead: bool = false
@@ -48,26 +51,26 @@ var attacks = [
 func _ready() -> void:
 	current_health = max_health
 	health_bar.init_health(current_health)
-	
+
 	if $HitBox:
 		print("HitBox found and signals connected")
-	
+
 	attack_timer = Timer.new()
 	attack_timer.one_shot = true
 	add_child(attack_timer)
 	attack_timer.connect("timeout", Callable(self, "_choose_and_execute_attack"))
-	
+
 	spawn_timer = Timer.new()
 	spawn_timer.wait_time = 10.0
 	spawn_timer.autostart = true
 	add_child(spawn_timer)
 	spawn_timer.connect("timeout", Callable(self, "_spawn_boid_plants"))
-	
+
 	_animated_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2d_animation_finished"))
-	
+
 	# Set initial velocity to zero
 	velocity = Vector2.ZERO
-	
+
 	teleport_cycle()
 	_start_random_attack_timer()
 
@@ -76,28 +79,28 @@ func teleport_cycle() -> void:
 		if is_attacking:
 			await get_tree().create_timer(0.1).timeout
 			continue
-		
+
 		is_teleporting = true
 		var new_target = choose_random_waypoint()
 		var direction = (new_target - global_position).normalized()
 		var animation_direction = get_direction_string(direction)
-		
+
 		# Play shrink sound
 		if grow_shrink_sound:
 			grow_shrink_sound.play()
 		play_animation(shrink_animations[animation_direction])
 		await _animated_sprite.animation_finished
-		
+
 		global_position = new_target
 		# Reset velocity to prevent sliding
 		velocity = Vector2.ZERO
-		
+
 		# Play grow sound
 		if grow_shrink_sound:
 			grow_shrink_sound.play()
 		play_animation(grow_animations[animation_direction])
 		await _animated_sprite.animation_finished
-		
+
 		is_teleporting = false
 		play_idle_animation()
 		var wait_time = randf_range(min_wait_time, max_wait_time)
@@ -114,30 +117,39 @@ func _spawn_boid_plants() -> void:
 	if is_dead or not boid_plant_scene:
 		print("Cannot spawn boid plants: dead or scene not set!")
 		return
-	
-	var player = find_player_node(get_tree().root)
+
+	var player = find_player_node()
 	if not player:
 		print("No player found for boid plant spawning!")
 		return
-	
+
 	# Play spawn sound
 	if spawn_sound:
 		spawn_sound.play()
-	
+
+	# Get count of all instances of BoidPlant scene
+	var current_boid_count = get_tree().get_nodes_in_group("plant_boid").size()
+	print_debug("current plant boid count: ", current_boid_count)
+	var available_spawn_slots = max_spawned_minions - current_boid_count
+	if available_spawn_slots <= 0:
+		print_debug("Plant boid spawn limit reached; skipping.")
+		return
+
+	# Check if spawn limit has been reached
 	var player_pos = player.global_position
 	var spawn_positions = []
 	var attempts = 0
 	var max_attempts = 10
-	
-	while spawn_positions.size() < 10 and attempts < max_attempts:
+
+	while spawn_positions.size() + current_boid_count < max_spawned_minions and attempts < max_attempts:
 		var pos = choose_random_waypoint()
 		var too_close_to_player = pos.distance_to(player_pos) < 100.0
 		var too_close_to_existing = spawn_positions.any(func(p): return p.distance_to(pos) < 50.0)
-		
+
 		if not too_close_to_player and not too_close_to_existing:
 			spawn_positions.append(pos)
 		attempts += 1
-	
+
 	for pos in spawn_positions:
 		var boid_plant = boid_plant_scene.instantiate()
 		boid_plant.global_position = pos
@@ -157,12 +169,12 @@ func play_animation(anim_name: String) -> void:
 	if is_dead:
 		print("Animation blocked: dead")
 		return
-	
+
 	if is_teleporting and not (anim_name.begins_with("shrink") or anim_name.begins_with("grow")):
 		return
 	if is_attacking and not anim_name.begins_with("attack"):
 		return
-	
+
 	print("Playing animation: ", anim_name)
 	_animated_sprite.play(anim_name)
 	last_animation = anim_name
@@ -170,7 +182,7 @@ func play_animation(anim_name: String) -> void:
 func play_idle_animation() -> void:
 	if is_dead or is_attacking or is_teleporting:
 		return
-	
+
 	var direction = "down"
 	if "down" in last_animation:
 		direction = "down"
@@ -180,32 +192,32 @@ func play_idle_animation() -> void:
 		direction = "left"
 	elif "right" in last_animation:
 		direction = "right"
-	
+
 	play_animation("idle_" + direction)
 
 func attack() -> void:
 	if is_dead or is_teleporting:
 		print("Attack blocked: dead=", is_dead, " teleporting=", is_teleporting)
 		return
-	
+
 	is_attacking = true
 	attack_timer.stop()
-	
-	var player = find_player_node(get_tree().root)
+
+	var player = find_player_node()
 	if player:
 		var direction_to_player = (player.global_position - global_position).normalized()
 		var animation_direction = get_direction_string(direction_to_player)
 		var attack_anim = "attack_" + animation_direction
 		print("Attempting to play attack animation: ", attack_anim)
-		
+
 		# Play attack sound
 		if attack_sound:
 			attack_sound.play()
-		
+
 		play_animation(attack_anim)
-		
+
 		await _animated_sprite.animation_finished
-		
+
 		var attack_radius = 100.0
 		var distance_to_player = global_position.distance_to(player.global_position)
 		if distance_to_player <= attack_radius:
@@ -213,7 +225,7 @@ func attack() -> void:
 			print("RootBoss dealt damage to player!")
 	else:
 		print("No player found for attack")
-	
+
 	is_attacking = false
 	print("Attack finished")
 	_start_random_attack_timer()
@@ -223,18 +235,18 @@ func _choose_and_execute_attack() -> void:
 		print("Attack execution blocked: dead=", is_dead, " attacking=", is_attacking, " teleporting=", is_teleporting)
 		_start_random_attack_timer()
 		return
-	
+
 	attack_timer.stop()
 	var available_attacks = attacks.filter(func(atk): return atk.unlocked)
 	if available_attacks.is_empty():
 		print("No available attacks")
 		_start_random_attack_timer()
 		return
-	
+
 	var total_weight = available_attacks.reduce(func(acc, atk): return acc + atk.weight, 0.0)
 	var random_value = randf() * total_weight
 	var cumulative_weight = 0.0
-	
+
 	for atk in available_attacks:
 		cumulative_weight += atk.weight
 		if random_value <= cumulative_weight:
@@ -245,7 +257,7 @@ func _choose_and_execute_attack() -> void:
 func _start_random_attack_timer() -> void:
 	if is_dead or is_attacking:
 		return
-	
+
 	var wait_time = randf_range(min_attack_interval, max_attack_interval)
 	attack_timer.wait_time = wait_time
 	attack_timer.start()
@@ -286,30 +298,15 @@ func _die() -> void:
 	spawn_timer.stop()
 	is_attacking = false
 	is_teleporting = false
-	
+
 	if is_instance_valid($HitBox):
 		$HitBox.set_deferred("monitoring", false)
 		$HitBox.set_deferred("monitorable", false)
-	
+
 	_animated_sprite.play("die")
 
-func find_player_node(root: Node) -> Node:
-	if root.name == "Player":
-		return root
-	for child in root.get_children():
-		var result = find_player_node(child)
-		if result:
-			return result
-	return null
-
-func find_node_recursive(root: Node, target: String) -> Node:
-	if root.name == target:
-		return root
-	for child in root.get_children():
-		var result = find_node_recursive(child, target)
-		if result:
-			return result
-	return null
+func find_player_node() -> Node:
+	return get_tree().get_first_node_in_group("player")
 
 func _physics_process(_delta: float) -> void:
 	if not is_dead:

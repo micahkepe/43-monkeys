@@ -624,7 +624,7 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	projectile.velocity = final_vel
 	projectile.scale = Vector2(1.5, 1.5)
 
-	var projectiles_node = find_node_recursive(get_tree().root, "Projectiles")
+	var projectiles_node = get_tree().root.find_child("Projectiles")
 
 	if projectiles_node == null:
 		print_debug("Projectiles node not found! Pwease add.")
@@ -638,24 +638,6 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	projectile.position = local_spawn_pos
 
 	projectiles_node.call_deferred("add_child", projectile)
-
-## Recursively searches for the target node starting from the given root node.
-## Returns the target node if found, otherwise returns null.
-## @param root: The root node to start the search from.
-## @param target: The name of the target node to search for.
-## @return The target node if found, otherwise null.
-func find_node_recursive(root: Node, target: String) -> Node:
-	if root.name == target:
-		return root
-
-	# Recursively search through all children
-	for child in root.get_children():
-		var result = find_node_recursive(child, target)
-		if result:
-			return result
-
-	# If no Player node is found, return null
-	return null
 
 
 ## Custom _sign function for float
@@ -778,7 +760,7 @@ func apply_blindness(duration: float) -> void:
 
 	# Find your dedicated UI node (adjust the path as needed).
 	print(get_tree().get_root().name)
-	var ui_node = find_node_recursive(get_tree().get_root(), "UI")
+	var ui_node = get_tree().root.find_child("UI")
 	if ui_node:
 		print("ui node")
 		ui_node.add_child(overlay)

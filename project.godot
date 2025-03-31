@@ -33,6 +33,7 @@ player="The main player's monkey to control."
 enemies="Enemies that deal damage to the player and/or troop."
 projectiles="Flying objects that deal damage to hit entities."
 moveables="Moveable objects in the level environment."
+plant_boid="Spawned plant boids from the RootBoss in Level 2"
 
 [input]
 
