@@ -1,22 +1,27 @@
-[gd_scene load_steps=12 format=3 uid="uid://cywybedmwyxf3"]
+[gd_scene load_steps=14 format=3 uid="uid://cywybedmwyxf3"]
 
+[ext_resource type="Script" uid="uid://no588hruyx8e" path="res://projectiles/Snowball/snowball.gd" id="1_2600i"]
 [ext_resource type="Texture2D" uid="uid://cxrm80h3lcuru" path="res://assets/sprites/attacks/snowball/snowball.png" id="1_lrq6g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2600i"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lrq6g"]
-atlas = ExtResource("1_lrq6g")
-region = Rect2(128, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_2600i"]
 atlas = ExtResource("1_lrq6g")
-region = Rect2(160, 0, 32, 32)
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsg78"]
 atlas = ExtResource("1_lrq6g")
-region = Rect2(192, 0, 32, 32)
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a20cv"]
+atlas = ExtResource("1_lrq6g")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uuu8"]
+atlas = ExtResource("1_lrq6g")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3m6a2"]
 atlas = ExtResource("1_lrq6g")
 region = Rect2(224, 0, 32, 32)
 
@@ -40,9 +45,6 @@ region = Rect2(96, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lrq6g")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_2600i")
 }, {
 "duration": 1.0,
@@ -50,10 +52,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a20cv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uuu8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3m6a2")
 }],
 "loop": false,
 "name": &"snowball_explode",
-"speed": 10.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -76,6 +84,7 @@ animations = [{
 [node name="Snowball" type="Area2D" groups=["projectiles"]]
 collision_layer = 4
 collision_mask = 35
+script = ExtResource("1_2600i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2600i")
@@ -83,5 +92,8 @@ shape = SubResource("CircleShape2D_2600i")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lsg78")
 animation = &"snowball_explode"
-frame = 3
+frame = 4
 frame_progress = 1.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
