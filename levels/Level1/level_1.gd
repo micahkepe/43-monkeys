@@ -45,8 +45,10 @@ func _ready() -> void:
 		# (Note: we bind the button node so our callback knows which button sent the signal.)
 		button.connect("button_state_changed", Callable(self, "on_button_state_changed").bind(button))
 
-# This callback is called whenever a button's state changes.
-func on_button_state_changed(is_pressed: bool, button: Button) -> void:
+## This callback is called whenever a button's state changes.
+## NOTE: this is a custom emitted event, NOT the pressed field of a native
+## Button object
+func on_button_state_changed(is_pressed: bool, button: Node) -> void:
 	_button_states[button] = is_pressed
 
 	# Check if both Buttons 1 and Buttons 2 are pressed.
