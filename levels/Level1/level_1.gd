@@ -5,8 +5,8 @@ extends "res://levels/default_level.gd"
 ## boss fight at the end. The troop can grow up to 6 by the end of the level.
 
 # Get all buttons and lasers from the scene tree.
-@onready var buttons = $World/Buttons.get_children()
-@onready var lasers = $ForegroundTiles/Lasers.get_children()
+@onready var buttons: Array[Node] = $World/Buttons.get_children()
+@onready var lasers: Array[Node] = $ForegroundTiles/Lasers.get_children()
 
 # Get door from the scene tree.
 @onready var door = $World/Doors/Door
@@ -14,7 +14,7 @@ extends "res://levels/default_level.gd"
 @onready var boss_music = $BossMusic
 
 ## A dictionary to track the state of each button.
-var _button_states = {}
+var _button_states: Dictionary[Node, bool] = {}
 
 #------------------------------------------------------------------
 # PUZZLE FLAGS
@@ -46,7 +46,7 @@ func _ready() -> void:
 		button.connect("button_state_changed", Callable(self, "on_button_state_changed").bind(button))
 
 # This callback is called whenever a button's state changes.
-func on_button_state_changed(is_pressed: bool, button: Node) -> void:
+func on_button_state_changed(is_pressed: bool, button: Button) -> void:
 	_button_states[button] = is_pressed
 
 	# Check if both Buttons 1 and Buttons 2 are pressed.

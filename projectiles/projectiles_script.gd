@@ -24,7 +24,6 @@ func _ready() -> void:
 	if animation_name != "" and $AnimatedSprite2D.sprite_frames.has_animation(animation_name):
 		$AnimatedSprite2D.play(animation_name)
 
-	
 	# Wait for the lifetime duration before freeing the projectile.
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()

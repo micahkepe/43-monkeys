@@ -13,6 +13,21 @@ var boss_instance: Node = null
 @export var fade_duration: float = 1.0  # Duration of fade in seconds
 # var _current_fade_tween: Tween = null
 
+## Puzzle internal variables
+@onready var _buttons: Array[Node] = $World/Buttons.get_children()
+@onready var _lasers: Array[Node] = $World/Lasers.get_children()
+
+## Track which buttons are currently "pressed" (button name -> pressed state)
+var _button_states: Dictionary[String, bool] = {}
+
+## Puzzle 1: press Button[1-3] => unlock Laser1
+var _laser1_deactivated = false
+
+## Puzzle 2: press Button4 => unlock Laser2
+var _laser2_deactivated = false
+
+## Puzzle 3: press Button[5-7] => unlock Laser[3-4]
+var _lasers_3_4_deactivated = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,6 +40,65 @@ func _ready() -> void:
 		initialize_from_troop_data()
 	if has_node("World/BossTrigger"):
 		$World/BossTrigger.connect("body_entered", Callable(self, "_on_boss_trigger_body_entered"))
+
+	for button in _buttons:
+		_button_states[button.name] = false  # All buttons start as "unpressed"
+		button.connect("body_entered", Callable(self, "_on_button_body_entered").bind(button))
+		button.connect("body_exited", Callable(self, "_on_button_body_exited").bind(button))
+
+func _on_button_body_entered(_body: Node, button: Node) -> void:
+	_button_states[button.name] = true
+	check_puzzles()
+
+func _on_button_body_exited(_body: Node, button: Node) -> void:
+	_button_states[button.name] = false
+	check_puzzles()
+
+func check_puzzles() -> void:
+	# Puzzle 1: Button1, Button2, and Button3 unlock Laser1
+	if are_buttons_pressed(["Button1", "Button2", "Button3"]):
+		deactivate_laser_1()
+
+	# Puzzle 2: Button4 unlocks Laser2
+	if are_buttons_pressed(["Button4"]):
+		deactivate_laser_2()
+
+	# Puzzle 3: Button5, Button6, and Button7 unlock Lasers 3 and 4
+	if are_buttons_pressed(["Button5", "Button6", "Button7"]):
+		deactivate_lasers_3_and_4()
+
+func are_buttons_pressed(names: Array[String]) -> bool:
+	for btn_name in names:
+		if not _button_states.get(btn_name, false):
+			return false
+	return true
+
+func deactivate_laser_1() -> void:
+	if _laser1_deactivated:
+		return
+	for laser in _lasers:
+		if laser.name == "Laser1":
+			laser.deactivate_laser()
+			_laser1_deactivated = true
+			return
+
+func deactivate_laser_2() -> void:
+	if _laser2_deactivated:
+		return
+	for laser in _lasers:
+		if laser.name == "Laser2":
+			laser.deactivate_laser()
+			_laser2_deactivated = true
+			return
+
+func deactivate_lasers_3_and_4() -> void:
+	if _lasers_3_4_deactivated:
+		return
+	for laser in _lasers:
+		if laser.name in ["Laser3", "Laser4"]:
+			laser.deactivate_laser()
+	_lasers_3_4_deactivated = true
+
 
 ## Set the troop data for this level.
 func set_troop_data(data: Dictionary) -> void:

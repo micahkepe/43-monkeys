@@ -1,6 +1,6 @@
 [gd_scene load_steps=78 format=3 uid="uid://bosg5oeaw8eqj"]
 
-[ext_resource type="Script" uid="uid://xsayx2sybb3k" path="res://entities/boids/BroccoliBoid/broccoli_boid.gd" id="1_njlat"]
+[ext_resource type="Script" uid="uid://xsayx2sybb3k" path="res://entities/Boids/BroccoliBoid/broccoli_boid.gd" id="1_njlat"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_61ugq"]
 [ext_resource type="Texture2D" uid="uid://bifok7yg7ghwe" path="res://assets/sprites/characters/people/broccoli-boid.png" id="3_dge5u"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="4_82wgh"]
@@ -556,7 +556,7 @@ animation = &"slash_down"
 frame_progress = 0.814057
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 22.4719)
+position = Vector2(-0.374532, 20.9738)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_hxjm0")
 

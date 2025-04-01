@@ -187,6 +187,10 @@ func _ready() -> void:
 	# Initialize the counter
 	_update_monkey_counter(_swarm_monkeys.size())
 
+	# Ensure UI is shown
+	if $PlayerUI:
+		$PlayerUI.show()
+
 
 ## Update the monkey group number
 ## @param count: int - The number of monkeys in the group.

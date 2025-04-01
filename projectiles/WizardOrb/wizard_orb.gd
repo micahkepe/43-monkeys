@@ -1,6 +1,7 @@
 extends "res://projectiles/projectiles_script.gd"
 
-@export var chain_range: float = 225.0  # Maximum distance to chain between enemies
+## Maximum distance to chain between enemies
+@export var chain_range: float = 225.0
 
 ## Recursively searches for a node with a given name.
 func find_node_recursive(root: Node, target: String) -> Node:
@@ -15,11 +16,12 @@ func find_node_recursive(root: Node, target: String) -> Node:
 func _ready() -> void:
 	animation_name = "orb_pulse"
 	use_shadow = true
-	
+
 	print("wizard orb at:", global_position)
+
 	# Call the parent _ready() to run the default projectile logic.
 	super._ready()
-	
+
 	scale = Vector2(3.5, 3.5)
 
 # When the orb collides with a body, check if it's an enemy.
@@ -33,10 +35,10 @@ func _on_body_entered(body: Node) -> void:
 		# Immediately apply damage to the enemy hit
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
-		
+
 		# Start the chaining process from this enemy
 		chain_enemies(body)
-		
+
 		queue_free()
 	else:
 		queue_free()
@@ -47,9 +49,9 @@ func _on_area_entered(area: Area2D) -> void:
 	if enemy.is_in_group("enemies") or enemy.is_in_group("boids"):
 		if enemy.has_method("take_damage"):
 			enemy.take_damage(damage)
-		
+
 		chain_enemies(enemy)
-		
+
 		queue_free()
 	else:
 		print("In area entered, collided with", area.name)
@@ -61,10 +63,10 @@ func chain_enemies(initial_enemy: Node) -> void:
 	var queue = []    # BFS queue.
 	visited[initial_enemy] = true
 	queue.push_back(initial_enemy)
-	
+
 	# Cache all enemies once (to avoid repeated group lookups).
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
-	
+
 	while queue.size() > 0:
 		var current = queue.pop_front()
 		for enemy in all_enemies:
@@ -84,6 +86,8 @@ func chain_enemies(initial_enemy: Node) -> void:
 				laser_instance.duration = 3.0
 				var projectiles_node = find_node_recursive(get_tree().root, "Projectiles")
 				if projectiles_node:
-					projectiles_node.add_child(laser_instance)
+                	# Use call_deferred to safely add the laser after physics
+					# processing is complete
+					projectiles_node.call_deferred("add_child", laser_instance)
 				else:
 					push_error("Projectiles node not found!")

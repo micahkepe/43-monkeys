@@ -817,6 +817,7 @@ polygon = PackedVector2Array(-33, -14, -33, 15, 38, 15, 38, -14)
 y_sort_enabled = true
 
 [node name="PlayerUI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="MonkeyIcon" type="Sprite2D" parent="PlayerUI"]
 position = Vector2(1213, 64)

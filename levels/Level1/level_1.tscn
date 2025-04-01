@@ -1399,10 +1399,9 @@ position = Vector2(2840, -2326)
 position = Vector2(3913.33, -1664.67)
 
 [node name="Player" parent="World" instance=ExtResource("10_i5f2g")]
-position = Vector2(-867, 589)
+position = Vector2(-885, 556)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
-position = Vector2(-1.33333, 2.66669)
 
 [node name="PotionBoss" parent="World" instance=ExtResource("21_qjt65")]
 position = Vector2(7089, -1091)
