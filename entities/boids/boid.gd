@@ -45,7 +45,8 @@ extends CharacterBody2D
 @export var minimum_speed: float = 50.0
 
 ## The number of hits required to kill the boid.
-@export var hits_to_kill: int = 2
+@export var max_health: float = 5.0
+@export var health: float = 5.0
 
 ## The animated sprite node for the boid.
 @onready var _anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -99,8 +100,8 @@ func _ready() -> void:
 	velocity = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * max_speed
 
 	# Initial health
-	health_bar.max_value = hits_to_kill
-	health_bar.value = hits_to_kill
+	health_bar.max_value = max_health
+	health_bar.value = health
 
 ## Called every frame.
 ## Handles input and updates the player's position and animation.
@@ -393,27 +394,22 @@ func _compute_cohesion(neighbors: Array) -> Vector2:
 ## @param amount: float - The amount of damage to take.
 func take_damage(amount: float) -> void:
 	# decrement the number of hits required to kill the boid
-	print_debug("Boid taking damage:", amount, " | Hits left:", hits_to_kill)
+	#print_debug("Boid taking damage:", amount, " | Hits left:", hits_to_kill)
+	health -= amount
 
-	if hits_to_kill > 0:
-		if amount > 1:
-			hits_to_kill -= int(amount)
-		else:
-			hits_to_kill -= 1
+	health_bar.value = health
 
-		health_bar.value = hits_to_kill
+	print_debug("Health: ", health)
 
-		print_debug("Hits to kill: ", hits_to_kill)
+	# kill off the boid if it has no more hits left
+	if health <= 0:
+		_die()
 
-		# kill off the boid if it has no more hits left
-		if hits_to_kill == 0:
-			_die()
-
-		# momentarily recolor the boid to indicate damage
-		_anim_sprite.modulate = Color(1, 0.5, 0.5, 1)
-		await get_tree().create_timer(0.5).timeout
-		if not is_slowed:
-			_anim_sprite.modulate = Color(1, 1, 1, 1)
+	# momentarily recolor the boid to indicate damage
+	_anim_sprite.modulate = Color(1, 0.5, 0.5, 1)
+	await get_tree().create_timer(0.5).timeout
+	if not is_slowed:
+		_anim_sprite.modulate = Color(1, 1, 1, 1)
 
 ## Handles the boid's death.
 func _die():

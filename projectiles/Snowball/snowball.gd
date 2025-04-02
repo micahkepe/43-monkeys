@@ -1,6 +1,8 @@
 extends "res://projectiles/projectiles_script.gd"
 
 func _ready() -> void:
+	damage = 1.0
+	
 	animation_name = "snowball_throw"
 	use_shadow = true
 	
