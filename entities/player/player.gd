@@ -27,6 +27,8 @@ extends CharacterBody2D
 ## The troop debug ellipse.
 @onready var ellipse_debug: Node2D = $EllipseDebug
 
+@export_group("Player Variables")
+
 ## Whether to show the troop debug ellipse or not.
 @export
 var show_ellipse_debug: bool = false
@@ -46,17 +48,32 @@ var _current_shoot_cooldown: float
 @export
 var shoot_cooldown_duration: float = 0.25
 
-## Banana boomerang scene
+## The player's default projectile to throw.
 @export
-var banana_boomerang_scene: PackedScene
+var default_projectile_scene: PackedScene
 
 @export
 var blindness_overlay_scene: PackedScene
+
+## The maximum health of the player character (in half-hearts).
+@export var max_health: float = 6.0  # 6 half-hearts = 3 full hearts
+
+## The current health of the player character (in half-hearts).
+var _current_health: float = 6.0
+
+## The time between damage ticks.
+var _damage_cooldown: float = 1.0
+
+## The current cool down for taking damage.
+var _current_cooldown: float = 0.0
+
 
 
 # -----------------------------------------------------------------
 # TROOP VARIABLES
 # -----------------------------------------------------------------
+
+@export_group("Troop Variables")
 
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
@@ -108,21 +125,6 @@ const WORLD_RIGHT = Vector2(1, 0)
 
 var _current_rotation_speed_in_radians_per_sec: float = 0.0
 
-
-# Health variables.
-
-## The maximum health of the player character (in half-hearts).
-var max_health: float = 6.0  # 6 half-hearts = 3 full hearts
-
-## The current health of the player character (in half-hearts).
-var _current_health: float = 6.0
-
-## The time between damage ticks.
-var _damage_cooldown: float = 1.0
-
-## The current cool down for taking damage.
-var _current_cooldown: float = 0.0
-
 ## Getter method for player health.
 var health: float:
 	get:
@@ -143,11 +145,12 @@ func get_troop() -> Array:
 ## The UI container for the player's health display.
 @onready var hearts_container = $PlayerUI/HeartsContainer
 
-# Monkey counter for number of monkeys in group, including the main monkey.
+## Monkey counter for number of monkeys in group, including the main monkey.
 @onready var monkey_counter_label: Label = $PlayerUI/MonkeyCounter
 
-
+## Reference to the AnimationTree
 @onready var animation_tree  = $AnimationTree
+
 # ------------------------------------------------
 # SIGNALS
 # ------------------------------------------------
@@ -592,10 +595,10 @@ func _handle_shooting() -> void:
 ## @param shoot_direction: Vector2 - The direction in which to shoot the
 ## projectile.
 func spawn_projectile(shoot_direction: Vector2) -> void:
-	if banana_boomerang_scene == null or not banana_boomerang_scene.can_instantiate():
+	if default_projectile_scene == null or not default_projectile_scene.can_instantiate():
 		return
 
-	var projectile = banana_boomerang_scene.instantiate()
+	var projectile = default_projectile_scene.instantiate()
 
 	if projectile == null:
 		return

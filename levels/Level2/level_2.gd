@@ -1,17 +1,24 @@
 extends "res://levels/default_level.gd"
+## Scripting logic for Level 2.
 
-var troop_data: Dictionary = {}
+var _troop_data: Dictionary = {}
 
-@export var root_boss_scene: PackedScene  # Assign res://entities/bosses/RootBoss/root_boss.tscn in the editor
-var boss_spawned: bool = false
+@export_group("Boss Variables")
+
+## The RootBoss scene to instantiate.
+@export var root_boss_scene: PackedScene
+
+## A flag for whether the boss has spawned in the level scene yet.
+var _boss_spawned: bool = false
+
+## A reference to the RootBoss instance.
 var boss_instance: Node = null
+
+## A marker for whether the boss has died.
 @onready var boss_dead = false
 
 @onready var background_music = $BackgroundMusic
 @onready var boss_music = $BossMusic
-
-@export var fade_duration: float = 1.0  # Duration of fade in seconds
-# var _current_fade_tween: Tween = null
 
 ## Puzzle internal variables
 @onready var _buttons: Array[Node] = $World/Buttons.get_children()
@@ -36,7 +43,7 @@ func _ready() -> void:
 	print("Audio stream check - Background music has stream:", background_music.stream != null)
 	print("Audio stream check - Boss music has stream:", boss_music.stream != null)
 	background_music.play()
-	if not troop_data.is_empty():
+	if not _troop_data.is_empty():
 		initialize_from_troop_data()
 	if has_node("World/BossTrigger"):
 		$World/BossTrigger.connect("body_entered", Callable(self, "_on_boss_trigger_body_entered"))
@@ -102,17 +109,17 @@ func deactivate_lasers_3_and_4() -> void:
 
 ## Set the troop data for this level.
 func set_troop_data(data: Dictionary) -> void:
-	troop_data = data
+	_troop_data = data
 
 ## Initialize the player and troop from the troop data.
 func initialize_from_troop_data() -> void:
 	var player = $World/Player
-	if player and not troop_data.is_empty():
-		player.health = troop_data["player_health"]
+	if player and not _troop_data.is_empty():
+		player.health = _troop_data["player_health"]
 		# Recreate troop
 		var current_count = player.get_troop_count()
-		var target_count = troop_data["count"]
-		var monkey_health = troop_data.get("monkey_health", [])
+		var target_count = _troop_data["count"]
+		var monkey_health = _troop_data.get("monkey_health", [])
 
 		# Remove excess monkeys if any
 		while current_count > target_count:
@@ -174,9 +181,9 @@ func spawn_root_boss() -> void:
 
 ## Called when a body enters the boss trigger area.
 func _on_boss_trigger_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") and not boss_spawned:
+	if body.is_in_group("player") and not _boss_spawned:
 		spawn_root_boss()
-		boss_spawned = true
+		_boss_spawned = true
 	if background_music.playing and not boss_dead:
 		fade_between_tracks(background_music, boss_music)
 
@@ -190,7 +197,7 @@ func simple_fade_transition(from_track: AudioStreamPlayer, to_track: AudioStream
 
 	# Create separate tweens for fade-out and fade-in to avoid dependencies
 	var fade_out = create_tween()
-	fade_out.tween_property(from_track, "volume_db", -40.0, fade_duration)
+	fade_out.tween_property(from_track, "volume_db", -40.0, music_fade_duration)
 	fade_out.tween_callback(func():
 		from_track.stop()
 	)
@@ -200,7 +207,7 @@ func simple_fade_transition(from_track: AudioStreamPlayer, to_track: AudioStream
 
 	# Now handle fade-in separately
 	var fade_in = create_tween()
-	fade_in.tween_property(to_track, "volume_db", 0.0, fade_duration)
+	fade_in.tween_property(to_track, "volume_db", 0.0, music_fade_duration)
 	fade_in.tween_callback(func():
 		print("Fade transition complete")
 	)

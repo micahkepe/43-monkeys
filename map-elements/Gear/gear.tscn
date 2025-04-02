@@ -1,9 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://4umu3kvj8266"]
+[gd_scene load_steps=12 format=3 uid="uid://4umu3kvj8266"]
 
+[ext_resource type="Script" uid="uid://s2kjd3ni3twl" path="res://map-elements/Gear/gear.gd" id="1_586tf"]
 [ext_resource type="Texture2D" uid="uid://bl27m5rk4c0kh" path="res://assets/sprites/tilesets/gear.png" id="1_ourqy"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_586tf"]
-rough = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ha5el"]
 atlas = ExtResource("1_ourqy")
@@ -35,40 +33,78 @@ animations = [{
 "texture": SubResource("AtlasTexture_lbotw")
 }],
 "loop": true,
-"name": &"spin_right",
+"name": &"spin",
 "speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ourqy"]
 radius = 45.0999
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_586tf"]
-radius = 8.06226
+[sub_resource type="Gradient" id="Gradient_uuoan"]
+offsets = PackedFloat32Array(0.0629371, 0.972028, 0.990676)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 
-[node name="GearWithAxis" type="Node2D"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_586tf"]
+gradient = SubResource("Gradient_uuoan")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.75, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_586tf"]
+bg_color = Color(0.67451, 0.654902, 0.643137, 0.654902)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ha5el"]
+bg_color = Color(0.352941, 0.623529, 0.866667, 0.784314)
+border_width_right = 1
+border_color = Color(0.180482, 0.42126, 0.627617, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+anti_aliasing_size = 0.5
+
+[node name="Gear" type="StaticBody2D"]
 y_sort_enabled = true
+collision_layer = 63
+script = ExtResource("1_586tf")
 
-[node name="PinJoint2D" type="PinJoint2D" parent="."]
-node_a = NodePath("../Gear")
-node_b = NodePath("../RotationAxis")
-
-[node name="Gear" type="RigidBody2D" parent="."]
-collision_layer = 32
-collision_mask = 63
-input_pickable = true
-physics_material_override = SubResource("PhysicsMaterial_586tf")
-gravity_scale = 0.0
-angular_damp = 32.884
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gear"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1hk56")
-animation = &"spin_right"
-frame_progress = 0.245055
+animation = &"spin"
+frame_progress = 0.759259
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Gear"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ourqy")
 
-[node name="RotationAxis" type="StaticBody2D" parent="."]
+[node name="Shadow" type="PointLight2D" parent="."]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(0, 3)
+scale = Vector2(1.44544, 1.26868)
+blend_mode = 1
+range_z_max = -1
+texture = SubResource("GradientTexture2D_586tf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RotationAxis"]
-shape = SubResource("CircleShape2D_586tf")
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -38.0
+offset_top = 27.0
+offset_right = 38.0
+offset_bottom = 40.0
+theme_override_styles/background = SubResource("StyleBoxFlat_586tf")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ha5el")
+value = 10.0
+rounded = true
+show_percentage = false

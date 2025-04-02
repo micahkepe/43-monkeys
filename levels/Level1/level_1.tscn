@@ -790,7 +790,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_3rsmv")
 theme_override_font_sizes/font_size = 50
 text = "Press E 
-to free"
+to interact"
 label_settings = SubResource("LabelSettings_fa2mj")
 horizontal_alignment = 1
 
@@ -1602,6 +1602,9 @@ position = Vector2(4218, -1306)
 
 [node name="Barrel23" parent="World/Barrels" instance=ExtResource("34_u1ukr")]
 position = Vector2(6028, -3290)
+
+[node name="Gears" type="Node2D" parent="World"]
+y_sort_enabled = true
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_wc88d")

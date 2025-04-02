@@ -23,7 +23,8 @@ extends StaticBody2D
 ## Container for the monkeys inside the cage.
 @onready var monkey_holder = $MonkeyHolder
 
-@export var open_distance: float = 150.0  # Maximum distance to open
+## Maximum distance to open
+@export var open_distance: float = 150.0
 
 ## The available variants of the monkeys to populate the troop.
 @export var monkey_scenes: Array[PackedScene] = []
@@ -63,7 +64,7 @@ func find_player_node() -> Node:
 
 ## Process the cage opening when the player is near.
 func _process(_delta: float):
-	if not is_open and player and Input.is_action_just_pressed("open_cage"):
+	if not is_open and player and Input.is_action_just_pressed("interact"):
 		if global_position.distance_to(player.global_position) <= open_distance:
 			open_cage()  # Only open if player is within range
 
