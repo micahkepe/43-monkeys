@@ -89,7 +89,7 @@ var _troop_locked: bool = false
 var _swarm_center_offset: Vector2 = Vector2.ZERO
 
 ## Each entry: { "node": <DefaultMonkey>, "angle": float (0..X) }
-var _swarm_monkeys: Array = []
+var _swarm_monkeys: Array[Dictionary] = []
 
 ## The center of the swarm/troop ellipse
 var _swarm_world_center: Vector2
