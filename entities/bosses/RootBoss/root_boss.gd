@@ -284,7 +284,8 @@ func take_damage(amount: float) -> void:
 	else:
 		_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
 		await get_tree().create_timer(0.5).timeout
-		_animated_sprite.modulate = Color(1, 1, 1, 1)
+		if not is_slowed:
+			_animated_sprite.modulate = Color(1, 1, 1, 1)
 
 func _die() -> void:
 	is_dead = true
@@ -309,9 +310,18 @@ func find_player_node() -> Node:
 	return get_tree().get_first_node_in_group("player")
 
 func _physics_process(_delta: float) -> void:
+		# Update the slow effect timer
+	if is_slowed:
+		slow_timer -= _delta
+		if slow_timer <= 0:
+			is_slowed = false
+			_animated_sprite.modulate = Color(1, 1, 1, 1)
+	
 	if not is_dead:
 		# Only call move_and_slide when we actually want to move
 		# Since this is a teleporting boss, we don't need move_and_slide for most cases
+		if is_slowed:
+			velocity = velocity * 0.65
 		if velocity != Vector2.ZERO:
 			move_and_slide()
 
@@ -331,3 +341,13 @@ func _on_hit_box_body_entered(body: Node2D) -> void:
 	if body.name == "Player" or body.is_in_group("troop"):
 		body.take_damage(1.0)
 		print("RootBoss dealt damage to player via HitBox!")
+
+# Variables to track slow effect state
+var is_slowed: bool = false
+var slow_timer: float = 0.0
+
+func slow_down() -> void:
+	is_slowed = true
+	slow_timer = 5.0  # Effect lasts 5 seconds
+	# Tint the sprite light blue
+	_animated_sprite.modulate = Color(0.5, 0.8, 1, 1)

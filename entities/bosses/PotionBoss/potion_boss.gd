@@ -139,6 +139,13 @@ func _physics_process(_delta: float) -> void:
 
 	# Update animation
 	_update_boss_animation()
+	
+	# Update the slow effect timer
+	if is_slowed:
+		slow_timer -= _delta
+		if slow_timer <= 0:
+			is_slowed = false
+			_animated_sprite.modulate = Color(1, 1, 1, 1)
 
 	# Check for colliding monkeys to attack
 	var overlapping_bodies = $HitBox.get_overlapping_bodies()
@@ -167,6 +174,8 @@ func _physics_process(_delta: float) -> void:
 			print("Adjusting direction to avoid obstacle: ", direction)
 
 		velocity = direction * move_speed
+		if is_slowed:
+			velocity = velocity * 0.65
 		move_and_slide()
 
 		if global_position.distance_to(current_target) <= proximity_threshold:
@@ -247,7 +256,8 @@ func take_damage(amount: float) -> void:
 		# momentarily recolor the boss to indicate damage
 		_animated_sprite.modulate = Color(1, 0.5, 0.5, 1)
 		await get_tree().create_timer(0.5).timeout
-		_animated_sprite.modulate = Color(1, 1, 1, 1)
+		if not is_slowed:
+			_animated_sprite.modulate = Color(1, 1, 1, 1)
 
 
 ## Start a timer to wait before moving to the next waypoint.
@@ -782,3 +792,14 @@ func _on_hit_box_body_exited(body:Node2D) -> void:
 
 	# Reset the animation to the walk animation
 	_animated_sprite.play("walk_down")
+
+
+# Variables to track slow effect state
+var is_slowed: bool = false
+var slow_timer: float = 0.0
+
+func slow_down() -> void:
+	is_slowed = true
+	slow_timer = 5.0  # Effect lasts 5 seconds
+	# Tint the sprite light blue
+	_animated_sprite.modulate = Color(0.5, 0.8, 1, 1)

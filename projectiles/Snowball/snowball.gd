@@ -21,6 +21,8 @@ func _on_body_entered(body: Node) -> void:
 		# Immediately apply damage to the enemy hit.
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
+		if body.has_method("slow_down"):
+			body.slow_down()
 		
 		explode_and_free()
 	else:
@@ -32,6 +34,8 @@ func _on_area_entered(area: Area2D) -> void:
 	if enemy.is_in_group("enemies") or enemy.is_in_group("boids"):
 		if enemy.has_method("take_damage"):
 			enemy.take_damage(damage)
+		if enemy.has_method("slow_down"):
+			enemy.slow_down()
 		
 		explode_and_free()
 	else:

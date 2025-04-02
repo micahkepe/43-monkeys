@@ -112,6 +112,13 @@ func _physics_process(delta: float) -> void:
 	attack_timer -= delta
 	var target = _get_closest_target()
 	var steering = Vector2.ZERO
+	
+	# Update the slow effect timer
+	if is_slowed:
+		slow_timer -= delta
+		if slow_timer <= 0:
+			is_slowed = false
+			_anim_sprite.modulate = Color(1, 1, 1, 1)
 
 	# See if we have a target, else continue with boid-like movement
 	if target:
@@ -140,6 +147,10 @@ func _physics_process(delta: float) -> void:
 	elif velocity.length() > max_speed:
 		velocity = velocity.normalized() * max_speed
 
+	# Apply slow effect if active
+	if is_slowed:
+		velocity = velocity.normalized() * (max_speed * 0.65)
+		
 	move_and_slide()
 
 	# Attack logic - Now checks for targets regardless of animation state
@@ -401,7 +412,8 @@ func take_damage(amount: float) -> void:
 		# momentarily recolor the boid to indicate damage
 		_anim_sprite.modulate = Color(1, 0.5, 0.5, 1)
 		await get_tree().create_timer(0.5).timeout
-		_anim_sprite.modulate = Color(1, 1, 1, 1)
+		if not is_slowed:
+			_anim_sprite.modulate = Color(1, 1, 1, 1)
 
 ## Handles the boid's death.
 func _die():
@@ -451,3 +463,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		print_debug("Attack animation finished. Resetting is_attacking.")
 		is_attacking = false
 		_update_animation()
+		
+		
+# Variables to track slow effect state
+var is_slowed: bool = false
+var slow_timer: float = 0.0
+
+func slow_down() -> void:
+	is_slowed = true
+	slow_timer = 5.0  # Effect lasts 5 seconds
+	# Tint the sprite light blue
+	_anim_sprite.modulate = Color(0.5, 0.8, 1, 1)
