@@ -745,6 +745,9 @@ y_sort_enabled = true
 [node name="Gear1" parent="World/Gears" instance=ExtResource("21_i8wmo")]
 position = Vector2(656, -2275)
 
+[node name="Gear2" parent="World/Gears" instance=ExtResource("21_i8wmo")]
+position = Vector2(-1058, -1331)
+
 [node name="PointLight2D" type="PointLight2D" parent="World/Gears"]
 y_sort_enabled = true
 position = Vector2(656, -2275)

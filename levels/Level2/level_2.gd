@@ -45,7 +45,8 @@ var _button_states: Dictionary[String, bool] = {}
 
 ## Gear-to-laser puzzle configuration
 @export var gears_to_lasers: Dictionary[Array, Array] = {
-	["Gear1"]: ["Laser6"]
+	["Gear1"]: ["Laser6"],
+	["Gear2"]: ["Laser5"]
 }
 
 ## Preloaded node references for quick access
