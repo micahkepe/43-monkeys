@@ -20,7 +20,11 @@ var boss_instance: Node = null
 @onready var background_music = $BackgroundMusic
 @onready var boss_music = $BossMusic
 
-## Puzzle internal variables
+# -------------------------
+# Puzzle internal variables
+# -------------------------
+@export_group("Puzzle Variables")
+
 @onready var _buttons: Array[Node] = $World/Buttons.get_children()
 @onready var _lasers: Array[Node] = $World/Lasers.get_children()
 
@@ -35,6 +39,16 @@ var _laser2_deactivated = false
 
 ## Puzzle 3: press Button[5-7] => unlock Laser[3-4]
 var _lasers_3_4_deactivated = false
+
+### Gear puzzles
+
+## Dictionary[Array[String], Array[String]] of gear(s) -> laser(s) unlocked
+## upon all gear(s) spun completely.
+@export var gears_to_lasers: Dictionary[Array, Array] = {
+	["Gear1"]: ["Laser6"]
+}
+
+# -------------------------
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,15 +67,49 @@ func _ready() -> void:
 		button.connect("body_entered", Callable(self, "_on_button_body_entered").bind(button))
 		button.connect("body_exited", Callable(self, "_on_button_body_exited").bind(button))
 
+    # Connect gear signals
+	for gear_name in gears_to_lasers.keys():
+		var gear = get_node("World/Gears/" + gear_name[0])
+		if gear:
+			gear.connect("gear_complete", Callable(self, "_on_gear_complete"))
+		else:
+			print("Warning: Gear node not found: ", gear_name[0])
+
 func _on_button_body_entered(_body: Node, button: Node) -> void:
 	_button_states[button.name] = true
-	check_puzzles()
+	check_btn_puzzles()
 
 func _on_button_body_exited(_body: Node, button: Node) -> void:
 	_button_states[button.name] = false
-	check_puzzles()
+	check_btn_puzzles()
 
-func check_puzzles() -> void:
+func _on_gear_complete(gear_name: String) -> void:
+	print("Gear completed: ", gear_name)
+
+	# Check if this gear is part of the gears_to_lasers dictionary
+	for gear_group in gears_to_lasers.keys():
+		if gear_name in gear_group:
+			# Check if all gears in this group are completed
+			var all_gears_complete = true
+			for g in gear_group:
+				var gear_node = get_node("World/Gears/" + g)
+				if gear_node and not gear_node.completed:
+					all_gears_complete = false
+					break
+
+			# If all gears in the group are complete, deactivate the associated lasers
+			if all_gears_complete:
+				var lasers = gears_to_lasers[gear_group]
+				for laser_name in lasers:
+					var laser = get_node("World/Lasers/" + laser_name)
+					if laser:
+						laser.deactivate_laser()
+						print("Deactivated laser: ", laser_name)
+					else:
+						print("Warning: Laser node not found: ", laser_name)
+
+
+func check_btn_puzzles() -> void:
 	# Puzzle 1: Button1, Button2, and Button3 unlock Laser1
 	if are_buttons_pressed(["Button1", "Button2", "Button3"]):
 		deactivate_laser_1()

@@ -42,6 +42,10 @@ func _on_body_exited(body: Node2D) -> void:
 
 # This method permanently deactivates the laser.
 func deactivate_laser() -> void:
+	# Already deactivated prior, skip
+	if not is_active:
+		return
+
 	is_active = false
 	animated_sprite.play("laser_turn_off")
 

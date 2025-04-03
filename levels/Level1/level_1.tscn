@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=75 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" uid="uid://bghxxvemydn31" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://oothsg3bxj8u" path="res://map-elements/Lights/FlickeringScreen/flickering_screen.tscn" id="32_w40f5"]
 [ext_resource type="PackedScene" uid="uid://magcl27gfs7r" path="res://map-elements/Vat/vat.tscn" id="33_ixw8n"]
 [ext_resource type="PackedScene" uid="uid://iw1ex7053soc" path="res://map-elements/Barrel/barrel.tscn" id="34_u1ukr"]
+[ext_resource type="PackedScene" uid="uid://4umu3kvj8266" path="res://map-elements/Gear/gear.tscn" id="35_njlbt"]
 [ext_resource type="AudioStream" uid="uid://b7bkgvrk1c1i7" path="res://assets/music/boss-music/bosslevel1.mp3" id="37_374ec"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
@@ -1605,6 +1606,9 @@ position = Vector2(6028, -3290)
 
 [node name="Gears" type="Node2D" parent="World"]
 y_sort_enabled = true
+
+[node name="Gear" parent="World/Gears" instance=ExtResource("35_njlbt")]
+position = Vector2(-959, 416)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_wc88d")

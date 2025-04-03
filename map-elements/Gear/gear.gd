@@ -28,6 +28,9 @@ var completed: bool:
 	get:
 		return _fully_spun
 
+## Signal to be emitted when the gear is fully spun.
+signal gear_complete(gear_name: String)
+
 ## Called upon scene initiation.
 func _ready() -> void:
 	# Ensure default (non-spinning) animation is playing at first
@@ -57,6 +60,7 @@ func _process(delta: float) -> void:
 		if _time_spun >= unlock_time:
 			_fully_spun = true
 			_animated_sprite.play("default")
+			gear_complete.emit(name)
 
 	elif Input.is_action_just_released("interact"):
 		_animated_sprite.play("default")

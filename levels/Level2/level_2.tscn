@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=41 format=4 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" uid="uid://c84qq2gb5de8x" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="19_i8wmo"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="20_25a24"]
 [ext_resource type="AudioStream" uid="uid://bk8gj2gogrhq3" path="res://assets/music/boss-music/bosslevel2.mp3" id="20_80t53"]
+[ext_resource type="PackedScene" uid="uid://4umu3kvj8266" path="res://map-elements/Gear/gear.tscn" id="21_i8wmo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8si7"]
 texture = ExtResource("2_jhhqm")
@@ -427,6 +428,16 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_qbeh1"]
 sources/0 = SubResource("TileSetAtlasSource_07qpt")
 
+[sub_resource type="Gradient" id="Gradient_25a24"]
+offsets = PackedFloat32Array(0.021028, 0.939252)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_peyil"]
+gradient = SubResource("Gradient_25a24")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0)
+
 [node name="Level2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_e5bne")
@@ -699,6 +710,15 @@ position = Vector2(948, 1942)
 rotation = 1.5708
 scale = Vector2(1.2, 1.5)
 
+[node name="Laser5" parent="World/Lasers" instance=ExtResource("20_25a24")]
+position = Vector2(-1170, -1339)
+rotation = 1.5708
+scale = Vector2(1.2, 1.5)
+
+[node name="Laser6" parent="World/Lasers" instance=ExtResource("20_25a24")]
+position = Vector2(662, -2192)
+scale = Vector2(1.1, 1.5)
+
 [node name="Boxes" type="Node2D" parent="World"]
 y_sort_enabled = true
 position = Vector2(-229, 121)
@@ -718,6 +738,19 @@ position = Vector2(-791.25, 2157.5)
 
 [node name="Box5" parent="World/Boxes" instance=ExtResource("19_i8wmo")]
 position = Vector2(-1842.5, 2258.75)
+
+[node name="Gears" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Gear1" parent="World/Gears" instance=ExtResource("21_i8wmo")]
+position = Vector2(656, -2275)
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Gears"]
+y_sort_enabled = true
+position = Vector2(656, -2275)
+scale = Vector2(1.75, 1.75)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_peyil")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xwg0x")
