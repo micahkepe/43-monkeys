@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://jpvp8dibwfw"]
+
+[ext_resource type="Texture2D" uid="uid://na7oyc4ppq03" path="res://assets/sprites/attacks/neuro_laser/laser.png" id="1_0umo6"]
+[ext_resource type="Script" uid="uid://e6jdf3xjtnr8" path="res://projectiles/neuro_laser/neuro_laser.gd" id="1_c500l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c500l"]
+atlas = ExtResource("1_0umo6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ixhu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c500l")
+}],
+"loop": true,
+"name": &"laser_default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3k3m3"]
+radius = 3.0
+height = 12.0
+
+[sub_resource type="Gradient" id="Gradient_0b7aq"]
+offsets = PackedFloat32Array(0.0582751, 0.741259)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0umo6"]
+gradient = SubResource("Gradient_0b7aq")
+width = 32
+height = 32
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="NeuroLaser" type="Area2D"]
+script = ExtResource("1_c500l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5ixhu")
+animation = &"laser_default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_3k3m3")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+color = Color(0.816099, 0.173536, 0.170478, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_0umo6")

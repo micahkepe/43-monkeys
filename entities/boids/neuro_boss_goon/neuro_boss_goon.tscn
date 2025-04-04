@@ -1,0 +1,136 @@
+[gd_scene load_steps=17 format=3 uid="uid://dnq5yht1esfkt"]
+
+[ext_resource type="Texture2D" uid="uid://c4rqld3cc3pq4" path="res://assets/sprites/characters/bosses/neuro_boss_goon/final_boss_orb.png" id="1_nq5ke"]
+[ext_resource type="Script" uid="uid://cah7dyx88vqgr" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.gd" id="1_tg647"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_tg647"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="4_ooar5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ooar5"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qusp"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyrrg"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltiim"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epnrj"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xltex"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb0f4"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hb0f4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ooar5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qusp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyrrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltiim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epnrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xltex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hb0f4")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_flfho"]
+radius = 5.0
+height = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i24ae"]
+radius = 17.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4l0t6"]
+bg_color = Color(0.600612, 0.161166, 0.305443, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6qusp"]
+shader = ExtResource("4_ooar5")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
+
+[node name="NeuroBossGoon" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_tg647")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hb0f4")
+animation = &"idle"
+frame_progress = 0.813623
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_flfho")
+
+[node name="RayUp" type="RayCast2D" parent="."]
+target_position = Vector2(0, -50)
+
+[node name="RayDown" type="RayCast2D" parent="."]
+
+[node name="RayRight" type="RayCast2D" parent="."]
+target_position = Vector2(50, 0)
+
+[node name="RayLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-50, 0)
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_i24ae")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_tg647")]
+offset_left = -11.0
+offset_top = -26.0
+offset_right = 11.0
+offset_bottom = -22.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_4l0t6")
+
+[node name="Shadow" type="ColorRect" parent="."]
+z_index = 1
+material = SubResource("ShaderMaterial_6qusp")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = 7.0
+offset_right = 23.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.85, 0.85)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
