@@ -416,6 +416,16 @@ texture_region_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_pshls")
 
+[sub_resource type="Gradient" id="Gradient_25a24"]
+offsets = PackedFloat32Array(0.021028, 0.939252)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_peyil"]
+gradient = SubResource("Gradient_25a24")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k72v6"]
 size = Vector2(324.5, 135)
 
@@ -427,16 +437,6 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_qbeh1"]
 sources/0 = SubResource("TileSetAtlasSource_07qpt")
-
-[sub_resource type="Gradient" id="Gradient_25a24"]
-offsets = PackedFloat32Array(0.021028, 0.939252)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_peyil"]
-gradient = SubResource("Gradient_25a24")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0)
 
 [node name="Level2" type="Node2D"]
 y_sort_enabled = true
@@ -508,6 +508,15 @@ position = Vector2(-588, -916)
 
 [node name="MonkeyCage10" parent="ForegroundTiles/Cages" instance=ExtResource("9_137nh")]
 position = Vector2(-423.333, 904.667)
+
+[node name="Lights" type="Node2D" parent="ForegroundTiles"]
+
+[node name="PointLight2D" type="PointLight2D" parent="ForegroundTiles/Lights"]
+y_sort_enabled = true
+position = Vector2(387.333, -1435.33)
+scale = Vector2(1.16667, 1.16667)
+range_z_max = -1
+texture = SubResource("GradientTexture2D_peyil")
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -746,14 +755,7 @@ y_sort_enabled = true
 position = Vector2(656, -2275)
 
 [node name="Gear2" parent="World/Gears" instance=ExtResource("21_i8wmo")]
-position = Vector2(-1058, -1331)
-
-[node name="PointLight2D" type="PointLight2D" parent="World/Gears"]
-y_sort_enabled = true
-position = Vector2(656, -2275)
-scale = Vector2(1.75, 1.75)
-range_z_max = -1
-texture = SubResource("GradientTexture2D_peyil")
+position = Vector2(-1072, -1340)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_xwg0x")

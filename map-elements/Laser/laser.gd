@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if is_active and (body.is_in_group("player") or body.is_in_group("troop")):
-		print("Player entered the laser!")
+		print_debug("Player entered the laser!")
 		body_in_laser = body
 		body.take_damage(1.0)
 

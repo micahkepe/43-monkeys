@@ -253,4 +253,3 @@ func simple_fade_transition(from_track: AudioStreamPlayer, to_track: AudioStream
 	var fade_in = create_tween()
 	fade_in.tween_property(to_track, "volume_db", 0.0, music_fade_duration)
 	fade_in.tween_callback(func(): print("Fade transition complete"))
-
