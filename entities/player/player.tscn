@@ -788,7 +788,6 @@ collision_layer = 16
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_ieec4")
-show_ellipse_debug = true
 shoot_cooldown_duration = 0.5
 default_projectile_scene = ExtResource("2_yc2po")
 blindness_overlay_scene = ExtResource("3_0k4ps")
@@ -867,7 +866,8 @@ bus = &"SFX"
 stream = ExtResource("12_o6mwb")
 bus = &"SFX"
 
-[node name="EllipseDebug" type="Node2D" parent="."]
+[node name="TroopEllipse" type="Node2D" parent="."]
+visible = false
 z_index = -1
 y_sort_enabled = true
 script = ExtResource("18_f01y2")

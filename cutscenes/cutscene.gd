@@ -36,7 +36,7 @@ var _can_advance: bool = false
 @onready var type_timer: Timer = Timer.new()
 @onready var frame_timer: Timer = Timer.new()
 
-@warning_ignore("unused_signal")
+## Signal for the end of the cutscene.
 signal cutscene_completed
 
 ## Called when the node enters the scene tree.
@@ -129,7 +129,7 @@ func _complete_typing() -> void:
 ## Ends the cutscene and triggers either a transition or level load
 func _end_cutscene() -> void:
 	_is_cutscene_active = false
-	emit_signal("cutscene_completed")
+	cutscene_completed.emit()
 
 	# Trigger level transition if defined
 	if transition_scene:

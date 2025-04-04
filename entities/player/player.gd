@@ -25,13 +25,9 @@ extends CharacterBody2D
 @onready var _animated_sprite = $AnimatedSprite2D
 
 ## The troop debug ellipse.
-@onready var ellipse_debug: Node2D = $EllipseDebug
+@onready var _troop_ellipse: Node2D = $TroopEllipse
 
 @export_group("Player Variables")
-
-## Whether to show the troop debug ellipse or not.
-@export
-var show_ellipse_debug: bool = false
 
 ## The base speed at which the player moves
 @export
@@ -166,12 +162,6 @@ func _ready() -> void:
 	## Set the player's initial position
 	_swarm_world_center = global_position
 
-	# Show ellipse or not
-	if show_ellipse_debug:
-		ellipse_debug.show()
-	else:
-		ellipse_debug.hide()
-
 	# Pre-spawn the entire troop at the start
 	for i in range(initial_troop_amount):
 		add_monkey_to_swarm()
@@ -214,11 +204,9 @@ func _physics_process(_delta: float) -> void:
 	# Conditionally display the troop ellipse.
 	# TODO: only call this on ellipse resizing, not in all shift cases.
 	if Input.is_key_pressed(KEY_SHIFT) and _swarm_monkeys.size() > 0:
-		show_ellipse_debug = true
-		ellipse_debug.show()
+		_troop_ellipse.show()
 	else:
-		show_ellipse_debug = false
-		ellipse_debug.hide()
+		_troop_ellipse.hide()
 
 	# Player movement input (no SHIFT)
 	if not Input.is_key_pressed(KEY_SHIFT):
@@ -420,12 +408,11 @@ func _update_swarm_positions() -> void:
 				monkey.velocity = to_target.normalized() * final_speed
 			monkey.move_and_slide()
 
-	if show_ellipse_debug:
-		ellipse_debug.ellipse_width_scale = ellipse_width_scale
-		ellipse_debug.ellipse_height_scale = ellipse_height_scale
-		ellipse_debug.swarm_rotation = _swarm_rotation
-		ellipse_debug.global_position = _swarm_center_offset.rotated(_swarm_rotation) + global_position
-		ellipse_debug.queue_redraw()
+	_troop_ellipse.ellipse_width_scale = ellipse_width_scale
+	_troop_ellipse.ellipse_height_scale = ellipse_height_scale
+	_troop_ellipse.swarm_rotation = _swarm_rotation
+	_troop_ellipse.global_position = _swarm_center_offset.rotated(_swarm_rotation) + global_position
+	_troop_ellipse.queue_redraw()
 
 
 ## Translates all monkeys by the same offset for WASD movement or swarm keys
