@@ -1,7 +1,6 @@
 extends "res://entities/boids/boid.gd" 
 
 @export var projectile_scene: PackedScene
-@export var projectile_speed: float = 800.0  # Unused in this version; bullet_speed is hardcoded
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -77,7 +76,7 @@ func _throw_projectile_at_position(target_position: Vector2) -> void:
 
 	# Calculate the projectile velocity.
 	# Here we use a bullet_speed of 550.0 as in the banana function.
-	var bullet_speed = 550.0
+	var bullet_speed = 450.0
 	var main_velocity = shoot_direction * bullet_speed
 
 	# Add a portion of the boid's current perpendicular velocity.

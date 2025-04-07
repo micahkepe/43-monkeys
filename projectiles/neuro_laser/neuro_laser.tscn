@@ -20,7 +20,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3k3m3"]
 radius = 3.0
-height = 12.0
+height = 8.0
 
 [sub_resource type="Gradient" id="Gradient_0b7aq"]
 offsets = PackedFloat32Array(0.0582751, 0.741259)
