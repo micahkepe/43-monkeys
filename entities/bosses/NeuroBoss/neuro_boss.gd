@@ -791,7 +791,7 @@ func update_banana_orbit(delta: float):
 func catch_banana(banana):
 	if banana == null or not is_instance_valid(banana):
 		return
-	
+
 	# Skip if in throw mode
 	if not debug_can_catch_bananas:
 		print("DEBUG: Not catching banana - in throw mode")
@@ -807,6 +807,11 @@ func catch_banana(banana):
 		print("DEBUG: Ignoring boss-thrown banana in catch_banana")
 		return
 	
+	# Skip if maximum bananas reached
+	if caught_bananas.size() >= max_caught_bananas:
+		print("DEBUG: Maximum bananas reached, cannot catch more")
+		return
+	
 	print("NeuroBoss: Catching banana:" + banana.name)
 	banana.set_meta("caught_by_boss", true)
 	call_deferred("_process_caught_banana", banana)
@@ -816,14 +821,6 @@ func _process_caught_banana(banana):
 		return
 	
 	print("DEBUG: Processing caught banana:", banana.name)
-	
-	# Limit maximum caught bananas
-	if caught_bananas.size() >= max_caught_bananas:
-		print("DEBUG: Maximum caught bananas reached, removing oldest")
-		if caught_bananas.size() > 0:
-			var oldest = caught_bananas.pop_front()
-			if is_instance_valid(oldest):
-				oldest.queue_free()
 	
 	var original_position = banana.global_position
 	

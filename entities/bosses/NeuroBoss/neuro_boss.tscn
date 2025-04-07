@@ -1,13 +1,14 @@
-[gd_scene load_steps=195 format=3 uid="uid://dsy8p5naej4lb"]
+[gd_scene load_steps=199 format=3 uid="uid://dsy8p5naej4lb"]
 
 [ext_resource type="Script" uid="uid://bcqf2ny3ukcvn" path="res://entities/bosses/NeuroBoss/neuro_boss.gd" id="1_2h7en"]
 [ext_resource type="Texture2D" uid="uid://dbpt7107yb4cp" path="res://assets/sprites/characters/bosses/evil_monkey/evil-monkey.png" id="1_l147v"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="3_1rfga"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_ghvu7"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="5_5ovqa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l147v"]
-radius = 0.08
-height = 0.38
+radius = 0.11
+height = 0.4
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l147v"]
 atlas = ExtResource("1_l147v")
@@ -1444,17 +1445,30 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghvu7"]
+bg_color = Color(0.822257, 0.322625, 0.292501, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1rfga"]
 size = Vector2(75, 101)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ghvu7"]
 radius = 66.0303
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8nxvu"]
+shader = ExtResource("5_5ovqa")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.901961, 0.192157, 0.286275, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wj7jt"]
+
 [node name="NeuroBoss" type="CharacterBody2D" groups=["enemies"]]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_2h7en")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.19209e-07, 54)
+position = Vector2(-1, 51)
 rotation = 1.5708
 scale = Vector2(100, 100)
 shape = SubResource("CapsuleShape2D_l147v")
@@ -1465,17 +1479,18 @@ sprite_frames = SubResource("SpriteFrames_47ep4")
 animation = &"idle_left"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_1rfga")]
-offset_left = -10.0
-offset_top = -47.0
-offset_right = 15.0
+offset_left = -32.0
+offset_top = -63.0
+offset_right = 32.0
 offset_bottom = -43.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_ghvu7")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 29
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(4.5, 13.5)
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_1rfga")
 
 [node name="BananaDetectionArea" type="Area2D" parent="."]
@@ -1486,6 +1501,15 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BananaDetectionArea"]
 position = Vector2(4, 13)
 shape = SubResource("CircleShape2D_ghvu7")
+
+[node name="HaloEffect" type="Polygon2D" parent="."]
+z_index = -1
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_8nxvu")
+position = Vector2(-75, -9.53674e-07)
+scale = Vector2(154.279, 100.459)
+texture = SubResource("CanvasTexture_wj7jt")
+polygon = PackedVector2Array(-33, -14, -33, 15, 38, 15, 38, -14)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
