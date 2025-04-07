@@ -159,8 +159,14 @@ func _physics_process(delta: float) -> void:
 		var overlapping_bodies = $HitBox.get_overlapping_bodies()
 		var targets = []
 		for body in overlapping_bodies:
-			if body.is_in_group("player") or body.is_in_group("troop"):
+			if body.is_in_group("player"):
+				#print("=== HERE PLAYER")
 				targets.append(body)
+			elif body.is_in_group("troop"):
+				print("==== HERE TROOP")
+				if body.is_caged == true:
+					targets.append(body)
+				
 
 		if targets.size() > 0:
 			var closest_target = _get_closest_target_from_list(targets)
@@ -432,6 +438,7 @@ func _die():
 		$HitBox.set_deferred("monitorable", false)
 
 	print_debug("Boid died", self)
+	print("==== BOID DIED")
 	_anim_sprite.play("die")
 
 	# Play a scream sound with a probability

@@ -1,9 +1,36 @@
-[gd_scene load_steps=17 format=3 uid="uid://dnq5yht1esfkt"]
+[gd_scene load_steps=26 format=3 uid="uid://dnq5yht1esfkt"]
 
 [ext_resource type="Texture2D" uid="uid://c4rqld3cc3pq4" path="res://assets/sprites/characters/bosses/neuro_boss_goon/final_boss_orb.png" id="1_nq5ke"]
 [ext_resource type="Script" uid="uid://cah7dyx88vqgr" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.gd" id="1_tg647"]
+[ext_resource type="PackedScene" uid="uid://jpvp8dibwfw" path="res://projectiles/neuro_laser/neuro_laser.tscn" id="2_6qusp"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_tg647"]
+[ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_kyrrg"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="4_ooar5"]
+[ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="7_ltiim"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flfho"]
+atlas = ExtResource("3_kyrrg")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i24ae"]
+atlas = ExtResource("3_kyrrg")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l0t6"]
+atlas = ExtResource("3_kyrrg")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quxdf"]
+atlas = ExtResource("3_kyrrg")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cja4n"]
+atlas = ExtResource("3_kyrrg")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guogu"]
+atlas = ExtResource("3_kyrrg")
+region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ooar5"]
 atlas = ExtResource("1_nq5ke")
@@ -35,6 +62,29 @@ region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hb0f4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flfho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i24ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4l0t6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quxdf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cja4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guogu")
+}],
+"loop": false,
+"name": &"die",
+"speed": 12.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ooar5")
@@ -78,14 +128,17 @@ shader_parameter/glow_spread = 0.5
 shader_parameter/glow_intensity = 1.5
 shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
 
-[node name="NeuroBossGoon" type="CharacterBody2D"]
+[node name="NeuroBossGoon" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_tg647")
+projectile_scene = ExtResource("2_6qusp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hb0f4")
-animation = &"idle"
-frame_progress = 0.813623
+animation = &"die"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 13)
@@ -134,3 +187,13 @@ scale = Vector2(0.85, 0.85)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="ScreamPlayer" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("7_ltiim")
+volume_db = -15.0
+mix_target = 1
+bus = &"SFX"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
