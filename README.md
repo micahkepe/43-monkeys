@@ -19,31 +19,6 @@ Game Design at Rice University.
 - Ascend through themed floors, face the mastermind scientist, and lead your
   monkey squad to freedom!
 
-## Project Structure
-
-| Directory      | Description                                          |
-| -------------- | ---------------------------------------------------- |
-| `assets/`      | Contains all static assets used in the game.         |
-| `cutscenes/`   | Contains all the cutscenes used in the game.         |
-| `entities/`    | Contains all the entity scenes used in the game.     |
-| `levels/`      | Contains all the scripts used in the game.           |
-| `menus/`       | Extermnal Godot plugins used in the game.            |
-| `projectiles/` | Contains all the projectile scenes used in the game. |
-| `shaders/`     | Custom game-wide shaders for the game.               |
-
-## Helpful Tools for Development
-
-- [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light):
-  a tool to generate spritesheets for characters
-- [LCP Character Generator](https://pflat.itch.io/lpc-character-generator):
-  another option for generating character spritesheets
-- [itch.io](https://itch.io/): indie game assets and resources
-- [Kenney](https://kenney.nl/): more free game assets
-- [OpenGameArt](https://opengameart.org/): yet more free game assets
-- [Pixel It Conversion Tool](https://giventofly.github.io/pixelit/): tool for
-  converting images to pixel art with parameters like pixel size, dithering, and
-  color palette
-
 ## Code Style and Documentation
 
 - File documentation should follow the guidelines outlined in the Godot
@@ -130,7 +105,7 @@ Game Design at Rice University.
 
 - [Official Godot Documentation (Latest Stable Release)](https://docs.godotengine.org/en/stable/index.html)
 - [Godot in 100 Seconds](https://www.youtube.com/watch?v=QKgTZWbwD1U)
-- [Every 2D Node Explained in 9 Minutes !](https://www.youtube.com/watch?v=22VYNOtrcgM)
+- [Every 2D Node Explained in 9 Minutes!](https://www.youtube.com/watch?v=22VYNOtrcgM)
 - [How to make a Video Game - Godot Beginner Tutorial](https://www.youtube.com/watch?v=LOhfqjmasi0&t=62s)
 - [Godot 4 Crash Course for Beginners - GameDev 2D Top Down Tutorial](https://youtu.be/Luf2Kr5s3BM)
 - [Flocking - AI for Game Development](https://www.oreilly.com/library/view/ai-for-game/0596005555/ch04.html)
