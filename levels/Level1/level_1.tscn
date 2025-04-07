@@ -1205,6 +1205,7 @@ tile_map_data = PackedByteArray("AADdAM7/AwAUABAAAADdAMb/AwAQAAgAAADdAL7/AwAQAAg
 tile_set = SubResource("TileSet_y44o3")
 
 [node name="Cages" type="Node2D" parent="ForegroundTiles"]
+z_index = -1
 y_sort_enabled = true
 position = Vector2(4.06901e-05, -0.666667)
 
@@ -1301,6 +1302,7 @@ position = Vector2(6036, -1226)
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
+position = Vector2(0, 1)
 
 [node name="Vats" type="Node2D" parent="World"]
 y_sort_enabled = true
