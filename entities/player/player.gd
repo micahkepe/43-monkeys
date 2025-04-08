@@ -1,7 +1,7 @@
-extends CharacterBody2D
-## Represents a 2D player character in the game.
+class_name Player extends CharacterBody2D
+## Represents a 2D pllayer character in the game.
 ##
-## The player character is controlled by the player and can move in four
+## The player character is contrjolled by the player and can move in four
 ## directions (up, down, left, right). The player's movement is controlled by
 ## input mappings defined in the project settings for the following actions:
 ## "ui_right" "ui_left" "ui_up" "ui_down"

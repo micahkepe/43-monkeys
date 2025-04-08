@@ -1,6 +1,10 @@
 extends CharacterBody2D
 ## The NeuroBoss is a powerful enemy that can manipulate bananas and control monkeys.
 
+# Signals for monkey control - allows decoupling from Player
+signal monkey_controlled(monkey)
+signal monkey_released(monkey)
+
 @export var max_health: float = 75.0
 @export var move_speed: float = 130.0
 @export var proximity_threshold: float = 50.0 # How close to target before picking new one
@@ -24,6 +28,12 @@ extends CharacterBody2D
 @export var psychic_push_force: float = 500.0
 @export var psychic_push_range: float = 200.0
 
+# Attack settings for controlled monkeys
+@export var controlled_monkey_attack_range: float = 100.0
+@export var controlled_monkey_attack_damage: int = 1
+@export var controlled_monkey_move_speed: float = 150.0
+@export var controlled_monkey_attack_interval: float = 1.0
+
 const STUCK_THRESHOLD: float = 5.0
 const SIMPLE_MOVEMENT_DURATION: float = 5.0
 const BANANA_THROW_SPEED: float = 550.0 # Speed for thrown bananas
@@ -32,6 +42,9 @@ const BANANA_THROW_SPEED: float = 550.0 # Speed for thrown bananas
 @onready var health_bar = $HealthBar
 @onready var banana_detection_area: Area2D = $BananaDetectionArea
 @onready var hitbox: Area2D = $Hitbox
+
+# Visual orbit ring
+var orbit_ring: Node2D
 
 # Timers - declare them first, will create in _ready
 var attack_timer: Timer
@@ -47,6 +60,7 @@ var in_special_ability: bool = false
 var is_dead: bool = false
 var caught_bananas: Array = []
 var controlled_monkeys: Array = []
+var monkey_attack_cooldowns: Dictionary = {}
 var banana_rotation: float = 0.0
 var banana_throw_cooldown: float = 0.0
 var last_direction_suffix: String = "down" # Used to track the direction suffix for animations
@@ -78,6 +92,9 @@ func _ready() -> void:
 	if health_bar:
 		health_bar.max_value = max_health
 		health_bar.value = current_health
+	
+	# Create the orbit ring visual
+	_create_orbit_ring()
 
 	# Make sure we have a valid AnimatedSprite2D reference
 	if !_animated_sprite:
@@ -94,14 +111,11 @@ func _ready() -> void:
 		printerr("NeuroBoss: No sprite_frames found on AnimatedSprite2D!")
 		return
 	
-	# Ensure animation_finished signal is properly connected
-	if _animated_sprite.animation_finished.is_connected(Callable(self, "_on_animated_sprite_2d_animation_finished")):
-		_animated_sprite.animation_finished.disconnect(Callable(self, "_on_animated_sprite_2d_animation_finished"))
+	# Ensure animation_finished signal is properly connected - FIX: Don't try to disconnect first
+	if !_animated_sprite.animation_finished.is_connected(Callable(self, "_on_animated_sprite_2d_animation_finished")):
+		_animated_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
+		print("NeuroBoss: Connected animation_finished signal from AnimatedSprite2D.")
 	
-	# Connect the signal
-	_animated_sprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
-	print("NeuroBoss: Connected animation_finished signal from AnimatedSprite2D.")
-
 	# Set initial animation
 	play_animation("idle_down")
 	print("NeuroBoss: Set initial animation to idle_down")
@@ -115,7 +129,7 @@ func _ready() -> void:
 		hitbox.collision_layer = 1 << 1 # Layer 2 
 		hitbox.collision_mask = (1 << 2) | (1 << 3) | (1 << 4) # Layers 3, 4, 5 
 		
-		# Connect hitbox signals 
+		# Connect hitbox signals - FIX: Only disconnect if connected
 		if hitbox.body_entered.is_connected(Callable(self, "_on_hitbox_body_entered")): 
 			hitbox.body_entered.disconnect(Callable(self, "_on_hitbox_body_entered")) 
 		if hitbox.body_exited.is_connected(Callable(self, "_on_hitbox_body_exited")): 
@@ -152,6 +166,31 @@ func _ready() -> void:
 	move_to_next_waypoint()
 
 	print("NeuroBoss: Initialization complete.")
+
+# Create the visual orbit ring
+func _create_orbit_ring() -> void:
+	orbit_ring = Node2D.new()
+	orbit_ring.name = "OrbitRing"
+	add_child(orbit_ring)
+	
+	# Set z_index to be behind the boss but in front of the background
+	orbit_ring.z_index = -1
+
+# Draw the orbit ring - needed to make it visible
+func _draw() -> void:
+	if caught_bananas.size() > 0:
+		# Draw orbit circle with a pulsing glow effect
+		var alpha = 0.5 + 0.2 * sin(Time.get_ticks_msec() / 200.0)
+		var color = Color(1.0, 0.7, 0.2, alpha)  # Golden glow
+		draw_circle(Vector2.ZERO, banana_orbit_radius, color)
+		
+		# Draw a slightly smaller inner circle for a ring effect
+		var inner_color = Color(1.0, 0.7, 0.2, alpha * 0.3)  # More transparent
+		draw_circle(Vector2.ZERO, banana_orbit_radius - 5, inner_color)
+		
+		# Draw orbit path
+		var orbit_color = Color(1.0, 0.8, 0.3, 0.3)  # Faint golden line
+		draw_arc(Vector2.ZERO, banana_orbit_radius, 0, TAU, 64, orbit_color, 2.0)
 
 # Setup timers properly
 func _setup_timers() -> void:
@@ -265,6 +304,15 @@ func _physics_process(delta: float) -> void:
 	# Update orbiting bananas if any
 	if caught_bananas.size() > 0:
 		update_banana_orbit(delta)
+		queue_redraw()  # Redraw the orbit ring
+	else:
+		queue_redraw()  # Still redraw to hide ring when no bananas
+		
+	# Update controlled monkeys to make them attack player/troop
+	update_controlled_monkeys(delta)
+	
+	# CRITICAL FIX: Check controlled monkeys for death (monitoring health)
+	check_controlled_monkeys_health()
 
 	# Stuck detection
 	var should_be_moving = current_target != Vector2.ZERO
@@ -294,6 +342,32 @@ func _physics_process(delta: float) -> void:
 	
 	# Update last_position after movement
 	last_position = global_position
+	
+# ADDED FUNCTION: Monitor controlled monkeys health to detect death
+func check_controlled_monkeys_health() -> void:
+	var monkeys_to_remove = []
+	
+	for monkey in controlled_monkeys:
+		if not is_instance_valid(monkey):
+			monkeys_to_remove.append(monkey)
+			continue
+			
+		# Check if monkey has health data
+		if "current_health" in monkey and monkey.has_meta("last_known_health"):
+			var last_health = monkey.get_meta("last_known_health")
+			var current_health = monkey.current_health
+			
+			# If health dropped to 0 or below, consider it dead
+			if current_health <= 0 and last_health > 0:
+				print("NeuroBoss: Detected monkey death by health drop:", monkey.name)
+				monkeys_to_remove.append(monkey)
+			else:
+				# Update stored health
+				monkey.set_meta("last_known_health", current_health)
+	
+	# Remove any dead monkeys
+	for monkey in monkeys_to_remove:
+		_on_controlled_monkey_died(monkey)
 
 # Simplified animation playing function
 func play_animation(anim_name: String) -> void:
@@ -316,7 +390,8 @@ func play_animation(anim_name: String) -> void:
 			last_direction_suffix = "right"
 	else:
 		# Fallback to a default animation
-		print("NeuroBoss: Animation not found: ", anim_name)
+		print("NeuroBoss: Animation not found: ", anim_name, " - Available animations: ", 
+			_animated_sprite.sprite_frames.get_animation_names())
 		if _animated_sprite.sprite_frames.has_animation("idle_" + last_direction_suffix):
 			_animated_sprite.play("idle_" + last_direction_suffix)
 		elif _animated_sprite.sprite_frames.has_animation("idle_down"):
@@ -565,6 +640,7 @@ func throw_caught_bananas():
 	# Schedule banana throw
 	get_tree().create_timer(0.3).timeout.connect(Callable(self, "_execute_banana_throw"))
 
+# FIXED: Complete overhaul of banana throw execution
 func _execute_banana_throw():
 	var projectiles_node = find_or_create_projectiles_node()
 	var targets = get_tree().get_nodes_in_group("player")
@@ -576,15 +652,45 @@ func _execute_banana_throw():
 	print("DEBUG: Found targets:", targets.size())
 	print("DEBUG: Current caught bananas:", caught_bananas.size())
 
-	var bananas_to_throw_copy = caught_bananas.duplicate() # Work on a copy
-	caught_bananas.clear() # Clear original immediately
+	# IMPORTANT FIX: Only create a copy but DON'T clear the original array yet!
+	var bananas_to_throw_copy = caught_bananas.duplicate() 
+	var bananas_to_remove = [] # Track which bananas to remove after successful throws
 	
 	print("DEBUG: Bananas to throw:", bananas_to_throw_copy.size())
 
+	# If we have no bananas or no targets, exit early
+	if bananas_to_throw_copy.size() == 0 or targets.size() == 0:
+		print("DEBUG: No bananas or targets available for throw")
+		is_attacking = false
+		in_special_ability = false
+		return
+
+	# FIXED: Determine the throw direction based on the boss's facing
+	var throw_direction = Vector2.ZERO
+	
+	# Use the last_direction_suffix to determine the throw direction
+	if last_direction_suffix == "up":
+		throw_direction = Vector2(0, -1)
+	elif last_direction_suffix == "down":
+		throw_direction = Vector2(0, 1)
+	elif last_direction_suffix == "left":
+		throw_direction = Vector2(-1, 0)
+	elif last_direction_suffix == "right":
+		throw_direction = Vector2(1, 0)
+	else:
+		# Default to the last known direction if suffix not recognized
+		throw_direction = last_known_direction
+	
+	# Make sure we have a valid throw direction
+	if throw_direction == Vector2.ZERO:
+		throw_direction = Vector2(0, 1) # Default to throwing down if no direction
+
+	# Now process the bananas for throwing
 	for banana in bananas_to_throw_copy:
 		if not is_instance_valid(banana):
 			continue
 
+		# Get a random target for damage, but use our calculated throw direction
 		var target_node = null
 		if not targets.is_empty():
 			target_node = targets[randi() % targets.size()]
@@ -596,11 +702,12 @@ func _execute_banana_throw():
 		var taser = taser_scene.instantiate()
 		taser.global_position = global_position
 		
-		# Calculate direction to target
-		var direction_to_target = (target_node.global_position - taser.global_position).normalized()
+		# FIXED: Use the boss's facing direction with minimal variation 
+		var variation = randf_range(-0.1, 0.1) # Reduced variation for more accurate forward throws
+		var final_throw_direction = throw_direction.rotated(variation)
 		
 		# Set velocity and appearance - make it look like a red banana
-		taser.velocity = direction_to_target * BANANA_THROW_SPEED
+		taser.velocity = final_throw_direction * BANANA_THROW_SPEED
 		taser.modulate = Color(1, 0.5, 0.5) # Red tint to indicate it's from boss
 		
 		# Keep the visual appearance of the banana
@@ -613,7 +720,7 @@ func _execute_banana_throw():
 		# Set metadata
 		taser.set_meta("thrown_by_boss", true)
 		taser.set_meta("friendly", false) # Not friendly to player
-		taser.set_meta("owner", self)
+		taser.set_meta("source_entity", self)
 		
 		# Set collision properties for proper hitting
 		taser.collision_layer = 1 << 2  # Layer 3 (Projectiles)
@@ -622,60 +729,530 @@ func _execute_banana_throw():
 		# Add the taser to the scene
 		projectiles_node.add_child(taser)
 		
-		# Free the original banana
-		if is_instance_valid(banana):
-			banana.queue_free()
+		# Track banana for removal instead of immediately freeing it
+		bananas_to_remove.append(banana)
 
 		print("NeuroBoss: Threw banana (as taser) at", target_node.name)
 		await get_tree().create_timer(0.2).timeout
+
+	# Now safely remove all bananas that were successfully thrown
+	for banana in bananas_to_remove:
+		if is_instance_valid(banana):
+			# Remove from array before freeing to avoid invalid reference
+			if caught_bananas.has(banana):
+				caught_bananas.erase(banana)
+			banana.queue_free()
+	
+	print("DEBUG: Finished throwing all bananas")
 	
 	# Reset the catching flag after completion with a delay
 	await get_tree().create_timer(0.5).timeout
 	debug_can_catch_bananas = true
 	
-	print("DEBUG: Finished throwing all bananas")
-	
 	# Reset animation lock after throw is complete
 	in_special_ability = false
 	is_attacking = false
+
+# FIXED: Improved function for controlled monkey behavior
+func update_controlled_monkeys(delta: float) -> void:
+	var player = find_player_node(get_tree().root)
+	if not player or controlled_monkeys.is_empty():
+		return
+	
+	# Check which monkeys are still valid and remove any that aren't
+	var valid_monkeys = []
+	for monkey in controlled_monkeys:
+		if is_instance_valid(monkey) and monkey.has_meta("controlled_by_boss"):
+			valid_monkeys.append(monkey)
+		else:
+			# Handle removing invalid monkeys
+			if monkey_attack_cooldowns.has(monkey):
+				monkey_attack_cooldowns.erase(monkey)
+	
+	# Update our list if any monkeys are no longer valid
+	if valid_monkeys.size() != controlled_monkeys.size():
+		controlled_monkeys = valid_monkeys
+	
+	for monkey in controlled_monkeys:
+		# Initialize attack cooldown for this monkey if needed
+		if not monkey_attack_cooldowns.has(monkey):
+			monkey_attack_cooldowns[monkey] = 0.0
+		
+		# Update cooldown
+		if monkey_attack_cooldowns[monkey] > 0:
+			monkey_attack_cooldowns[monkey] -= delta
+		
+		# Choose a target - either player or a random troop member
+		var target = player
+		var troop_members = get_tree().get_nodes_in_group("troop")
+		if not troop_members.is_empty() and randf() < 0.3:  # 30% chance to target troop instead of player
+			target = troop_members[randi() % troop_members.size()]
+			
+		if not is_instance_valid(target):
+			continue
+			
+		# Calculate distance to target
+		var distance_to_target = monkey.global_position.distance_to(target.global_position)
+		
+		# Direction to target
+		var direction = (target.global_position - monkey.global_position).normalized()
+		
+		# Handle animation
+		_update_monkey_animation(monkey, direction)
+		
+		# Move monkey toward target if not in attack range
+		if distance_to_target > controlled_monkey_attack_range:
+			if "velocity" in monkey:
+				monkey.velocity = direction * controlled_monkey_move_speed
+				# Apply the velocity (if the monkey has move_and_slide method)
+				if monkey.has_method("move_and_slide"):
+					monkey.move_and_slide()
+		else:
+			# Slow down when in attack range
+			if "velocity" in monkey:
+				monkey.velocity = direction * (controlled_monkey_move_speed * 0.5)
+				if monkey.has_method("move_and_slide"):
+					monkey.move_and_slide()
+			
+			# Attack if cooldown is done
+			if monkey_attack_cooldowns[monkey] <= 0:
+				_make_monkey_attack(monkey, target, direction)
+				monkey_attack_cooldowns[monkey] = controlled_monkey_attack_interval
+
+# FIXED: Helper function to update monkey animation with improved AnimatedSprite2D handling
+func _update_monkey_animation(monkey, direction: Vector2) -> void:
+	if not is_instance_valid(monkey):
+		return
+
+	# Avoid referencing freed objects
+	if monkey == null:
+		return
+
+	if monkey is AnimatedSprite2D:
+		if not is_instance_valid(monkey.sprite_frames):
+			return
+
+		var anim_suffix = "_down"
+		if abs(direction.x) > abs(direction.y):
+			anim_suffix = "_right" if direction.x > 0 else "_left"
+		else:
+			anim_suffix = "_down" if direction.y > 0 else "_up"
+
+		var walk_anim = "walk" + anim_suffix
+		if monkey.sprite_frames.has_animation(walk_anim):
+			monkey.play(walk_anim)
+		else:
+			var animations = monkey.sprite_frames.get_animation_names()
+			if animations.size() > 0:
+				monkey.play(animations[0])
+		return
+
+	if monkey.has_method("animate_walk") and is_instance_valid(monkey):
+		monkey.animate_walk(direction)
+
+	elif monkey.has_method("_update_animation") and is_instance_valid(monkey):
+		monkey._update_animation()
+
+	elif monkey.has_node("AnimationTree") and is_instance_valid(monkey):
+		var animation_tree = monkey.get_node("AnimationTree")
+		if animation_tree and is_instance_valid(animation_tree):
+			var playback = animation_tree.get("parameters/playback")
+			if playback:
+				if direction.length() > 0.1:
+					if has_parameter(animation_tree, "parameters/Walk/BlendSpace2D/blend_position"):
+						animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", direction)
+					playback.travel("Walk")
+				else:
+					if has_parameter(animation_tree, "parameters/Idle/BlendSpace2D/blend_position"):
+						animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", direction)
+					playback.travel("Idle")
+
+	elif monkey.has_node("AnimatedSprite2D") and is_instance_valid(monkey):
+		var sprite = monkey.get_node("AnimatedSprite2D")
+		if not is_instance_valid(sprite) or not is_instance_valid(sprite.sprite_frames):
+			return
+
+		var anim_prefix = "walk" if direction.length() >= 0.1 else "idle"
+		var anim_suffix = "_down"
+		if abs(direction.x) > abs(direction.y):
+			anim_suffix = "_right" if direction.x > 0 else "_left"
+		else:
+			anim_suffix = "_down" if direction.y > 0 else "_up"
+
+		var anim_name = anim_prefix + anim_suffix
+		if sprite.sprite_frames.has_animation(anim_name):
+			sprite.play(anim_name)
+
+# Helper method for checking safely if a parameter exists in the AnimationTree
+func has_parameter(animation_tree, param_path: String) -> bool:
+	var parts = param_path.split("/")
+	var current = animation_tree
+	
+	for part in parts:
+		if not current.has(part):
+			return false
+		current = current.get(part)
+	
+	return true
+
+# Helper function to make a monkey attack - FIXED FOR DAMAGE DEALING
+func _make_monkey_attack(monkey, target, direction: Vector2) -> void:
+	if not is_instance_valid(monkey) or not is_instance_valid(target):
+		return
+	
+	# Apply damage immediately to ensure it happens
+	if target.has_method("take_damage"):
+		target.take_damage(controlled_monkey_attack_damage)
+	
+	# Try different attack methods for visuals
+	if monkey.has_method("attack"):
+		monkey.attack(target)
+	elif monkey.has_method("perform_attack"):
+		monkey.perform_attack()
+	elif monkey.has_method("_play_attack_animation"):
+		monkey._play_attack_animation(target)
+	elif monkey.has_node("AnimationTree"):
+		var animation_tree = monkey.get_node("AnimationTree")
+		if animation_tree:
+			var playback = animation_tree.get("parameters/playback")
+			if playback:
+				# Set attack direction in blend space if available
+				if has_parameter(animation_tree, "parameters/Attack/BlendSpace2D/blend_position"):
+					animation_tree.set("parameters/Attack/BlendSpace2D/blend_position", direction)
+				playback.travel("Attack")
+	else:
+		# Visual attack feedback
+		if monkey.has_node("AnimatedSprite2D"):
+			var sprite = monkey.get_node("AnimatedSprite2D")
+			if sprite:
+				sprite.modulate = Color(1.5, 0.5, 0.5, 1.0)  # Briefly flash red
+				get_tree().create_timer(0.2).timeout.connect(func():
+					if is_instance_valid(sprite):
+						sprite.modulate = Color(1.0, 0.5, 0.5, 1.0)  # Back to normal red tint
+				)
 
 func perform_mind_control():
 	is_attacking = true
 	in_special_ability = true
 	velocity = Vector2.ZERO
-
+	
+	# Ensure we have a valid direction for the animation
+	if last_known_direction == Vector2.ZERO:
+		last_known_direction = Vector2.DOWN
+	
+	# Get the animation name based on our current direction
 	var anim_name = get_direction_animation("expand", last_known_direction)
+	print("NeuroBoss: Mind Control - Playing animation:", anim_name)
+	
+	# Play the animation
 	play_animation(anim_name)
 	
-	# Schedule mind control effect
+	# Schedule mind control effect with a longer delay to ensure animation plays
 	get_tree().create_timer(0.5).timeout.connect(Callable(self, "_execute_mind_control"))
 
+# Updated to properly handle animation state and find monkeys
 func _execute_mind_control():
+	print("NeuroBoss: Executing mind control")
+	
+	# Find all potential monkeys to control
 	var monkeys_in_range = []
 	var troop_nodes = get_tree().get_nodes_in_group("troop")
+	print("NeuroBoss: Found", troop_nodes.size(), "total troop members")
+	
 	for monkey in troop_nodes:
 		if not controlled_monkeys.has(monkey):
-			if monkey.global_position.distance_to(global_position) <= mind_control_range:
+			var distance = monkey.global_position.distance_to(global_position)
+			if distance <= mind_control_range:
 				monkeys_in_range.append(monkey)
-
+				print("NeuroBoss: Found monkey in range at distance", distance)
+	
 	if monkeys_in_range.size() > 0:
 		monkeys_in_range.sort_custom(Callable(self, "sort_by_distance"))
-
+		
 		var control_count = min(monkeys_in_range.size(), max_controlled_monkeys - controlled_monkeys.size())
-		print("NeuroBoss: Found", monkeys_in_range.size(), "potential monkeys, controlling up to", control_count)
-
+		print("NeuroBoss: Found", monkeys_in_range.size(), "potential monkeys, controlling", control_count)
+		
+		var took_control = false
 		for i in range(control_count):
-			take_control_of_monkey(monkeys_in_range[i])
-
-		# Mind control duration
-		if control_count > 0:
+			if is_instance_valid(monkeys_in_range[i]):
+				take_control_of_monkey(monkeys_in_range[i])
+				took_control = true
+		
+		# Only schedule release if we actually took control of any monkeys
+		if took_control:
+			print("NeuroBoss: Started mind control - will release in", mind_control_duration, "seconds")
 			get_tree().create_timer(mind_control_duration).timeout.connect(Callable(self, "release_all_controlled_monkeys"))
-
-	# Reset animation lock
-	in_special_ability = false
-	is_attacking = false
+		else:
+			print("NeuroBoss: Failed to take control of any monkeys")
+	else:
+		print("NeuroBoss: No monkeys in range to control")
+	
+	# Reset animation state after a small delay to ensure animation completes
+	get_tree().create_timer(0.5).timeout.connect(func():
+		if is_instance_valid(self) and not is_dead:
+			# Only reset if we're still in the special ability state
+			if in_special_ability:
+				in_special_ability = false
+				is_attacking = false
+				print("NeuroBoss: Mind control animation complete, resetting animation state")
+				
+				# Resume normal animations
+				if velocity.length_squared() > 10.0:
+					var anim_name = get_direction_animation("walk", velocity.normalized())
+					play_animation(anim_name)
+				else:
+					play_idle_animation()
+	)
 	
 	_start_special_ability_timer()
+
+# FIXED: Updated to properly detect controlled monkey death
+func take_control_of_monkey(monkey: Node2D):
+	if not is_instance_valid(monkey): 
+		print("NeuroBoss: Cannot take control of invalid monkey")
+		return
+		
+	if controlled_monkeys.has(monkey): 
+		print("NeuroBoss: Monkey already controlled:", monkey.name)
+		return
+
+	print("NeuroBoss: Taking control of monkey:", monkey.name)
+	controlled_monkeys.append(monkey)
+	monkey.set_meta("controlled_by_boss", true)
+	
+	# Make controlled monkeys red
+	monkey.modulate = Color(1.0, 0.5, 0.5, 1.0) # Red tint
+	
+	# IMPORTANT: Connect to die/death signals
+	if monkey.has_signal("died"):
+		if not monkey.is_connected("died", Callable(self, "_on_controlled_monkey_died")):
+			monkey.connect("died", Callable(self, "_on_controlled_monkey_died").bind(monkey))
+	
+	# Connect to animation finished to monitor for death animations
+	if monkey.has_node("AnimatedSprite2D"):
+		var sprite = monkey.get_node("AnimatedSprite2D")
+		if sprite and not sprite.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished")):
+			sprite.connect("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished").bind(monkey))
+			
+	# Connect to animation tree animation finished
+	if monkey.has_node("AnimationTree"):
+		var anim_tree = monkey.get_node("AnimationTree")
+		if anim_tree and anim_tree.has_signal("animation_finished"):
+			if not anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
+				anim_tree.connect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished").bind(monkey))
+	
+	# IMPROVED FIX: Monitor the monkey's health to detect death
+	# We can't override the monkey's _die method directly in GDScript
+	# Instead, save the current health and check for health <= 0 in physics_process
+	if "current_health" in monkey:
+		monkey.set_meta("last_known_health", monkey.current_health)
+		# We'll check this in _physics_process to detect death
+	
+	# Visual effect for control - flash briefly
+	var _flash_sequence = func():
+		monkey.modulate = Color(1.5, 0.5, 0.5, 1.0) # Bright red flash
+		await get_tree().create_timer(0.1).timeout
+		monkey.modulate = Color(1.0, 0.0, 0.0, 1.0) # Deep red
+		await get_tree().create_timer(0.1).timeout
+		monkey.modulate = Color(1.0, 0.5, 0.5, 1.0) # Back to normal red tint
+	
+	_flash_sequence.call()
+	
+	# CRITICAL FIX: Configure controlled monkey to be recognized as an enemy
+	if not monkey.is_in_group("enemies"):
+		monkey.add_to_group("enemies")
+	
+	# Remove from player's groups
+	if monkey.is_in_group("troop"):
+		monkey.remove_from_group("troop")
+
+	# SIGNAL-BASED APPROACH: Emit signal that monkey is being controlled
+	# Other systems can connect to this signal to handle removal from player
+	emit_signal("monkey_controlled", monkey)
+	
+	# Get the monkey's current parent to check if removal is needed
+	var current_parent = monkey.get_parent()
+	
+	# Reparent to boss - use get_parent() to check if it has a parent first
+	if current_parent:
+		print("NeuroBoss: Reparenting monkey from", current_parent.name, "to NeuroBoss")
+		var global_pos = monkey.global_position
+		current_parent.remove_child(monkey)
+		add_child(monkey)
+		monkey.global_position = global_pos  # Maintain world position
+	else:
+		print("NeuroBoss: Monkey has no parent, adding directly")
+		add_child(monkey)
+		# Position relative to boss
+		monkey.position = Vector2(randf_range(-50, 50), randf_range(-50, 50))
+
+	# Update collision properties - make sure we can still damage the monkey
+	# Set the collision layer to enemy (layer 2)
+	if monkey is CollisionObject2D:
+		monkey.collision_layer = 1 << 1  # Layer 2 (Enemies)
+		monkey.collision_mask = (1 << 0) | (1 << 3) | (1 << 4)  # Layer 1 (World), Layer 4 (Troop), Layer 5 (Player)
+	
+	# Set metadata for projectiles being hostile
+	monkey.set_meta("controlled_projectiles_hostile", true)
+	
+	# Set up AI behavior based on available methods
+	if monkey.has_method("set_ai_state"):
+		print("NeuroBoss: Setting monkey AI state to attack_player")
+		monkey.set_ai_state("attack_player")
+	
+	# Lock the monkey if it has that property
+	if "locked" in monkey:
+		monkey.locked = false
+	
+	# Make sure monkey is not paralyzed if it has that property
+	if "paralyzed" in monkey and monkey.paralyzed:
+		monkey.paralyzed = false
+		
+	# Set up hitbox to affect player and troop
+	var monkey_hitbox = monkey.get_node_or_null("Hitbox")
+	if monkey_hitbox:
+		if monkey_hitbox is Area2D:
+			monkey_hitbox.collision_layer = 1 << 1  # Layer 2 (Enemies)
+			monkey_hitbox.collision_mask = (1 << 3) | (1 << 4)  # Layer 4 (Troop) and 5 (Player)
+		
+		# Connect any missing signals needed to interact with player/troop
+		if monkey.has_method("_on_hitbox_body_entered") and not monkey_hitbox.body_entered.is_connected(Callable(monkey, "_on_hitbox_body_entered")):
+			monkey_hitbox.body_entered.connect(monkey._on_hitbox_body_entered)
+		if monkey.has_method("_on_hitbox_area_entered") and not monkey_hitbox.area_entered.is_connected(Callable(monkey, "_on_hitbox_area_entered")):
+			monkey_hitbox.area_entered.connect(monkey._on_hitbox_area_entered)
+	
+	# Initialize attack cooldown for this monkey
+	monkey_attack_cooldowns[monkey] = 0.0
+
+# Improved fix for the controlled monkey issue (dying but remaining invincible)
+func _on_controlled_monkey_died(monkey):
+	print("NeuroBoss: Controlled monkey died: ", monkey.name if is_instance_valid(monkey) else "Invalid monkey")
+	
+	# Remove from controlled_monkeys array
+	if controlled_monkeys.has(monkey):
+		controlled_monkeys.erase(monkey)
+	
+	# Remove from attack cooldowns
+	if monkey_attack_cooldowns.has(monkey):
+		monkey_attack_cooldowns.erase(monkey)
+	
+	# Make sure the monkey is properly freed
+	if is_instance_valid(monkey):
+		# Clear any metadata we've set
+		if monkey.has_meta("controlled_by_boss"):
+			monkey.remove_meta("controlled_by_boss")
+		if monkey.has_meta("last_known_health"):
+			monkey.remove_meta("last_known_health")
+			
+		# If it's our child, remove it
+		if monkey.get_parent() == self:
+			remove_child(monkey)
+			
+		# Allow the monkey to finish its death animation naturally
+		# The Player script will handle the removal through its own channels
+		# We just need to make sure we're not referencing it anymore
+		
+		# Reset the monkey's appearance if it's still valid
+		monkey.modulate = Color(1, 1, 1, 1)
+		
+		# Finally emit the release signal so the Player knows it's been released
+		emit_signal("monkey_released", monkey)
+		
+		print("NeuroBoss: Cleaned up controlled monkey:", monkey.name)
+
+# Detect death animations in controlled monkeys
+func _on_controlled_monkey_animation_finished(anim_name, monkey):
+	if anim_name == "die":
+		_on_controlled_monkey_died(monkey)
+
+func _on_controlled_monkey_animation_tree_finished(anim_name, monkey):
+	if anim_name == "die":
+		_on_controlled_monkey_died(monkey)
+
+# FIXED: Release controlled monkeys without extra walking logic
+func release_all_controlled_monkeys():
+	print("NeuroBoss: Releasing", controlled_monkeys.size(), "controlled monkeys")
+	var scene_root = get_tree().current_scene
+	
+	var released_count = 0
+	var valid_monkeys = []
+	
+	for monkey in controlled_monkeys:
+		if is_instance_valid(monkey):
+			valid_monkeys.append(monkey)
+			released_count += 1
+			
+			# Clean up metadata
+			monkey.remove_meta("controlled_by_boss")
+			if monkey.has_meta("controlled_projectiles_hostile"):
+				monkey.remove_meta("controlled_projectiles_hostile")
+			if monkey.has_meta("last_known_health"):
+				monkey.remove_meta("last_known_health")
+			
+			# Remove from Enemy group
+			if monkey.is_in_group("enemies"):
+				monkey.remove_from_group("enemies")
+			
+			# Add back to troop group
+			if not monkey.is_in_group("troop"):
+				monkey.add_to_group("troop")
+			
+			# Visual effect for release
+			var _flash_sequence = func():
+				monkey.modulate = Color(0.5, 0.5, 1.5, 1.0) # Bright blue flash
+				await get_tree().create_timer(0.1).timeout
+				monkey.modulate = Color(1.0, 1.0, 1.0, 1.0) # Back to normal
+			
+			_flash_sequence.call()
+			
+			# Disconnect any signals we connected
+			if monkey.has_signal("died"):
+				if monkey.is_connected("died", Callable(self, "_on_controlled_monkey_died")):
+					monkey.disconnect("died", Callable(self, "_on_controlled_monkey_died"))
+					
+			if monkey.has_node("AnimatedSprite2D"):
+				var sprite = monkey.get_node("AnimatedSprite2D")
+				if sprite and sprite.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished")):
+					sprite.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished"))
+					
+			if monkey.has_node("AnimationTree"):
+				var anim_tree = monkey.get_node("AnimationTree")
+				if anim_tree and anim_tree.has_signal("animation_finished"):
+					if anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
+						anim_tree.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished"))
+			
+			# Only remove if it's our child
+			if monkey.get_parent() == self:
+				# Store monkey data for transition
+				var global_pos = monkey.global_position
+				remove_child(monkey)
+				
+				# Add back to scene root so it can be added to player
+				if scene_root:
+					scene_root.add_child(monkey)
+					monkey.global_position = global_pos  # Maintain world position
+					
+					# IMPORTANT: Skip walking logic, let the player handle it
+					emit_signal("monkey_released", monkey)
+				else:
+					print("NeuroBoss: No scene root found, cannot release monkey properly")
+			else:
+				print("NeuroBoss: Monkey not a child of boss, just resetting appearance")
+				monkey.modulate = Color(1, 1, 1)  # Still reset color
+				
+				# Still update AI state if it's not our child somehow
+				if monkey.has_method("set_ai_state"):
+					monkey.set_ai_state("follow_player")
+					
+				# Signal monkey released even if not our child
+				emit_signal("monkey_released", monkey)
+	
+	# Update our controlled_monkeys list in case any were removed
+	controlled_monkeys = valid_monkeys
+	
+	print("NeuroBoss: Released", released_count, "monkeys")
+	controlled_monkeys.clear()
+	monkey_attack_cooldowns.clear()
 
 func perform_psychic_push():
 	is_attacking = true
@@ -753,48 +1330,64 @@ func perform_banana_catching_special():
 		in_special_ability = false
 	)
 
+# FIXED: Complete overhaul of banana orbit system to prevent disappearing
 func update_banana_orbit(delta: float):
+	# Increment the rotation
 	banana_rotation += banana_orbit_speed * delta
-
+	
+	# Make a defensive copy of the array
 	var valid_bananas = []
 	
 	for i in range(caught_bananas.size()):
 		var banana = caught_bananas[i]
-		if is_instance_valid(banana):
-			valid_bananas.append(banana)
+		
+		# First validate the banana
+		if not is_instance_valid(banana):
+			continue
 			
-			# Calculate orbit position
-			var angle = banana_rotation + (TAU * i / caught_bananas.size())
-			var target_offset = Vector2.RIGHT.rotated(angle) * banana_orbit_radius
-			var target_position = global_position + target_offset
-
-			var lerp_factor = clamp(banana.global_position.distance_to(target_position) / 100.0, 0.1, 0.3)
-			banana.global_position = banana.global_position.lerp(target_position, lerp_factor)
-			banana.rotation = angle + PI / 2 # Point outwards
+		# Make sure it's tagged as caught to prevent collisions from removing it
+		if not banana.has_meta("caught_by_boss"):
+			banana.set_meta("caught_by_boss", true)
 			
-			# Disable collisions
-			if banana.collision_layer != 0 or banana.collision_mask != 0:
-				banana.set_deferred("collision_layer", 0)
-				banana.set_deferred("collision_mask", 0)
-				
-			# Disable Area2D
-			var area = banana.get_node_or_null("Area2D")
-			if area:
-				area.set_deferred("monitoring", false)
-				area.set_deferred("monitorable", false)
+		valid_bananas.append(banana)
+		
+		# Calculate orbit position based on index and rotation
+		var angle = banana_rotation + (TAU * i / caught_bananas.size())
+		var target_offset = Vector2.RIGHT.rotated(angle) * banana_orbit_radius
+		var target_position = global_position + target_offset
+		
+		# Calculate lerp factor based on distance - slower lerp for far bananas
+		var lerp_factor = clamp(banana.global_position.distance_to(target_position) / 100.0, 0.1, 0.3)
+		
+		# If the banana is very far, bring it in faster
+		if banana.global_position.distance_to(target_position) > 200.0:
+			lerp_factor = 0.5
+		
+		# Update position
+		banana.global_position = banana.global_position.lerp(target_position, lerp_factor)
+		banana.rotation = angle + PI / 2 # Point outwards
 	
-	# Replace with valid bananas
+	# Only update the bananas array if sizes don't match
 	if valid_bananas.size() != caught_bananas.size():
 		caught_bananas = valid_bananas
 		print("DEBUG: Cleaned up invalid orbiting bananas, now have", caught_bananas.size())
+		
+	# Double-check all caught bananas for collision settings
+	for banana in caught_bananas:
+		if is_instance_valid(banana):
+			# Ensure collision is still disabled
+			if banana is CollisionObject2D:
+				banana.set_deferred("collision_layer", 0)
+				banana.set_deferred("collision_mask", 0)
 
+# FIXED: Completely revamped banana catching to prevent collisions
 func catch_banana(banana):
 	if banana == null or not is_instance_valid(banana):
 		return
 
 	# Skip if in throw mode
 	if not debug_can_catch_bananas:
-		print("DEBUG: Not catching banana - in throw mode")
+		print("DEBUG: Not catching - boss is in throw mode")
 		return
 		
 	# Skip if already caught
@@ -813,6 +1406,7 @@ func catch_banana(banana):
 		return
 	
 	print("NeuroBoss: Catching banana:" + banana.name)
+	# Set metadata immediately to prevent double-catching
 	banana.set_meta("caught_by_boss", true)
 	call_deferred("_process_caught_banana", banana)
 
@@ -828,22 +1422,40 @@ func _process_caught_banana(banana):
 	if not caught_bananas.has(banana):
 		caught_bananas.append(banana)
 	
-	# Disable collisions
-	banana.set_deferred("collision_layer", 0)
-	banana.set_deferred("collision_mask", 0)
+	# IMPORTANT: Completely disable ALL collisions and physics interactions
+	if banana is CollisionObject2D:
+		# Disable all collisions, monitoring, and monitorable properties
+		banana.set_collision_layer_value(1, false)
+		banana.set_collision_layer_value(2, false)
+		banana.set_collision_layer_value(3, false)
+		banana.set_collision_layer_value(4, false)
+		banana.set_collision_layer_value(5, false)
+		banana.set_collision_layer_value(6, false)
+		banana.set_collision_layer_value(7, false)
+		banana.set_collision_layer_value(8, false)
+		
+		banana.set_collision_mask_value(1, false)
+		banana.set_collision_mask_value(2, false)
+		banana.set_collision_mask_value(3, false)
+		banana.set_collision_mask_value(4, false)
+		banana.set_collision_mask_value(5, false)
+		banana.set_collision_mask_value(6, false)
+		banana.set_collision_mask_value(7, false)
+		banana.set_collision_mask_value(8, false)
 	
 	var banana_collision = banana.get_node_or_null("CollisionShape2D")
 	if banana_collision:
 		banana_collision.set_deferred("disabled", true)
 	
-	var banana_area = banana.get_node_or_null("Area2D")
-	if banana_area:
-		banana_area.set_deferred("monitoring", false)
-		banana_area.set_deferred("monitorable", false)
-		
-		var area_collision = banana_area.get_node_or_null("CollisionShape2D")
-		if area_collision:
-			area_collision.set_deferred("disabled", true)
+	# Disable all Area2D nodes and their children
+	for child in banana.get_children():
+		if child is Area2D:
+			child.set_deferred("monitoring", false)
+			child.set_deferred("monitorable", false)
+			
+			for grandchild in child.get_children():
+				if grandchild is CollisionShape2D or grandchild is CollisionPolygon2D:
+					grandchild.set_deferred("disabled", true)
 	
 	# Reparent to boss
 	if banana.get_parent():
@@ -859,61 +1471,6 @@ func _process_caught_banana(banana):
 	banana.modulate = Color(1, 1, 1)
 	
 	print("DEBUG: Banana successfully caught and processed")
-
-func take_control_of_monkey(monkey: Node2D):
-	if not is_instance_valid(monkey): return
-	if controlled_monkeys.has(monkey): return
-
-	print("NeuroBoss: Taking control of monkey:", monkey.name)
-	controlled_monkeys.append(monkey)
-	monkey.set_meta("controlled_by_boss", true)
-	monkey.modulate = Color(1.0, 0.5, 0.5) # Red tint
-
-	# Remove from player troop if possible
-	var player = find_player_node(get_tree().root)
-	if player and player.has_method("remove_monkey"):
-		player.remove_monkey(monkey)
-
-	# Reparent to boss
-	if monkey.get_parent():
-		monkey.get_parent().remove_child(monkey)
-	add_child(monkey)
-
-	# Add AI
-	if monkey.has_method("set_ai_state"):
-		monkey.set_ai_state("attack_player")
-	else:
-		var target_pos = player.global_position if player else global_position + Vector2.LEFT * 100
-		if "target_position" in monkey: monkey.target_position = target_pos
-
-func release_all_controlled_monkeys():
-	print("NeuroBoss: Releasing", controlled_monkeys.size(), "monkeys.")
-	var player = find_player_node(get_tree().root)
-	var scene_root = get_tree().current_scene
-
-	for monkey in controlled_monkeys:
-		if is_instance_valid(monkey):
-			monkey.remove_meta("controlled_by_boss")
-			monkey.modulate = Color(1, 1, 1) # Reset color
-
-			if monkey.get_parent() == self:
-				remove_child(monkey)
-
-			# Add back to scene root
-			if scene_root:
-				scene_root.add_child(monkey)
-
-			# Try add back to player troop
-			if player and player.has_method("add_monkey_to_swarm"):
-				player.add_monkey_to_swarm(monkey)
-			elif player:
-				monkey.global_position = player.global_position + Vector2(randf_range(-50,50), randf_range(-50,50))
-
-			# Reset monkey AI
-			if monkey.has_method("set_ai_state"):
-				monkey.set_ai_state("follow_player")
-
-	controlled_monkeys.clear()
 
 func sort_by_distance(a: Node2D, b: Node2D) -> bool:
 	if not is_instance_valid(a) or not is_instance_valid(b): return false
@@ -940,6 +1497,8 @@ func _die():
 	if is_dead: return
 	print("NeuroBoss: Dying...")
 	is_dead = true
+	
+	_animated_sprite.play("die")
 
 	# Stop everything
 	set_physics_process(false)
@@ -960,14 +1519,6 @@ func _die():
 	for banana in caught_bananas:
 		if is_instance_valid(banana): banana.queue_free()
 	caught_bananas.clear()
-
-	# Play death animation
-	if _animated_sprite.sprite_frames.has_animation("die"):
-		play_animation("die")
-	elif _animated_sprite.sprite_frames.has_animation("die_" + last_direction_suffix):
-		play_animation("die_" + last_direction_suffix)
-	else:
-		queue_free() # If no death animation, just free
 
 func find_player_node(root: Node) -> Node:
 	# Use get_nodes_in_group for efficiency
@@ -991,7 +1542,7 @@ func find_or_create_projectiles_node() -> Node:
 		get_tree().root.add_child(proj_node)
 	return proj_node
 
-# Signal handler for animation finished - simplified like PotionBoss
+# Signal handler for animation finished - improved with better logging
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if !is_instance_valid(_animated_sprite):
 		return
@@ -1013,7 +1564,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			play_idle_animation()
 	elif animation_name.begins_with("expand") or animation_name.begins_with("cast"):
 		print("NeuroBoss: Special animation finished, resetting special state")
-		in_special_ability = false
+		# Note: we now defer the resetting of in_special_ability in _execute_mind_control 
+		# to allow time for the controlled monkeys to be processed
+		
+		# Only reset flags here if we're NOT in the middle of mind control
+		# which handles its own flag reset
+		if in_special_ability and not controlled_monkeys.size() > 0:
+			in_special_ability = false
+			
 		# Return to movement animation based on current velocity
 		if velocity.length_squared() > 10.0:
 			var anim_name = get_direction_animation("walk", velocity.normalized())
@@ -1032,17 +1590,17 @@ func _on_hitbox_area_entered(area: Area2D):
 	print("DEBUG: Area collision layer:", area.collision_layer)
 	
 	# Skip our own thrown bananas
-	if area.get_meta("thrown_by_boss", false):
+	if area.has_meta("thrown_by_boss"):
 		print("DEBUG: Ignoring boss-thrown banana in hitbox")
 		return
 	
 	# Skip already caught bananas
-	if area.get_meta("caught_by_boss", false):
+	if area.has_meta("caught_by_boss"):
 		print("DEBUG: Ignoring already caught banana in hitbox")
 		return
 		
 	# Handle friendly (player-thrown) bananas
-	if area.get_meta("friendly", false):
+	if area.has_meta("friendly"):
 		# Try to catch if conditions are right
 		if (in_special_ability or randf() < 0.4) and debug_can_catch_bananas:
 			print("DEBUG: Attempting to catch banana (Hitbox)")
@@ -1069,17 +1627,17 @@ func _on_banana_detection_area_area_entered(area: Area2D):
 	print("DEBUG: Area collision layer:", area.collision_layer)
 	
 	# Skip already caught bananas
-	if area.get_meta("caught_by_boss", false):
+	if area.has_meta("caught_by_boss"):
 		print("DEBUG: Ignoring already caught banana")
 		return
 		
 	# Skip boss-thrown bananas
-	if area.get_meta("thrown_by_boss", false):
+	if area.has_meta("thrown_by_boss"):
 		print("DEBUG: Ignoring boss-thrown banana in detection area")
 		return
-		
+	
 	# Only catch player/friendly bananas
-	if area.get_meta("friendly", false):
+	if area.has_meta("friendly"):
 		# Can only catch if not currently throwing
 		if not debug_can_catch_bananas:
 			print("DEBUG: Not catching - boss is in throw mode")

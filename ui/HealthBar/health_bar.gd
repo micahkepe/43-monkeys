@@ -34,9 +34,17 @@ func _set_health(new_health):
 		queue_free()
 
 	if health < prev_health:
-		timer.start()
+		if is_instance_valid(timer) and timer.is_inside_tree():
+			timer.start()
+		else:
+			call_deferred("start_timer_safely")
 	else:
 		damage_bar.value = health
+
+func start_timer_safely():
+	if is_instance_valid(timer) and timer.is_inside_tree():
+		timer.start()
+
 
 
 ## Handle the timer timeout signal

@@ -3,6 +3,8 @@ extends CharacterBody2D
 ##
 ## Handles walking animation, collision avoidance, and enemy detection.
 
+signal monkey_died(monkey) 
+
 var locked: bool = false
 
 ## The AnimatedSprite2D node that plays the monkey's walking animation.
@@ -408,35 +410,65 @@ func _update_vision_rays(direction: Vector2) -> void:
 
 ## Handles monkey death. Plays the death animation and cleans the monkey from
 ## the scene.
+## Handles monkey death. Plays the death animation and cleans the monkey from
+## the scene.
 func _die() -> void:
 	print_debug("Trying to _die for monkey", self)
 
 	# Debug check if animation exists
-	print_debug("Available animations:", _animated_sprite.sprite_frames.get_animation_names())
-	print_debug("Current animation:", _animated_sprite.animation)
+	if is_instance_valid(_animated_sprite) and _animated_sprite.sprite_frames:
+		print_debug("Available animations:", _animated_sprite.sprite_frames.get_animation_names())
+		print_debug("Current animation:", _animated_sprite.animation)
+	else:
+		print_debug("Could not get animations for dying monkey.")
+
 
 	set_physics_process(false)
-	set_process(false)
+	set_process(false) # Also disable _process if used
 	collision_layer = 0
 	collision_mask = 0
 
 	# Hide the health bar
-	if health_bar:
+	if is_instance_valid(health_bar):
 		health_bar.hide()
-		print("Health bar hidden")
+		print_debug("Health bar hidden for dying monkey")
 
 	# zero out the velocity to stop additional movement
 	velocity = Vector2.ZERO
 
 	var parent = get_parent()
-	# Remove the monkey from the parent node to avoid having it continue to walk
-	# and conflict with the die animation
-	# parent --> the 'Monkeys' node
-	# parent.get_parent() --> the level node
 	if parent:
-		parent.get_parent().remove_monkey(self)
+		var grandparent = parent.get_parent()
+		# Only call remove_monkey if the grandparent is the Player
+		if is_instance_valid(grandparent) and grandparent is Player:
+			print_debug("Monkey dying, telling Player to remove it: ", self.name)
+			grandparent.remove_monkey(self)
+		else:
+			print_debug("Monkey dying, but grandparent is not Player (Parent: %s, Grandparent: %s). Not calling remove_monkey." % [parent.name if is_instance_valid(parent) else "Invalid Parent", grandparent.name if is_instance_valid(grandparent) else "Invalid/None Grandparent"])
 
-	animation_tree.get("parameters/playback").travel("die")
+	# --- Corrected AnimationTree Travel ---
+	if is_instance_valid(animation_tree):
+		# Attempt to get the playback parameter state machine
+		var playback = animation_tree.get("parameters/playback")
+		# Check if playback exists (is a valid AnimationNodeStateMachinePlayback)
+		if playback:
+			print_debug("Attempting to play 'die' animation via AnimationTree for monkey: ", self.name)
+			# Directly attempt to travel. If "die" state doesn't exist,
+			# playback.travel() might print an error but often won't crash.
+			playback.travel("die")
+			# Note: The actual queue_free should happen AFTER the animation finishes.
+			# This is handled by the _on_animation_tree_animation_finished signal handler.
+		else:
+			# This case means the "parameters/playback" doesn't exist or isn't a state machine
+			printerr("Could not get valid 'playback' state machine from AnimationTree for monkey: ", self.name)
+			queue_free() # Fallback to immediate removal if no playback found
+	else:
+		# Fallback if no AnimationTree node found
+		printerr("No valid AnimationTree node found for dying monkey: ", self.name)
+		queue_free()
+
+	# DO NOT queue_free here directly if using the animation finish signal.
+	# queue_free() # REMOVE THIS LINE IF USING THE SIGNAL HANDLER BELOW
 
 
 ## Takes the specified amount of damage from the monkey's health.
@@ -596,8 +628,16 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 	elif body.is_in_group("player") or body.is_in_group("troop"):
 		print_debug("Player or troop exited monkey hitbox: ", body.name)
 
+# Make sure this signal handler exists and is connected in the editor or _ready
+# to the animation_tree's "animation_finished" signal (or appropriate signal)
 func _on_animation_tree_animation_finished(anim_name):
-	if "slash" in anim_name:
-		is_attacking = false
-	if "die" in anim_name:
+	print_debug("AnimationTree finished animation: ", anim_name)
+	# You might need to adjust "die" if your actual state name in the AnimationTree is different
+	if anim_name == "die":
+		print_debug("Die animation finished via AnimationTree, queueing free for monkey: ", self.name)
 		queue_free()
+	elif "slash" in anim_name: # Keep your existing slash logic
+		print_debug("Slash animation finished, resetting is_attacking for monkey: ", self.name)
+		is_attacking = false
+		# Optionally, immediately update animation state if needed
+		# _update_animation()
