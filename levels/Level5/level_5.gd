@@ -137,7 +137,7 @@ func _on_monkey_released(monkey: Node2D): # Add type hint for monkey
 		monkey.add_to_group("troop")
 
 	# Wait a bit for the monkey to walk back before rejoining
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(2.0).timeout
 
 	# Check if monkey and the stored player reference are still valid *after* the wait
 	if not is_instance_valid(monkey):
