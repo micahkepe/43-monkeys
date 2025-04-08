@@ -352,18 +352,42 @@ func check_controlled_monkeys_health() -> void:
 			monkeys_to_remove.append(monkey)
 			continue
 			
-		# Check if monkey has health data
-		if "current_health" in monkey and monkey.has_meta("last_known_health"):
-			var last_health = monkey.get_meta("last_known_health")
-			var current_health = monkey.current_health
+		# Special case: if the monkey is an AnimatedSprite2D, it might be a child of the actual monkey
+		if monkey is AnimatedSprite2D:
+			var parent = monkey.get_parent()
+			if is_instance_valid(parent) and parent is CharacterBody2D and "current_health" in parent:
+				# Monitor the parent's health instead
+				if parent.current_health <= 0:
+					monkeys_to_remove.append(monkey)
+					print("NeuroBoss: Detected sprite's parent death by health check:", parent.name)
+			continue
 			
-			# If health dropped to 0 or below, consider it dead
-			if current_health <= 0 and last_health > 0:
-				print("NeuroBoss: Detected monkey death by health drop:", monkey.name)
+		# Check if monkey has health data
+		if "current_health" in monkey:
+			var monkey_health = monkey.current_health  # Renamed to avoid shadowing
+			
+			# If health is already at 0, this monkey is dead
+			if monkey_health <= 0:
 				monkeys_to_remove.append(monkey)
-			else:
-				# Update stored health
-				monkey.set_meta("last_known_health", current_health)
+				print("NeuroBoss: Detected monkey death (health=0):", monkey.name)
+				continue
+				
+			# Store last known health if not already stored
+			if not monkey.has_meta("last_known_health"):
+				monkey.set_meta("last_known_health", monkey_health)
+				continue
+				
+			var last_health = monkey.get_meta("last_known_health")
+			
+			# If health dropped since last check, record the new health
+			if monkey_health < last_health:
+				print("NeuroBoss: Monkey", monkey.name, "health dropped from", last_health, "to", monkey_health)
+				monkey.set_meta("last_known_health", monkey_health)
+				
+				# If health dropped to 0 or below, consider it dead
+				if monkey_health <= 0:
+					monkeys_to_remove.append(monkey)
+					print("NeuroBoss: Detected monkey death by health drop:", monkey.name)
 	
 	# Remove any dead monkeys
 	for monkey in monkeys_to_remove:
@@ -377,7 +401,6 @@ func play_animation(anim_name: String) -> void:
 	# Check if animation exists before trying to play it
 	if _animated_sprite.sprite_frames.has_animation(anim_name):
 		_animated_sprite.play(anim_name)
-		print("NeuroBoss: Playing animation: ", anim_name)
 		
 		# Update direction tracking based on animation name
 		if anim_name.ends_with("_up"):
@@ -824,62 +847,44 @@ func _update_monkey_animation(monkey, direction: Vector2) -> void:
 	if not is_instance_valid(monkey):
 		return
 
-	# Avoid referencing freed objects
-	if monkey == null:
-		return
-
-	if monkey is AnimatedSprite2D:
-		if not is_instance_valid(monkey.sprite_frames):
-			return
-
-		var anim_suffix = "_down"
-		if abs(direction.x) > abs(direction.y):
-			anim_suffix = "_right" if direction.x > 0 else "_left"
-		else:
-			anim_suffix = "_down" if direction.y > 0 else "_up"
-
-		var walk_anim = "walk" + anim_suffix
-		if monkey.sprite_frames.has_animation(walk_anim):
-			monkey.play(walk_anim)
-		else:
-			var animations = monkey.sprite_frames.get_animation_names()
-			if animations.size() > 0:
-				monkey.play(animations[0])
-		return
-
-	if monkey.has_method("animate_walk") and is_instance_valid(monkey):
+	# Check if monkey has an animate_walk method
+	if monkey.has_method("animate_walk"):
 		monkey.animate_walk(direction)
+		return
 
-	elif monkey.has_method("_update_animation") and is_instance_valid(monkey):
-		monkey._update_animation()
+	# Check for AnimationTree
+	var animation_tree = monkey.get_node_or_null("AnimationTree")
+	if is_instance_valid(animation_tree):
+		var playback = animation_tree.get("parameters/playback")
+		if playback != null:
+			# Set blend positions if they exist
+			if animation_tree.has("parameters/Walk/BlendSpace2D/blend_position"):
+				animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", direction)
+			if animation_tree.has("parameters/Idle/BlendSpace2D/blend_position"):
+				animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", direction)
+			
+			# Travel to appropriate state
+			if direction.length() > 0.1:
+				playback.travel("Walk")
+			else:
+				playback.travel("Idle")
+		return
 
-	elif monkey.has_node("AnimationTree") and is_instance_valid(monkey):
-		var animation_tree = monkey.get_node("AnimationTree")
-		if animation_tree and is_instance_valid(animation_tree):
-			var playback = animation_tree.get("parameters/playback")
-			if playback:
-				if direction.length() > 0.1:
-					if has_parameter(animation_tree, "parameters/Walk/BlendSpace2D/blend_position"):
-						animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", direction)
-					playback.travel("Walk")
-				else:
-					if has_parameter(animation_tree, "parameters/Idle/BlendSpace2D/blend_position"):
-						animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", direction)
-					playback.travel("Idle")
-
-	elif monkey.has_node("AnimatedSprite2D") and is_instance_valid(monkey):
-		var sprite = monkey.get_node("AnimatedSprite2D")
-		if not is_instance_valid(sprite) or not is_instance_valid(sprite.sprite_frames):
-			return
-
-		var anim_prefix = "walk" if direction.length() >= 0.1 else "idle"
-		var anim_suffix = "_down"
+	# Check for AnimatedSprite2D
+	var sprite = monkey.get_node_or_null("AnimatedSprite2D")
+	if is_instance_valid(sprite) && is_instance_valid(sprite.sprite_frames):
+		var anim_suffix = "_down"  # Default direction
+		
+		# Determine direction suffix
 		if abs(direction.x) > abs(direction.y):
 			anim_suffix = "_right" if direction.x > 0 else "_left"
 		else:
 			anim_suffix = "_down" if direction.y > 0 else "_up"
-
-		var anim_name = anim_prefix + anim_suffix
+		
+		# Choose animation name
+		var anim_name = "walk" + anim_suffix if direction.length() > 0.1 else "idle" + anim_suffix
+		
+		# Play animation if it exists
 		if sprite.sprite_frames.has_animation(anim_name):
 			sprite.play(anim_name)
 
@@ -1007,56 +1012,35 @@ func _execute_mind_control():
 	_start_special_ability_timer()
 
 # FIXED: Updated to properly detect controlled monkey death
-func take_control_of_monkey(monkey: Node2D):
-	if not is_instance_valid(monkey): 
+func take_control_of_monkey(monkey_node: Node2D):
+	if not is_instance_valid(monkey_node): 
 		print("NeuroBoss: Cannot take control of invalid monkey")
 		return
+	
+	# Determine the actual monkey to control (in case we receive an AnimatedSprite2D)
+	var monkey = monkey_node
+	if monkey_node is AnimatedSprite2D:
+		var parent = monkey_node.get_parent()
+		if is_instance_valid(parent) and parent is CharacterBody2D:
+			monkey = parent
+			print("NeuroBoss: Using parent", parent.name, "instead of sprite for control")
 		
 	if controlled_monkeys.has(monkey): 
 		print("NeuroBoss: Monkey already controlled:", monkey.name)
 		return
 
 	print("NeuroBoss: Taking control of monkey:", monkey.name)
+	
+	# Add to our control list and set metadata
 	controlled_monkeys.append(monkey)
 	monkey.set_meta("controlled_by_boss", true)
 	
-	# Make controlled monkeys red
-	monkey.modulate = Color(1.0, 0.5, 0.5, 1.0) # Red tint
-	
-	# IMPORTANT: Connect to die/death signals
-	if monkey.has_signal("died"):
-		if not monkey.is_connected("died", Callable(self, "_on_controlled_monkey_died")):
-			monkey.connect("died", Callable(self, "_on_controlled_monkey_died").bind(monkey))
-	
-	# Connect to animation finished to monitor for death animations
-	if monkey.has_node("AnimatedSprite2D"):
-		var sprite = monkey.get_node("AnimatedSprite2D")
-		if sprite and not sprite.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished")):
-			sprite.connect("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished").bind(monkey))
-			
-	# Connect to animation tree animation finished
-	if monkey.has_node("AnimationTree"):
-		var anim_tree = monkey.get_node("AnimationTree")
-		if anim_tree and anim_tree.has_signal("animation_finished"):
-			if not anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
-				anim_tree.connect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished").bind(monkey))
-	
-	# IMPROVED FIX: Monitor the monkey's health to detect death
-	# We can't override the monkey's _die method directly in GDScript
-	# Instead, save the current health and check for health <= 0 in physics_process
+	# Save current health to detect death later
 	if "current_health" in monkey:
 		monkey.set_meta("last_known_health", monkey.current_health)
-		# We'll check this in _physics_process to detect death
 	
-	# Visual effect for control - flash briefly
-	var _flash_sequence = func():
-		monkey.modulate = Color(1.5, 0.5, 0.5, 1.0) # Bright red flash
-		await get_tree().create_timer(0.1).timeout
-		monkey.modulate = Color(1.0, 0.0, 0.0, 1.0) # Deep red
-		await get_tree().create_timer(0.1).timeout
-		monkey.modulate = Color(1.0, 0.5, 0.5, 1.0) # Back to normal red tint
-	
-	_flash_sequence.call()
+	# Make controlled monkeys red
+	monkey.modulate = Color(1.0, 0.5, 0.5, 1.0) # Red tint
 	
 	# CRITICAL FIX: Configure controlled monkey to be recognized as an enemy
 	if not monkey.is_in_group("enemies"):
@@ -1067,7 +1051,6 @@ func take_control_of_monkey(monkey: Node2D):
 		monkey.remove_from_group("troop")
 
 	# SIGNAL-BASED APPROACH: Emit signal that monkey is being controlled
-	# Other systems can connect to this signal to handle removal from player
 	emit_signal("monkey_controlled", monkey)
 	
 	# Get the monkey's current parent to check if removal is needed
@@ -1092,73 +1075,140 @@ func take_control_of_monkey(monkey: Node2D):
 		monkey.collision_layer = 1 << 1  # Layer 2 (Enemies)
 		monkey.collision_mask = (1 << 0) | (1 << 3) | (1 << 4)  # Layer 1 (World), Layer 4 (Troop), Layer 5 (Player)
 	
-	# Set metadata for projectiles being hostile
-	monkey.set_meta("controlled_projectiles_hostile", true)
-	
-	# Set up AI behavior based on available methods
-	if monkey.has_method("set_ai_state"):
-		print("NeuroBoss: Setting monkey AI state to attack_player")
-		monkey.set_ai_state("attack_player")
-	
-	# Lock the monkey if it has that property
-	if "locked" in monkey:
-		monkey.locked = false
-	
-	# Make sure monkey is not paralyzed if it has that property
-	if "paralyzed" in monkey and monkey.paralyzed:
-		monkey.paralyzed = false
-		
 	# Set up hitbox to affect player and troop
 	var monkey_hitbox = monkey.get_node_or_null("Hitbox")
-	if monkey_hitbox:
-		if monkey_hitbox is Area2D:
-			monkey_hitbox.collision_layer = 1 << 1  # Layer 2 (Enemies)
-			monkey_hitbox.collision_mask = (1 << 3) | (1 << 4)  # Layer 4 (Troop) and 5 (Player)
-		
-		# Connect any missing signals needed to interact with player/troop
-		if monkey.has_method("_on_hitbox_body_entered") and not monkey_hitbox.body_entered.is_connected(Callable(monkey, "_on_hitbox_body_entered")):
-			monkey_hitbox.body_entered.connect(monkey._on_hitbox_body_entered)
-		if monkey.has_method("_on_hitbox_area_entered") and not monkey_hitbox.area_entered.is_connected(Callable(monkey, "_on_hitbox_area_entered")):
-			monkey_hitbox.area_entered.connect(monkey._on_hitbox_area_entered)
+	if is_instance_valid(monkey_hitbox) and monkey_hitbox is Area2D:
+		monkey_hitbox.collision_layer = 1 << 1  # Layer 2 (Enemies)
+		monkey_hitbox.collision_mask = (1 << 3) | (1 << 4)  # Layer 4 (Troop) and 5 (Player)
 	
 	# Initialize attack cooldown for this monkey
 	monkey_attack_cooldowns[monkey] = 0.0
 
+func clean_up_invalid_references() -> void:
+	# Clean up controlled monkeys
+	var valid_monkeys = []
+	for m in controlled_monkeys:
+		if is_instance_valid(m):
+			valid_monkeys.append(m)
+	controlled_monkeys = valid_monkeys
+	
+	# Clean up caught bananas
+	var valid_bananas = []
+	for b in caught_bananas:
+		if is_instance_valid(b):
+			valid_bananas.append(b)
+	caught_bananas = valid_bananas
+	
+	# Clean up attack cooldowns dictionary
+	var keys_to_remove = []
+	for key in monkey_attack_cooldowns.keys():
+		if not is_instance_valid(key):
+			keys_to_remove.append(key)
+	for key in keys_to_remove:
+		monkey_attack_cooldowns.erase(key)
+
 # Improved fix for the controlled monkey issue (dying but remaining invincible)
-func _on_controlled_monkey_died(monkey):
-	print("NeuroBoss: Controlled monkey died: ", monkey.name if is_instance_valid(monkey) else "Invalid monkey")
+func _on_controlled_monkey_died(monkey_node):
+	print("NeuroBoss: Controlled monkey died: ", monkey_node.name if is_instance_valid(monkey_node) else "Invalid monkey")
 	
-	# Remove from controlled_monkeys array
-	if controlled_monkeys.has(monkey):
-		controlled_monkeys.erase(monkey)
+	# If the monkey isn't valid, clean up all our arrays
+	if not is_instance_valid(monkey_node):
+		clean_up_invalid_references()
+		return
 	
-	# Remove from attack cooldowns
-	if monkey_attack_cooldowns.has(monkey):
-		monkey_attack_cooldowns.erase(monkey)
+	# Special case for AnimatedSprite2D - we need to handle the parent CharacterBody2D
+	var monkey = monkey_node
+	if monkey_node is AnimatedSprite2D:
+		var parent = monkey_node.get_parent()
+		if is_instance_valid(parent) and parent is CharacterBody2D:
+			monkey = parent
+			print("NeuroBoss: Using parent", parent.name, "instead of sprite for death handling")
 	
-	# Make sure the monkey is properly freed
+	# PLAY DEATH ANIMATION - Critical to fix animation issues
+	# First check if we can safely play a death animation
+	var played_animation = false
 	if is_instance_valid(monkey):
+		# Try to play death animation through AnimationTree if available
+		var anim_tree = monkey.get_node_or_null("AnimationTree")
+		if is_instance_valid(anim_tree):
+			var playback = anim_tree.get("parameters/playback")
+			if playback and anim_tree.get("parameters/playback").has_method("travel"):
+				print("NeuroBoss: Playing 'die' animation via AnimationTree for", monkey.name)
+				anim_tree.get("parameters/playback").travel("die")
+				played_animation = true
+		
+		# If AnimationTree approach didn't work, try AnimatedSprite2D
+		if not played_animation:
+			var sprite = monkey.get_node_or_null("AnimatedSprite2D")
+			if is_instance_valid(sprite) and is_instance_valid(sprite.sprite_frames):
+				# Check if 'die' animation exists before playing
+				if sprite.sprite_frames.has_animation("die"):
+					print("NeuroBoss: Playing 'die' animation via AnimatedSprite2D for", monkey.name)
+					sprite.play("die")
+					played_animation = true
+				else:
+					print("NeuroBoss: No 'die' animation found in sprite frames for", monkey.name)
+					# List available animations for debugging
+					print("NeuroBoss: Available animations:", sprite.sprite_frames.get_animation_names())
+	
+	# Continue with cleanup
+	if is_instance_valid(monkey):
+		# Remove from controlled_monkeys array
+		if controlled_monkeys.has(monkey_node):
+			controlled_monkeys.erase(monkey_node)
+		elif controlled_monkeys.has(monkey):
+			controlled_monkeys.erase(monkey)
+		
+		# Remove from attack cooldowns
+		if monkey_attack_cooldowns.has(monkey_node):
+			monkey_attack_cooldowns.erase(monkey_node)
+		if monkey_attack_cooldowns.has(monkey):
+			monkey_attack_cooldowns.erase(monkey)
+		
+		# Clear all collision masks immediately
+		if monkey is CollisionObject2D:
+			monkey.collision_layer = 0
+			monkey.collision_mask = 0
+			
+			# Disable all collision shapes
+			for child in monkey.get_children():
+				if child is CollisionShape2D:
+					child.set_deferred("disabled", true)
+				elif child is Area2D:
+					child.set_deferred("monitoring", false)
+					child.set_deferred("monitorable", false)
+					for grandchild in child.get_children():
+						if grandchild is CollisionShape2D:
+							grandchild.set_deferred("disabled", true)
+		
 		# Clear any metadata we've set
 		if monkey.has_meta("controlled_by_boss"):
 			monkey.remove_meta("controlled_by_boss")
 		if monkey.has_meta("last_known_health"):
 			monkey.remove_meta("last_known_health")
 			
-		# If it's our child, remove it
-		if monkey.get_parent() == self:
-			remove_child(monkey)
-			
-		# Allow the monkey to finish its death animation naturally
-		# The Player script will handle the removal through its own channels
-		# We just need to make sure we're not referencing it anymore
-		
-		# Reset the monkey's appearance if it's still valid
-		monkey.modulate = Color(1, 1, 1, 1)
-		
-		# Finally emit the release signal so the Player knows it's been released
+		# Emit signal that the monkey has been released
 		emit_signal("monkey_released", monkey)
 		
+		# Queue_free after a short delay to allow animation to play
+		if monkey.get_parent() == self:
+			# Create a timer to delay the queue_free call
+			if played_animation:
+				print("NeuroBoss: Delaying queue_free to allow death animation to play")
+				get_tree().create_timer(1.5).timeout.connect(func():
+					if is_instance_valid(monkey):
+						monkey.queue_free()
+						print("NeuroBoss: Queued free after animation delay:", monkey.name)
+				)
+			else:
+				# If we couldn't play an animation, free immediately
+				monkey.queue_free()
+				print("NeuroBoss: Queued free immediately (no animation played):", monkey.name)
+		
 		print("NeuroBoss: Cleaned up controlled monkey:", monkey.name)
+	
+	# Final cleanup of arrays to remove any invalid references
+	clean_up_invalid_references()
 
 # Detect death animations in controlled monkeys
 func _on_controlled_monkey_animation_finished(anim_name, monkey):
@@ -1172,15 +1222,52 @@ func _on_controlled_monkey_animation_tree_finished(anim_name, monkey):
 # FIXED: Release controlled monkeys without extra walking logic
 func release_all_controlled_monkeys():
 	print("NeuroBoss: Releasing", controlled_monkeys.size(), "controlled monkeys")
-	var scene_root = get_tree().current_scene
-	
 	var released_count = 0
-	var valid_monkeys = []
 	
-	for monkey in controlled_monkeys:
-		if is_instance_valid(monkey):
-			valid_monkeys.append(monkey)
-			released_count += 1
+	# Make a copy of the array to safely iterate while modifying
+	var monkeys_to_release = controlled_monkeys.duplicate()
+	
+	for monkey_node in monkeys_to_release:
+		if not is_instance_valid(monkey_node):
+			continue
+			
+		# Get the actual monkey (in case we accidentally stored an AnimatedSprite2D)
+		var monkey = monkey_node
+		if monkey_node is AnimatedSprite2D:
+			var parent = monkey_node.get_parent()
+			if is_instance_valid(parent) and parent is CharacterBody2D:
+				monkey = parent
+		
+		released_count += 1
+		
+		# Check if the monkey is dead
+		var monkey_is_dead = false  # Renamed to avoid shadowing
+		if "current_health" in monkey and monkey.current_health <= 0:
+			monkey_is_dead = true
+			
+		if monkey_is_dead:
+			# For dead monkeys, completely remove them
+			if is_instance_valid(monkey):
+				# Clear collision properties first
+				if monkey is CollisionObject2D:
+					monkey.collision_layer = 0
+					monkey.collision_mask = 0
+				
+				# Disconnect any signals we connected
+				_disconnect_monkey_signals(monkey)
+				
+				# Free the monkey node completely
+				if monkey.get_parent() == self:
+					monkey.queue_free()
+				
+				# Signal that it's been released (for cleanup in level script)
+				emit_signal("monkey_released", monkey)
+		else:
+			# For living monkeys, restore their properties
+			# Reset collision settings properly
+			if monkey is CollisionObject2D:
+				monkey.collision_layer = 1 << 2  # Layer 3 (Troop) 
+				monkey.collision_mask = 1 << 0   # Layer 1 (World)
 			
 			# Clean up metadata
 			monkey.remove_meta("controlled_by_boss")
@@ -1197,29 +1284,17 @@ func release_all_controlled_monkeys():
 			if not monkey.is_in_group("troop"):
 				monkey.add_to_group("troop")
 			
-			# Visual effect for release
-			var _flash_sequence = func():
-				monkey.modulate = Color(0.5, 0.5, 1.5, 1.0) # Bright blue flash
-				await get_tree().create_timer(0.1).timeout
-				monkey.modulate = Color(1.0, 1.0, 1.0, 1.0) # Back to normal
+			# Reset appearance
+			monkey.modulate = Color(1, 1, 1, 1)
 			
-			_flash_sequence.call()
+			# Disconnect all signals
+			_disconnect_monkey_signals(monkey)
 			
-			# Disconnect any signals we connected
-			if monkey.has_signal("died"):
-				if monkey.is_connected("died", Callable(self, "_on_controlled_monkey_died")):
-					monkey.disconnect("died", Callable(self, "_on_controlled_monkey_died"))
-					
-			if monkey.has_node("AnimatedSprite2D"):
-				var sprite = monkey.get_node("AnimatedSprite2D")
-				if sprite and sprite.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished")):
-					sprite.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished"))
-					
-			if monkey.has_node("AnimationTree"):
-				var anim_tree = monkey.get_node("AnimationTree")
-				if anim_tree and anim_tree.has_signal("animation_finished"):
-					if anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
-						anim_tree.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished"))
+			# Fix monkey hitbox collision settings
+			var monkey_hitbox = monkey.get_node_or_null("Hitbox")
+			if is_instance_valid(monkey_hitbox) and monkey_hitbox is Area2D:
+				monkey_hitbox.collision_layer = 1 << 2  # Layer 3 (Troop)
+				monkey_hitbox.collision_mask = 1 << 1   # Layer 2 (Enemies)
 			
 			# Only remove if it's our child
 			if monkey.get_parent() == self:
@@ -1228,31 +1303,24 @@ func release_all_controlled_monkeys():
 				remove_child(monkey)
 				
 				# Add back to scene root so it can be added to player
-				if scene_root:
+				var scene_root = get_tree().current_scene
+				if is_instance_valid(scene_root):
 					scene_root.add_child(monkey)
 					monkey.global_position = global_pos  # Maintain world position
 					
-					# IMPORTANT: Skip walking logic, let the player handle it
+					# Signal the monkey is released
 					emit_signal("monkey_released", monkey)
 				else:
 					print("NeuroBoss: No scene root found, cannot release monkey properly")
 			else:
-				print("NeuroBoss: Monkey not a child of boss, just resetting appearance")
-				monkey.modulate = Color(1, 1, 1)  # Still reset color
-				
-				# Still update AI state if it's not our child somehow
-				if monkey.has_method("set_ai_state"):
-					monkey.set_ai_state("follow_player")
-					
 				# Signal monkey released even if not our child
 				emit_signal("monkey_released", monkey)
 	
-	# Update our controlled_monkeys list in case any were removed
-	controlled_monkeys = valid_monkeys
-	
-	print("NeuroBoss: Released", released_count, "monkeys")
+	# Clear all controlled monkey references
 	controlled_monkeys.clear()
 	monkey_attack_cooldowns.clear()
+	
+	print("NeuroBoss: Released", released_count, "monkeys")
 
 func perform_psychic_push():
 	is_attacking = true
@@ -1495,6 +1563,10 @@ func take_damage(amount: float):
 
 func _die():
 	if is_dead: return
+
+	if Engine.get_frames_drawn() % 60 == 0:
+		clean_up_invalid_references()
+
 	print("NeuroBoss: Dying...")
 	is_dead = true
 	
@@ -1679,3 +1751,22 @@ func _on_hitbox_body_exited(body: Node2D):
 					else:
 						play_idle_animation()
 			)
+
+func _disconnect_monkey_signals(monkey):
+	if not is_instance_valid(monkey):
+		return
+		
+	# Disconnect direct signals from the monkey itself
+	if monkey.has_signal("died") and monkey.is_connected("died", Callable(self, "_on_controlled_monkey_died")):
+		monkey.disconnect("died", Callable(self, "_on_controlled_monkey_died"))
+	
+	# Disconnect from AnimatedSprite2D if it exists
+	var sprite = monkey.get_node_or_null("AnimatedSprite2D")
+	if is_instance_valid(sprite) and sprite.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished")):
+		sprite.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_finished"))
+		
+	# Disconnect from AnimationTree if it exists
+	var anim_tree = monkey.get_node_or_null("AnimationTree")
+	if is_instance_valid(anim_tree) and anim_tree.has_signal("animation_finished"):
+		if anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
+			anim_tree.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished"))
