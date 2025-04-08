@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://l7oimh82k7tw"]
+
+[ext_resource type="Texture2D" uid="uid://bajh6w2h8fpwv" path="res://assets/sprites/tilesets/level_5_walls.png" id="1_ejdgl"]
+[ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0rvt"]
+atlas = ExtResource("1_ejdgl")
+region = Rect2(192, 448, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fk3qx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0rvt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjfbh"]
+radius = 7.0
+height = 38.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5cc0r"]
+radius = 19.0
+height = 38.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxjtn"]
+bg_color = Color(0.600612, 0.161166, 0.305443, 1)
+
+[node name="NeuroBossPhase1" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fk3qx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_hjfbh")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_5cc0r")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_814ll")]
+offset_left = -17.0
+offset_top = -26.0
+offset_right = 18.0
+offset_bottom = -22.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_kxjtn")
