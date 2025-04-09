@@ -16,7 +16,7 @@ var current_health: float
 @export var boid_plant_scene: PackedScene
 
 ## The maximum amount of spawned plant minions at any point.
-@export var max_spawned_minions: int = 20
+@export var max_spawned_minions: int = 10
 
 var last_animation: String = "idle_down"
 var is_attacking: bool = false

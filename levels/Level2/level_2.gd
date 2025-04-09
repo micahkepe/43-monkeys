@@ -57,6 +57,11 @@ var _button_nodes: Dictionary[String, Node] = {}
 ## Track deactivated laser states to prevent re-deactivation
 var _deactivated_lasers: Array[String] = []
 
+@onready var door = $World/Doors/Door
+
+@export var transition_scene: PackedScene = preload("res://cutscenes/LevelTransition/level_transition.tscn")
+@export var next_level_scene: PackedScene = preload("res://levels/Level5/level_5.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Audio setup
@@ -210,13 +215,16 @@ func _process(_delta: float) -> void:
 
 ## Check if the boss is dead and transition to the next level.
 func check_boss_death() -> void:
-	if boss_instance and boss_instance.is_dead and not boss_dead:
+	if boss_instance and boss_instance.is_dead and not boss_dead and door and door.is_active and not boss_dead:
 		print("Boss death detected - transitioning music")
-
+		
+		door.open_door()
 		# Simple fade transition with safeguards
 		simple_fade_transition(boss_music, background_music)
 
 		boss_dead = true
+		
+		
 
 ## Spawn the RootBoss.
 func spawn_root_boss() -> void:
@@ -253,3 +261,33 @@ func simple_fade_transition(from_track: AudioStreamPlayer, to_track: AudioStream
 	var fade_in = create_tween()
 	fade_in.tween_property(to_track, "volume_db", 0.0, music_fade_duration)
 	fade_in.tween_callback(func(): print("Fade transition complete"))
+
+
+func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		# Transition to next level
+		var player = $World/Player
+		var troop_count = player.get_troop_count() if player else 6
+		var monkey_health = []
+		if player:
+			for monkey in player.get_troop():
+				# Use current_health instead of health
+				monkey_health.append(monkey.current_health if "current_health" in monkey else 6.0)
+
+		var troop_data = {
+			"count": troop_count,
+			"player_health": player.health if player else 6.0,
+			"monkey_health": monkey_health
+		}
+
+		if player:
+			player.heal(player.max_health - player.health)
+
+		var transition_instance = transition_scene.instantiate()
+		transition_instance.next_level_scene = next_level_scene
+		transition_instance.level_number = 5
+		transition_instance.level_title = "Neuroscience Lab"
+		transition_instance.set_troop_data(troop_data)
+		get_tree().root.add_child(transition_instance)
+		get_tree().current_scene.queue_free()
+		get_tree().current_scene = transition_instance

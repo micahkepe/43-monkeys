@@ -6,12 +6,17 @@ extends "res://levels/default_level.gd"
 var player_node: Player # Type hint helps with autocompletion and type safety
 var neuro_boss_node: Node # Or specific type if you know it (e.g., CharacterBody2D)
 
+var _troop_data: Dictionary = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Use await to ensure nodes are ready before getting references (Good practice)
 	await ready
 
 	background_music.play()
+	
+	if not _troop_data.is_empty():
+		initialize_from_troop_data()
 
 	# Get references using get_node_or_null for safety
 	var potential_player = $World.get_node_or_null("Player")
@@ -171,3 +176,43 @@ func _on_monkey_released(monkey: Node2D): # Add type hint for monkey
 		printerr("    Node Path: ", player_node.get_path())
 		printerr("    Node Class: ", player_node.get_class())
 		printerr("    Node Script: ", player_node.get_script())
+
+func set_troop_data(data: Dictionary) -> void:
+	_troop_data = data
+
+## Initialize the player and troop from the troop data.
+func initialize_from_troop_data() -> void:
+	var player = $World/Player
+	if player and not _troop_data.is_empty():
+		player.health = _troop_data["player_health"]
+		# Recreate troop
+		var current_count = player.get_troop_count()
+		var target_count = _troop_data["count"]
+		var monkey_health = _troop_data.get("monkey_health", [])
+
+		# Remove excess monkeys if any
+		while current_count > target_count:
+			if player._swarm_monkeys.size() > 0:
+				var monkey = player._swarm_monkeys.pop_back()["node"]
+				monkey.queue_free()
+			current_count -= 1
+
+		# Add missing monkeys
+		while current_count < target_count:
+			player.add_monkey_to_swarm()
+			current_count += 1
+
+		# Restore monkey health if tracked
+		if not monkey_health.is_empty():
+			for i in range(min(player._swarm_monkeys.size(), monkey_health.size())):
+				var monkey = player._swarm_monkeys[i]["node"]
+				if "current_health" in monkey and "health_bar" in monkey:
+					monkey.current_health = monkey_health[i]
+
+					# Ensure the health bar is properly initialized and visible
+					if monkey.health_bar:
+						monkey.health_bar.value = monkey.current_health
+						monkey.health_bar.health = monkey.current_health
+						monkey.health_bar.show()  # Always show health bar, regardless of health value
+
+					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
