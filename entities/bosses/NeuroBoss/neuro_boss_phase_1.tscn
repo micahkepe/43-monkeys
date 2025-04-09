@@ -1,55 +1,118 @@
-[gd_scene load_steps=10 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=19 format=3 uid="uid://l7oimh82k7tw"]
 
 [ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
-[ext_resource type="Texture2D" uid="uid://bajh6w2h8fpwv" path="res://assets/sprites/tilesets/level_5_walls.png" id="1_ejdgl"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
 [ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.tscn" id="2_r0rvt"]
+[ext_resource type="Texture2D" uid="uid://bg4utr64j3s2o" path="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png" id="3_r0rvt"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0rvt"]
-atlas = ExtResource("1_ejdgl")
-region = Rect2(192, 448, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk3qx"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjfbh"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cc0r"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxjtn"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umkdd"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k533t"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rv3ka"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkmuc"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aucu8"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_im11n"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1p7i"]
+atlas = ExtResource("3_r0rvt")
+region = Rect2(1152, 0, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fk3qx"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r0rvt")
+"texture": SubResource("AtlasTexture_fk3qx")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hjfbh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cc0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kxjtn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umkdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k533t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rv3ka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkmuc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aucu8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_im11n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1p7i")
+}],
+"loop": true,
+"name": &"wiggle",
+"speed": 15.0
 }]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjfbh"]
-radius = 7.0
-height = 38.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5cc0r"]
-radius = 19.0
-height = 38.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxjtn"]
 bg_color = Color(0.600612, 0.161166, 0.305443, 1)
 
-[node name="NeuroBossPhase1" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5cc0r"]
+radius = 41.0
+height = 94.0
+
+[node name="NeuroBossPhase1" type="CharacterBody2D" groups=["enemies"]]
+z_index = 1
 collision_layer = 2
-collision_mask = 3
+collision_mask = 63
 script = ExtResource("1_814ll")
 minion_scene = ExtResource("2_r0rvt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 12)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_hjfbh")
-
-[node name="Hitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_5cc0r")
+animation = &"idle"
+frame_progress = 0.0751922
 
 [node name="HealthBar" parent="." instance=ExtResource("2_814ll")]
 offset_left = -17.0
@@ -57,3 +120,7 @@ offset_top = -26.0
 offset_right = 18.0
 offset_bottom = -22.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_kxjtn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 2)
+shape = SubResource("CapsuleShape2D_5cc0r")

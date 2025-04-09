@@ -137,11 +137,11 @@ func spawn_minions_attack() -> void:
 
 	# Check how many minions already exist by counting nodes in the "minions" group
 	var current_minions = get_tree().get_nodes_in_group("minions")
-	if current_minions.size() >= 12:
+	if current_minions.size() >= 1:
 		print("Maximum minions reached (", current_minions.size(), "); not spawning any more.")
 		return
 	
-	var max_spawn = 12 - current_minions.size()
+	var max_spawn = 1 - current_minions.size()
 	var num_minions = min(3, max_spawn)
 	
 	is_attacking = true
