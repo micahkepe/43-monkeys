@@ -1,105 +1,132 @@
-extends Node2D
+extends "res://menus/default_menu.gd"
 
-const section_time := 2.0
-const line_time := 0.3
-const base_speed := 100
-const speed_up_multiplier := 10.0
-const title_color := Color.BLUE_VIOLET
-const vertical_spacing := 20.0
-const image_width := 50.0
-const image_margin := 20.0
+# Constants defining timing, speed, and visual properties
+const section_time: float = 2.0  # Duration in seconds before a new section starts
+const line_time: float = 0.3     # Time in seconds between displaying each line
+const base_speed: float = 100.0  # Base scrolling speed in pixels per second
+const speed_up_multiplier: float = 10.0  # Multiplier applied to speed when sped up
+const title_color: Color = Color.BLUE_VIOLET  # Color for section titles
+const vertical_spacing: float = 20.0  # Vertical gap between credit lines
+const image_width: float = 50.0       # Fixed width and height for images
+const image_margin: float = 20.0      # Margin between image and text (not currently used)
 
-var scroll_speed := base_speed
-var speed_up := false
+# Variables controlling scroll behavior
+var scroll_speed: float = base_speed  # Current scrolling speed
+var speed_up: bool = false            # Flag indicating if scrolling is sped up
 
-var started := false
-var finished := false
+# State tracking variables
+var started: bool = false    # Whether credits have begun scrolling
+var finished: bool = false   # Whether credits have completed
 
-var section
-var section_next := true
-var section_timer := 0.0
-var line_timer := 0.0
-var curr_line := 0
-var lines := []
-@onready var line = $CreditsContainer/Line
-var total_line := -1
-var last_y_position := 0.0
-var image_index := 0
+# Section and line timing variables
+var section: Array           # Current section of credits being processed
+var section_next: bool = true  # Flag to start the next section
+var section_timer: float = 0.0  # Timer for section delay
+var line_timer: float = 0.0     # Timer for line delay
+var curr_line: int = 0          # Current line index within the section
+var lines: Array = []           # Array of active credit line nodes
 
-var credits = [
-	["A game by Awesome Game Company"],
-	["Programming", "Programmer Name", "Programmer Name 2"],
+# Node reference for the template label
+@onready var line: Label = $CreditsContainer/Line  # Template label duplicated for each credit line
+
+# Additional tracking variables
+var total_line: int = -1         # Total number of lines processed
+var last_y_position: float = 0.0  # Y-position for the next line
+var image_index: int = 0          # Index for alternating image sides
+
+# Exported variable for future choice-based logic (currently unused)
+@export var choice: String = "good"  # Choice parameter ("good" or "bad"), not implemented yet
+
+# Credit data as an array of sections, each containing strings
+# TODO: do this smarter, make some object definition for credit sections
+var credits: Array = [
+	["A game by alpha studios"],
+	["Programming", "Micah Kepe", "Grant Thompson", "Kevin Lei", "Zach Kepe"],
 	["Art", "Artist Name"],
-	["Music", "Musician Name"],
-	["Sound Effects", "SFX Name"],
-	["Testers", "Name 1", "Name 2", "Name 3"],
+	["Music", "Kyle Sanderfer"],
 	["Tools used", "Developed with Godot Engine", "https://godotengine.org/license", "", "Art created with My Favourite Art Program", "https://myfavouriteartprogram.com"],
 	["Special thanks", "My parents", "My friends", "My pet rabbit"]
 ]
 
-var img_blackjack = preload("res://assets/exposition/end-credits/freedom/blackjack.png")
-var img_movies = preload("res://assets/exposition/end-credits/freedom/movies.png")
-var img_rollercoaster = preload("res://assets/exposition/end-credits/freedom/rollercoaster.png")
+# Preloaded image resources for credits
+# TODO: make this just an exported var of Array of images you can just drag in
+# the editor or something
+var img_blackjack: Texture = preload("res://assets/exposition/end-credits/freedom/blackjack.png")
+var img_movies: Texture = preload("res://assets/exposition/end-credits/freedom/movies.png")
+var img_rollercoaster: Texture = preload("res://assets/exposition/end-credits/freedom/rollercoaster.png")
 
-var credits_images = [
+# Array of dictionaries mapping images to specific lines
+var credits_images: Array = [
 	{"line": 1, "texture": img_blackjack},
 	{"line": 3, "texture": img_movies},
 	{"line": 5, "texture": img_rollercoaster}
 ]
 
-func _ready():
+## Initializes the credits scene by setting the starting position
+func _ready() -> void:
 	last_y_position = get_viewport().size.y
 	print("== READY ==")
 
-func _process(delta):
-	var current_scroll_speed = base_speed * delta
+## Updates the credits scrolling each frame
+## @param delta: Time elapsed since the last frame (in seconds)
+func _process(delta: float) -> void:
+	# Calculate the current scroll speed based on delta and speed-up state
+	var current_scroll_speed: float = base_speed * delta
 	if speed_up:
 		current_scroll_speed *= speed_up_multiplier
 
+	# Handle section timing
 	if section_next:
-		section_timer += (delta * speed_up_multiplier) if speed_up else delta
+		section_timer += delta * speed_up_multiplier if speed_up else delta
 		if section_timer >= section_time:
 			section_timer -= section_time
 			if credits.size() > 0:
 				started = true
-				section = credits.pop_front()
+				section = credits.pop_front()  # Get the next section
 				curr_line = 0
-				add_line()
+				add_line()  # Add the first line of the section
 	else:
-		line_timer += (delta * speed_up_multiplier) if speed_up else delta
+		# Handle line timing within a section
+		line_timer += delta * speed_up_multiplier if speed_up else delta
 		if line_timer >= line_time:
 			line_timer -= line_time
-			add_line()
+			add_line()  # Add the next line
 
+	# Scroll all active lines and remove those off-screen
 	if lines.size() > 0:
 		for l in lines:
-			l.position.y -= current_scroll_speed
-			if l.position.y < -l.size.y:
+			l.position.y -= current_scroll_speed  # Move line upward
+			if l.position.y < -l.size.y:  # Check if line is fully off-screen
 				lines.erase(l)
-				l.queue_free()
+				l.queue_free()  # Free the node to avoid memory leaks
 	elif started:
-		finish()
+		finish()  # End credits when all lines are gone and started
 
-func finish():
+## Ends the credits and transitions to the main menu
+func finish() -> void:
 	if not finished:
 		finished = true
-		print("== FINISHED CREDITS ==")
-		# get_tree().change_scene("res://scenes/MainMenu.tscn")
+		print("== FINISHED CREDITS ==")  # Debug message to confirm completion
+		get_tree().change_scene_to_file("res://menus/MainMenu/main_menu.tscn")  # Switch to main menu
 
-func add_line():
-	total_line += 1
+## Adds a new credit line to the scene
+func add_line() -> void:
+	total_line += 1  # Increment total lines processed
+
 	if section.size() > 0:
-		var text = section.pop_front()
+		var text: String = section.pop_front()  # Get the next line text
 
-		var hbox = HBoxContainer.new()
-		hbox.position = Vector2(0, last_y_position)
-		hbox.anchor_right = 1.0
-		hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		# Create a horizontal container for the line
+		var hbox: HBoxContainer = HBoxContainer.new()
+		hbox.position = Vector2(0, last_y_position)  # Position at the last Y coordinate
+		hbox.anchor_right = 1.0  # Stretch across the full width
+		hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL  # Expand to fill horizontally
+		hbox.alignment = BoxContainer.ALIGNMENT_CENTER  # Center contents
 
-		var has_image = false
-		var image_side = image_index % 2 == 0  # true = left, false = right
-		var image_texture = null
+		# Check if this line has an associated image
+		var has_image: bool = false
+		var image_side: bool = image_index % 2 == 0  # True for left, false for right
+		var image_texture = null  # Texture for the image, if any
 
 		for img in credits_images:
 			if img["line"] == total_line:
@@ -108,48 +135,52 @@ func add_line():
 				image_index += 1
 				break
 
-		# Image node
-		var image_node = TextureRect.new()
+		# Create and configure the image node
+		var image_node: TextureRect = TextureRect.new()
 		image_node.texture = image_texture
-		image_node.stretch_mode = TextureRect.STRETCH_SCALE
-		image_node.size = Vector2(image_width, image_width)
-		image_node.custom_minimum_size = image_node.size
-		image_node.visible = has_image
+		image_node.stretch_mode = TextureRect.STRETCH_SCALE  # Scale image proportionally
+		image_node.size = Vector2(image_width, image_width)  # Set fixed size
+		image_node.custom_minimum_size = image_node.size  # Ensure minimum size
+		image_node.visible = has_image  # Show only if there’s an image
 
-		# Text label
-		var label = line.duplicate()
+		# Create and configure the text label
+		var label: Label = line.duplicate()  # Duplicate the template label
 		label.text = text
-		if curr_line == 0:
+		if curr_line == 0:  # First line of a section is a title
 			label.add_theme_color_override("font_color", title_color)
-		label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER  # Center text within label
 
-		# Add in proper order for left/right alignment
+		# Arrange image and text based on image side
 		if has_image:
 			if image_side:
-				hbox.add_child(image_node)
-				hbox.add_child(label)
+				hbox.add_child(image_node)  # Image on left
+				hbox.add_child(label)       # Text on right
 			else:
-				hbox.add_child(label)
-				hbox.add_child(image_node)
+				hbox.add_child(label)       # Text on left
+				hbox.add_child(image_node)  # Image on right
 		else:
-			hbox.add_child(label)
+			hbox.add_child(label)  # Only text if no image
 
+		# Add the container to the scene and track it
 		$CreditsContainer.add_child(hbox)
 		lines.append(hbox)
 
-		# Positioning
-		var height = max(label.size.y, image_node.size.y)
+		# Update the Y position for the next line
+		var height: float = max(label.size.y, image_node.size.y)
 		last_y_position += height + vertical_spacing
 		curr_line += 1
-		section_next = section.size() == 0
+		section_next = section.size() == 0  # Move to next section if current one is empty
 	else:
+		# Add extra spacing between sections
 		last_y_position += vertical_spacing * 2
 		section_next = true
 
-func _unhandled_input(event):
+## Handles user input for skipping or speeding up credits
+## @param event: The input event to process
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		finish()
+		finish()  # Skip credits and go to main menu
 	if event.is_action_pressed("ui_down") and not event.is_echo():
-		speed_up = true
+		speed_up = true  # Speed up scrolling
 	if event.is_action_released("ui_down"):
-		speed_up = false
+		speed_up = false  # Return to normal speed

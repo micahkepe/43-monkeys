@@ -14,7 +14,7 @@ func _ready():
 	await ready
 
 	background_music.play()
-	
+
 	if not _troop_data.is_empty():
 		initialize_from_troop_data()
 
