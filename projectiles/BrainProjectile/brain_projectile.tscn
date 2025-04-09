@@ -1,0 +1,154 @@
+[gd_scene load_steps=20 format=3 uid="uid://hwti6j7ij16o"]
+
+[ext_resource type="Script" uid="uid://cg6oa1u4iv51h" path="res://projectiles/BrainProjectile/brain_projectile.gd" id="1_8il3y"]
+[ext_resource type="Texture2D" uid="uid://dprfl7ta8sevr" path="res://assets/sprites/attacks/brain_projectile/brain_projectile.png" id="1_g1ojc"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="2_k5lg4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5lg4"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8il3y"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4381"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_haxs8"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rm1d4"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1fx7"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3tbo"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkbjs"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u0tv"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4s8n"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6kv4"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iix72"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpqa6"]
+atlas = ExtResource("1_g1ojc")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rvtat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5lg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8il3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4381")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_haxs8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rm1d4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1fx7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3tbo")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkbjs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u0tv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4s8n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6kv4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iix72")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpqa6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8il3y"]
+radius = 8.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n4381"]
+shader = ExtResource("2_k5lg4")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
+
+[node name="BrainProjectile" type="Area2D" groups=["projectiles"]]
+z_index = 1
+collision_layer = 4
+collision_mask = 35
+script = ExtResource("1_8il3y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rvtat")
+animation = &"explode"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8il3y")
+
+[node name="ShadowContainer" type="Node2D" parent="."]
+top_level = true
+
+[node name="Shadow" type="ColorRect" parent="ShadowContainer"]
+material = SubResource("ShaderMaterial_n4381")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 1.0
+offset_right = 20.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
