@@ -1,5 +1,7 @@
 extends "res://levels/default_level.gd"
 
+@onready var background_music: AudioStreamPlayer = $BackgroundMusic
+
 # Store references obtained in _ready
 var player_node: Player # Type hint helps with autocompletion and type safety
 var neuro_boss_node: Node # Or specific type if you know it (e.g., CharacterBody2D)
@@ -8,6 +10,8 @@ var neuro_boss_node: Node # Or specific type if you know it (e.g., CharacterBody
 func _ready():
 	# Use await to ensure nodes are ready before getting references (Good practice)
 	await ready
+
+	background_music.play()
 
 	# Get references using get_node_or_null for safety
 	var potential_player = $World.get_node_or_null("Player")
@@ -38,10 +42,10 @@ func _ready():
 		# Clean up any existing connections first to prevent duplicates
 		if neuro_boss_node.is_connected("monkey_controlled", Callable(self, "_on_monkey_controlled")):
 			neuro_boss_node.disconnect("monkey_controlled", Callable(self, "_on_monkey_controlled"))
-		
+
 		if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
 			neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
-		
+
 		# Check if boss has the expected signals before connecting
 		if not neuro_boss_node.has_signal("monkey_controlled"):
 			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_controlled' signal!")
@@ -96,42 +100,42 @@ func _on_monkey_released(monkey: Node2D): # Add type hint for monkey
 	if not is_instance_valid(monkey):
 		print("  Monkey is no longer valid, can't add it back")
 		return
-		
+
 	# Make sure health bar is visible again if it exists
 	if "health_bar" in monkey and is_instance_valid(monkey.health_bar):
 		monkey.health_bar.show()
-	
+
 	# Ensure any collision is properly enabled
 	if monkey is CollisionObject2D:
 		monkey.collision_layer = 4 # Layer 3 - Assuming this is the troop layer
 		monkey.collision_mask = 1  # Layer 1 - Assuming this is the world layer
-	
+
 	# Enable collision shapes
 	for child in monkey.get_children():
 		if not is_instance_valid(child):
 			continue
-			
+
 		if child is CollisionShape2D:
 			child.disabled = false
 		elif child is Area2D:
 			child.monitoring = true
 			child.monitorable = true
-			
+
 			for grandchild in child.get_children():
 				if not is_instance_valid(grandchild):
 					continue
-					
+
 				if grandchild is CollisionShape2D:
 					grandchild.disabled = false
-	
+
 	# Make sure the monkey is not marked as caged
 	if "is_caged" in monkey:
 		monkey.is_caged = false
-		
+
 	# Remove from enemies group
 	if monkey.is_in_group("enemies"):
 		monkey.remove_from_group("enemies")
-	
+
 	# Add to troop group if not already there
 	if not monkey.is_in_group("troop"):
 		monkey.add_to_group("troop")

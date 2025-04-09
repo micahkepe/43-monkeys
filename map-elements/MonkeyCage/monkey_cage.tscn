@@ -122,7 +122,6 @@ fill = 1
 fill_from = Vector2(0.532051, 0.519231)
 
 [node name="MonkeyCage" type="StaticBody2D"]
-z_index = 1
 y_sort_enabled = true
 collision_mask = 31
 script = ExtResource("2_12jvl")
