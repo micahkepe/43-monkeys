@@ -1,41 +1,73 @@
 extends "res://menus/default_menu.gd"
 
-# Constants defining timing, speed, and visual properties
-const section_time: float = 2.0  # Duration in seconds before a new section starts
-const line_time: float = 0.3     # Time in seconds between displaying each line
-const base_speed: float = 100.0  # Base scrolling speed in pixels per second
-const speed_up_multiplier: float = 10.0  # Multiplier applied to speed when sped up
-const title_color: Color = Color.BLUE_VIOLET  # Color for section titles
-const vertical_spacing: float = 20.0  # Vertical gap between credit lines
-const image_width: float = 50.0       # Fixed width and height for images
-const image_margin: float = 20.0      # Margin between image and text (not currently used)
+## Duration in seconds before a new section starts
+const section_time: float = 2.0
 
-# Variables controlling scroll behavior
-var scroll_speed: float = base_speed  # Current scrolling speed
-var speed_up: bool = false            # Flag indicating if scrolling is sped up
+## Time in seconds between displaying each line
+const line_time: float = 0.3
 
-# State tracking variables
-var started: bool = false    # Whether credits have begun scrolling
-var finished: bool = false   # Whether credits have completed
+## Base scrolling speed in pixels per second
+const base_speed: float = 100.0
 
-# Section and line timing variables
-var section: Array           # Current section of credits being processed
-var section_next: bool = true  # Flag to start the next section
-var section_timer: float = 0.0  # Timer for section delay
-var line_timer: float = 0.0     # Timer for line delay
-var curr_line: int = 0          # Current line index within the section
-var lines: Array = []           # Array of active credit line nodes
+## Multiplier applied to speed when sped up
+const speed_up_multiplier: float = 10.0
 
-# Node reference for the template label
-@onready var line: Label = $CreditsContainer/Line  # Template label duplicated for each credit line
+## Color for section titles
+const title_color: Color = Color.BLUE_VIOLET
 
-# Additional tracking variables
-var total_line: int = -1         # Total number of lines processed
-var last_y_position: float = 0.0  # Y-position for the next line
-var image_index: int = 0          # Index for alternating image sides
+## Vertical gap between credit lines
+const vertical_spacing: float = 20.0
 
-# Exported variable for future choice-based logic (currently unused)
-@export var choice: String = "good"  # Choice parameter ("good" or "bad"), not implemented yet
+## Fixed width and height for images
+const image_width: float = 50.0
+
+## Margin between image and text (not currently used)
+const image_margin: float = 20.0
+
+## Current scrolling speed
+var scroll_speed: float = base_speed
+
+## Flag indicating if scrolling is sped up
+var speed_up: bool = false
+
+## Whether credits have begun scrolling
+var started: bool = false
+
+## Whether credits have completed
+var finished: bool = false
+
+## Current section of credits being processed
+var section: Array
+
+## Flag to start the next section
+var section_next: bool = true
+
+## Timer for section delay
+var section_timer: float = 0.0
+
+## Timer for line delay
+var line_timer: float = 0.0
+
+## Current line index within the section
+var _curr_line: int = 0
+
+## Array of active credit line nodes
+var lines: Array = []
+
+## Template label duplicated for each credit line
+@onready var line: Label = $CreditsContainer/Line
+
+## Total number of lines processed
+var _total_lines_seen: int = -1
+
+## Y-position for the next line
+var _last_y_position: float = 0.0
+
+## Index for alternating image sides
+var _image_index: int = 0
+
+## Choice parameter ("good" or "bad")
+@export var choice: String = "good"
 
 # Credit data as an array of sections, each containing strings
 # TODO: do this smarter, make some object definition for credit sections
@@ -64,7 +96,7 @@ var credits_images: Array = [
 
 ## Initializes the credits scene by setting the starting position
 func _ready() -> void:
-	last_y_position = get_viewport().size.y
+	_last_y_position = get_viewport().size.y
 	print("== READY ==")
 
 ## Updates the credits scrolling each frame
@@ -83,7 +115,7 @@ func _process(delta: float) -> void:
 			if credits.size() > 0:
 				started = true
 				section = credits.pop_front()  # Get the next section
-				curr_line = 0
+				_curr_line = 0
 				add_line()  # Add the first line of the section
 	else:
 		# Handle line timing within a section
@@ -111,28 +143,28 @@ func finish() -> void:
 
 ## Adds a new credit line to the scene
 func add_line() -> void:
-	total_line += 1  # Increment total lines processed
+	_total_lines_seen += 1  # Increment total lines processed
 
 	if section.size() > 0:
 		var text: String = section.pop_front()  # Get the next line text
 
 		# Create a horizontal container for the line
 		var hbox: HBoxContainer = HBoxContainer.new()
-		hbox.position = Vector2(0, last_y_position)  # Position at the last Y coordinate
+		hbox.position = Vector2(0, _last_y_position)  # Position at the last Y coordinate
 		hbox.anchor_right = 1.0  # Stretch across the full width
 		hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL  # Expand to fill horizontally
 		hbox.alignment = BoxContainer.ALIGNMENT_CENTER  # Center contents
 
 		# Check if this line has an associated image
 		var has_image: bool = false
-		var image_side: bool = image_index % 2 == 0  # True for left, false for right
+		var image_side: bool = _image_index % 2 == 0  # True for left, false for right
 		var image_texture = null  # Texture for the image, if any
 
 		for img in credits_images:
-			if img["line"] == total_line:
+			if img["line"] == _total_lines_seen:
 				image_texture = img["texture"]
 				has_image = true
-				image_index += 1
+				_image_index += 1
 				break
 
 		# Create and configure the image node
@@ -146,7 +178,7 @@ func add_line() -> void:
 		# Create and configure the text label
 		var label: Label = line.duplicate()  # Duplicate the template label
 		label.text = text
-		if curr_line == 0:  # First line of a section is a title
+		if _curr_line == 0:  # First line of a section is a title
 			label.add_theme_color_override("font_color", title_color)
 		label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER  # Center text within label
 
@@ -167,12 +199,12 @@ func add_line() -> void:
 
 		# Update the Y position for the next line
 		var height: float = max(label.size.y, image_node.size.y)
-		last_y_position += height + vertical_spacing
-		curr_line += 1
+		_last_y_position += height + vertical_spacing
+		_curr_line += 1
 		section_next = section.size() == 0  # Move to next section if current one is empty
 	else:
 		# Add extra spacing between sections
-		last_y_position += vertical_spacing * 2
+		_last_y_position += vertical_spacing * 2
 		section_next = true
 
 ## Handles user input for skipping or speeding up credits
