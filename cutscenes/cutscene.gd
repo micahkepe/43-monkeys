@@ -1,4 +1,8 @@
 extends Node2D
+## A default cutscene script that allows for adding slides with a typed caption.
+##
+## You can configure which scene to transition to after the cutscene is
+## complete, as well as other parameters like typing speed, variation, etc.
 
 ## Configuration for the cutscene
 class CutsceneFrame:
@@ -9,15 +13,33 @@ class CutsceneFrame:
 		image = img
 		text = txt
 
-## Export variables for easy configuration in the editor
-@export var transition_scene: PackedScene = null  # Optional Level Transition Scene
-@export var next_level_scene: PackedScene = null  # Target Level Scene
-@export var transition_level_number: int = 1      # Configurable Level Number
-@export var transition_level_title: String = ""   # Configurable Level Title
+@export_group("Scene Routing")
+
+## Optional Level Transition Scene
+@export var transition_scene: PackedScene = null
+
+## Target Scene
+@export var next_scene: PackedScene = null
+
+## Configurable Level Number
+@export var transition_level_number: int = 1
+
+## Configurable Level Title to pass to optional transition scene.
+@export var transition_level_title: String = ""
+
+## Time to switch to next slide if no user input (in seconds)
 @export var auto_advance_delay: float = 2.0
-@export var typing_speed: float = 0.05            # Base typing speed
-@export var punctuation_pause: float = 0.2        # Additional pause for punctuation
-@export var typing_variation: float = 0.02        # New: Variation in typing speed
+
+@export_group("Typewriter Variables")
+
+## Time between characters; inverse to typing speed; (in seconds)
+@export var base_time_btwn_chars: float = 0.05
+
+## Additional pause for punctuation
+@export var punctuation_pause: float = 0.2
+
+## Variation in typing speed
+@export var typing_variation: float = 0.02
 
 ## Current state variables
 var _frames: Array[CutsceneFrame] = []
@@ -29,7 +51,7 @@ var _target_text: String = ""
 var _char_index: int = 0
 var _can_advance: bool = false
 
-# Node references
+## Node references
 @onready var background: Sprite2D = get_node("Background")
 @onready var label: Label = get_node("Label")
 @onready var keystroke_player: AudioStreamPlayer = get_node("KeyStrokePlayer")
@@ -111,7 +133,7 @@ func _on_type_timer_timeout() -> void:
 
 ## Generates a random typing speed to simulate natural typing
 func _get_random_typing_speed() -> float:
-	return typing_speed + randf_range(-typing_variation, typing_variation)
+	return base_time_btwn_chars + randf_range(-typing_variation, typing_variation)
 
 ## Timer callback for the frame transfer
 func _on_frame_timer_timeout() -> void:
@@ -136,7 +158,9 @@ func _end_cutscene() -> void:
 		var transition = transition_scene.instantiate()
 		transition.level_number = transition_level_number
 		transition.level_title = transition_level_title
-		transition.next_level_scene = next_level_scene  # Pass next level to the transition
+
+		# Pass next level to the transition
+		transition.next_scene = next_scene
 
 		# Defer the freeing of the current scene
 		call_deferred("_switch_to_transition_scene", transition)
@@ -156,7 +180,7 @@ func _switch_to_transition_scene(transition):
 
 ## Load the next gameplay level after the transition (or immediately if no transition)
 func _on_transition_completed():
-	if next_level_scene:
-		get_tree().change_scene_to_packed(next_level_scene)
+	if next_scene:
+		get_tree().change_scene_to_packed(next_scene)
 	else:
 		push_error("No next level scene specified after cutscene.")
