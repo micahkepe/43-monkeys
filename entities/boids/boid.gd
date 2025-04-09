@@ -293,18 +293,21 @@ func _update_animation() -> void:
 	var abs_y = abs(velocity.y)
 
 	if abs_x > abs_y:
-		# Horizontal movement takes precedence
+		# Horizontal movement takes precedence.
 		if velocity.x > 0:
-			_anim_sprite.play("walk_right")
+			if _anim_sprite.sprite_frames.has_animation("walk_right"):
+				_anim_sprite.play("walk_right")
 		else:
-			_anim_sprite.play("walk_left")
+			if _anim_sprite.sprite_frames.has_animation("walk_left"):
+				_anim_sprite.play("walk_left")
 	else:
-		# Vertical movement
+		# Vertical movement.
 		if velocity.y > 0:
-			_anim_sprite.play("walk_down")
+			if _anim_sprite.sprite_frames.has_animation("walk_down"):
+				_anim_sprite.play("walk_down")
 		else:
-			_anim_sprite.play("walk_up")
-
+			if _anim_sprite.sprite_frames.has_animation("walk_up"):
+				_anim_sprite.play("walk_up")
 
 ## Returns an array of neighboring boids within the view radius and angle.
 ## Neighbors are other boids in the same group as this boid.

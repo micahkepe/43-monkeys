@@ -112,7 +112,7 @@ minion_scene = ExtResource("2_r0rvt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
 animation = &"idle"
-frame_progress = 0.0751922
+frame_progress = 0.311484
 
 [node name="HealthBar" parent="." instance=ExtResource("2_814ll")]
 offset_left = -17.0
