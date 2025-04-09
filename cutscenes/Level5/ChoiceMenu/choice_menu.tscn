@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy1rwafh2gqhh"]
+
+[ext_resource type="Script" uid="uid://blcjq8yh1r083" path="res://cutscenes/Level5/ChoiceMenu/choice_menu.gd" id="1_3fg54"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="1_xwbu6"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_icalf"]
+[ext_resource type="PackedScene" uid="uid://btg08tyjh8p4o" path="res://end-credits/RollingCredits/rolling_credits.tscn" id="2_q5knp"]
+[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/ui/click.wav" id="5_h4k1l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_icalf"]
+
+[node name="ChoiceMenu" type="Node2D"]
+script = ExtResource("1_3fg54")
+next_scene = ExtResource("2_q5knp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("1_xwbu6")]
+visible = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_constants/separation = 250
+alignment = 1
+
+[node name="Good" type="Button" parent="Buttons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Evil")
+focus_neighbor_right = NodePath("../Evil")
+theme_override_colors/font_hover_color = Color(0.624822, 0.175097, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_focus_color = Color(0.857103, 0.253716, 1.92523e-07, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_icalf")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_icalf")
+text = "Freedom"
+alignment = 0
+
+[node name="Evil" type="Button" parent="Buttons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Good")
+focus_neighbor_right = NodePath("../Good")
+theme_override_colors/font_hover_color = Color(0.624822, 0.175097, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_focus_color = Color(0.857103, 0.253716, 1.92523e-07, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_icalf")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_icalf")
+text = "Power"
+alignment = 0
+
+[node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_h4k1l")
+bus = &"SFX"
+
+[connection signal="pressed" from="Buttons/Good" to="." method="_on_good_pressed"]
+[connection signal="pressed" from="Buttons/Evil" to="." method="_on_evil_pressed"]

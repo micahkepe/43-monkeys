@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://mum2kotho0dw"]
 
 [ext_resource type="Script" uid="uid://xkjwgjawwxst" path="res://cutscenes/Level5/Level5PostBoss/level_5_post_boss.gd" id="1_cfy4q"]
-[ext_resource type="PackedScene" uid="uid://btg08tyjh8p4o" path="res://end-credits/RollingCredits/rolling_credits.tscn" id="2_jjbqp"]
+[ext_resource type="PackedScene" uid="uid://dy1rwafh2gqhh" path="res://cutscenes/Level5/ChoiceMenu/choice_menu.tscn" id="2_ecklh"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_ssq8h"]
 [ext_resource type="AudioStream" uid="uid://dndthokwu6e1m" path="res://assets/music/bospad-type-beat/bospad-type-beat.ogg" id="3_inn7k"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="4_4fyg5"]
@@ -34,7 +34,7 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_ajjb5")
 
 [node name="Level5PostBoss" type="Node2D"]
 script = ExtResource("1_cfy4q")
-next_scene = ExtResource("2_jjbqp")
+next_scene = ExtResource("2_ecklh")
 transition_level_number = -1
 auto_advance_delay = 2.5
 base_time_btwn_chars = 0.07
@@ -63,7 +63,7 @@ theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Camera2D2" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_inn7k")
