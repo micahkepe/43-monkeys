@@ -17,7 +17,7 @@ var velocity: Vector2 = Vector2.ZERO
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("taser spawned at:", global_position)
+	#print("taser spawned at:", global_position)
 
 	# Play an animation if available
 	if $AnimationPlayer.has_animation("taser_spin"):

@@ -9,17 +9,18 @@ extends CharacterBody2D
 # Exported scenes for the different attack types.
 @export var minion_scene: PackedScene
 @export var projectiile_scene: PackedScene
+@export var brainbrim_scene: PackedScene
 
 # Health settings for the boss.
-@export var max_health: float = 500.0
+@export var max_health: float = 150.0
 var current_health: float
 
 # Timer for triggering random attacks.
 var attack_timer: Timer
 
 # Attack interval settings.
-@export var min_attack_interval: float = 3.0
-@export var max_attack_interval: float = 8.0
+@export var min_attack_interval: float = 2.5
+@export var max_attack_interval: float = 7.0
 
 # Optional quick-succession attack settings.
 @export var quick_succession_chance: float = 0.25
@@ -37,7 +38,7 @@ var attacks = [
 	{
 		"name": "spawn_minions_attack",
 		"function": Callable(self, "spawn_minions_attack"),
-		"weight": 2,
+		"weight": 6,
 		"unlocked": true
 	},
 	{
@@ -55,13 +56,24 @@ var attacks = [
 	{
 		"name": "attack_shoot_bullet_wall_vertical",
 		"function": Callable(self, "attack_shoot_bullet_wall_vertical"),
-		"weight": 2,
+		"weight": 3,
 		"unlocked": true
 	},
 	{
 		"name": "attack_shoot_bullet_wall_horizontal",
-		"function": Callable(self, "attack_shoot_bullet_wall_horizontal"),
-		"weight": 2,
+		"function": 3,
+		"unlocked": true
+	},
+	{
+		"name": "attack_brainbeam_cardinal",
+		"function": Callable(self, "attack_brainbeam_cardinal"),
+		"weight": 1,
+		"unlocked": true
+	},
+	{
+		"name": "attack_brainbeam_diagonal",
+		"function": Callable(self, "attack_brainbeam_diagonal"),
+		"weight": 1,
 		"unlocked": true
 	}
 ]
@@ -258,19 +270,18 @@ func attack_shoot_bullet_wall_vertical() -> void:
 		return
 
 	is_attacking = true
-	var duration = 2.0            # Duration of the effect in seconds.
-	var spawn_interval = 0.1      # Time between each bullet spawn.
+	var duration = 4.0            # Duration of the effect in seconds.
+	var spawn_interval = 0.15     # Time between each bullet spawn.
 	var elapsed = 0.0
 	while elapsed < duration:
 		var projectile = projectiile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
-		# Choose a random x offset within ±300 from the boss's position.
-		var x_offset = randf_range(-500, 500)
+		var x_offset = randf_range(-800, 800)
 		# Spawn along a horizontal line at the boss's y position.
-		projectile.global_position = Vector2(global_position.x + x_offset, global_position.y - 900)
+		projectile.global_position = Vector2(global_position.x + x_offset, global_position.y - 1100)
 		# Set the projectile to move downward.
-		projectile.velocity = Vector2(0, 300)
+		projectile.velocity = Vector2(0, 450)
 		await get_tree().create_timer(spawn_interval).timeout
 		elapsed += spawn_interval
 	await _animated_sprite.animation_finished
@@ -289,23 +300,91 @@ func attack_shoot_bullet_wall_horizontal() -> void:
 		return
 
 	is_attacking = true
-	var duration = 2.0            # Duration of the effect in seconds.
-	var spawn_interval = 0.25      # Time between bullet spawns.
+	var duration = 4.0            # Duration of the effect in seconds.
+	var spawn_interval = 0.15      # Time between bullet spawns.
 	var elapsed = 0.0
 	while elapsed < duration:
 		var projectile = projectiile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
-		# Choose a random y offset within ±300 from the boss's position.
-		var y_offset = randf_range(-300, 300)
+		var y_offset = randf_range(-800, 800)
 		# Spawn along a vertical line at the boss's x position.
-		projectile.global_position = Vector2(global_position.x - 800.0, global_position.y + y_offset)
+		projectile.global_position = Vector2(global_position.x - 1700.0, global_position.y + y_offset)
 		# Set the projectile to move rightward.
-		projectile.velocity = Vector2(300, 0)
+		projectile.velocity = Vector2(450, 0)
 		await get_tree().create_timer(spawn_interval).timeout
 		elapsed += spawn_interval
 	await _animated_sprite.animation_finished
 	is_attacking = false
+	
+	
+# ---------------------------
+# Attack 6: Brainbeam Cardinal
+# ---------------------------
+# Spawns 4 instances of BrainBrim in the cardinal directions (North, East, South, West).
+func attack_brainbeam_cardinal() -> void:
+	if not brainbrim_scene:
+		print("BrainBrim scene not set!")
+		return
+	
+	is_attacking = true
+	
+	# Dictionary mapping cardinal direction names to their parameters..
+	var cardinal_data = {
+		"north": { "pos": Vector2(6.0, -6998.0), "rotation": 0,    "scale": Vector2(5.0, 14.3) },
+		"east":  { "pos": Vector2(976, -6269),  "rotation": PI / 2,   "scale": Vector2(5.0, 24.3) },
+		"south": { "pos": Vector2(6.0, -5508),  "rotation": 0,  "scale": Vector2(5.0, 19.0) },
+		"west":  { "pos": Vector2(-985, -6269), "rotation": PI / 2,  "scale": Vector2(5.0, 24.3) }
+	}
+	
+	# Loop through each cardinal direction and spawn a BrainBrim
+	for direction in cardinal_data.keys():
+		var brainbrim = brainbrim_scene.instantiate()
+		var braim_beam_holder = get_parent().get_node("BrainBeamHolder")
+		braim_beam_holder.add_child(brainbrim)
+		
+		var data = cardinal_data[direction]
+		brainbrim.global_position = data["pos"]
+		brainbrim.rotation = data["rotation"]
+		brainbrim.scale = data["scale"]
+	
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
+# ---------------------------
+# Attack 7: Brainbeam Diagonal
+# ---------------------------
+# Spawns 4 instances of BrainBrim in the diagonal directions (NE, SE, SW, NW).
+func attack_brainbeam_diagonal() -> void:
+	print("=== DIAGNOLLA")
+	if not brainbrim_scene:
+		print("BrainBrim scene not set!")
+		return
+	
+	is_attacking = true
+	
+	# Dictionary for diagonal directions.
+	var diagonal_data = {
+		"sw": { "pos": Vector2(-642, -5671), "rotation": PI / 4,    "scale": Vector2(5.0, 21.0) },
+		"ne":  { "pos": Vector2(453, -6802),  "rotation": PI / 4,   "scale": Vector2(5.0, 16.0) },
+		"se": { "pos": Vector2(588, -5671),  "rotation": (3 * PI) / 4,  "scale": Vector2(5.0, 21.0) },
+		"nw":  { "pos": Vector2(-481, -6811), "rotation": (3 * PI) / 4,  "scale": Vector2(5.0, 16.0) }
+	}
+	
+	# Loop through each diagonal direction and spawn a BrainBrim
+	for direction in diagonal_data.keys():
+		var brainbrim = brainbrim_scene.instantiate()
+		var braim_beam_holder = get_parent().get_node("BrainBeamHolder")
+		braim_beam_holder.add_child(brainbrim)
+		
+		var data = diagonal_data[direction]
+		brainbrim.global_position = data["pos"]
+		brainbrim.rotation = data["rotation"]
+		brainbrim.scale = data["scale"]
+	
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
 
 
 #########################################

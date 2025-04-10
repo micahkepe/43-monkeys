@@ -16,6 +16,10 @@ func _ready() -> void:
 
 	# Play the start_up animation
 	_animated_sprite.play("idle")
+	
+	# Automatically free this node after 5 seconds
+	await get_tree().create_timer(5.0).timeout
+	queue_free()
 
 func _on_body_entered(body: Node) -> void:
 	print("=== IM IN THERE")
@@ -43,3 +47,6 @@ func _process(delta: float) -> void:
 		for body in bodies_in_laser:
 			if body and body.has_method("take_damage"):  # Ensure the body still exists
 				body.take_damage(2.0)
+
+func _physics_process(delta: float) -> void:
+		print("BEAM AT: ", global_position)
