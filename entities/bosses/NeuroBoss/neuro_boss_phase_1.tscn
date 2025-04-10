@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
 [ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.tscn" id="2_r0rvt"]
-[ext_resource type="Texture2D" uid="uid://bg4utr64j3s2o" path="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png" id="3_r0rvt"]
+[ext_resource type="PackedScene" uid="uid://hwti6j7ij16o" path="res://projectiles/BrainProjectile/brain_projectile.tscn" id="3_fk3qx"]
+[ext_resource type="Texture2D" uid="uid://b0gbmtvrbbot" path="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png" id="3_r0rvt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fk3qx"]
 atlas = ExtResource("3_r0rvt")
@@ -95,9 +96,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxjtn"]
-bg_color = Color(0.600612, 0.161166, 0.305443, 1)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5cc0r"]
 radius = 41.0
 height = 94.0
@@ -108,19 +106,19 @@ collision_layer = 2
 collision_mask = 63
 script = ExtResource("1_814ll")
 minion_scene = ExtResource("2_r0rvt")
+projectiile_scene = ExtResource("3_fk3qx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
 animation = &"idle"
 frame_progress = 0.311484
 
-[node name="HealthBar" parent="." instance=ExtResource("2_814ll")]
-offset_left = -17.0
-offset_top = -26.0
-offset_right = 18.0
-offset_bottom = -22.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_kxjtn")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
 shape = SubResource("CapsuleShape2D_5cc0r")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_814ll")]
+offset_left = -40.0
+offset_top = 45.0
+offset_right = 41.0
+offset_bottom = 49.0

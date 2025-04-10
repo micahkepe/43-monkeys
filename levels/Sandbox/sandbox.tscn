@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://b2v0cel5p7b10"]
+[gd_scene load_steps=28 format=4 uid="uid://b2v0cel5p7b10"]
 
 [ext_resource type="Texture2D" uid="uid://knm0mqxixq7w" path="res://assets/sprites/tilesets/blank-tileset.png" id="1_ve7g1"]
 [ext_resource type="Texture2D" uid="uid://c6n1otllaac03" path="res://assets/sprites/tilesets/background_tileset.png" id="2_fmcf5"]
@@ -10,8 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://bk0217lqr5uyn" path="res://assets/sprites/tilesets/side-desk.png" id="8_dh2vp"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="9_kx71c"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="9_mxanj"]
-[ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_rmb4c"]
-[ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.tscn" id="12_7rayu"]
+[ext_resource type="PackedScene" uid="uid://l7oimh82k7tw" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.tscn" id="9_p7mdm"]
+[ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/bosses/NeuroBoss/BrainBrim.tscn" id="10_7rayu"]
+[ext_resource type="PackedScene" uid="uid://qo5g1h3qpgww" path="res://entities/bosses/TaserBoss/electro_laser.tscn" id="11_bq7jv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b24tw"]
 resource_name = "blank-tiles"
@@ -401,6 +402,7 @@ position = Vector2(469, 626)
 
 [node name="Player" parent="World" instance=ExtResource("7_74lj2")]
 position = Vector2(645, 845)
+initial_troop_amount = 8
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.00798, 5.34402)
@@ -408,32 +410,17 @@ position = Vector2(4.00798, 5.34402)
 [node name="Cages" type="Node2D" parent="World"]
 y_sort_enabled = true
 
-[node name="MonkeyCage" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(921, 1107)
+[node name="NeuroBossPhase1" parent="World" instance=ExtResource("9_p7mdm")]
+position = Vector2(609, 1342)
+scale = Vector2(4.5, 4.5)
 
-[node name="MonkeyCage2" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(715, 1109)
+[node name="ElectroLaser" parent="World" instance=ExtResource("11_bq7jv")]
+position = Vector2(335, 795)
+scale = Vector2(8, 1)
 
-[node name="MonkeyCage3" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(501, 1109)
-
-[node name="MonkeyCage4" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(282, 1116)
-
-[node name="MonkeyCage5" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(278, 1267)
-
-[node name="MonkeyCage6" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(530, 1273)
-
-[node name="MonkeyCage7" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(744, 1266)
-
-[node name="MonkeyCage8" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(965, 1278)
-
-[node name="MonkeyCage9" parent="World/Cages" instance=ExtResource("9_rmb4c")]
-position = Vector2(965, 1278)
+[node name="BrainBrim" parent="World" instance=ExtResource("10_7rayu")]
+position = Vector2(198, 1091)
+scale = Vector2(3, 9)
 
 [node name="ForegroundTiles" type="TileMapLayer" parent="."]
 z_index = 1
@@ -448,15 +435,3 @@ tile_set = SubResource("TileSet_to3rt")
 visible = false
 size_flags_horizontal = 6
 size_flags_vertical = 6
-
-[node name="NeuroBossGoon" parent="." instance=ExtResource("12_7rayu")]
-position = Vector2(240, 676)
-scale = Vector2(3, 3)
-
-[node name="NeuroBossGoon2" parent="." instance=ExtResource("12_7rayu")]
-position = Vector2(884, 528)
-scale = Vector2(3, 3)
-
-[node name="NeuroBossGoon3" parent="." instance=ExtResource("12_7rayu")]
-position = Vector2(350, 358)
-scale = Vector2(3, 3)

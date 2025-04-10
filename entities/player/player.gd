@@ -782,9 +782,9 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			damage = area.damage
 		take_damage(damage)
 		print_debug("Player hit by projectile area: ", area.name, " for damage: ", damage)
-		# Optionally remove the projectile after hitting
-		if area.has_method("queue_free"):
-			area.queue_free()
+		## Optionally remove the projectile after hitting
+		#if area.has_method("queue_free"):
+			#area.queue_free()
 
 
 ## When a body enters the HitBox.

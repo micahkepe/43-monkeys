@@ -8,9 +8,10 @@ extends CharacterBody2D
 
 # Exported scenes for the different attack types.
 @export var minion_scene: PackedScene
+@export var projectiile_scene: PackedScene
 
 # Health settings for the boss.
-@export var max_health: float = 100.0
+@export var max_health: float = 500.0
 var current_health: float
 
 # Timer for triggering random attacks.
@@ -28,12 +29,39 @@ var attack_timer: Timer
 var is_attacking: bool = false
 var is_dead: bool = false
 
+@export var minion_scale: float = 0.5
+@export var bullet_scale: float = 0.5
+
 # List of available attacks with a weight factor for random selection.
 var attacks = [
 	{
 		"name": "spawn_minions_attack",
 		"function": Callable(self, "spawn_minions_attack"),
-		"weight": 3,
+		"weight": 2,
+		"unlocked": true
+	},
+	{
+		"name": "attack_shoot_projectiles_circle",
+		"function": Callable(self, "attack_shoot_projectiles_circle"),
+		"weight": 2,
+		"unlocked": true
+	},
+	{
+		"name": "attack_shoot_projectiles_spiral",
+		"function": Callable(self, "attack_shoot_projectiles_spiral"),
+		"weight": 2,
+		"unlocked": true
+	},
+	{
+		"name": "attack_shoot_bullet_wall_vertical",
+		"function": Callable(self, "attack_shoot_bullet_wall_vertical"),
+		"weight": 2,
+		"unlocked": true
+	},
+	{
+		"name": "attack_shoot_bullet_wall_horizontal",
+		"function": Callable(self, "attack_shoot_bullet_wall_horizontal"),
+		"weight": 2,
 		"unlocked": true
 	}
 ]
@@ -137,17 +165,17 @@ func spawn_minions_attack() -> void:
 
 	# Check how many minions already exist by counting nodes in the "minions" group
 	var current_minions = get_tree().get_nodes_in_group("minions")
-	if current_minions.size() >= 1:
+	if current_minions.size() >= 12:
 		print("Maximum minions reached (", current_minions.size(), "); not spawning any more.")
 		return
 	
-	var max_spawn = 1 - current_minions.size()
+	var max_spawn = 12 - current_minions.size()
 	var num_minions = min(3, max_spawn)
 	
 	is_attacking = true
 	for i in range(num_minions):
 		var minion = minion_scene.instantiate()
-		minion.scale = Vector2(0.5, 0.5)
+		minion.scale = Vector2(minion_scale, minion_scale)
 		minion.add_to_group("minions")
 		add_child(minion)
 
@@ -170,6 +198,115 @@ func spawn_minions_attack() -> void:
 		await get_tree().create_timer(0.1).timeout
 	
 	is_attacking = false
+	
+# ---------------------------
+# Attack 2: Shoot Projectiles in a Circle
+# ---------------------------
+# This attack fires a series of projectiles evenly around the boss.
+func attack_shoot_projectiles_circle() -> void:
+	if not projectiile_scene:
+		print("Projectile scene not set!")
+		return
+	
+	is_attacking = true
+	var num_projectiles = 12
+	var angle_step = (PI * 2) / num_projectiles
+	for i in range(num_projectiles):
+		var projectile = projectiile_scene.instantiate()
+		projectile.scale = Vector2(bullet_scale, bullet_scale)
+		add_child(projectile)
+		projectile.global_position = global_position
+		# Set the projectile velocity so that it moves outward.
+		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
+
+# ---------------------------
+# Attack 3: Shoot Projectiles in a Spiral
+# ---------------------------
+# This attack fires projectiles in a spiral pattern, one after the other.
+func attack_shoot_projectiles_spiral() -> void:
+	if not projectiile_scene:
+		print("Projectile scene not set!")
+		return
+	
+	is_attacking = true
+	var num_projectiles = 20
+	var angle = 0.0
+	var angle_increment = PI / 7.5  # Adjust this for tighter or looser spirals.
+	for i in range(num_projectiles):
+		var projectile = projectiile_scene.instantiate()
+		projectile.scale = Vector2(bullet_scale, bullet_scale)
+		add_child(projectile)
+		projectile.global_position = global_position
+		projectile.velocity = Vector2.RIGHT.rotated(angle) * 300
+		angle += angle_increment
+		await get_tree().create_timer(0.1).timeout
+	await _animated_sprite.animation_finished
+	is_attacking = false
+	
+# ---------------------------
+# Attack 4: Shoot a Vertical Bullet Wall (Centered on Boss)
+# ---------------------------
+# This attack spawns bullets along a horizontal line through the boss.
+# Each bullet's x position is randomly offset within ±300 from the boss,
+# and they travel downward.
+func attack_shoot_bullet_wall_vertical() -> void:
+	if not projectiile_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var duration = 2.0            # Duration of the effect in seconds.
+	var spawn_interval = 0.1      # Time between each bullet spawn.
+	var elapsed = 0.0
+	while elapsed < duration:
+		var projectile = projectiile_scene.instantiate()
+		projectile.scale = Vector2(bullet_scale, bullet_scale)
+		add_child(projectile)
+		# Choose a random x offset within ±300 from the boss's position.
+		var x_offset = randf_range(-500, 500)
+		# Spawn along a horizontal line at the boss's y position.
+		projectile.global_position = Vector2(global_position.x + x_offset, global_position.y - 900)
+		# Set the projectile to move downward.
+		projectile.velocity = Vector2(0, 300)
+		await get_tree().create_timer(spawn_interval).timeout
+		elapsed += spawn_interval
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
+
+# ---------------------------
+# Attack 5: Shoot a Horizontal Bullet Wall (Centered on Boss)
+# ---------------------------
+# This attack spawns bullets along a vertical line through the boss.
+# Each bullet's y position is randomly offset within ±300 from the boss,
+# and they travel rightward.
+func attack_shoot_bullet_wall_horizontal() -> void:
+	if not projectiile_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var duration = 2.0            # Duration of the effect in seconds.
+	var spawn_interval = 0.25      # Time between bullet spawns.
+	var elapsed = 0.0
+	while elapsed < duration:
+		var projectile = projectiile_scene.instantiate()
+		projectile.scale = Vector2(bullet_scale, bullet_scale)
+		add_child(projectile)
+		# Choose a random y offset within ±300 from the boss's position.
+		var y_offset = randf_range(-300, 300)
+		# Spawn along a vertical line at the boss's x position.
+		projectile.global_position = Vector2(global_position.x - 800.0, global_position.y + y_offset)
+		# Set the projectile to move rightward.
+		projectile.velocity = Vector2(300, 0)
+		await get_tree().create_timer(spawn_interval).timeout
+		elapsed += spawn_interval
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
 
 #########################################
 # HELPER ANIMATION FUNCTIONS
