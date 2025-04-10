@@ -10,6 +10,7 @@ extends CharacterBody2D
 @export var minion_scene: PackedScene
 @export var projectiile_scene: PackedScene
 @export var brainbrim_scene: PackedScene
+@export var brainfog_scene: PackedScene
 
 # Health settings for the boss.
 @export var max_health: float = 150.0
@@ -19,8 +20,8 @@ var current_health: float
 var attack_timer: Timer
 
 # Attack interval settings.
-@export var min_attack_interval: float = 2.5
-@export var max_attack_interval: float = 7.0
+@export var min_attack_interval: float = 2.0
+@export var max_attack_interval: float = 4.5
 
 # Optional quick-succession attack settings.
 @export var quick_succession_chance: float = 0.25
@@ -38,7 +39,7 @@ var attacks: Array[Dictionary] = [
 	{
 		"name": "spawn_minions_attack",
 		"function": Callable(self, "spawn_minions_attack"),
-		"weight": 6,
+		"weight": 5,
 		"unlocked": true
 	},
 	{
@@ -76,7 +77,14 @@ var attacks: Array[Dictionary] = [
 		"function": Callable(self, "attack_brainbeam_diagonal"),
 		"weight": 1,
 		"unlocked": true
+	},
+	{
+		"name": "attack_brain_fog",
+		"function": Callable(self, "attack_brain_fog"),
+		"weight": 4,
+		"unlocked": true
 	}
+	
 ]
 
 func _ready() -> void:
@@ -231,6 +239,42 @@ func attack_shoot_projectiles_circle() -> void:
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+		
+	await get_tree().create_timer(0.8).timeout
+	angle_step = (PI / 12)
+	for i in range(24):
+		if i % 2 == 0:
+			continue
+		
+		var projectile = projectiile_scene.instantiate()
+		projectile.scale = Vector2(bullet_scale, bullet_scale)
+		add_child(projectile)
+		projectile.global_position = global_position
+		# Set the projectile velocity so that it moves outward.
+		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+	
+	await _animated_sprite.animation_finished
+	is_attacking = false
+	
+func attack_shoot_projectiles_circle2() -> void:
+	if not projectiile_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var num_projectiles = 12
+	var angle_step = (PI / 12)
+	for i in range(24):
+		if i % 2 == 0:
+			continue
+		
+		var projectile = projectiile_scene.instantiate()
+		projectile.scale = Vector2(bullet_scale, bullet_scale)
+		add_child(projectile)
+		projectile.global_position = global_position
+		# Set the projectile velocity so that it moves outward.
+		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+	
 	await _animated_sprite.animation_finished
 	is_attacking = false
 
@@ -385,6 +429,24 @@ func attack_brainbeam_diagonal() -> void:
 
 	await _animated_sprite.animation_finished
 	is_attacking = false
+	
+# ---------------------------
+# Attack 8: Brain Fog Forcefield
+# ---------------------------
+# Spawns a layer of fog over the brain, protecting it from all projectiles.
+func attack_brain_fog() -> void:
+	if not brainfog_scene:
+		print("Brain Fog Scene Not Set")
+		return
+		
+	var brainfog = brainfog_scene.instantiate()
+	var brain_beam_holder = get_parent().get_node("BrainBeamHolder")
+	brain_beam_holder.add_child(brainfog)
+	brainfog.global_position = global_position
+	brainfog.scale = Vector2(22,22)
+	
+	print("=== BRIAN FOG AT: ", brainfog.global_position)
+	
 
 
 
