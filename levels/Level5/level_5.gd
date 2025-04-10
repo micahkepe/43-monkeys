@@ -10,15 +10,18 @@ var _troop_data: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	## TODO: Button-to-laser puzzle configuration
-	# buttons_to_lasers = {
-	# 	[]: [],
-	# }
+	# Button-to-laser puzzle configuration
+	buttons_to_lasers = {
+		["Button1", "Button2"]: ["Laser1"],
+		["Button3", "Button4", "Button5", "Button6"]: ["Laser2", "Laser3"],
+		["Button7", "Button8", "Button9", "Button10", "Button11"]: ["Laser5", "Laser6", "Laser7"],
+	}
 
-	# # TODO: Gear-to-laser puzzle configuration
-	# gears_to_lasers = {
-	# 	[]: [],
-	# }
+	# Gear-to-laser puzzle configuration
+	gears_to_lasers = {
+		["Gear1", "Gear2"]: ["Laser8", "Laser9", "Laser10"],
+		["Gear3"]: ["Laser4"],
+	}
 
 	super._ready()
 
