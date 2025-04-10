@@ -529,58 +529,60 @@ position = Vector2(-3208, -2844.67)
 [node name="MonkeyCage6" parent="ForegroundTiles/Cages" instance=ExtResource("8_ucg6s")]
 position = Vector2(3358, -2828.67)
 
-[node name="Lasers" type="Node2D" parent="ForegroundTiles"]
+[node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Laser1" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Lasers" type="Node2D" parent="World"]
+y_sort_enabled = true
+position = Vector2(75, -122)
+scale = Vector2(1.5, 1.5)
+
+[node name="Laser1" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(-61.3333, 80)
 scale = Vector2(1.55, 1.55)
 
-[node name="Laser2" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser2" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(-62, -545.333)
 scale = Vector2(1.55, 1.55)
 
-[node name="Laser3" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser3" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(-62, -614)
 scale = Vector2(1.55, 1.55)
 
-[node name="Laser4" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser4" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(560.667, -1574)
 rotation = 1.5708
 scale = Vector2(1.7, 1.55)
 
-[node name="Laser5" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser5" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(-804.667, -2756.67)
 rotation = 1.5708
 scale = Vector2(0.8, 1)
 
-[node name="Laser6" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser6" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(-870, -2756.67)
 rotation = 1.5708
 scale = Vector2(0.8, 1)
 
-[node name="Laser7" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser7" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(-742, -2758)
 rotation = 1.5708
 scale = Vector2(0.8, 1)
 
-[node name="Laser8" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser8" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(660.667, -2746)
 rotation = 1.5708
 scale = Vector2(0.75, 1)
 
-[node name="Laser9" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser9" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(716.667, -2746.67)
 rotation = 1.5708
 scale = Vector2(0.75, 1)
 
-[node name="Laser10" parent="ForegroundTiles/Lasers" instance=ExtResource("12_ct1e2")]
+[node name="Laser10" parent="World/Lasers" instance=ExtResource("12_ct1e2")]
 position = Vector2(766.667, -2744.67)
 rotation = 1.5708
 scale = Vector2(0.75, 1)
-
-[node name="World" type="Node2D" parent="."]
-y_sort_enabled = true
 
 [node name="BrainBeamHolder" type="Node2D" parent="World"]
 

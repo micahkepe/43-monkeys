@@ -10,7 +10,19 @@ var _troop_data: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Use await to ensure nodes are ready before getting references (Good practice)
+	## TODO: Button-to-laser puzzle configuration
+	# buttons_to_lasers = {
+	# 	[]: [],
+	# }
+
+	# # TODO: Gear-to-laser puzzle configuration
+	# gears_to_lasers = {
+	# 	[]: [],
+	# }
+
+	super._ready()
+
+	# Use await to ensure nodes are ready before getting references
 	await ready
 
 	background_music.play()

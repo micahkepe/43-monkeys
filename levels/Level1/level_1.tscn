@@ -1223,26 +1223,6 @@ position = Vector2(3928.67, -2963.33)
 [node name="MonkeyCage5" parent="ForegroundTiles/Cages" instance=ExtResource("9_6m36m")]
 position = Vector2(2446.67, -2948.67)
 
-[node name="Lasers" type="Node2D" parent="ForegroundTiles"]
-y_sort_enabled = true
-position = Vector2(4.06901e-05, -0.666667)
-
-[node name="Laser1" parent="ForegroundTiles/Lasers" instance=ExtResource("11_lybpb")]
-position = Vector2(680, -1884.67)
-scale = Vector2(1.75, 1.75)
-
-[node name="Laser2" parent="ForegroundTiles/Lasers" instance=ExtResource("11_lybpb")]
-position = Vector2(680, -2022.67)
-scale = Vector2(1.75, 1.75)
-
-[node name="Laser3" parent="ForegroundTiles/Lasers" instance=ExtResource("11_lybpb")]
-position = Vector2(679.333, -2154.67)
-scale = Vector2(1.75, 1.75)
-
-[node name="Laser4" parent="ForegroundTiles/Lasers" instance=ExtResource("11_lybpb")]
-position = Vector2(3274.67, -1531.33)
-scale = Vector2(2.3, 2.3)
-
 [node name="Lights" type="Node2D" parent="ForegroundTiles"]
 y_sort_enabled = true
 position = Vector2(-50, 81.3333)
@@ -1605,6 +1585,27 @@ position = Vector2(6028, -3290)
 
 [node name="Gears" type="Node2D" parent="World"]
 y_sort_enabled = true
+
+[node name="Lasers" type="Node2D" parent="World"]
+y_sort_enabled = true
+position = Vector2(75.0001, -124)
+scale = Vector2(1.5, 1.5)
+
+[node name="Laser1" parent="World/Lasers" instance=ExtResource("11_lybpb")]
+position = Vector2(680, -1884.67)
+scale = Vector2(1.75, 1.75)
+
+[node name="Laser2" parent="World/Lasers" instance=ExtResource("11_lybpb")]
+position = Vector2(680, -2022.67)
+scale = Vector2(1.75, 1.75)
+
+[node name="Laser3" parent="World/Lasers" instance=ExtResource("11_lybpb")]
+position = Vector2(679.333, -2154.67)
+scale = Vector2(1.75, 1.75)
+
+[node name="Laser4" parent="World/Lasers" instance=ExtResource("11_lybpb")]
+position = Vector2(3274.67, -1531.33)
+scale = Vector2(2.3, 2.3)
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_wc88d")
