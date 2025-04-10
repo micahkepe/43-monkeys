@@ -1,11 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=17 format=3 uid="uid://l7oimh82k7tw"]
 
-[ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
+[ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/Bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
-[ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.tscn" id="2_r0rvt"]
-[ext_resource type="PackedScene" uid="uid://hwti6j7ij16o" path="res://projectiles/BrainProjectile/brain_projectile.tscn" id="3_fk3qx"]
 [ext_resource type="Texture2D" uid="uid://b0gbmtvrbbot" path="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png" id="3_r0rvt"]
-[ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/bosses/NeuroBoss/BrainBrim.tscn" id="4_hjfbh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fk3qx"]
 atlas = ExtResource("3_r0rvt")
@@ -103,18 +100,13 @@ height = 94.0
 
 [node name="NeuroBossPhase1" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
-position = Vector2(-4, 0)
 collision_layer = 2
 collision_mask = 63
 script = ExtResource("1_814ll")
-minion_scene = ExtResource("2_r0rvt")
-projectiile_scene = ExtResource("3_fk3qx")
-brainbrim_scene = ExtResource("4_hjfbh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
 animation = &"idle"
-frame_progress = 0.311484
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)

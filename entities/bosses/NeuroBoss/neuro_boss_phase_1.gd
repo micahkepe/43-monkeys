@@ -34,7 +34,7 @@ var is_dead: bool = false
 @export var bullet_scale: float = 0.5
 
 # List of available attacks with a weight factor for random selection.
-var attacks = [
+var attacks: Array[Dictionary] = [
 	{
 		"name": "spawn_minions_attack",
 		"function": Callable(self, "spawn_minions_attack"),
@@ -61,7 +61,8 @@ var attacks = [
 	},
 	{
 		"name": "attack_shoot_bullet_wall_horizontal",
-		"function": 3,
+		"function": Callable(self, "attack_shoot_bullet_wall_horizontal"),
+		"weight": 3,
 		"unlocked": true
 	},
 	{
@@ -84,13 +85,13 @@ func _ready() -> void:
 	health_bar.init_health(current_health)
 
 	_animated_sprite.play("idle")
-	
+
 	# Create and set up a one-shot timer node for triggering attacks.
 	attack_timer = Timer.new()
 	attack_timer.one_shot = true
 	add_child(attack_timer)
 	attack_timer.connect("timeout", Callable(self, "_choose_and_execute_attack"))
-	
+
 	# Start the first random attack timer.
 	_start_random_attack_timer()
 
@@ -115,20 +116,20 @@ func _choose_and_execute_attack() -> void:
 	for attack in attacks:
 		if attack.unlocked:
 			available_attacks.append(attack)
-	
+
 	if available_attacks.size() == 0:
 		print("No available attacks!")
 		_start_random_attack_timer()
 		return
-	
+
 	var total_weight: float = 0.0
 	for attack in available_attacks:
-		total_weight += attack.weight
-	
+		total_weight += attack["weight"]
+
 	var random_value = randf() * total_weight
 	var cumulative_weight: float = 0.0
 	for attack in available_attacks:
-		cumulative_weight += attack.weight
+		cumulative_weight += attack["weight"]
 		if random_value <= cumulative_weight:
 			# Call the chosen attack function.
 			attack.function.call()
@@ -137,7 +138,7 @@ func _choose_and_execute_attack() -> void:
 				print("Quick succession triggered!")
 				await _perform_quick_succession_attack(available_attacks)
 			break
-	
+
 	# Restart the attack timer.
 	_start_random_attack_timer()
 
@@ -146,12 +147,12 @@ func _perform_quick_succession_attack(available_attacks: Array) -> void:
 	await get_tree().create_timer(quick_succession_delay).timeout
 	var total_weight: float = 0.0
 	for attack in available_attacks:
-		total_weight += attack.weight
-	
+		total_weight += attack["weight"]
+
 	var random_value = randf() * total_weight
 	var cumulative_weight: float = 0.0
 	for attack in available_attacks:
-		cumulative_weight += attack.weight
+		cumulative_weight += attack["weight"]
 		if random_value <= cumulative_weight:
 			attack.function.call()
 			break
@@ -180,10 +181,10 @@ func spawn_minions_attack() -> void:
 	if current_minions.size() >= 12:
 		print("Maximum minions reached (", current_minions.size(), "); not spawning any more.")
 		return
-	
+
 	var max_spawn = 12 - current_minions.size()
 	var num_minions = min(3, max_spawn)
-	
+
 	is_attacking = true
 	for i in range(num_minions):
 		var minion = minion_scene.instantiate()
@@ -208,9 +209,9 @@ func spawn_minions_attack() -> void:
 
 		minion.global_position = global_position + offset
 		await get_tree().create_timer(0.1).timeout
-	
+
 	is_attacking = false
-	
+
 # ---------------------------
 # Attack 2: Shoot Projectiles in a Circle
 # ---------------------------
@@ -219,7 +220,7 @@ func attack_shoot_projectiles_circle() -> void:
 	if not projectiile_scene:
 		print("Projectile scene not set!")
 		return
-	
+
 	is_attacking = true
 	var num_projectiles = 12
 	var angle_step = (PI * 2) / num_projectiles
@@ -242,7 +243,7 @@ func attack_shoot_projectiles_spiral() -> void:
 	if not projectiile_scene:
 		print("Projectile scene not set!")
 		return
-	
+
 	is_attacking = true
 	var num_projectiles = 20
 	var angle = 0.0
@@ -257,7 +258,7 @@ func attack_shoot_projectiles_spiral() -> void:
 		await get_tree().create_timer(0.1).timeout
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
+
 # ---------------------------
 # Attack 4: Shoot a Vertical Bullet Wall (Centered on Boss)
 # ---------------------------
@@ -316,8 +317,8 @@ func attack_shoot_bullet_wall_horizontal() -> void:
 		elapsed += spawn_interval
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
-	
+
+
 # ---------------------------
 # Attack 6: Brainbeam Cardinal
 # ---------------------------
@@ -326,9 +327,9 @@ func attack_brainbeam_cardinal() -> void:
 	if not brainbrim_scene:
 		print("BrainBrim scene not set!")
 		return
-	
+
 	is_attacking = true
-	
+
 	# Dictionary mapping cardinal direction names to their parameters..
 	var cardinal_data = {
 		"north": { "pos": Vector2(6.0, -6998.0), "rotation": 0,    "scale": Vector2(5.0, 14.3) },
@@ -336,18 +337,18 @@ func attack_brainbeam_cardinal() -> void:
 		"south": { "pos": Vector2(6.0, -5508),  "rotation": 0,  "scale": Vector2(5.0, 19.0) },
 		"west":  { "pos": Vector2(-985, -6269), "rotation": PI / 2,  "scale": Vector2(5.0, 24.3) }
 	}
-	
+
 	# Loop through each cardinal direction and spawn a BrainBrim
 	for direction in cardinal_data.keys():
 		var brainbrim = brainbrim_scene.instantiate()
 		var braim_beam_holder = get_parent().get_node("BrainBeamHolder")
 		braim_beam_holder.add_child(brainbrim)
-		
+
 		var data = cardinal_data[direction]
 		brainbrim.global_position = data["pos"]
 		brainbrim.rotation = data["rotation"]
 		brainbrim.scale = data["scale"]
-	
+
 	await _animated_sprite.animation_finished
 	is_attacking = false
 
@@ -360,9 +361,9 @@ func attack_brainbeam_diagonal() -> void:
 	if not brainbrim_scene:
 		print("BrainBrim scene not set!")
 		return
-	
+
 	is_attacking = true
-	
+
 	# Dictionary for diagonal directions.
 	var diagonal_data = {
 		"sw": { "pos": Vector2(-642, -5671), "rotation": PI / 4,    "scale": Vector2(5.0, 21.0) },
@@ -370,18 +371,18 @@ func attack_brainbeam_diagonal() -> void:
 		"se": { "pos": Vector2(588, -5671),  "rotation": (3 * PI) / 4,  "scale": Vector2(5.0, 21.0) },
 		"nw":  { "pos": Vector2(-481, -6811), "rotation": (3 * PI) / 4,  "scale": Vector2(5.0, 16.0) }
 	}
-	
+
 	# Loop through each diagonal direction and spawn a BrainBrim
 	for direction in diagonal_data.keys():
 		var brainbrim = brainbrim_scene.instantiate()
 		var braim_beam_holder = get_parent().get_node("BrainBeamHolder")
 		braim_beam_holder.add_child(brainbrim)
-		
+
 		var data = diagonal_data[direction]
 		brainbrim.global_position = data["pos"]
 		brainbrim.rotation = data["rotation"]
 		brainbrim.scale = data["scale"]
-	
+
 	await _animated_sprite.animation_finished
 	is_attacking = false
 
@@ -408,7 +409,7 @@ func take_damage(amount: float) -> void:
 	print("BrainBoss took ", amount, " damage!")
 	current_health -= amount
 	health_bar.value = current_health
-	
+
 	if current_health <= 0:
 		_die()
 	else:

@@ -1,4 +1,4 @@
-extends "res://entities/boids/boid.gd" 
+extends "res://entities/Boids/boid.gd"
 
 @export var projectile_scene: PackedScene
 @export var bullet_speed: float
@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	# Apply slow effect if active.
 	if is_slowed:
 		velocity = velocity.normalized() * (max_speed * 0.65)
-		
+
 	move_and_slide()
 
 	# --- Projectile Attack Logic ---
@@ -125,5 +125,5 @@ func _play_attack_animation(target: Node2D) -> void:
 				_anim_sprite.play("throw_up")
 			else:
 				_anim_sprite.play("throw")
-				
+
 	is_attacking = true
