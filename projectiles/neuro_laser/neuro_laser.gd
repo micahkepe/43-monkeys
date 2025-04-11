@@ -6,5 +6,4 @@ func _ready() -> void:
 	# Call the parent _ready() to run the default projectile logic.
 	super._ready()
 
-	velocity = velocity
 	scale = Vector2(3.5, 3.5)

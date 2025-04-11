@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=31 format=3 uid="uid://l7oimh82k7tw"]
 
 [ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
@@ -8,6 +8,39 @@
 [ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/bosses/NeuroBoss/BrainBrim.tscn" id="4_wjupm"]
 [ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
 [ext_resource type="PackedScene" uid="uid://dsy8p5naej4lb" path="res://entities/bosses/NeuroBoss/neuro_boss.tscn" id="6_kxjtn"]
+[ext_resource type="Texture2D" uid="uid://q0ahto6kq27v" path="res://assets/sprites/attacks/explosion/brain_explosion.png" id="7_umkdd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxoh8"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uetsc"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6o32u"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpavq"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4f8d0"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iptg0"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es2p4"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0iaec"]
+atlas = ExtResource("7_umkdd")
+region = Rect2(192, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fk3qx"]
 atlas = ExtResource("3_r0rvt")
@@ -57,6 +90,35 @@ region = Rect2(1152, 0, 128, 128)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_yxoh8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uetsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6o32u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpavq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4f8d0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iptg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es2p4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0iaec")
+}],
+"loop": true,
+"name": &"die",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fk3qx")
 }],
 "loop": true,
@@ -103,7 +165,7 @@ animations = [{
 radius = 41.0
 height = 94.0
 
-[node name="NeuroBossPhase1" type="CharacterBody2D" groups=["enemies"]]
+[node name="NeuroBossPhase1" type="CharacterBody2D" groups=["boids", "enemies"]]
 z_index = 1
 collision_layer = 2
 collision_mask = 63
@@ -116,7 +178,7 @@ phase2_scene = ExtResource("6_kxjtn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
-animation = &"idle"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
