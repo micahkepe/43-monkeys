@@ -1,458 +1,443 @@
 extends "res://menus/default_menu.gd"
+## Manages scrolling credits with modular sections and clickable links.
+##
+## Scrolling credits with sections that can be added dynamically. Each section
+## can contain a title, description, and a list of people with optional roles
+## and links. The credits scroll up the screen, and the user can fast-scroll by
+## holding down a key. The script also handles loading images for each person
+## and displaying them alongside their information. The credits are displayed
+## in a visually appealing manner with customizable colors, fonts, and styles.
+## The script is designed to be modular and reusable, allowing for easy
+## customization and extension.
 
-## Settings for controlling credit scrolling and timing
-class_name CreditsController
+# --- Configuration ---
 
-## Data class for individual credit contributors
-class CreditPerson:
-	var name: String
-	var role: String
-	var social_link: String = ""
-	var image_path: String = ""
+@export_group("Timing")
 
-	func _init(p_name: String, p_role: String = "", p_social_link: String = "", p_image_path: String = ""):
-		name = p_name
-		role = p_role
-		social_link = p_social_link
-		image_path = p_image_path
+## Delay between sections in seconds
+@export var section_delay: float = 2.0
 
-## Data class for credit sections
-class CreditSection:
-	var title: String
-	var people: Array[CreditPerson] = []
-	var description: String = ""
-	var section_image_path: String = ""
+## Delay between lines in seconds
+@export var line_delay: float = 0.3
 
-	func _init(p_title: String, p_description: String = "", p_section_image_path: String = ""):
-		title = p_title
-		description = p_description
-		section_image_path = p_section_image_path
+## Base scroll speed in pixels per second
+@export var base_scroll_speed: float = 80.0
 
-	func add_person(person: CreditPerson) -> void:
-		people.append(person)
+## Multiplier for fast scrolling
+@export var fast_scroll_multiplier: float = 10.0
 
-## Duration in seconds before a new section starts
-@export var section_time: float = 2.0
+@export_group("Colors")
 
-## Time in seconds between displaying each line
-@export var line_time: float = 0.3
-
-## Base scrolling speed in pixels per second
-@export var base_speed: float = 80.0
-
-## Multiplier applied to speed when sped up
-@export var speed_up_multiplier: float = 10.0
-
-## Color for section titles
+## The color for the title text
 @export var title_color: Color = Color(0.7, 0.3, 0.9, 1.0)
 
-## Regular text color
+## The color for the text
 @export var text_color: Color = Color.WHITE
 
-## Social link color
+## The color for the link text
 @export var link_color: Color = Color(0.4, 0.7, 1.0, 1.0)
 
-## Background color
+## The color for the background
 @export var background_color: Color = Color(0.0, 0.0, 0.0, 1.0)
 
-## Vertical gap between credit lines
+@export_group("Spacing")
+
+## Spacing between lines
 @export var vertical_spacing: float = 60.0
 
-## Vertical gap between people in a section
-@export var person_spacing: float = 80.0
+## Spacing between people
+@export var person_spacing: float = 60.0
 
-## Fixed width for images
-@export var image_width: float = 400
-
-## Fixed height for images
-@export var image_height: float = 400
-
-## Margin between image and text
+## Margin for images
 @export var image_margin: float = 40.0
 
-## Font size for titles
+@export_group("Images")
+
+## Size of the images displayed in the credits
+@export var image_size: Vector2 = Vector2(400, 400)
+
+@export_group("Fonts")
+
+## Font size for the title
 @export var title_font_size: int = 60
 
-## Font size for regular text
-@export var text_font_size: int = 32
+## Font size for the text
+@export var text_font_size: int = 45
 
-## Font size for social links
-@export var link_font_size: int = 28
+## Font size for the link text
+@export var link_font_size: int = 35
 
-## Background panel style
+## Font for the link text
+@export var link_font: Font
+
+@export_group("Style")
+
+## Style for the background
 @export var background_panel: StyleBox
 
-## Image panel style
+## Style for the images
 @export var image_panel: StyleBox
 
-## Choice parameter ("good" or "evil")
-@export var choice: String = "good"
+@export_group("Game")
 
-## Current scrolling speed
-var scroll_speed: float = base_speed
+## Player choice ("good" or "evil")
+@export var player_choice: String = "good"
 
-## Flag indicating if scrolling is sped up
-var speed_up: bool = false
+# --- Nodes ---
+@onready var credits_container = $CreditsContainer
+@onready var line_template = $CreditsContainer/Line
+@onready var background = $Background
 
-## Whether credits have begun scrolling
-var started: bool = false
+# --- Internal State ---
+var current_scroll_speed = base_scroll_speed
+var is_fast_scrolling = false
+var started = false
+var finished = false
 
-## Whether credits have completed
-var finished: bool = false
+var section_timer = 0.0
+var line_timer = 0.0
+var active_lines = []
+var next_y_position = 0.0
+var wait_for_next_section = true
+var image_alternate_counter = 0
 
-## Current section of credits being processed
-var current_section: CreditSection
+# --- Credits Data ---
+var credits_sections = []
+var current_section = null
 
-## Flag to start the next section
-var section_next: bool = true
+# --- Image Paths ---
+const IMAGES = {
+	"good": [
+		"res://assets/exposition/end-credits/freedom/blackjack.png",
+		"res://assets/exposition/end-credits/freedom/movies.png",
+		"res://assets/exposition/end-credits/freedom/rollercoaster.png"
+	],
+	"evil": [
+		"res://assets/exposition/end-credits/new-evil/evil-smile.png",
+		"res://assets/exposition/end-credits/new-evil/group-of-scientists.png",
+		"res://assets/exposition/end-credits/new-evil/scared-monkey.png"
+	]
+}
 
-## Timer for section delay
-var section_timer: float = 0.0
+# --- Image Cache ---
+var loaded_images = {}
 
-## Timer for line delay
-var line_timer: float = 0.0
+func _ready():
+	# Set background color
+	if background:
+		background.color = background_color
 
-## Current line index within the section
-var _curr_line: int = 0
+	# Set initial position to bottom of screen
+	next_y_position = get_viewport().size.y
 
-## Array of active credit line nodes
-var lines: Array = []
+	# Setup credits data
+	_setup_credits()
 
-## Template label duplicated for each credit line
-@onready var line: Label = $CreditsContainer/Line
+	# Preload images
+	_preload_all_images()
 
-## Y-position for the next line
-var _last_y_position: float = 0.0
+func _process(delta) -> void:
+	# Handle scrolling speed
+	var current_delta_speed = base_scroll_speed * delta
+	if is_fast_scrolling:
+		current_delta_speed *= fast_scroll_multiplier
 
-## Array of all credit sections
-var credits_sections: Array[CreditSection] = []
+	# Handle section and line timing
+	if wait_for_next_section:
+		section_timer += delta * (fast_scroll_multiplier if is_fast_scrolling else 1.0)
+		if section_timer >= section_delay:
+			section_timer = 0.0
+			_start_next_section()
+	else:
+		line_timer += delta * (fast_scroll_multiplier if is_fast_scrolling else 1.0)
+		if line_timer >= line_delay:
+			line_timer = 0.0
+			_add_next_person()
 
-## Dictionary of preloaded images mapped by path
-var preloaded_images: Dictionary = {}
+	# Scroll active lines
+	for line in active_lines:
+		line.position.y -= current_delta_speed
+		# Remove lines that have scrolled off the top
+		if line.position.y < -line.size.y - 100:
+			active_lines.erase(line)
+			line.queue_free()
 
-## Counter to distribute images throughout credits
-var image_counter: int = 0
+	# Check if credits are finished
+	if started and active_lines.size() == 0 and credits_sections.size() == 0:
+		_end_credits()
 
-func _ready() -> void:
-	# Configure background
-	var bg = $Background
-	if bg:
-		bg.color = background_color
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		_end_credits()
+	if event.is_action_pressed("ui_down") and not event.is_echo():
+		is_fast_scrolling = true
+	if event.is_action_released("ui_down"):
+		is_fast_scrolling = false
 
-	# Initialize the starting position
-	_last_y_position = get_viewport().size.y
+# --- Credits Data Setup ---
 
-	# Load the appropriate credits based on choice
-	setup_credits_data()
-
-	# Preload all images
-	preload_images()
-
-	print("Credits sections: ", credits_sections.size())
-
-## Create and setup all credit data
-func setup_credits_data() -> void:
-	# Ensure we have a default choice if none is set
-	if choice != "good" and choice != "evil":
-		choice = "good"
-		print_debug("WARNING: Invalid choice, defaulting to 'good'")
-
-	# Clear any existing data
+## Setup all credit sections. Includes images and people.
+func _setup_credits() -> void:
 	credits_sections.clear()
 
-	# Add appropriate ending section based on choice
-	if choice == "good":
-		var ending_section = CreditSection.new("FREEDOM",
-			"You chose a life of freedom, \nfinally experiencing peace and simple pleasures.\n")
-		ending_section.add_person(CreditPerson.new("No longer living in fear", "", "",
-			"res://assets/exposition/end-credits/freedom/blackjack.png"))
-		credits_sections.append(ending_section)
+	# Get images for the selected choice
+	var images = IMAGES["good"] if player_choice == "good" else IMAGES["evil"]
+	var image_index = 0
+
+	# Add ending section based on player choice
+	if player_choice == "good":
+		_add_section("FREEDOM",
+			"You chose a life of freedom, \nfinally experiencing peace and simple pleasures.",
+			[["No longer living in fear", "", [], images[image_index]]])
 	else:
-		var ending_section = CreditSection.new("POWER",
-			"You chose to seize control. \nThe tables have turned, and now you run the show.")
-		ending_section.add_person(CreditPerson.new("The New Order Begins", "", "",
-			"res://assets/exposition/end-credits/new-evil/evil-smile.png"))
-		credits_sections.append(ending_section)
+		_add_section("POWER",
+			"You chose to seize control. \nThe tables have turned, and now you run the show.",
+			[["The New Order Begins", "", [], images[image_index]]])
+	image_index += 1
 
-	# # Create core credits sections
-	# var credits_intro = CreditSection.new("A Game By Alpha Studios")
-	# credits_sections.append(credits_intro)
+	# Programming section
+	_add_section("PROGRAMMING", "", [
+		["Micah Kepe", "Project Lead", [["GitHub", "https://github.com/micahkepe"]]],
+		["Grant Thompson", "Game Architect", [["LinkedIn", "https://www.linkedin.com/in/grantwthompson/"]]],
+		["Kevin Lei", "Artistic Director", [["LinkedIn", "https://www.linkedin.com/in/lei-kevin/"]]],
+		["Zach Kepe", "Software Developer", [["GitHub", "https://github.com/zachkepe"]]]
+	])
 
-	# Programming section with social links
-	var programming = CreditSection.new("PROGRAMMING")
-	programming.add_person(CreditPerson.new("Micah Kepe", "", "github.com/micahkepe"))
-	programming.add_person(CreditPerson.new("Grant Thompson", "", "https://www.linkedin.com/in/grantwthompson/"))
-	programming.add_person(CreditPerson.new("Kevin Lei", "", "https://www.linkedin.com/in/lei-kevin/"))
-	programming.add_person(CreditPerson.new("Zach Kepe", "", "github.com/zachkepe"))
-	credits_sections.append(programming)
-
-	# Art section with image
-	var art = CreditSection.new("ART")
-	art.add_person(CreditPerson.new("Kevin Lei", "Lead Artist", "",
-		"res://assets/exposition/end-credits/freedom/movies.png"))
-	credits_sections.append(art)
+	# Art section
+	_add_section("ART", "", [
+		["Kevin Lei", "Lead Artist", [], images[image_index]]
+	])
+	image_index += 1
 
 	# Music section
-	var music = CreditSection.new("MUSIC")
-	music.add_person(CreditPerson.new("Kyle Sanderfer (Bospad)", "Composer", "https://open.spotify.com/artist/6Z9DPgoBu600ZbUbdQqZQf?si=IqUu-Tg0T9K7kVdWd1_35Q"))
-	credits_sections.append(music)
+	_add_section("MUSIC", "", [
+		["Kyle Sanderfer (Bospad)", "Composer", [["Spotify", "https://open.spotify.com/artist/6Z9DPgoBu600ZbUbdQqZQf?si=IqUu-Tg0T9K7kVdWd1_35Q"]]]
+	])
 
-	# Supervision section with image
-	var supervision = CreditSection.new("SUPERVISION")
-	supervision.add_person(CreditPerson.new("Professor Joe Warren", "Faculty Advisor", "cs.rice.edu/~jwarren",
-		 "res://assets/exposition/end-credits/freedom/rollercoaster.png" if choice == "good" else
-						   "res://assets/exposition/end-credits/new-evil/group-of-scientists.png"))
-	credits_sections.append(supervision)
+	# Supervision section
+	_add_section("SUPERVISION", "", [
+		["Professor Joe Warren", "Faculty Advisor", [["Website", "https://cs.rice.edu/~jwarren"]], images[image_index]]
+	])
+	image_index += 1
 
-	# Thank you section with image
-	var thanks = CreditSection.new("SPECIAL THANKS")
-	thanks.add_person(CreditPerson.new("The Godot community"))
-	thanks.add_person(CreditPerson.new("Our countless beta testers"))
-	thanks.add_person(CreditPerson.new("You for playing!", "", "",
-		 "res://assets/exposition/end-credits/new-evil/scared-monkey.png" if choice == "evil" else ""))
-	credits_sections.append(thanks)
+	# Thanks section
+	var thanks_people = [
+		["The Godot community", ""],
+		["Our countless beta testers", ""],
+		["YOU for playing!", ""]
+	]
 
-## Preload all images referenced in the credits
-func preload_images() -> void:
-	for section in credits_sections:
-		if section.section_image_path != "":
-			if not preloaded_images.has(section.section_image_path):
-				preloaded_images[section.section_image_path] = load(section.section_image_path)
+	_add_section("SPECIAL THANKS", "", thanks_people)
 
-		for person in section.people:
-			if person.image_path != "":
-				if not preloaded_images.has(person.image_path):
-					preloaded_images[person.image_path] = load(person.image_path)
+# Helper function to add a section to the credits
+func _add_section(title, description="", people=[]) -> void:
+	credits_sections.append({
+		"title": title,
+		"description": description,
+		"people": people
+	})
 
-## Updates the credits scrolling each frame
-func _process(delta: float) -> void:
-	# Calculate the current scroll speed based on delta and speed-up state
-	var current_scroll_speed: float = base_speed * delta
-	if speed_up:
-		current_scroll_speed *= speed_up_multiplier
+# Preload all images
+func _preload_all_images():
+	for path_array in IMAGES.values():
+		for path in path_array:
+			if path and not path.is_empty():
+				loaded_images[path] = load(path)
 
-	# Handle section timing
-	if section_next:
-		section_timer += delta * speed_up_multiplier if speed_up else delta
-		if section_timer >= section_time:
-			section_timer -= section_time
-			if credits_sections.size() > 0:
-				started = true
-				current_section = credits_sections.pop_front()  # Get the next section
-				_curr_line = 0
-				add_section_title()  # Add section title first
+# --- Display Functions ---
+
+# Start displaying the next section
+func _start_next_section() -> void:
+	# Check if there are more sections
+	if credits_sections.size() > 0:
+		started = true
+		current_section = credits_sections.pop_front()
+		_add_section_title()
 	else:
-		# Handle line timing within a section
-		line_timer += delta * speed_up_multiplier if speed_up else delta
-		if line_timer >= line_time:
-			line_timer -= line_time
-			add_person_line()  # Add the next person line
+		wait_for_next_section = true
 
-	# Scroll all active lines and remove those off-screen
-	if lines.size() > 0:
-		for l in lines:
-			l.position.y -= current_scroll_speed  # Move line upward
-			if l.position.y < -l.size.y - 100:  # Check if line is fully off-screen (with margin)
-				lines.erase(l)
-				l.queue_free()  # Free the node to avoid memory leaks
-	elif started and credits_sections.size() == 0:
-		finish()  # End credits when all lines are gone and credits array is empty
+## Add the section title and description
+func _add_section_title() -> void:
+	# Create title container
+	var title_container = HBoxContainer.new()
+	title_container.position = Vector2(0, next_y_position)
+	title_container.anchor_right = 1.0
+	title_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_container.alignment = BoxContainer.ALIGNMENT_CENTER
 
-## Adds the section title to the credits
-func add_section_title() -> void:
-	# Create a horizontal container for the line
-	var hbox: HBoxContainer = HBoxContainer.new()
-	hbox.position = Vector2(0, _last_y_position)
-	hbox.anchor_right = 1.0
-	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
-
-	# Create and configure the title label
-	var title_label: Label = line.duplicate()
+	# Create and configure title label
+	var title_label = line_template.duplicate()
 	title_label.text = current_section.title
 	title_label.visible = true
 	title_label.add_theme_color_override("font_color", title_color)
 	title_label.add_theme_font_size_override("font_size", title_font_size)
 	title_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-
-	# Add drop shadow for better visibility
 	title_label.add_theme_constant_override("shadow_offset_x", 2)
 	title_label.add_theme_constant_override("shadow_offset_y", 2)
 	title_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.7))
 
-	hbox.add_child(title_label)
+	title_container.add_child(title_label)
+	credits_container.add_child(title_container)
+	active_lines.append(title_container)
 
-	$CreditsContainer.add_child(hbox)
-	lines.append(hbox)
+	# Add description if available
+	if current_section.description:
+		next_y_position += vertical_spacing
 
-	# Add section description if it exists
-	if current_section.description != "":
-		_last_y_position += vertical_spacing
-		var desc_hbox: HBoxContainer = HBoxContainer.new()
-		desc_hbox.position = Vector2(0, _last_y_position)
-		desc_hbox.anchor_right = 1.0
-		desc_hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		desc_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		var desc_container = HBoxContainer.new()
+		desc_container.position = Vector2(0, next_y_position)
+		desc_container.anchor_right = 1.0
+		desc_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		desc_container.alignment = BoxContainer.ALIGNMENT_CENTER
 
-		var desc_label: Label = line.duplicate()
+		var desc_label = line_template.duplicate()
 		desc_label.text = current_section.description
 		desc_label.visible = true
 		desc_label.add_theme_color_override("font_color", text_color)
 		desc_label.add_theme_font_size_override("font_size", text_font_size)
 		desc_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 
-		desc_hbox.add_child(desc_label)
-		$CreditsContainer.add_child(desc_hbox)
-		lines.append(desc_hbox)
+		desc_container.add_child(desc_label)
+		credits_container.add_child(desc_container)
+		active_lines.append(desc_container)
 
-	_last_y_position += vertical_spacing * 1.5
+	next_y_position += vertical_spacing * 1.5
 
-	# Check if we need to add people or move to next section
-	section_next = current_section.people.size() == 0
+	# Check if there are people to display
+	wait_for_next_section = current_section.people.size() == 0
+	if wait_for_next_section:
+		next_y_position += vertical_spacing * 2
 
-## Adds a credit person line to the scene
-func add_person_line() -> void:
-	if current_section.people.size() > 0:
-		var person: CreditPerson = current_section.people.pop_front()
 
-		# Create a horizontal container for the line
-		var hbox: HBoxContainer = HBoxContainer.new()
-		hbox.position = Vector2(0, _last_y_position)
-		hbox.anchor_right = 1.0
-		hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+## Add the next person in the current section
+func _add_next_person() -> void:
+	if current_section.people.size() == 0:
+		next_y_position += vertical_spacing * 2
+		wait_for_next_section = true
+		return
 
-		# Create the content container
-		var content: VBoxContainer = VBoxContainer.new()
-		content.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		content.alignment = BoxContainer.ALIGNMENT_CENTER
-		content.custom_minimum_size.x = 300 # Ensure consistent width
+	var person = current_section.people.pop_front()
+	var person_name = person[0]
+	var role = person[1]
+	var links = person[2] if person.size() > 2 else []
+	var image_path = person[3] if person.size() > 3 else ""
 
-		# Add the person's name
-		var name_label: Label = line.duplicate()
-		name_label.text = person.name
-		name_label.visible = true
-		name_label.add_theme_color_override("font_color", text_color)
-		name_label.add_theme_font_size_override("font_size", text_font_size)
-		name_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		content.add_child(name_label)
+	# Create main container
+	var container = HBoxContainer.new()
+	container.position = Vector2(0, next_y_position)
+	container.anchor_right = 1.0
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	container.alignment = BoxContainer.ALIGNMENT_CENTER
 
-		# Add the person's role if it exists
-		if person.role != "":
-			var role_label: Label = line.duplicate()
-			role_label.text = person.role
-			role_label.visible = true
-			role_label.add_theme_color_override("font_color", text_color.darkened(0.2))
-			role_label.add_theme_font_size_override("font_size", text_font_size - 4)
-			role_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			role_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			content.add_child(role_label)
+	# Create content container
+	var content = VBoxContainer.new()
+	content.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	content.alignment = BoxContainer.ALIGNMENT_CENTER
+	content.custom_minimum_size.x = 300
 
-		# Add the person's social link if it exists
-		if person.social_link != "":
-			var link_label: Label = line.duplicate()
-			link_label.text = person.social_link
-			link_label.visible = true
-			link_label.add_theme_color_override("font_color", link_color)
-			link_label.add_theme_font_size_override("font_size", link_font_size)
-			link_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			link_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			content.add_child(link_label)
+	# Add name label
+	var name_label = line_template.duplicate()
+	name_label.text = person_name
+	name_label.visible = true
+	name_label.add_theme_color_override("font_color", text_color)
+	name_label.add_theme_font_size_override("font_size", text_font_size)
+	name_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(name_label)
 
-		# Handle image if available
-		if person.image_path != "":
-			var image_texture = preloaded_images[person.image_path]
+	# Add role label if available
+	if role:
+		var role_label = line_template.duplicate()
+		role_label.text = role
+		role_label.visible = true
+		role_label.add_theme_color_override("font_color", text_color.darkened(0.2))
+		role_label.add_theme_font_size_override("font_size", text_font_size - 4)
+		role_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		role_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		content.add_child(role_label)
 
-			# Create the image container
-			var img_container: PanelContainer = PanelContainer.new()
-			img_container.custom_minimum_size = Vector2(image_width, image_height)
-			if image_panel:
-				img_container.add_theme_stylebox_override("panel", image_panel)
-			else:
-				# Create a default panel style if none provided
-				var panel_style = StyleBoxFlat.new()
-				panel_style.bg_color = Color(0, 0, 0, 0.2)
-				panel_style.corner_radius_top_left = 10
-				panel_style.corner_radius_top_right = 10
-				panel_style.corner_radius_bottom_left = 10
-				panel_style.corner_radius_bottom_right = 10
-				img_container.add_theme_stylebox_override("panel", panel_style)
+	# Add links if available
+	if links.size() > 0:
+		# Create a centered container for links
+		var links_container = HBoxContainer.new()
+		links_container.alignment = BoxContainer.ALIGNMENT_CENTER
+		links_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-			# Create the image
-			var img: TextureRect = TextureRect.new()
-			img.texture = image_texture
-			img.expand = true
-			img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			img.custom_minimum_size = Vector2(image_width, image_height)
-			img_container.add_child(img)
+		for link_data in links:
+			var link_button = LinkButton.new()
+			link_button.text = link_data[0]
+			link_button.uri = link_data[1]
+			link_button.underline = LinkButton.UNDERLINE_MODE_ON_HOVER
+			link_button.add_theme_color_override("font_color", link_color)
+			link_button.add_theme_font_size_override("font_size", link_font_size)
+			if link_font:
+				link_button.add_theme_font_override("font", link_font)
+			links_container.add_child(link_button)
 
-			# Alternate image sides for visual interest
-			var image_side = image_counter % 2 == 0
-			image_counter += 1
+		content.add_child(links_container)
 
-			if image_side:
-				hbox.add_child(img_container)
+	# Handle image if available
+	var image_container = null
+	if image_path and not image_path.is_empty() and loaded_images.has(image_path):
+		image_container = PanelContainer.new()
+		image_container.custom_minimum_size = image_size
 
-				var spacer = Control.new()
-				spacer.custom_minimum_size = Vector2(image_margin, 0)
-				hbox.add_child(spacer)
-
-				hbox.add_child(content)
-			else:
-				hbox.add_child(content)
-
-				var spacer = Control.new()
-				spacer.custom_minimum_size = Vector2(image_margin, 0)
-				hbox.add_child(spacer)
-
-				hbox.add_child(img_container)
-
-			# Images need more space
-			_last_y_position += image_height + vertical_spacing
+		# Apply panel style
+		if image_panel:
+			image_container.add_theme_stylebox_override("panel", image_panel)
 		else:
-			# Center the content for text-only entries
-			hbox.add_child(content)
-			_last_y_position += vertical_spacing
+			var style = StyleBoxFlat.new()
+			style.bg_color = Color(0, 0, 0, 0.2)
+			style.set_corner_radius_all(10)
+			image_container.add_theme_stylebox_override("panel", style)
 
-		$CreditsContainer.add_child(hbox)
-		lines.append(hbox)
+		# Add image
+		var image = TextureRect.new()
+		image.texture = loaded_images[image_path]
+		image.expand = true
+		image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		image.custom_minimum_size = image_size
+		image_container.add_child(image)
 
-		_last_y_position += person_spacing
+	# Arrange content and image
+	if image_container:
+		# Alternate image position
+		var image_on_left = image_alternate_counter % 2 == 0
+		image_alternate_counter += 1
 
-		# Increment counter for tracking position in section
-		_curr_line += 1
+		if image_on_left:
+			container.add_child(image_container)
+			var spacer = Control.new()
+			spacer.custom_minimum_size = Vector2(image_margin, 0)
+			container.add_child(spacer)
+			container.add_child(content)
+		else:
+			container.add_child(content)
+			var spacer = Control.new()
+			spacer.custom_minimum_size = Vector2(image_margin, 0)
+			container.add_child(spacer)
+			container.add_child(image_container)
 
-		# Check if we're done with this section
-		section_next = current_section.people.size() == 0
+		next_y_position += image_size.y + vertical_spacing
 	else:
-		# Add extra spacing between sections
-		_last_y_position += vertical_spacing * 2
-		section_next = true
+		container.add_child(content)
+		next_y_position += vertical_spacing * 1.5
 
-## Ends the credits and transitions to the main menu
-func finish() -> void:
-	if not finished:
-		# Set the finished flag to prevent multiple calls
-		finished = true
-		print("== FINISHED CREDITS ==")
+	credits_container.add_child(container)
+	active_lines.append(container)
 
-		# Stop processing to prevent console spam
-		set_process(false)
+	next_y_position += person_spacing
+	wait_for_next_section = current_section.people.size() == 0
 
-		# Use a short timer then transition to main menu
-		get_tree().create_timer(0.5).timeout.connect(func(): change_scene_to_main_menu())
+# --- End Credits ---
 
-## Changes scene to the main menu
-func change_scene_to_main_menu() -> void:
-	print("Changing to main menu")
+## Handle the end of the credits
+func _end_credits() -> void:
+	if finished:
+		return
+	finished = true
+	set_process(false)
+	get_tree().create_timer(0.5).timeout.connect(_return_to_main_menu)
+
+func _return_to_main_menu() -> void:
 	get_tree().change_scene_to_file("res://menus/MainMenu/main_menu.tscn")
-
-## Handles user input for skipping or speeding up credits
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		finish()  # Skip credits and go to main menu
-	if event.is_action_pressed("ui_down") and not event.is_echo():
-		speed_up = true  # Speed up scrolling
-	if event.is_action_released("ui_down"):
-		speed_up = false  # Return to normal speed
