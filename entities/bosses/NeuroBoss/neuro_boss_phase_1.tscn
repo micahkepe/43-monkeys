@@ -1,12 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=22 format=3 uid="uid://l7oimh82k7tw"]
 
-[ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/Bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
+[ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
-[ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/Boids/NeuroBossGoon/neuro_boss_goon.tscn" id="2_r0rvt"]
+[ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/boids/NeuroBossGoon/neuro_boss_goon.tscn" id="2_r0rvt"]
 [ext_resource type="PackedScene" uid="uid://hwti6j7ij16o" path="res://projectiles/BrainProjectile/brain_projectile.tscn" id="3_fk3qx"]
 [ext_resource type="Texture2D" uid="uid://b0gbmtvrbbot" path="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png" id="3_r0rvt"]
-[ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/Bosses/NeuroBoss/BrainBrim.tscn" id="4_wjupm"]
-[ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/Bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
+[ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/bosses/NeuroBoss/BrainBrim.tscn" id="4_wjupm"]
+[ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
+[ext_resource type="PackedScene" uid="uid://dsy8p5naej4lb" path="res://entities/bosses/NeuroBoss/neuro_boss.tscn" id="6_kxjtn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fk3qx"]
 atlas = ExtResource("3_r0rvt")
@@ -111,6 +112,7 @@ minion_scene = ExtResource("2_r0rvt")
 projectile_scene = ExtResource("3_fk3qx")
 brainbrim_scene = ExtResource("4_wjupm")
 brainfog_scene = ExtResource("5_5cc0r")
+phase2_scene = ExtResource("6_kxjtn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")

@@ -291,6 +291,8 @@ func validate_caught_bananas():
 		print("DEBUG: Force reset catch flag - was stuck")
 
 func _physics_process(delta: float) -> void:
+	print("=== PHASE 2 MONKEY AT: ", global_position)
+	
 	if is_dead:
 		return
 

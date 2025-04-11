@@ -1465,6 +1465,8 @@ shader_parameter/glow_color = Color(0.901961, 0.192157, 0.286275, 1)
 [node name="NeuroBoss" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_2h7en")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -1480,7 +1482,7 @@ animation = &"idle_left"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_1rfga")]
 offset_left = -32.0
-offset_top = -63.0
+offset_top = -53.0
 offset_right = 32.0
 offset_bottom = -43.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_ghvu7")

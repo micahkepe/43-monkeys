@@ -11,9 +11,10 @@ extends CharacterBody2D
 @export var projectile_scene: PackedScene
 @export var brainbrim_scene: PackedScene
 @export var brainfog_scene: PackedScene
+@export var phase2_scene: PackedScene
 
 # Health settings for the boss.
-@export var max_health: float = 150.0
+@export var max_health: float = 10
 var current_health: float
 
 # Timer for triggering random attacks.
@@ -489,6 +490,11 @@ func _die() -> void:
 	_animated_sprite.play("die")
 	print("BrainBoss died!")
 
+	var world_node = get_parent()
+	var phase2 = phase2_scene.instantiate()
+	world_node.add_child(phase2)
+	phase2.global_position = global_position
+	phase2.scale = Vector2(1.5,1.5)
 	queue_free()
 
 # This function handles any actions needed when an animation finishes.
