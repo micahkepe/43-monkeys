@@ -1,3 +1,54 @@
-[gd_scene format=3 uid="uid://mum2kotho0dw"]
+[gd_scene load_steps=6 format=3 uid="uid://mum2kotho0dw"]
+
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_0no2x"]
+[ext_resource type="Script" uid="uid://rakmvun0v3w0" path="res://cutscenes/Level5/level_5_cutscene.gd" id="1_pka75"]
+[ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="2_pka75"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="3_crp2l"]
+[ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="4_jduir"]
 
 [node name="Level5Cutscene" type="Node2D"]
+script = ExtResource("1_pka75")
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -470.0
+offset_top = -216.0
+offset_right = -469.0
+offset_bottom = -166.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.760784, 0.580392, 0, 1)
+theme_override_constants/line_spacing = 10
+theme_override_constants/outline_size = 14
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/font = ExtResource("1_0no2x")
+theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_pka75")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("3_crp2l")]
+visible = false
+metadata/_edit_use_anchors_ = true
+
+[node name="KeyStrokePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jduir")
+volume_db = -30.0
+bus = &"SFX"
