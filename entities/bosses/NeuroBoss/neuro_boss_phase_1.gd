@@ -14,7 +14,7 @@ extends CharacterBody2D
 @export var phase2_scene: PackedScene
 
 # Health settings for the boss.
-@export var max_health: float = 150.0
+@export var max_health: float = 10.0
 var current_health: float
 
 # Timer for triggering random attacks.
