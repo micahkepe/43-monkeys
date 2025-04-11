@@ -339,6 +339,9 @@ energy = 0.8
 blend_mode = 1
 shadow_enabled = true
 
+[node name="Projectiles" type="Node2D" parent="."]
+position = Vector2(50, -110)
+
 [node name="BackgroundTiles" type="TileMapLayer" parent="."]
 z_index = -1
 position = Vector2(-12, 1)
@@ -759,6 +762,7 @@ position = Vector2(-5174, -4364)
 
 [node name="Player" parent="World" instance=ExtResource("6_cnoxu")]
 position = Vector2(17, -5429)
+initial_troop_amount = 10
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.008, 5.344)
