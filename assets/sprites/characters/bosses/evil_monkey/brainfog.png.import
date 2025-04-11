@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5yjygyjdds06"
-path="res://.godot/imported/plant_boss_speaking.png-ba002cb44e843d114c07917f11378c1d.ctex"
+uid="uid://gf38evhhdltr"
+path="res://.godot/imported/brainfog.png-fd40dab7241aaa08f51e2143556f68c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/exposition/plant_boss_speaking.png"
-dest_files=["res://.godot/imported/plant_boss_speaking.png-ba002cb44e843d114c07917f11378c1d.ctex"]
+source_file="res://assets/sprites/characters/bosses/evil_monkey/brainfog.png"
+dest_files=["res://.godot/imported/brainfog.png-fd40dab7241aaa08f51e2143556f68c3.ctex"]
 
 [params]
 

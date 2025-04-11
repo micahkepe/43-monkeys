@@ -24,39 +24,6 @@ var boss_instance: Node = null
 ## Reference to the boss music player.
 @onready var boss_music: AudioStreamPlayer = $BossMusic
 
-# -------------------------
-# Puzzle internal variables
-# -------------------------
-@export_group("Puzzle Variables")
-
-@onready var _buttons: Array[Node] = $World/Buttons.get_children()
-@onready var _lasers: Array[Node] = $World/Lasers.get_children()
-@onready var _gears: Array[Node] = $World/Gears.get_children()
-
-## Track button states (button name -> pressed state)
-var _button_states: Dictionary[String, bool] = {}
-
-## Button-to-laser puzzle configuration
-@export var buttons_to_lasers: Dictionary[Array, Array] = {
-	["Button1", "Button2", "Button3"]: ["Laser1"],
-	["Button4"]: ["Laser2"],
-	["Button5", "Button6", "Button7"]: ["Laser3", "Laser4"]
-}
-
-## Gear-to-laser puzzle configuration
-@export var gears_to_lasers: Dictionary[Array, Array] = {
-	["Gear1"]: ["Laser6"],
-	["Gear2"]: ["Laser5"]
-}
-
-## Preloaded node references for quick access
-var _gear_nodes: Dictionary[String, Node] = {}
-var _laser_nodes: Dictionary[String, Node] = {}
-var _button_nodes: Dictionary[String, Node] = {}
-
-## Track deactivated laser states to prevent re-deactivation
-var _deactivated_lasers: Array[String] = []
-
 @onready var door = $World/Doors/Door
 
 @export var transition_scene: PackedScene = preload("res://cutscenes/LevelTransition/level_transition.tscn")
@@ -64,6 +31,21 @@ var _deactivated_lasers: Array[String] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	## Button-to-laser puzzle configuration
+	buttons_to_lasers = {
+		["Button1", "Button2", "Button3"]: ["Laser1"],
+		["Button4"]: ["Laser2"],
+		["Button5", "Button6", "Button7"]: ["Laser3", "Laser4"]
+	}
+
+	## Gear-to-laser puzzle configuration
+	gears_to_lasers = {
+		["Gear1"]: ["Laser6"],
+		["Gear2"]: ["Laser5"]
+	}
+
+	super._ready()
+
 	# Audio setup
 	_validate_audio_nodes()
 	background_music.play()
@@ -76,10 +58,6 @@ func _ready() -> void:
 	if has_node("World/BossTrigger"):
 		$World/BossTrigger.connect("body_entered", Callable(self, "_on_boss_trigger_body_entered"))
 
-	# Preload puzzle nodes and connect signals
-	_preload_puzzle_nodes()
-	_connect_gear_signals()
-	_connect_button_signals()
 
 # Audio validation helper
 func _validate_audio_nodes() -> void:
@@ -87,86 +65,6 @@ func _validate_audio_nodes() -> void:
 	print("Audio nodes check - Boss music exists:", boss_music != null)
 	print("Audio stream check - Background music has stream:", background_music.stream != null)
 	print("Audio stream check - Boss music has stream:", boss_music.stream != null)
-
-# Preload gear, laser, and button nodes into dictionaries
-func _preload_puzzle_nodes() -> void:
-	for gear in _gears:
-		_gear_nodes[gear.name] = gear
-	for laser in _lasers:
-		_laser_nodes[laser.name] = laser
-	for button in _buttons:
-		_button_nodes[button.name] = button
-		_button_states[button.name] = false
-
-# Connect gear signals dynamically
-func _connect_gear_signals() -> void:
-	for gear_group in gears_to_lasers.keys():
-		for gear_name in gear_group:
-			if _gear_nodes.has(gear_name):
-				_gear_nodes[gear_name].connect("gear_complete", Callable(self, "_on_gear_complete"))
-			else:
-				print("Warning: Gear node not found in scene: ", gear_name)
-
-# Connect button signals dynamically
-func _connect_button_signals() -> void:
-	for button_group in buttons_to_lasers.keys():
-		for button_name in button_group:
-			if _button_nodes.has(button_name):
-				_button_nodes[button_name].connect("body_entered", Callable(self, "_on_button_body_entered").bind(_button_nodes[button_name]))
-				_button_nodes[button_name].connect("body_exited", Callable(self, "_on_button_body_exited").bind(_button_nodes[button_name]))
-			else:
-				print("Warning: Button node not found in scene: ", button_name)
-
-# Button signal handlers
-func _on_button_body_entered(_body: Node, button: Node) -> void:
-	_button_states[button.name] = true
-	_check_button_puzzles()
-
-func _on_button_body_exited(_body: Node, button: Node) -> void:
-	_button_states[button.name] = false
-	_check_button_puzzles()
-
-# Gear completion handler
-func _on_gear_complete(gear: Node) -> void:
-	print("Gear completed: ", gear.name)
-	_check_gear_puzzles(gear)
-
-# Check button-based puzzles
-func _check_button_puzzles() -> void:
-	for button_group in buttons_to_lasers.keys():
-		if _are_buttons_complete(button_group):
-			_deactivate_lasers(buttons_to_lasers[button_group])
-
-# Check gear-based puzzles
-func _check_gear_puzzles(completed_gear: Node) -> void:
-	for gear_group in gears_to_lasers.keys():
-		if completed_gear.name in gear_group:
-			if _are_gears_complete(gear_group):
-				_deactivate_lasers(gears_to_lasers[gear_group])
-
-# Helper: Check if all buttons in a group are pressed
-func _are_buttons_complete(button_group: Array) -> bool:
-	for button_name in button_group:
-		if not _button_states.get(button_name, false):
-			return false
-	return true
-
-# Helper: Check if all gears in a group are complete
-func _are_gears_complete(gear_group: Array) -> bool:
-	for gear_name in gear_group:
-		if not _gear_nodes[gear_name].completed:
-			return false
-	return true
-
-# Helper: Deactivate multiple lasers
-func _deactivate_lasers(laser_names: Array) -> void:
-	for laser_name in laser_names:
-		if laser_name not in _deactivated_lasers and _laser_nodes.has(laser_name):
-			_laser_nodes[laser_name].deactivate_laser()
-			_deactivated_lasers.append(laser_name)
-			print("Deactivated laser: ", laser_name)
-		elif not _laser_nodes.has(laser_name):
-			print("Warning: Laser node not found: ", laser_name)
 
 # Troop data setters and initializers
 func set_troop_data(data: Dictionary) -> void:

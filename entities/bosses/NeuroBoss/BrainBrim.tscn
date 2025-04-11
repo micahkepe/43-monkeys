@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://iupuomebaeuv"]
+
+[ext_resource type="Script" uid="uid://yd43k1nwje8y" path="res://entities/bosses/NeuroBoss/brain_brim.gd" id="1_d73du"]
+[ext_resource type="Texture2D" uid="uid://1uyhkf0nt4k1" path="res://assets/sprites/characters/bosses/evil_monkey/brain_beam.png" id="1_rllvx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d73du"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76ymw"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwm6s"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0mnc"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nody0"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3myff"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjxiq"]
+atlas = ExtResource("1_rllvx")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_21ifh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d73du")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76ymw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwm6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0mnc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nody0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3myff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjxiq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 14.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fywco"]
+size = Vector2(20, 64)
+
+[node name="BrainBrim" type="Area2D"]
+modulate = Color(1, 1, 1, 0.677)
+z_index = 5
+collision_mask = 24
+script = ExtResource("1_d73du")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_21ifh")
+animation = &"idle"
+frame_progress = 0.391742
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_fywco")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

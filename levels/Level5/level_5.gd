@@ -10,11 +10,26 @@ var _troop_data: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Use await to ensure nodes are ready before getting references (Good practice)
+	# Button-to-laser puzzle configuration
+	buttons_to_lasers = {
+		["Button1", "Button2"]: ["Laser1"],
+		["Button3", "Button4", "Button5", "Button6"]: ["Laser2", "Laser3"],
+		["Button7", "Button8", "Button9", "Button10", "Button11"]: ["Laser5", "Laser6", "Laser7"],
+	}
+
+	# Gear-to-laser puzzle configuration
+	gears_to_lasers = {
+		["Gear1", "Gear2"]: ["Laser8", "Laser9", "Laser10"],
+		["Gear3"]: ["Laser4"],
+	}
+
+	super._ready()
+
+	# Use await to ensure nodes are ready before getting references
 	await ready
 
 	background_music.play()
-	
+
 	if not _troop_data.is_empty():
 		initialize_from_troop_data()
 

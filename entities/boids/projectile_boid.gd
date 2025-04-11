@@ -1,6 +1,7 @@
-extends "res://entities/boids/boid.gd" 
+extends "res://entities/Boids/boid.gd"
 
 @export var projectile_scene: PackedScene
+@export var bullet_speed: float
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -46,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	# Apply slow effect if active.
 	if is_slowed:
 		velocity = velocity.normalized() * (max_speed * 0.65)
-		
+
 	move_and_slide()
 
 	# --- Projectile Attack Logic ---
@@ -76,7 +77,6 @@ func _throw_projectile_at_position(target_position: Vector2) -> void:
 
 	# Calculate the projectile velocity.
 	# Here we use a bullet_speed of 550.0 as in the banana function.
-	var bullet_speed = 450.0
 	var main_velocity = shoot_direction * bullet_speed
 
 	# Add a portion of the boid's current perpendicular velocity.
@@ -125,5 +125,5 @@ func _play_attack_animation(target: Node2D) -> void:
 				_anim_sprite.play("throw_up")
 			else:
 				_anim_sprite.play("throw")
-				
+
 	is_attacking = true

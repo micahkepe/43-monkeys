@@ -3,7 +3,8 @@ extends CharacterBody2D
 ##
 ## Handles walking animation, collision avoidance, and enemy detection.
 
-signal monkey_died(monkey) 
+@warning_ignore("unused_signal")
+signal monkey_died(monkey)
 
 var locked: bool = false
 

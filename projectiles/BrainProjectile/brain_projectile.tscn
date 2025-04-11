@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://hwti6j7ij16o"]
+[gd_scene load_steps=22 format=3 uid="uid://hwti6j7ij16o"]
 
 [ext_resource type="Script" uid="uid://cg6oa1u4iv51h" path="res://projectiles/BrainProjectile/brain_projectile.gd" id="1_8il3y"]
 [ext_resource type="Texture2D" uid="uid://dprfl7ta8sevr" path="res://assets/sprites/attacks/brain_projectile/brain_projectile.png" id="1_g1ojc"]
@@ -117,15 +117,30 @@ shader_parameter/glow_spread = 0.5
 shader_parameter/glow_intensity = 1.5
 shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_0b7aq"]
+offsets = PackedFloat32Array(0.0582751, 0.741259)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_te8sk"]
+gradient = SubResource("Gradient_0b7aq")
+width = 32
+height = 32
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="BrainProjectile" type="Area2D" groups=["projectiles"]]
 z_index = 1
 collision_layer = 4
-collision_mask = 35
+collision_mask = 56
 script = ExtResource("1_8il3y")
+lifetime = 11.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rvtat")
-animation = &"explode"
+animation = &"idle"
+frame = 5
+frame_progress = 0.525912
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8il3y")
@@ -150,5 +165,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+scale = Vector2(1.5625, 1.39063)
+color = Color(0.804263, 0.132259, 0.127616, 1)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_te8sk")
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_AnimatedSprite2D_animation_finished"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6hqssagt75up"]
+[gd_scene load_steps=16 format=3 uid="uid://c6hqssagt75up"]
 
 [ext_resource type="Script" uid="uid://cfirxptqatr55" path="res://projectiles/BananaBoomerang/banana_boomerang.gd" id="1_g21ix"]
 [ext_resource type="Texture2D" uid="uid://db8jtvki4pwdd" path="res://assets/sprites/attacks/bananas/banana_boomerang.png" id="1_q0566"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="3_wqwfh"]
+[ext_resource type="Texture2D" uid="uid://dt547hb5yasmd" path="res://assets/sprites/attacks/explosion/banana_explosion.png" id="4_5us3k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqhhy"]
 size = Vector2(30, 30)
@@ -29,6 +30,22 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("1_q0566")
 region = Rect2(96, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_uc11o"]
+atlas = ExtResource("4_5us3k")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyxo8"]
+atlas = ExtResource("4_5us3k")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwt8d"]
+atlas = ExtResource("4_5us3k")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gm5j"]
+atlas = ExtResource("4_5us3k")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_uc11o"]
 animations = [{
 "frames": [{
@@ -47,6 +64,23 @@ animations = [{
 "loop": true,
 "name": &"banana_spin",
 "speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uc11o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyxo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwt8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gm5j")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
 }]
 
 [node name="BananaBoomerang" type="Area2D" groups=["projectiles"]]
@@ -85,8 +119,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uc11o")
-animation = &"banana_spin"
-frame_progress = 0.863007
+animation = &"explode"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

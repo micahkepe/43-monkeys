@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhfc8hsx7ntpq"
-path="res://.godot/imported/george_speaking.png-4052267357e7e93aee505ac065467d4b.ctex"
+uid="uid://b0gbmtvrbbot"
+path="res://.godot/imported/brain_animation.png-98cfcb0efbc90ac5c0d82040a257a833.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/exposition/george_speaking.png"
-dest_files=["res://.godot/imported/george_speaking.png-4052267357e7e93aee505ac065467d4b.ctex"]
+source_file="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png"
+dest_files=["res://.godot/imported/brain_animation.png-98cfcb0efbc90ac5c0d82040a257a833.ctex"]
 
 [params]
 

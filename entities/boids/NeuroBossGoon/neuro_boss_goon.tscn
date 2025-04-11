@@ -1,8 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://dnq5yht1esfkt"]
+[gd_scene load_steps=40 format=3 uid="uid://dnq5yht1esfkt"]
 
 [ext_resource type="Texture2D" uid="uid://c4rqld3cc3pq4" path="res://assets/sprites/characters/bosses/neuro_boss_goon/final_boss_orb.png" id="1_nq5ke"]
-[ext_resource type="Script" uid="uid://cah7dyx88vqgr" path="res://entities/boids/neuro_boss_goon/neuro_boss_goon.gd" id="1_tg647"]
-[ext_resource type="PackedScene" uid="uid://jpvp8dibwfw" path="res://projectiles/neuro_laser/neuro_laser.tscn" id="2_6qusp"]
+[ext_resource type="Script" uid="uid://cah7dyx88vqgr" path="res://entities/Boids/NeuroBossGoon/neuro_boss_goon.gd" id="1_tg647"]
+[ext_resource type="PackedScene" uid="uid://jpvp8dibwfw" path="res://projectiles/neuro_laser/neuro_laser.tscn" id="2_1vql5"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_tg647"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_kyrrg"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="4_ooar5"]
@@ -60,6 +60,62 @@ region = Rect2(160, 0, 32, 32)
 atlas = ExtResource("1_nq5ke")
 region = Rect2(192, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_whfm2"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_md5cn"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llyil"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs6il"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt4np"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_px2w8"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjdoh"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqehe"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5518m"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnot0"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_taojl"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g18ox"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jsnx"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpudv"]
+atlas = ExtResource("1_nq5ke")
+region = Rect2(192, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_hb0f4"]
 animations = [{
 "frames": [{
@@ -110,6 +166,58 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whfm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_md5cn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llyil")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs6il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yt4np")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_px2w8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjdoh")
+}],
+"loop": true,
+"name": &"throw",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqehe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5518m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnot0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_taojl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g18ox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jsnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpudv")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_flfho"]
@@ -132,13 +240,11 @@ shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_tg647")
-projectile_scene = ExtResource("2_6qusp")
+projectile_scene = ExtResource("2_1vql5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hb0f4")
-animation = &"die"
-frame = 5
-frame_progress = 1.0
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 13)

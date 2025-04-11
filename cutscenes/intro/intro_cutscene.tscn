@@ -13,7 +13,7 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vlkf1"]
 frequency = 0.4015
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ajjb5"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mmrrd"]
 noise = SubResource("FastNoiseLite_vlkf1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eo37s"]
@@ -31,14 +31,13 @@ shader_parameter/tape_crease_discoloration = 1.0
 shader_parameter/bottom_border_thickness = 6.0
 shader_parameter/bottom_border_jitter = 6.0
 shader_parameter/noise_intensity = 0.6
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_ajjb5")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_mmrrd")
 
 [node name="IntroCutscene" type="Node2D"]
 script = ExtResource("1_lxcfy")
 transition_scene = ExtResource("2_ntrmn")
-next_level_scene = ExtResource("3_vhlu5")
+next_scene = ExtResource("3_vhlu5")
 transition_level_title = "The Basement"
-typing_speed = 0.07
 
 [node name="Background" type="Sprite2D" parent="."]
 

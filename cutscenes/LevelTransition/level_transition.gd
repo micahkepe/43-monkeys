@@ -2,7 +2,7 @@ extends Node2D
 
 @export var level_number: int = 1
 @export var level_title: String = ""
-@export var next_level_scene: PackedScene = null  # Scene to load after transition
+@export var next_scene: PackedScene = null  # Scene to load after transition
 @export var display_duration: float = 2.0         # Time the full text stays visible
 @export var fade_duration: float = 0.5            # Fade in/out duration
 @export var typing_speed: float = 0.05            # Speed of typewriter effect
@@ -94,8 +94,8 @@ func _on_fade_out_complete():
 	print_debug("Transition completed, loading next level.")
 
 	# Load the next level with troop data
-	if next_level_scene:
-		var next_level = next_level_scene.instantiate()
+	if next_scene:
+		var next_level = next_scene.instantiate()
 		if next_level.has_method("set_troop_data") and not troop_data.is_empty():
 			next_level.set_troop_data(troop_data)
 		get_tree().root.add_child(next_level)
