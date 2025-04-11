@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://btg08tyjh8p4o"]
+[gd_scene load_steps=6 format=3 uid="uid://btg08tyjh8p4o"]
 
 [ext_resource type="Script" uid="uid://lh20ojvxeohb" path="res://end-credits/RollingCredits/rolling_credits.gd" id="1_wlhsm"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_t2ldp"]
 [ext_resource type="AudioStream" uid="uid://kmsrnupy14ru" path="res://assets/music/end-credits/end-credits.wav" id="3_0w2ho"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a65a1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w2ho"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 70
+border_color = Color(1, 1, 1, 1)
 
 [node name="RollingCredits" type="Control"]
 layout_mode = 3
@@ -12,8 +21,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wlhsm")
+text_font_size = 45
+background_panel = SubResource("StyleBoxFlat_a65a1")
+image_panel = SubResource("StyleBoxFlat_0w2ho")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +47,6 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="Line" type="Label" parent="CreditsContainer"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
