@@ -1,10 +1,21 @@
 [gd_scene load_steps=6 format=3 uid="uid://mum2kotho0dw"]
 
-[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_0no2x"]
 [ext_resource type="Script" uid="uid://brwl51x0rypm" path="res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.gd" id="1_pka75"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="2_pka75"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="3_crp2l"]
 [ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="4_jduir"]
+
+[sub_resource type="FontFile" id="FontFile_me55r"]
+cache/0/40/0/ascent = 0.0
+cache/0/40/0/descent = 0.0
+cache/0/40/0/underline_position = 0.0
+cache/0/40/0/underline_thickness = 0.0
+cache/0/40/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [node name="Level5PreBossCutscene" type="Node2D"]
 script = ExtResource("1_pka75")
@@ -16,20 +27,17 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -470.0
-offset_top = -216.0
-offset_right = -469.0
-offset_bottom = -166.0
+offset_top = 243.0
+offset_right = 1.0
+offset_bottom = 293.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0.760784, 0.580392, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 10
-theme_override_constants/outline_size = 14
-theme_override_constants/shadow_outline_size = 30
-theme_override_fonts/font = ExtResource("1_0no2x")
-theme_override_font_sizes/font_size = 50
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("FontFile_me55r")
+theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
 
