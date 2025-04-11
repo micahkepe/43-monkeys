@@ -1,6 +1,6 @@
 [gd_scene load_steps=100 format=3 uid="uid://chsvjhv0uagub"]
 
-[ext_resource type="Script" uid="uid://cys15peufgn36" path="res://entities/player/player.gd" id="1_ieec4"]
+[ext_resource type="Script" uid="uid://cys15peufgn36" path="res://entities/Player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
 [ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_yc2po"]
 [ext_resource type="PackedScene" uid="uid://3kyps6qs6oo3" path="res://overlays/BlindnessOverlay/blindness_overlay.tscn" id="3_0k4ps"]
@@ -18,7 +18,7 @@
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="15_g1xt3"]
-[ext_resource type="Script" uid="uid://dbbeyk612atjl" path="res://entities/player/ellipse_debug.gd" id="18_f01y2"]
+[ext_resource type="Script" uid="uid://dbbeyk612atjl" path="res://entities/Player/ellipse_debug.gd" id="18_f01y2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dl0wg"]
 radius = 11.9979

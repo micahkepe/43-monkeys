@@ -8,7 +8,7 @@ extends CharacterBody2D
 
 # Exported scenes for the different attack types.
 @export var minion_scene: PackedScene
-@export var projectiile_scene: PackedScene
+@export var projectile_scene: PackedScene
 @export var brainbrim_scene: PackedScene
 @export var brainfog_scene: PackedScene
 
@@ -84,7 +84,7 @@ var attacks: Array[Dictionary] = [
 		"weight": 4,
 		"unlocked": true
 	}
-	
+
 ]
 
 func _ready() -> void:
@@ -225,7 +225,7 @@ func spawn_minions_attack() -> void:
 # ---------------------------
 # This attack fires a series of projectiles evenly around the boss.
 func attack_shoot_projectiles_circle() -> void:
-	if not projectiile_scene:
+	if not projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -233,48 +233,48 @@ func attack_shoot_projectiles_circle() -> void:
 	var num_projectiles = 12
 	var angle_step = (PI * 2) / num_projectiles
 	for i in range(num_projectiles):
-		var projectile = projectiile_scene.instantiate()
+		var projectile = projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
-		
+
 	await get_tree().create_timer(0.8).timeout
 	angle_step = (PI / 12)
 	for i in range(24):
 		if i % 2 == 0:
 			continue
-		
-		var projectile = projectiile_scene.instantiate()
+
+		var projectile = projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
-	
+
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
+
 func attack_shoot_projectiles_circle2() -> void:
-	if not projectiile_scene:
+	if not projectile_scene:
 		print("Projectile scene not set!")
 		return
 
 	is_attacking = true
-	var num_projectiles = 12
+	var _num_projectiles = 12
 	var angle_step = (PI / 12)
 	for i in range(24):
 		if i % 2 == 0:
 			continue
-		
-		var projectile = projectiile_scene.instantiate()
+
+		var projectile = projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
-	
+
 	await _animated_sprite.animation_finished
 	is_attacking = false
 
@@ -284,7 +284,7 @@ func attack_shoot_projectiles_circle2() -> void:
 # ---------------------------
 # This attack fires projectiles in a spiral pattern, one after the other.
 func attack_shoot_projectiles_spiral() -> void:
-	if not projectiile_scene:
+	if not projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -293,7 +293,7 @@ func attack_shoot_projectiles_spiral() -> void:
 	var angle = 0.0
 	var angle_increment = PI / 7.5  # Adjust this for tighter or looser spirals.
 	for i in range(num_projectiles):
-		var projectile = projectiile_scene.instantiate()
+		var projectile = projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -310,7 +310,7 @@ func attack_shoot_projectiles_spiral() -> void:
 # Each bullet's x position is randomly offset within ±300 from the boss,
 # and they travel downward.
 func attack_shoot_bullet_wall_vertical() -> void:
-	if not projectiile_scene:
+	if not projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -319,7 +319,7 @@ func attack_shoot_bullet_wall_vertical() -> void:
 	var spawn_interval = 0.15     # Time between each bullet spawn.
 	var elapsed = 0.0
 	while elapsed < duration:
-		var projectile = projectiile_scene.instantiate()
+		var projectile = projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		var x_offset = randf_range(-800, 800)
@@ -340,7 +340,7 @@ func attack_shoot_bullet_wall_vertical() -> void:
 # Each bullet's y position is randomly offset within ±300 from the boss,
 # and they travel rightward.
 func attack_shoot_bullet_wall_horizontal() -> void:
-	if not projectiile_scene:
+	if not projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -349,7 +349,7 @@ func attack_shoot_bullet_wall_horizontal() -> void:
 	var spawn_interval = 0.15      # Time between bullet spawns.
 	var elapsed = 0.0
 	while elapsed < duration:
-		var projectile = projectiile_scene.instantiate()
+		var projectile = projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		var y_offset = randf_range(-800, 800)
@@ -429,7 +429,7 @@ func attack_brainbeam_diagonal() -> void:
 
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
+
 # ---------------------------
 # Attack 8: Brain Fog Forcefield
 # ---------------------------
@@ -438,15 +438,15 @@ func attack_brain_fog() -> void:
 	if not brainfog_scene:
 		print("Brain Fog Scene Not Set")
 		return
-		
+
 	var brainfog = brainfog_scene.instantiate()
 	var brain_beam_holder = get_parent().get_node("BrainBeamHolder")
 	brain_beam_holder.add_child(brainfog)
 	brainfog.global_position = global_position
 	brainfog.scale = Vector2(22,22)
-	
+
 	print("=== BRIAN FOG AT: ", brainfog.global_position)
-	
+
 
 
 
