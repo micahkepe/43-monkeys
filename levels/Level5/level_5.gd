@@ -2,6 +2,9 @@ extends "res://levels/default_level.gd"
 
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 
+@onready var dialogue_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.tscn")
+var dialogue_cutscene_played: bool = false
+
 # Store references obtained in _ready
 var player_node: Player # Type hint helps with autocompletion and type safety
 var neuro_boss_node: Node # Or specific type if you know it (e.g., CharacterBody2D)
@@ -231,3 +234,19 @@ func initialize_from_troop_data() -> void:
 						monkey.health_bar.show()  # Always show health bar, regardless of health value
 
 					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
+
+
+func _on_pre_boss_dialogue_trigger_body_entered(body: Node2D) -> void:
+	if dialogue_cutscene_played:
+		return
+
+	if body.is_in_group("player"):
+		
+		dialogue_cutscene_played = true
+		var dialogue_cutscene_instance = dialogue_cutscene.instantiate()
+		
+		get_tree().root.add_child(dialogue_cutscene_instance)
+		get_tree().current_scene.queue_free()
+		get_tree().current_scene = dialogue_cutscene_instance
+		
+		
