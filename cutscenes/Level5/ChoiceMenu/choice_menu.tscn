@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy1rwafh2gqhh"]
+[gd_scene load_steps=8 format=3 uid="uid://dy1rwafh2gqhh"]
 
 [ext_resource type="Script" uid="uid://blcjq8yh1r083" path="res://cutscenes/Level5/ChoiceMenu/choice_menu.gd" id="1_3fg54"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="1_xwbu6"]
@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/ui/click.wav" id="5_h4k1l"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_icalf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h4k1l"]
 
 [node name="ChoiceMenu" type="Node2D"]
 script = ExtResource("1_3fg54")
@@ -54,7 +56,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_icalf")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_icalf")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_icalf")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_icalf")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_icalf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_h4k1l")
 text = "Freedom"
 alignment = 0
 

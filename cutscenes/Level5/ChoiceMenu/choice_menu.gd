@@ -8,16 +8,15 @@ extends Node2D
 
 ## Called when the node enters the scene tree for the first time
 func _ready():
-	# Set focus to the first button when the scene loads
-	$Buttons/Good.grab_focus()
+	pass
 
 ## Handles the Freedom (good) choice
 func _on_good_pressed():
 	select_sfx_player.play()
 	# Simpler transition method
 	var credits_scene = next_scene.instantiate()
-	credits_scene.choice = "good"  # Set the choice parameter for credits
-	
+	credits_scene.player_choice = "good"  # Set the choice parameter for credits
+
 	# Use a more reliable scene transition method
 	get_tree().root.add_child(credits_scene)
 	# Set the current scene but don't call queue_free right away
@@ -30,8 +29,8 @@ func _on_evil_pressed():
 	select_sfx_player.play()
 	# Simpler transition method
 	var credits_scene = next_scene.instantiate()
-	credits_scene.choice = "evil"  # Set the choice parameter for credits
-	
+	credits_scene.player_choice = "evil"  # Set the choice parameter for credits
+
 	# Use a more reliable scene transition method
 	get_tree().root.add_child(credits_scene)
 	# Set the current scene but don't call queue_free right away

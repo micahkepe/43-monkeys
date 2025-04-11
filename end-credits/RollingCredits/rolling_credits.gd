@@ -192,7 +192,7 @@ func _setup_credits() -> void:
 	else:
 		_add_section("POWER",
 			"You chose to seize control. \nThe tables have turned, and now you run the show.",
-			[["The New Order Begins", "", [], images[image_index]]])
+			[["The New Order begins...", "", [], images[image_index]]])
 	image_index += 1
 
 	# Programming section
