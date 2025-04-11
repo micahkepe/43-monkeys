@@ -7,19 +7,20 @@ const section_time: float = 2.0
 const line_time: float = 0.3
 
 ## Base scrolling speed in pixels per second
-const base_speed: float = 100.0
+const base_speed: float = 80.0
 
 ## Multiplier applied to speed when sped up
 const speed_up_multiplier: float = 10.0
 
 ## Color for section titles
-const title_color: Color = Color.BLUE_VIOLET
+const title_color: Color = Color(0.7, 0.3, 0.9, 1.0) # Brighter purple
 
 ## Vertical gap between credit lines
-const vertical_spacing: float = 20.0
+const vertical_spacing: float = 30.0
 
 ## Fixed width and height for images
-const image_width: float = 50.0
+const image_width: float = 600
+const image_height: float = 600
 
 ## Margin between image and text (not currently used)
 const image_margin: float = 20.0
@@ -66,38 +67,67 @@ var _last_y_position: float = 0.0
 ## Index for alternating image sides
 var _image_index: int = 0
 
-## Choice parameter ("good" or "bad")
+## Choice parameter ("good" or "evil")
 @export var choice: String = "good"
 
 # Credit data as an array of sections, each containing strings
-# TODO: do this smarter, make some object definition for credit sections
 var credits: Array = [
 	["A game by alpha studios"],
 	["Programming", "Micah Kepe", "Grant Thompson", "Kevin Lei", "Zach Kepe"],
-	["Art", "Artist Name"],
-	["Music", "Kyle Sanderfer"],
-	["Tools used", "Developed with Godot Engine", "https://godotengine.org/license", "", "Art created with My Favourite Art Program", "https://myfavouriteartprogram.com"],
-	["Special thanks", "My parents", "My friends", "My pet rabbit"]
+	["Art", "Kevin Lei"],
+	["Music", "Kyle Sanderfer", "@Bospad"],
+	["Supervision", "Professor Joe Warren"],
+	["Tools used", "Developed with Godot Engine", "https://godotengine.org/license", "", "Art created with Aseprite", "https://www.aseprite.org/"]
 ]
 
-# Preloaded image resources for credits
-# TODO: make this just an exported var of Array of images you can just drag in
-# the editor or something
-var img_blackjack: Texture = preload("res://assets/exposition/end-credits/freedom/blackjack.png")
-var img_movies: Texture = preload("res://assets/exposition/end-credits/freedom/movies.png")
-var img_rollercoaster: Texture = preload("res://assets/exposition/end-credits/freedom/rollercoaster.png")
+# Image resources for the "good" choice (freedom)
+var freedom_images = {
+	"blackjack": preload("res://assets/exposition/end-credits/freedom/blackjack.png"),
+	"movies": preload("res://assets/exposition/end-credits/freedom/movies.png"),
+	"rollercoaster": preload("res://assets/exposition/end-credits/freedom/rollercoaster.png")
+}
 
-# Array of dictionaries mapping images to specific lines
-var credits_images: Array = [
-	{"line": 1, "texture": img_blackjack},
-	{"line": 3, "texture": img_movies},
-	{"line": 5, "texture": img_rollercoaster}
-]
+# Image resources for the "evil" choice (power)
+var power_images = {
+	"evil_smile": preload("res://assets/exposition/end-credits/new-evil/evil-smile.png"),
+	"scientists": preload("res://assets/exposition/end-credits/new-evil/group-of-scientists.png"),
+	"scared_monkey": preload("res://assets/exposition/end-credits/new-evil/scared-monkey.png")
+}
+
+# Array of dictionaries mapping images to specific lines based on choice
+var credits_images: Array = []
 
 ## Initializes the credits scene by setting the starting position
 func _ready() -> void:
+	# Ensure we have a default choice if none is set
+	if choice != "good" and choice != "evil":
+		choice = "good"
+		print("WARNING: Invalid choice, defaulting to 'good'")
+		
+	print("== READY == Choice: " + choice)
+	
+	# Add choice-specific section at the beginning for more visibility
+	if choice == "good":
+		credits.insert(0, ["Freedom Ending", "You chose a life of freedom", "Enjoying the simple pleasures", "Finally at peace"])
+		credits_images = [
+			{"line": 1, "texture": freedom_images.blackjack},
+			{"line": 3, "texture": freedom_images.movies},
+			{"line": 5, "texture": freedom_images.rollercoaster}
+		]
+	else:
+		credits.insert(0, ["Power Ending", "You chose to seize control", "The tables have turned", "The experiments continue..."])
+		credits_images = [
+			{"line": 1, "texture": power_images.evil_smile},
+			{"line": 3, "texture": power_images.scientists},
+			{"line": 5, "texture": power_images.scared_monkey}
+		]
+	
+	# Initialize the starting position
 	_last_y_position = get_viewport().size.y
-	print("== READY ==")
+	
+	# Print info for debugging
+	print("Credits sections: ", credits.size())
+	print("First section: ", credits[0])
 
 ## Updates the credits scrolling each frame
 ## @param delta: Time elapsed since the last frame (in seconds)
@@ -131,15 +161,34 @@ func _process(delta: float) -> void:
 			if l.position.y < -l.size.y:  # Check if line is fully off-screen
 				lines.erase(l)
 				l.queue_free()  # Free the node to avoid memory leaks
-	elif started:
-		finish()  # End credits when all lines are gone and started
+	elif started and credits.size() == 0:
+		print("No more credits and no more lines - finishing")
+		finish()  # End credits when all lines are gone and credits array is empty
+		
+	# Debug - check if the finish condition should be met
+	if started and lines.size() == 0 and credits.size() == 0 and not finished:
+		print("Credits should be finishing - Started: {0}, Lines: {1}, Credits: {2}, Finished: {3}".format([started, lines.size(), credits.size(), finished]))
 
 ## Ends the credits and transitions to the main menu
 func finish() -> void:
 	if not finished:
+		# Set the finished flag to prevent multiple calls
 		finished = true
 		print("== FINISHED CREDITS ==")  # Debug message to confirm completion
-		get_tree().change_scene_to_file("res://menus/MainMenu/main_menu.tscn")  # Switch to main menu
+		
+		# Stop the debug output that's causing console spam
+		set_process(false)
+		
+		# Use a more direct approach with a shorter delay
+		get_tree().create_timer(0.5).timeout.connect(func(): change_scene_to_main_menu())
+
+## Changes scene to the main menu
+func change_scene_to_main_menu() -> void:
+	print("Changing to main menu")
+	# Use safer scene transition method
+	get_tree().change_scene_to_file("res://menus/MainMenu/main_menu.tscn")
+	# Don't call queue_free() here - it's causing issues
+	# Godot will handle the cleanup automatically
 
 ## Adds a new credit line to the scene
 func add_line() -> void:
@@ -170,26 +219,106 @@ func add_line() -> void:
 		# Create and configure the image node
 		var image_node: TextureRect = TextureRect.new()
 		image_node.texture = image_texture
-		image_node.stretch_mode = TextureRect.STRETCH_SCALE  # Scale image proportionally
-		image_node.size = Vector2(image_width, image_width)  # Set fixed size
-		image_node.custom_minimum_size = image_node.size  # Ensure minimum size
-		image_node.visible = has_image  # Show only if there’s an image
+		
+		# Maintain aspect ratio while filling the container
+		image_node.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		
+		# Force the size by setting both size properties
+		image_node.custom_minimum_size = Vector2(image_width, image_height)
+		image_node.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		image_node.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		
+		# Explicitly set expand to true to ensure the texture scales
+		image_node.expand = true
+		
+		# Add a subtle drop shadow for depth
+		var shadow_stylebox = StyleBoxFlat.new()
+		shadow_stylebox.bg_color = Color(0, 0, 0, 0.3)
+		shadow_stylebox.shadow_color = Color(0, 0, 0, 0.4)
+		shadow_stylebox.shadow_size = 4
+		shadow_stylebox.shadow_offset = Vector2(2, 2)
+		image_node.add_theme_stylebox_override("panel", shadow_stylebox)
+		
+		# Make sure it's visible
+		image_node.visible = has_image
 
 		# Create and configure the text label
 		var label: Label = line.duplicate()  # Duplicate the template label
 		label.text = text
+		label.visible = true  # Make sure the label is visible
+		
+		# Set text color (white on black background)
+		label.add_theme_color_override("font_color", Color.WHITE)
+		
+		# Add a subtle text shadow for better visibility
+		label.add_theme_constant_override("shadow_offset_x", 1)
+		label.add_theme_constant_override("shadow_offset_y", 1)
+		label.add_theme_constant_override("shadow_as_outline", 0)
+		label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.5))
+		
 		if _curr_line == 0:  # First line of a section is a title
 			label.add_theme_color_override("font_color", title_color)
+			label.add_theme_font_size_override("font_size", 60)  # Larger font for titles
+		
 		label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER  # Center text within label
 
 		# Arrange image and text based on image side
 		if has_image:
 			if image_side:
-				hbox.add_child(image_node)  # Image on left
+				# Create a fixed-size container for the image with rounded corners
+				var image_container = PanelContainer.new()
+				image_container.custom_minimum_size = Vector2(image_width, image_height)
+				image_container.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+				image_container.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+				
+				# Add stylebox for the container
+				var container_style = StyleBoxFlat.new()
+				container_style.bg_color = Color(0, 0, 0, 0) # Transparent background
+				container_style.corner_radius_top_left = 10
+				container_style.corner_radius_top_right = 10
+				container_style.corner_radius_bottom_left = 10
+				container_style.corner_radius_bottom_right = 10
+				image_container.add_theme_stylebox_override("panel", container_style)
+				
+				# Add the image to the container
+				image_node.anchors_preset = Control.PRESET_FULL_RECT  # Fill the container
+				image_container.add_child(image_node)
+				
+				hbox.add_child(image_container)  # Image container on left
+				
+				# Add some space between image and text
+				var spacer = Control.new()
+				spacer.custom_minimum_size = Vector2(image_margin, 0)
+				hbox.add_child(spacer)
 				hbox.add_child(label)       # Text on right
 			else:
 				hbox.add_child(label)       # Text on left
-				hbox.add_child(image_node)  # Image on right
+				
+				# Add some space between text and image
+				var spacer = Control.new()
+				spacer.custom_minimum_size = Vector2(image_margin, 0)
+				hbox.add_child(spacer)
+				
+				# Create a fixed-size container for the image with rounded corners
+				var image_container = PanelContainer.new()
+				image_container.custom_minimum_size = Vector2(image_width, image_height)
+				image_container.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+				image_container.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+				
+				# Add stylebox for the container
+				var container_style = StyleBoxFlat.new()
+				container_style.bg_color = Color(0, 0, 0, 0) # Transparent background
+				container_style.corner_radius_top_left = 10
+				container_style.corner_radius_top_right = 10
+				container_style.corner_radius_bottom_left = 10
+				container_style.corner_radius_bottom_right = 10
+				image_container.add_theme_stylebox_override("panel", container_style)
+				
+				# Add the image to the container
+				image_node.anchors_preset = Control.PRESET_FULL_RECT  # Fill the container
+				image_container.add_child(image_node)
+				
+				hbox.add_child(image_container)  # Image container on right
 		else:
 			hbox.add_child(label)  # Only text if no image
 

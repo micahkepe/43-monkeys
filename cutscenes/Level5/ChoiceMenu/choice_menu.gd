@@ -1,28 +1,46 @@
 extends Node2D
 
-## The AudioStreamPlayer node that plays the select sound effect.
-@onready var select_sfx_player: AudioStreamPlayer = get_node("SelectSFXPlayer")
+## The scene to transition to after making a choice
+@export var next_scene: PackedScene
 
-@export
-var next_scene: PackedScene
+# Audio player for click sound
+@onready var select_sfx_player = $SelectSFXPlayer
 
-func _on_evil_pressed() -> void:
-	print_debug("pressed evil choice")
-	_handle_choice("evil")
+## Called when the node enters the scene tree for the first time
+func _ready():
+	# Set focus to the first button when the scene loads
+	$Buttons/Good.grab_focus()
 
-func _on_good_pressed() -> void:
-	print_debug("pressed good choice")
-	_handle_choice("good")
+## Handles the Freedom (good) choice
+func _on_good_pressed():
+	select_sfx_player.play()
+	# Simpler transition method
+	var credits_scene = next_scene.instantiate()
+	credits_scene.choice = "good"  # Set the choice parameter for credits
+	
+	# Use a more reliable scene transition method
+	get_tree().root.add_child(credits_scene)
+	# Set the current scene but don't call queue_free right away
+	get_tree().current_scene = credits_scene
+	# Mark this scene for deletion after a brief delay
+	call_deferred("queue_free")
 
-func _handle_choice(choice="good"):
-	if next_scene:
-		select_sfx_player.play()
-		await select_sfx_player.finished
+## Handles the Power (evil) choice
+func _on_evil_pressed():
+	select_sfx_player.play()
+	# Simpler transition method
+	var credits_scene = next_scene.instantiate()
+	credits_scene.choice = "evil"  # Set the choice parameter for credits
+	
+	# Use a more reliable scene transition method
+	get_tree().root.add_child(credits_scene)
+	# Set the current scene but don't call queue_free right away
+	get_tree().current_scene = credits_scene
+	# Mark this scene for deletion after a brief delay
+	call_deferred("queue_free")
 
-		var next = next_scene.instantiate()
-		next.choice = choice
-		get_tree().root.add_child(next)
-		get_tree().current_scene = next
-		queue_free()
-	else:
-		push_error("No next scene for choice menu selected; exiting")
+## Handles pausing the game
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel"):
+		$UI/PauseMenu.visible = true
+		get_tree().paused = true
