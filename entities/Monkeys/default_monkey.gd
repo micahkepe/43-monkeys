@@ -234,7 +234,7 @@ func _physics_process(_delta: float) -> void:
 		var overlapping_bodies = $Hitbox.get_overlapping_bodies()
 		var targets = []
 		for body in overlapping_bodies:
-			if body.is_in_group("boids"):  # Assuming boids are the enemies
+			if body.is_in_group("enemies"):
 				targets.append(body)
 
 		if targets.size() > 0:
@@ -301,8 +301,6 @@ func _update_animation() -> void:
 		animate_walk(velocity)
 
 func animate_walk(input_velocity: Vector2) -> void:
-	#print("ANIMATE WALK CALL!")
-
 	if paralyzed or is_attacking:
 		return
 
@@ -323,8 +321,6 @@ func animate_walk(input_velocity: Vector2) -> void:
 func is_input_pressed() -> bool:
 	return (Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left") or
 	Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_up"))
-
-
 
 
 ## Utility method for the monkey to play the walk left animation and adjust its
@@ -408,7 +404,6 @@ func _update_vision_rays(direction: Vector2) -> void:
 		raycast.target_position = norm_direction.rotated(offset_radians) * vision_range
 
 
-
 ## Handles monkey death. Plays the death animation and cleans the monkey from
 ## the scene.
 ## Handles monkey death. Plays the death animation and cleans the monkey from
@@ -422,7 +417,6 @@ func _die() -> void:
 		print_debug("Current animation:", _animated_sprite.animation)
 	else:
 		print_debug("Could not get animations for dying monkey.")
-
 
 	set_physics_process(false)
 	set_process(false) # Also disable _process if used
@@ -468,9 +462,6 @@ func _die() -> void:
 		printerr("No valid AnimationTree node found for dying monkey: ", self.name)
 		queue_free()
 
-	# DO NOT queue_free here directly if using the animation finish signal.
-	# queue_free() # REMOVE THIS LINE IF USING THE SIGNAL HANDLER BELOW
-
 
 ## Takes the specified amount of damage from the monkey's health.
 func take_damage(amount: float) -> void:
@@ -493,7 +484,6 @@ func take_damage(amount: float) -> void:
 			print_debug("Health <= 0, calling _die()")
 			_die()
 
-## Function to throw a banana at a specific position
 ## Function to throw a banana at a specific position
 func _throw_banana_at_position(target_position: Vector2) -> void:
 	if default_projectile_scene == null:
@@ -527,7 +517,6 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 	var final_velocity = main_velocity + (perpendicular_velocity * orth_factor)
 
 	projectile.velocity = final_velocity
-	projectile.scale = Vector2(1.5, 1.5)
 
 	# Add the projectile to the 'Projectiles' node safely
 	var projectiles_node = get_tree().get_current_scene().get_node("Projectiles") if get_tree().get_current_scene().has_node("Projectiles") else null
@@ -547,18 +536,6 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 	# Play attack animation or effects if needed
 	print("Banana thrown at position:", target_position)
 
-### Called when the monkey's AnimatedSprite2D node finishes playing an animation.
-### If the animation is "die", the monkey is queued for deletion.
-#func _on_animated_sprite_2d_animation_finished() -> void:
-	#print("===I GOT CALLED")
-	#if _animated_sprite.animation == "die":
-		#_animated_sprite.stop()
-		#queue_free()
-		#print_debug("Die animation finished, freeing monkey")
-	#elif _animated_sprite.animation in ["slash_up", "slash_down", "slash_left", "slash_right"]:
-		#print_debug("Attack animation finished. Resetting is_attacking.")
-		#is_attacking = false
-		#_update_animation()
 
 func heal(amount: float) -> void:
 	# Increase current health but do not exceed max_health.
@@ -640,5 +617,4 @@ func _on_animation_tree_animation_finished(anim_name):
 	elif "slash" in anim_name: # Keep your existing slash logic
 		print_debug("Slash animation finished, resetting is_attacking for monkey: ", self.name)
 		is_attacking = false
-		# Optionally, immediately update animation state if needed
-		# _update_animation()
+

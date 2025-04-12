@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b8v4eyt7ey3dn" path="res://entities/Monkeys/roman_monkey.tscn" id="9_p3y6h"]
 [ext_resource type="PackedScene" uid="uid://dpg5gffrgnefa" path="res://ui/HeartsContainer/HeartsContainer.tscn" id="10_l0e3e"]
 [ext_resource type="AudioStream" uid="uid://b4qkiy8s1r3un" path="res://assets/sfx/player/hitHurt.wav" id="11_mqlhb"]
-[ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/shooting/banana_throw.wav" id="12_o6mwb"]
+[ext_resource type="AudioStream" uid="uid://chwwls7n1u3rq" path="res://assets/sfx/shooting/throw.wav" id="12_o6mwb"]
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="13_na4qj"]
 [ext_resource type="Texture2D" uid="uid://b2lda8ewltcie" path="res://assets/sprites/tilesets/monkey-counter.png" id="14_sepjg"]
 [ext_resource type="Texture2D" uid="uid://cqrftknnfo2cs" path="res://assets/sprites/ui/ui.png" id="15_g1xt3"]
@@ -862,7 +862,7 @@ stretch_mode = 0
 stream = ExtResource("11_mqlhb")
 bus = &"SFX"
 
-[node name="BananaSound" type="AudioStreamPlayer" parent="."]
+[node name="ThrowSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_o6mwb")
 bus = &"SFX"
 

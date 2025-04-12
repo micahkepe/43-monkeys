@@ -41,10 +41,8 @@ func _physics_process(delta: float) -> void:
 		$ShadowContainer.global_position = global_position
 
 func _on_body_entered(body: Node) -> void:
-	print("== BODY ENTER OG")
 	# If colliding with specific environment nodes, remove the projectile.
-	if body.name in ["BackgroundTiles", "ForegroundTiles", "Boundaries"]:
-		print("In body entered, collided with", body.name)
+	if body.name in ["BackgroundTiles", "ForegroundTiles"]:
 		queue_free()
 	# If colliding with an enemy or boid, deal damage.
 	elif body.is_in_group("enemies") or body.is_in_group("boids"):
@@ -53,12 +51,10 @@ func _on_body_entered(body: Node) -> void:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
-	print("===AREA ENTERED OG")
 	# If the area belongs to an enemy or boid, deal damage.
 	if area.get_parent().is_in_group("enemies") or area.get_parent().is_in_group("boids"):
 		if area.get_parent().has_method("take_damage"):
 			area.get_parent().take_damage(damage)
 		queue_free()
 	else:
-		print("In area entered, collided with", area.name)
 		queue_free()

@@ -84,6 +84,12 @@ var is_attacking: bool = false
 ## The boid's current alive state.
 var is_dead: bool = false
 
+## Whether the boid is slowed
+var is_slowed: bool = false
+
+## Time left on slow down effect (in seconds)
+var slow_timer: float = 0.0
+
 
 ## Called when the node enters the scene tree for the first time.
 ## Initializes any setup required for the player character.
@@ -113,7 +119,7 @@ func _physics_process(delta: float) -> void:
 	attack_timer -= delta
 	var target = _get_closest_target()
 	var steering = Vector2.ZERO
-	
+
 	# Update the slow effect timer
 	if is_slowed:
 		slow_timer -= delta
@@ -151,7 +157,7 @@ func _physics_process(delta: float) -> void:
 	# Apply slow effect if active
 	if is_slowed:
 		velocity = velocity.normalized() * (max_speed * 0.65)
-		
+
 	move_and_slide()
 
 	# Attack logic - Now checks for targets regardless of animation state
@@ -166,7 +172,7 @@ func _physics_process(delta: float) -> void:
 				print("==== HERE TROOP")
 				if body.is_caged == true:
 					targets.append(body)
-				
+
 
 		if targets.size() > 0:
 			var closest_target = _get_closest_target_from_list(targets)
@@ -469,11 +475,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		print_debug("Attack animation finished. Resetting is_attacking.")
 		is_attacking = false
 		_update_animation()
-		
-		
-# Variables to track slow effect state
-var is_slowed: bool = false
-var slow_timer: float = 0.0
 
 func slow_down() -> void:
 	is_slowed = true

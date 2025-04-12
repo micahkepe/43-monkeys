@@ -80,7 +80,7 @@ func _ready() -> void:
 
 
 ## Choose a random waypoint within the bounds of the room
-## FIX: make this dymanic based on the room size instead of hardcoded
+## FIX: make this dynamic based on the room size instead of hard coded
 func choose_random_waypoint() -> Vector2:
 	var min_x = 24 + 50
 	var max_x = 1133 - 50
@@ -197,7 +197,6 @@ func attack_shoot_at_player():
 	is_attacking = true
 
 	# Calculate direction to the player and set projectile velocity
-	projectile.scale = Vector2(2.25,2.25)
 	var direction = (player.global_position - global_position).normalized()
 	projectile.global_position = global_position
 	projectile.velocity = direction * projectile.speed

@@ -594,7 +594,7 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 	projectile.set_meta("friendly", true)
 	projectile.set_meta("owner", self)
 
-	$BananaSound.play()
+	$ThrowSound.play()
 
 	var offset_distance = 30.0
 	var spawn_offset = shoot_direction.normalized() * offset_distance
@@ -616,7 +616,6 @@ func spawn_projectile(shoot_direction: Vector2) -> void:
 
 	var final_vel = main_vel + (orth_vel * orth_factor)
 	projectile.velocity = final_vel
-	projectile.scale = Vector2(1.5, 1.5)
 
 	var projectiles_node = get_tree().root.find_child("Projectiles")
 

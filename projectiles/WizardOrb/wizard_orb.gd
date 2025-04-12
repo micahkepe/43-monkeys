@@ -17,21 +17,16 @@ func _ready() -> void:
 	animation_name = "orb_pulse"
 	use_shadow = true
 
-	print("wizard orb at:", global_position)
-
-	# Call the parent _ready() to run the default projectile logic.
+    # Call the parent _ready() to run the default projectile logic.
 	super._ready()
 
 	scale = Vector2(3.5, 3.5)
 
 # When the orb collides with a body, check if it's an enemy.
 func _on_body_entered(body: Node) -> void:
-	print("====== BODY ENTERED")
 	if body.name in ["BackgroundTiles", "ForegroundTiles", "Boundaries"]:
-		print("In body entered, collided with", body.name)
 		queue_free()
 	elif body.is_in_group("enemies") or body.is_in_group("boids"):
-		print("===== BODY IS ENEMY OR BOID === ")
 		# Immediately apply damage to the enemy hit
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
@@ -44,7 +39,6 @@ func _on_body_entered(body: Node) -> void:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
-	print("=== AREA ENTERED NEW")
 	var enemy = area.get_parent()
 	if enemy.is_in_group("enemies") or enemy.is_in_group("boids"):
 		if enemy.has_method("take_damage"):
@@ -54,7 +48,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 		queue_free()
 	else:
-		print("In area entered, collided with", area.name)
 		queue_free()
 
 # Performs a BFS starting at initial_enemy to find nearby enemies and spawns a wizard_laser for each connection.

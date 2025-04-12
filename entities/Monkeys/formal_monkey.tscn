@@ -1,8 +1,8 @@
 [gd_scene load_steps=124 format=3 uid="uid://c5nx4jcpdcmuy"]
 
 [ext_resource type="Script" uid="uid://dcwcnknvr4h23" path="res://entities/Monkeys/default_monkey.gd" id="1_44641"]
-[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_16tm4"]
 [ext_resource type="Texture2D" uid="uid://cvs778vja8v7p" path="res://assets/sprites/characters/monkeys/formal-monkey.png" id="2_ec8ci"]
+[ext_resource type="PackedScene" uid="uid://44nnscag3bhv" path="res://projectiles/Stapler/stapler_projectile.tscn" id="2_hsbry"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="3_idj8b"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_p3i8y"]
 
@@ -1123,7 +1123,7 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_44641")
-default_projectile_scene = ExtResource("2_16tm4")
+default_projectile_scene = ExtResource("2_hsbry")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

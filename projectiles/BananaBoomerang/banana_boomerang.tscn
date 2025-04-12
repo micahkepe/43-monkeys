@@ -87,15 +87,13 @@ animations = [{
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true
+scale = Vector2(1.5, 1.5)
 collision_layer = 4
 collision_mask = 35
 script = ExtResource("1_g21ix")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_eqhhy")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-autoplay = true
 
 [node name="ShadowContainer" type="Node2D" parent="."]
 top_level = true

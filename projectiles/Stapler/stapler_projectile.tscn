@@ -1,10 +1,31 @@
-[gd_scene load_steps=18 format=3 uid="uid://44nnscag3bhv"]
+[gd_scene load_steps=25 format=3 uid="uid://44nnscag3bhv"]
 
+[ext_resource type="Script" uid="uid://bxg18r0kt8qga" path="res://projectiles/Stapler/stapler_projectile.gd" id="1_0wfw8"]
 [ext_resource type="Texture2D" uid="uid://cxs573mydl5ul" path="res://assets/sprites/items/stapler/stapler_animation.png" id="1_bjtar"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="2_ru3ky"]
+[ext_resource type="Texture2D" uid="uid://dsx7mly7htkim" path="res://assets/sprites/items/stapler/stapler_explode.png" id="2_t46ae"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pxpuk"]
-radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jn5go"]
+atlas = ExtResource("2_t46ae")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b6bi"]
+atlas = ExtResource("2_t46ae")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vy42h"]
+atlas = ExtResource("2_t46ae")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyvrt"]
+atlas = ExtResource("2_t46ae")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lguf"]
+atlas = ExtResource("2_t46ae")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sdj5p"]
 atlas = ExtResource("1_bjtar")
@@ -58,6 +79,26 @@ region = Rect2(352, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jn5go")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7b6bi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vy42h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyvrt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lguf")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_sdj5p")
 }, {
 "duration": 1.0,
@@ -94,8 +135,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_oovx1")
 }],
 "loop": true,
-"name": &"default",
-"speed": 15.0
+"name": &"spin",
+"speed": 18.0
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rvlma"]
@@ -104,17 +145,19 @@ shader_parameter/glow_spread = 0.5
 shader_parameter/glow_intensity = 1.5
 shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
 
-[node name="StaplerProjectile" type="StaticBody2D"]
-scale = Vector2(1.5, 1.5)
+[node name="StaplerProjectile" type="Area2D" groups=["projectiles"]]
+scale = Vector2(2, 2)
 collision_layer = 4
 collision_mask = 35
+script = ExtResource("1_0wfw8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pxpuk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fy1x3")
-frame_progress = 0.622766
+animation = &"spin"
+frame_progress = 0.81143
 
 [node name="ShadowContainer" type="Node2D" parent="."]
 top_level = true
@@ -126,12 +169,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 24.0
-offset_right = 20.0
-offset_bottom = 64.0
+offset_left = -30.0
+offset_top = 23.0
+offset_right = 30.0
+offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
