@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://iupuomebaeuv"]
+[gd_scene load_steps=14 format=3 uid="uid://iupuomebaeuv"]
 
 [ext_resource type="Script" uid="uid://yd43k1nwje8y" path="res://entities/bosses/NeuroBoss/brain_brim.gd" id="1_d73du"]
 [ext_resource type="Texture2D" uid="uid://1uyhkf0nt4k1" path="res://assets/sprites/characters/bosses/evil_monkey/brain_beam.png" id="1_rllvx"]
@@ -63,6 +63,16 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fywco"]
 size = Vector2(20, 64)
 
+[sub_resource type="Gradient" id="Gradient_0b7aq"]
+offsets = PackedFloat32Array(0.0582751, 0.741259)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d73du"]
+gradient = SubResource("Gradient_0b7aq")
+use_hdr = true
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
 [node name="BrainBrim" type="Area2D"]
 modulate = Color(1, 1, 1, 0.677)
 z_index = 5
@@ -77,6 +87,15 @@ frame_progress = 0.391742
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 0)
 shape = SubResource("RectangleShape2D_fywco")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
+position = Vector2(-1, 0)
+scale = Vector2(1.9375, 2)
+color = Color(0.816099, 0.173536, 0.170478, 1)
+energy = 1.25
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_d73du")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
