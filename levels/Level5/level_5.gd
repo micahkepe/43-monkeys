@@ -38,7 +38,7 @@ func _ready():
 
 	# Get references using get_node_or_null for safety
 	var potential_player = $World.get_node_or_null("Player")
-	neuro_boss_node = $World.get_node_or_null("NeuroBoss")
+	neuro_boss_node = $World.get_node_or_null("NeuroBossPhase1")
 
 	# --- Player Node Verification ---
 	if not is_instance_valid(potential_player):
@@ -83,7 +83,62 @@ func _ready():
 		print("Level 5: Successfully connected NeuroBoss signals.")
 	else:
 		printerr("Level 5 _ready: Cannot connect signals because Player or NeuroBoss node is invalid.")
+	
+	# Connect to NeuroBossPhase1's death signal
+	if is_instance_valid(neuro_boss_node):
+		# Check each signal individually before trying to connect
+	
+		# For phase1_died signal
+		if neuro_boss_node.has_signal("phase1_died"):
+			if neuro_boss_node.is_connected("phase1_died", Callable(self, "_on_phase1_died")):
+				neuro_boss_node.disconnect("phase1_died", Callable(self, "_on_phase1_died"))
+			neuro_boss_node.phase1_died.connect(_on_phase1_died)
+			print("Level 5: Connected to NeuroBoss Phase 1 death signal")
+		else:
+			printerr("Level 5 Error: NeuroBoss node does not have the 'phase1_died' signal!")
+			
+		# For monkey_controlled signal - only connect if it exists
+		if neuro_boss_node.has_signal("monkey_controlled"):
+			if neuro_boss_node.is_connected("monkey_controlled", Callable(self, "_on_monkey_controlled")):
+				neuro_boss_node.disconnect("monkey_controlled", Callable(self, "_on_monkey_controlled"))
+			neuro_boss_node.monkey_controlled.connect(_on_monkey_controlled)
+		else:
+			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_controlled' signal!")
+		
+		# For monkey_released signal - only connect if it exists
+		if neuro_boss_node.has_signal("monkey_released"):
+			if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
+				neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
+			neuro_boss_node.monkey_released.connect(_on_monkey_released)
+		else:
+			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_released' signal!")
 
+func _on_phase1_died(phase2_instance):
+	print("Level 5: NeuroBoss Phase 1 died, transitioning to Phase 2")
+	
+	# Update our reference to point to Phase 2 now
+	neuro_boss_node = phase2_instance
+	
+	# Reconnect signals for Phase 2
+	if is_instance_valid(neuro_boss_node):
+		# Clean up any existing connections first to prevent duplicates
+		if neuro_boss_node.is_connected("monkey_controlled", Callable(self, "_on_monkey_controlled")):
+			neuro_boss_node.disconnect("monkey_controlled", Callable(self, "_on_monkey_controlled"))
+
+		if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
+			neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
+
+		# Check if boss has the expected signals before connecting
+		if neuro_boss_node.has_signal("monkey_controlled"):
+			neuro_boss_node.monkey_controlled.connect(_on_monkey_controlled)
+			print("Level 5: Connected monkey_controlled signal to Phase 2")
+
+		if neuro_boss_node.has_signal("monkey_released"):
+			neuro_boss_node.monkey_released.connect(_on_monkey_released)
+			print("Level 5: Connected monkey_released signal to Phase 2")
+	else:
+		printerr("Level 5: Phase 2 instance is not valid!")
+		
 # Handle monkey being controlled
 func _on_monkey_controlled(monkey: Node2D): # Add type hint for monkey
 	print("--- Level 5 _on_monkey_controlled Triggered ---")

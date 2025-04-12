@@ -1,6 +1,10 @@
 extends CharacterBody2D
 # The BrainBoss is stationary and does not move.
 
+signal monkey_controlled(monkey)
+signal monkey_released(monkey)
+signal phase1_died(phase2_instance)
+
 # Reference to the AnimatedSprite2D for animations.
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 # Health bar node (assumed to have a method init_health() and a property 'value').
@@ -486,15 +490,26 @@ func _die() -> void:
 	is_dead = true
 	health_bar.hide()
 	set_process(false)
-	set_physics_process(false)
+	# Use set_deferred for physics properties instead of direct assignment
+	set_deferred("physics_process", false)
 	_animated_sprite.play("die")
 	print("BrainBoss died!")
 
+	# Use call_deferred to create the phase2 boss to avoid physics issues
+	call_deferred("_spawn_phase2")
+
+# New function to handle spawning Phase 2
+func _spawn_phase2() -> void:
 	var world_node = get_parent()
 	var phase2 = phase2_scene.instantiate()
 	world_node.add_child(phase2)
 	phase2.global_position = global_position
-	phase2.scale = Vector2(1.5,1.5)
+	phase2.scale = Vector2(1.5, 1.5)
+	
+	# Emit signal with the correct instance
+	emit_signal("phase1_died", phase2)
+	
+	# Queue free at the end
 	queue_free()
 
 # This function handles any actions needed when an animation finishes.
