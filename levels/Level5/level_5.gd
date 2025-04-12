@@ -320,7 +320,7 @@ func _on_boss_died():
 	print("Level 5: NeuroBoss Phase 2 has died, transitioning to cutscene in 1 second")
 	
 	# Wait 1 second before transitioning
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	
 	# Load and instantiate the post-boss cutscene
 	var cutscene_instance = post_boss_cutscene.instantiate()

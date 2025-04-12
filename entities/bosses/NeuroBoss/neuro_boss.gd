@@ -6,7 +6,7 @@ signal monkey_controlled(monkey)
 signal monkey_released(monkey)
 signal boss_died
 
-@export var max_health: float = 75.0
+@export var max_health: float = 10.0
 @export var move_speed: float = 130.0
 @export var proximity_threshold: float = 50.0 # How close to target before picking new one
 @export var min_wait_time: float = 0.5
@@ -1572,9 +1572,10 @@ func _die():
 
 	print("NeuroBoss: Dying...")
 	is_dead = true
-
-	_animated_sprite.play("die")
-
+	
+	# First play the fall_down animation
+	_animated_sprite.play("fall_down")
+	
 	# Stop everything
 	set_physics_process(false)
 	velocity = Vector2.ZERO
@@ -1594,6 +1595,7 @@ func _die():
 	for banana in caught_bananas:
 		if is_instance_valid(banana): banana.queue_free()
 	caught_bananas.clear()
+	
 	# Emit death signal before the boss is removed
 	emit_signal("boss_died")
 
@@ -1627,7 +1629,11 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	var animation_name = _animated_sprite.animation
 	print("NeuroBoss: Animation finished:", animation_name)
 
-	if animation_name.begins_with("die") or animation_name == "die":
+	if animation_name == "fall_down":
+		# After fall_down completes, play die animation
+		print("NeuroBoss: Fall down animation finished, playing die animation")
+		_animated_sprite.play("die")
+	elif animation_name.begins_with("die") or animation_name == "die":
 		print("NeuroBoss: Die animation finished, queueing free")
 		queue_free()
 	elif animation_name.begins_with("slash"):

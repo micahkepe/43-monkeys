@@ -35,6 +35,7 @@ var attack_timer: Timer
 # Track if the boss is currently attacking or is dead.
 var is_attacking: bool = false
 var is_dead: bool = false
+var phase2_spawned = false
 
 @export var minion_scale: float = 0.5
 @export var bullet_scale: float = 0.5
@@ -487,7 +488,10 @@ func take_damage(amount: float) -> void:
 
 # Called when the boss's health reaches zero.
 func _die() -> void:
+	if is_dead || phase2_spawned:
+		return
 	is_dead = true
+	phase2_spawned = true
 	health_bar.hide()
 	set_process(false)
 	# Use set_deferred for physics properties instead of direct assignment
