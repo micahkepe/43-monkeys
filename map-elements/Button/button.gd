@@ -26,6 +26,7 @@ func _on_body_entered(_body: Node2D) -> void:
 		is_pressed = true
 		_animated_sprite.play("unpressed_to_pressed")
 		_animated_sprite.play("just_pressed")
+		$ToggleOnPlayer.play()
 		$AnimatedSprite2D/ColorRect.hide()
 		emit_signal("button_state_changed", true)
 

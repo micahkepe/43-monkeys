@@ -6,6 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="4_jduir"]
 
 [sub_resource type="FontFile" id="FontFile_me55r"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/40/0/ascent = 0.0
 cache/0/40/0/descent = 0.0
 cache/0/40/0/underline_position = 0.0
