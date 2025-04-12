@@ -1,5 +1,7 @@
 extends "res://levels/default_level.gd"
 
+@onready var post_boss_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PostBoss/level_5_post_boss.tscn")
+
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 
 @onready var dialogue_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.tscn")
@@ -127,6 +129,16 @@ func _on_phase1_died(phase2_instance):
 
 		if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
 			neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
+			
+		# Connect to Phase 2 death signal
+		if neuro_boss_node.has_signal("boss_died"):
+			if neuro_boss_node.is_connected("boss_died", Callable(self, "_on_boss_died")):
+				neuro_boss_node.disconnect("boss_died", Callable(self, "_on_boss_died"))
+			
+			neuro_boss_node.boss_died.connect(_on_boss_died)
+			print("Level 5: Connected to NeuroBoss Phase 2 death signal")
+		else:
+			printerr("Level 5: NeuroBoss Phase 2 doesn't have boss_died signal!")
 
 		# Check if boss has the expected signals before connecting
 		if neuro_boss_node.has_signal("monkey_controlled"):
@@ -304,4 +316,16 @@ func _on_pre_boss_dialogue_trigger_body_entered(body: Node2D) -> void:
 		get_tree().current_scene.queue_free()
 		get_tree().current_scene = dialogue_cutscene_instance
 		
-		
+func _on_boss_died():
+	print("Level 5: NeuroBoss Phase 2 has died, transitioning to cutscene in 1 second")
+	
+	# Wait 1 second before transitioning
+	await get_tree().create_timer(1.0).timeout
+	
+	# Load and instantiate the post-boss cutscene
+	var cutscene_instance = post_boss_cutscene.instantiate()
+	
+	# Add to root and set as current scene
+	get_tree().root.add_child(cutscene_instance)
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = cutscene_instance

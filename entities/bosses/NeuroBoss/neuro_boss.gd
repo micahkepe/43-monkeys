@@ -4,6 +4,7 @@ extends CharacterBody2D
 # Signals for monkey control - allows decoupling from Player
 signal monkey_controlled(monkey)
 signal monkey_released(monkey)
+signal boss_died
 
 @export var max_health: float = 75.0
 @export var move_speed: float = 130.0
@@ -1593,6 +1594,8 @@ func _die():
 	for banana in caught_bananas:
 		if is_instance_valid(banana): banana.queue_free()
 	caught_bananas.clear()
+	# Emit death signal before the boss is removed
+	emit_signal("boss_died")
 
 func find_player_node(root: Node) -> Node:
 	# Use get_nodes_in_group for efficiency
