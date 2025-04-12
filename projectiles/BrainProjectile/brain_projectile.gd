@@ -31,7 +31,7 @@ func _on_body_entered(body: Node) -> void:
 	if body.name in ["BackgroundTiles", "ForegroundTiles", "Boundaries"]:
 		print("In body entered, collided with", body.name)
 		explode_and_free()
-	elif body.is_in_group("enemies") or body.is_in_group("boids"):
+	elif body.is_in_group("player") or body.is_in_group("troop"):
 		#print("===== BODY IS ENEMY OR BOID === ")
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
@@ -42,7 +42,7 @@ func _on_body_entered(body: Node) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	#print("=== AREA ENTERED NEW")
 	var enemy = area.get_parent()
-	if enemy.is_in_group("enemies") or enemy.is_in_group("boids"):
+	if enemy.is_in_group("player") or enemy.is_in_group("troop"):
 		if enemy.has_method("take_damage"):
 			enemy.take_damage(damage)
 		explode_and_free()

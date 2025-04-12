@@ -242,6 +242,7 @@ collision_mask = 3
 script = ExtResource("1_tg647")
 projectile_scene = ExtResource("2_1vql5")
 bullet_speed = 375.0
+view_radius = 350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hb0f4")
@@ -264,6 +265,8 @@ target_position = Vector2(50, 0)
 target_position = Vector2(-50, 0)
 
 [node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, -2)

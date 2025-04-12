@@ -69,7 +69,7 @@ func _throw_projectile_at_position(target_position: Vector2) -> void:
 
 	# Calculate the shooting direction.
 	var shoot_direction = (target_position - global_position).normalized()
-	var offset_distance = 30.0
+	var offset_distance = 40.0
 	var spawn_offset = shoot_direction * offset_distance
 	var spawn_global_position = global_position + spawn_offset
 	print_debug("PROJECTILE SPAWN (global):", spawn_global_position)

@@ -212,8 +212,10 @@ size = Vector2(64, 66)
 
 [node name="BrainAoeProjectile" type="Area2D" groups=["projectiles"]]
 collision_layer = 4
-collision_mask = 25
+collision_mask = 24
 script = ExtResource("1_dqu5k")
+speed = 700.0
+lifetime = 11.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dqu5k")
@@ -234,7 +236,7 @@ texture = SubResource("GradientTexture2D_xqjon")
 
 [node name="AOE" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 25
+collision_mask = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AOE"]
 shape = SubResource("RectangleShape2D_xqjon")

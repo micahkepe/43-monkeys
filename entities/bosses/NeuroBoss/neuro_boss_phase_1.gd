@@ -12,10 +12,13 @@ signal phase1_died(phase2_instance)
 
 # Exported scenes for the different attack types.
 @export var minion_scene: PackedScene
-@export var projectile_scene: PackedScene
+@export var default_projectile_scene: PackedScene
+@export var aoe_projectile_scene: PackedScene
 @export var brainbrim_scene: PackedScene
 @export var brainfog_scene: PackedScene
 @export var phase2_scene: PackedScene
+
+@export var aoe_proj_prob: float = 0.15
 
 # Health settings for the boss.
 @export var max_health: float = 10.0
@@ -108,7 +111,6 @@ func _ready() -> void:
 
 	# Start the first random attack timer.
 	_start_random_attack_timer()
-
 
 #########################################
 # ATTACK TIMER & SELECTION LOGIC
@@ -231,7 +233,7 @@ func spawn_minions_attack() -> void:
 # ---------------------------
 # This attack fires a series of projectiles evenly around the boss.
 func attack_shoot_projectiles_circle() -> void:
-	if not projectile_scene:
+	if not default_projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -239,7 +241,13 @@ func attack_shoot_projectiles_circle() -> void:
 	var num_projectiles = 12
 	var angle_step = (PI * 2) / num_projectiles
 	for i in range(num_projectiles):
-		var projectile = projectile_scene.instantiate()
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		if random_val < aoe_proj_prob:
+			projectile = aoe_projectile_scene.instantiate()
+		else:
+			projectile = default_projectile_scene.instantiate()
+
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -252,7 +260,7 @@ func attack_shoot_projectiles_circle() -> void:
 		if i % 2 == 0:
 			continue
 
-		var projectile = projectile_scene.instantiate()
+		var projectile = default_projectile_scene.instantiate()
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -263,7 +271,7 @@ func attack_shoot_projectiles_circle() -> void:
 	is_attacking = false
 
 func attack_shoot_projectiles_circle2() -> void:
-	if not projectile_scene:
+	if not default_projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -274,7 +282,13 @@ func attack_shoot_projectiles_circle2() -> void:
 		if i % 2 == 0:
 			continue
 
-		var projectile = projectile_scene.instantiate()
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		if random_val < aoe_proj_prob:
+			projectile = aoe_projectile_scene.instantiate()
+		else:
+			projectile = default_projectile_scene.instantiate()
+			
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -290,7 +304,7 @@ func attack_shoot_projectiles_circle2() -> void:
 # ---------------------------
 # This attack fires projectiles in a spiral pattern, one after the other.
 func attack_shoot_projectiles_spiral() -> void:
-	if not projectile_scene:
+	if not default_projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -299,7 +313,14 @@ func attack_shoot_projectiles_spiral() -> void:
 	var angle = 0.0
 	var angle_increment = PI / 7.5  # Adjust this for tighter or looser spirals.
 	for i in range(num_projectiles):
-		var projectile = projectile_scene.instantiate()
+		
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		if random_val < aoe_proj_prob:
+			projectile = aoe_projectile_scene.instantiate()
+		else:
+			projectile = default_projectile_scene.instantiate()
+			
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -316,7 +337,7 @@ func attack_shoot_projectiles_spiral() -> void:
 # Each bullet's x position is randomly offset within ±300 from the boss,
 # and they travel downward.
 func attack_shoot_bullet_wall_vertical() -> void:
-	if not projectile_scene:
+	if not default_projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -325,7 +346,14 @@ func attack_shoot_bullet_wall_vertical() -> void:
 	var spawn_interval = 0.15     # Time between each bullet spawn.
 	var elapsed = 0.0
 	while elapsed < duration:
-		var projectile = projectile_scene.instantiate()
+		
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		if random_val < aoe_proj_prob:
+			projectile = aoe_projectile_scene.instantiate()
+		else:
+			projectile = default_projectile_scene.instantiate()
+			
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		var x_offset = randf_range(-800, 800)
@@ -346,7 +374,7 @@ func attack_shoot_bullet_wall_vertical() -> void:
 # Each bullet's y position is randomly offset within ±300 from the boss,
 # and they travel rightward.
 func attack_shoot_bullet_wall_horizontal() -> void:
-	if not projectile_scene:
+	if not default_projectile_scene:
 		print("Projectile scene not set!")
 		return
 
@@ -355,7 +383,14 @@ func attack_shoot_bullet_wall_horizontal() -> void:
 	var spawn_interval = 0.15      # Time between bullet spawns.
 	var elapsed = 0.0
 	while elapsed < duration:
-		var projectile = projectile_scene.instantiate()
+		
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		if random_val < aoe_proj_prob:
+			projectile = aoe_projectile_scene.instantiate()
+		else:
+			projectile = default_projectile_scene.instantiate()
+			
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		var y_offset = randf_range(-800, 800)
