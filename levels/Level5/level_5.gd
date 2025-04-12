@@ -4,7 +4,8 @@ extends "res://levels/default_level.gd"
 
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 
-@onready var dialogue_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.tscn")
+# @onready var dialogue_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.tscn")
+# @onready var level_5_dialogue: PackedScene = get_node("res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.tscn") # adjust the path as needed
 var dialogue_cutscene_played: bool = false
 
 # Store references obtained in _ready
@@ -302,19 +303,21 @@ func initialize_from_troop_data() -> void:
 
 					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
 
+var previous_scene : Node = null  # Store reference to the previous scene
+
 
 func _on_pre_boss_dialogue_trigger_body_entered(body: Node2D) -> void:
 	if dialogue_cutscene_played:
 		return
 
 	if body.is_in_group("player"):
-		
 		dialogue_cutscene_played = true
-		var dialogue_cutscene_instance = dialogue_cutscene.instantiate()
-		
-		get_tree().root.add_child(dialogue_cutscene_instance)
-		get_tree().current_scene.queue_free()
-		get_tree().current_scene = dialogue_cutscene_instance
+		Input.action_press("ui_end")
+		# level_5_dialogue.cutscene_completed.connect(_on_level_5_dialogue_finished)
+		# level_5_dialogue.initialize() # if needed to start the cutscene
+func _on_level_5_dialogue_finished():
+	# level_5_dialogue.visible = false
+	get_tree().paused = false
 		
 func _on_boss_died():
 	print("Level 5: NeuroBoss Phase 2 has died, transitioning to cutscene in 1 second")

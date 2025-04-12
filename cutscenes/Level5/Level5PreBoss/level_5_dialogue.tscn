@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://upspjmtpxcp7"]
+
+[ext_resource type="Script" uid="uid://dc1evtyhkhmm2" path="res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.gd" id="1_7jdpd"]
+[ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="1_sqxwh"]
+[ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_7jdpd"]
+[ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="3_5owx1"]
+
+[sub_resource type="FontFile" id="FontFile_npg70"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/40/0/ascent = 0.0
+cache/0/40/0/descent = 0.0
+cache/0/40/0/underline_position = 0.0
+cache/0/40/0/underline_thickness = 0.0
+cache/0/40/0/scale = 1.0
+
+[node name="Level5Dialogue" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = -640.0
+offset_bottom = -360.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7jdpd")
+
+[node name="Background" type="Sprite2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 235.0
+offset_right = 1.0
+offset_bottom = 285.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 10
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = SubResource("FontFile_npg70")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_sqxwh")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("2_7jdpd")]
+visible = false
+metadata/_edit_use_anchors_ = true
+
+[node name="KeyStrokePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5owx1")
+volume_db = -30.0
+bus = &"SFX"
+
+[connection signal="cutscene_completed" from="." to="." method="_on_cutscene_completed"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://mum2kotho0dw"]
 
-[ext_resource type="Script" uid="uid://brwl51x0rypm" path="res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.gd" id="1_pka75"]
+[ext_resource type="Script" path="res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.gd" id="1_pka75"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="2_pka75"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="3_crp2l"]
 [ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="4_jduir"]
