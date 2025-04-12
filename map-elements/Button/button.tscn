@@ -162,7 +162,7 @@ shape = SubResource("RectangleShape2D_vo8xo")
 tile_map_data = PackedByteArray("AAD//wIAAAADAAUAAAD+/wEAAAACAAQAAAD//wEAAAADAAQAAAAAAAEAAAACAAQAAAABAAEAAAADAAQAAAD+/wIAAAACAAUAAAAAAAIAAAACAAUAAAABAAIAAAADAAUAAAA=")
 tile_set = SubResource("TileSet_opilk")
 
-[node name="ToggleOnPlayer" type="AudioStreamPlayer" parent="."]
+[node name="ToggleOnPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_t1yd3")
 bus = &"SFX"
 

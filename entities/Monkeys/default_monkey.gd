@@ -200,10 +200,11 @@ func _check_vision_detection() -> void:
 		if raycast.is_colliding():
 			var collider = raycast.get_collider()
 			if collider and global_position.distance_to(collider.global_position) <= attack_range:
-				# Set enemy detected and break early
-				_enemy_in_sight = true
-				_current_enemy = collider.global_position
-				break
+				if collider.is_in_group("enemies"):
+					# Set enemy detected and break early
+					_enemy_in_sight = true
+					_current_enemy = collider.global_position
+					break
 
 
 ## Physics processing to handle collision avoidance and vision
@@ -519,7 +520,7 @@ func _throw_banana_at_position(target_position: Vector2) -> void:
 	projectile.velocity = final_velocity
 
 	# Add the projectile to the 'Projectiles' node safely
-	var projectiles_node = get_tree().get_current_scene().get_node("Projectiles") if get_tree().get_current_scene().has_node("Projectiles") else null
+	var projectiles_node = get_tree().current_scene.find_child("Projectiles")
 	if projectiles_node:
 		# Convert the global spawn position to the local coordinate system of the 'Projectiles' node
 		var local_spawn_pos = projectiles_node.to_local(spawn_global_position)
@@ -571,25 +572,6 @@ func paralyze(duration: float) -> void:
 	await get_tree().create_timer(duration).timeout
 	_animated_sprite.modulate = Color(1, 1, 1, 1)
 	paralyzed = false
-
-
-#func _on_hitbox_area_entered(area: Area2D) -> void:
-	## Handle interactions with Area2D nodes (e.g., projectiles)
-	#if area.is_in_group("projectiles"):
-		## Ignore friendly projectiles (those spawned by player or troop)
-		#if area.get_meta("friendly", false):
-			#return  # Skip damage from this monkey's own banana projectiles
-		## Apply damage from non-friendly (enemy) projectiles
-		#var damage = 1.0  # Default damage if no specific value is provided
-		#if area.has_method("get_damage"):
-			#damage = area.get_damage()
-		#elif "damage" in area:  # Check if the projectile has a damage property
-			#damage = area.damage
-		#take_damage(damage)
-		#print_debug("Monkey hit by projectile area: ", area.name, " for damage: ", damage)
-		## Optionally remove the projectile after hitting
-		#if area.has_method("queue_free"):
-			#area.queue_free()
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Handle interactions with physics bodies (e.g., enemies)

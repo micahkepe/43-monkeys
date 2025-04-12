@@ -25,11 +25,11 @@
 [ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/Boids/Femoid2/femoid_2.tscn" id="18_ct1e2"]
 [ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/Boids/BoidJoe/boid_joe.tscn" id="19_ig7p6"]
 [ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/Boids/BoidRixner/boid_rixner.tscn" id="20_0cbrv"]
-[ext_resource type="AudioStream" uid="uid://dlw7hrf3shv5x" path="res://assets/music/neuro-lab/neuro-lab.wav" id="25_8iqji"]
 [ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="25_ig7p6"]
 [ext_resource type="PackedScene" uid="uid://4umu3kvj8266" path="res://map-elements/Gear/gear.tscn" id="25_jw6l6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="26_0cbrv"]
 [ext_resource type="PackedScene" uid="uid://l7oimh82k7tw" path="res://entities/Bosses/NeuroBoss/neuro_boss_phase_1.tscn" id="28_grkab"]
+[ext_resource type="AudioStream" uid="uid://bu56eyhqjsvdk" path="res://assets/music/neuro-lab/neuro-lab.ogg" id="30_grkab"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fydb6"]
 texture = ExtResource("3_j13gj")
@@ -764,8 +764,7 @@ position = Vector2(-4055, -4861)
 position = Vector2(-5174, -4364)
 
 [node name="Player" parent="World" instance=ExtResource("6_cnoxu")]
-position = Vector2(17, -5429)
-initial_troop_amount = 10
+position = Vector2(-2051, 2798)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.008, 5.344)
@@ -999,8 +998,9 @@ scale = Vector2(6, 6)
 visible = false
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("25_8iqji")
+stream = ExtResource("30_grkab")
 bus = &"Music"
+parameters/looping = true
 
 [node name="PreBossDialogueTrigger" type="Area2D" parent="."]
 position = Vector2(-4, -4318)

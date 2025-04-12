@@ -736,8 +736,6 @@ func heal(amount: float) -> void:
 
 	print_debug("Player healed by ", amount, ". Current health: ", _current_health)
 
-
-
 ## Applies the blindness overlay to the scene.
 ## @param duration float time in seconds to apply the overlay
 func apply_blindness(duration: float) -> void:
