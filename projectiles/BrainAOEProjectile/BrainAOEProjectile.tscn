@@ -1,8 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://c7lsxk47iv14o"]
+[gd_scene load_steps=34 format=3 uid="uid://c7lsxk47iv14o"]
 
 [ext_resource type="Script" uid="uid://xifakgbcjmsj" path="res://projectiles/BrainAOEProjectile/brain_aoe_projectile.gd" id="1_dqu5k"]
-[ext_resource type="Texture2D" uid="uid://cwhk2g7h7uc63" path="res://assets/sprites/attacks/final_boss_aoe.png" id="1_hh0ks"]
-[ext_resource type="Texture2D" uid="uid://cmk2fwvd4xtmk" path="res://assets/sprites/attacks/explosion/brain_aoe_explosion.png" id="2_xqjon"]
+[ext_resource type="Texture2D" uid="uid://da8eg31a73obu" path="res://assets/sprites/attacks/final_boss_aoe.png" id="1_hh0ks"]
+[ext_resource type="Texture2D" uid="uid://dajgajs42aurr" path="res://assets/sprites/attacks/explosion/brain_aoe_explosion.png" id="2_xqjon"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dqu5k"]
 radius = 9.0
@@ -207,9 +207,12 @@ use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqjon"]
+size = Vector2(64, 66)
+
 [node name="BrainAoeProjectile" type="Area2D" groups=["projectiles"]]
 collision_layer = 4
-collision_mask = 35
+collision_mask = 25
 script = ExtResource("1_dqu5k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -228,6 +231,13 @@ scale = Vector2(1.92187, 1.79687)
 color = Color(0.223529, 0.917647, 0.309804, 1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_xqjon")
+
+[node name="AOE" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOE"]
+shape = SubResource("RectangleShape2D_xqjon")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

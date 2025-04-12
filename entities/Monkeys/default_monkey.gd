@@ -573,23 +573,23 @@ func paralyze(duration: float) -> void:
 	paralyzed = false
 
 
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	# Handle interactions with Area2D nodes (e.g., projectiles)
-	if area.is_in_group("projectiles"):
-		# Ignore friendly projectiles (those spawned by player or troop)
-		if area.get_meta("friendly", false):
-			return  # Skip damage from this monkey's own banana projectiles
-		# Apply damage from non-friendly (enemy) projectiles
-		var damage = 1.0  # Default damage if no specific value is provided
-		if area.has_method("get_damage"):
-			damage = area.get_damage()
-		elif "damage" in area:  # Check if the projectile has a damage property
-			damage = area.damage
-		take_damage(damage)
-		print_debug("Monkey hit by projectile area: ", area.name, " for damage: ", damage)
-		# Optionally remove the projectile after hitting
-		if area.has_method("queue_free"):
-			area.queue_free()
+#func _on_hitbox_area_entered(area: Area2D) -> void:
+	## Handle interactions with Area2D nodes (e.g., projectiles)
+	#if area.is_in_group("projectiles"):
+		## Ignore friendly projectiles (those spawned by player or troop)
+		#if area.get_meta("friendly", false):
+			#return  # Skip damage from this monkey's own banana projectiles
+		## Apply damage from non-friendly (enemy) projectiles
+		#var damage = 1.0  # Default damage if no specific value is provided
+		#if area.has_method("get_damage"):
+			#damage = area.get_damage()
+		#elif "damage" in area:  # Check if the projectile has a damage property
+			#damage = area.damage
+		#take_damage(damage)
+		#print_debug("Monkey hit by projectile area: ", area.name, " for damage: ", damage)
+		## Optionally remove the projectile after hitting
+		#if area.has_method("queue_free"):
+			#area.queue_free()
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Handle interactions with physics bodies (e.g., enemies)
