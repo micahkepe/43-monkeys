@@ -6,7 +6,7 @@ signal monkey_controlled(monkey)
 signal monkey_released(monkey)
 signal boss_died
 
-@export var max_health: float = 10.0
+@export var max_health: float = 75.0
 @export var move_speed: float = 130.0
 @export var proximity_threshold: float = 50.0 # How close to target before picking new one
 @export var min_wait_time: float = 0.5
