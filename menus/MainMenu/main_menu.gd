@@ -31,6 +31,8 @@ var _is_first_focus: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	await get_tree().root.ready
+
 	if !settings_menu:
 		# Create settings menu if it doesn't exist
 		settings_menu = SettingsScene.instantiate()
@@ -41,27 +43,23 @@ func _ready() -> void:
 
 func _input(event):
 	if event.is_action_pressed("ui_accept") and visible:
+		select_sfx_player.play()
+		await select_sfx_player.finished
 		var focused_node = get_viewport().gui_get_focus_owner()
 		if focused_node == $VBoxContainer/StartButton:
-			if !select_sfx_player.playing:
-				select_sfx_player.play()
 			theme_player.stop()
 			get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
 		elif focused_node == $VBoxContainer/SettingsButton:
-			if !select_sfx_player.playing:
-				select_sfx_player.play()
 			if settings_menu:
 				settings_menu.show_settings()
 		elif focused_node == $VBoxContainer/QuitButton:
-			if !select_sfx_player.playing:
-				select_sfx_player.play()
 			get_tree().quit()
+
 	# Call parent _input for fullscreen toggle
 	super._input(event)
 
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
-	# NOTE: Remove sound playback from here; handled in _input
 	theme_player.stop()
 	get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
 
