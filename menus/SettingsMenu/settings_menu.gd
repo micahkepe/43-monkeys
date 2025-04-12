@@ -83,6 +83,7 @@ func hide_settings() -> void:
 func _on_back_pressed() -> void:
 	if select_sfx_player:
 		select_sfx_player.play()
+	await select_sfx_player.finished
 	hide_settings()
 
 
@@ -92,13 +93,9 @@ func _on_music_volume_value_changed(value: float) -> void:
 	if music_player and not music_player.playing:
 		music_player.play()
 
-
 ## Change sfx volume when the slider changes.
 func _on_sfx_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(SFX_BUS, linear_to_db(value))
-	if select_sfx_player:
-		select_sfx_player.play()
-
 
 ## Hide setttings if 'esc' is pressed.
 func _process(_delta: float) -> void:

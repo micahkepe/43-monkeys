@@ -7,7 +7,7 @@ extends "res://menus/default_menu.gd"
 ## quiting the game tree.
 
 ## The AudioStreamPlayer node that plays the select sound effect.
-@onready var sfx_player: AudioStreamPlayer = get_node("Sound/SelectSFXPlayer")
+@onready var select_sfx_player: AudioStreamPlayer = get_node("Sound/SelectSFXPlayer")
 
 ## The AudioStreamPlayer node that plays the navigate sound effect.
 @onready var navigate_sfx_player: AudioStreamPlayer = get_node("Sound/NavigateSFXPlayer")
@@ -75,20 +75,23 @@ func resume_game() -> void:
 
 ## If the resume button is pressed, resume the game.
 func _on_resume_pressed() -> void:
-	sfx_player.play()
+	select_sfx_player.play()
+	await select_sfx_player.finished
 	resume_game()
 
 
 ## Take the user to the main menu if they press the Main Menu button.
 func _on_main_menu_pressed() -> void:
-	sfx_player.play()
+	select_sfx_player.play()
+	await select_sfx_player.finished
 	get_tree().paused = false # Ensure the game is unpaused
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 
 ## Open the settings menu if the Settings button is pressed.
 func _on_settings_pressed() -> void:
-	sfx_player.play()
+	select_sfx_player.play()
+	await select_sfx_player.finished
 	if settings_menu:
 		# Ensure settings menu is properly positioned
 		settings_menu.position = Vector2.ZERO
@@ -97,7 +100,8 @@ func _on_settings_pressed() -> void:
 
 ## Quit the game if the Quit button is pressed.
 func _on_quit_pressed() -> void:
-	sfx_player.play()
+	select_sfx_player.play()
+	await select_sfx_player.finished
 	get_tree().quit()
 
 

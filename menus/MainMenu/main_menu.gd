@@ -6,7 +6,6 @@ extends "res://menus/default_menu.gd"
 ## will change the scene to the first level. The quit button will exit the game
 ## by quiting the game tree.
 
-
 ## The AudioStreamPlayer node that plays the select sound effect.
 @onready var select_sfx_player: AudioStreamPlayer = get_node("Sound/SelectSFXPlayer")
 
