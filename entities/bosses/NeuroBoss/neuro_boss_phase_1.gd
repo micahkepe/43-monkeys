@@ -543,7 +543,7 @@ func _spawn_phase2() -> void:
 	var phase2 = phase2_scene.instantiate()
 	world_node.add_child(phase2)
 	phase2.global_position = global_position
-	phase2.scale = Vector2(1.5, 1.5)
+	phase2.scale = Vector2(1, 1)
 	
 	# Emit signal with the correct instance
 	emit_signal("phase1_died", phase2)

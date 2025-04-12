@@ -9,13 +9,8 @@ func _ready() -> void:
 
 	# Call the parent _ready() to run the default projectile logic.
 	super._ready()
-<<<<<<< Updated upstream
-
-	scale = Vector2(2.0, 2.0)
-=======
 	
 	scale = Vector2(0.5, 0.5)
->>>>>>> Stashed changes
 
 # When the orb collides with a body, check if it's a valid target.
 func _on_body_entered(body: Node) -> void:
