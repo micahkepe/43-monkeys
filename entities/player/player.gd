@@ -63,8 +63,6 @@ var _damage_cooldown: float = 1.0
 ## The current cool down for taking damage.
 var _current_cooldown: float = 0.0
 
-
-
 # -----------------------------------------------------------------
 # TROOP VARIABLES
 # -----------------------------------------------------------------

@@ -1,17 +1,12 @@
 extends "res://levels/default_level.gd"
 
 @onready var post_boss_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PostBoss/level_5_post_boss.tscn")
-
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
-
-# @onready var dialogue_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PreBoss/level_5_pre_boss_cutscene.tscn")
-# @onready var level_5_dialogue: PackedScene = get_node("res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.tscn") # adjust the path as needed
 var dialogue_cutscene_played: bool = false
 
 # Store references obtained in _ready
 var player_node: Player # Type hint helps with autocompletion and type safety
 var neuro_boss_node: Node # Or specific type if you know it (e.g., CharacterBody2D)
-
 var _troop_data: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -57,40 +52,10 @@ func _ready():
 		print("Level 5 _ready: Successfully found and validated Player node: ", player_node)
 		print("  Player Script: ", player_node.get_script())
 
-	# --- NeuroBoss Node Verification ---
-	if not is_instance_valid(neuro_boss_node):
-		printerr("Level 5 _ready ERROR: NeuroBoss node not found at path $World/NeuroBoss!")
-		# Decide if you should return or continue without boss functionality
-		return
-
-	# --- Signal Connection (Only if both nodes are valid) ---
-	if is_instance_valid(player_node) and is_instance_valid(neuro_boss_node):
-		# Clean up any existing connections first to prevent duplicates
-		if neuro_boss_node.is_connected("monkey_controlled", Callable(self, "_on_monkey_controlled")):
-			neuro_boss_node.disconnect("monkey_controlled", Callable(self, "_on_monkey_controlled"))
-
-		if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
-			neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
-
-		# Check if boss has the expected signals before connecting
-		if not neuro_boss_node.has_signal("monkey_controlled"):
-			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_controlled' signal!")
-		else:
-			neuro_boss_node.monkey_controlled.connect(_on_monkey_controlled)
-
-		if not neuro_boss_node.has_signal("monkey_released"):
-			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_released' signal!")
-		else:
-			neuro_boss_node.monkey_released.connect(_on_monkey_released)
-
-		print("Level 5: Successfully connected NeuroBoss signals.")
-	else:
-		printerr("Level 5 _ready: Cannot connect signals because Player or NeuroBoss node is invalid.")
-	
 	# Connect to NeuroBossPhase1's death signal
 	if is_instance_valid(neuro_boss_node):
 		# Check each signal individually before trying to connect
-	
+
 		# For phase1_died signal
 		if neuro_boss_node.has_signal("phase1_died"):
 			if neuro_boss_node.is_connected("phase1_died", Callable(self, "_on_phase1_died")):
@@ -99,35 +64,33 @@ func _ready():
 			print("Level 5: Connected to NeuroBoss Phase 1 death signal")
 		else:
 			printerr("Level 5 Error: NeuroBoss node does not have the 'phase1_died' signal!")
-			
+
 		# For monkey_controlled signal - only connect if it exists
 		if neuro_boss_node.has_signal("monkey_controlled"):
 			if neuro_boss_node.is_connected("monkey_controlled", Callable(self, "_on_monkey_controlled")):
 				neuro_boss_node.disconnect("monkey_controlled", Callable(self, "_on_monkey_controlled"))
 			neuro_boss_node.monkey_controlled.connect(_on_monkey_controlled)
-		else:
-			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_controlled' signal!")
-		
+
 		# For monkey_released signal - only connect if it exists
 		if neuro_boss_node.has_signal("monkey_released"):
 			if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
 				neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
 			neuro_boss_node.monkey_released.connect(_on_monkey_released)
-		else:
-			printerr("Level 5 Error: NeuroBoss node does not have the 'monkey_released' signal!")
+
 
 func _on_phase1_died(phase2_instance):
 	print("Level 5: NeuroBoss Phase 1 died, transitioning to Phase 2")
-	
+
 	# Play dialogue cutscene
 	if dialogue_cutscene_played:
 		return
 	dialogue_cutscene_played = true
+
 	Input.action_press("ui_end")
-	
+
 	# Update our reference to point to Phase 2 now
 	neuro_boss_node = phase2_instance
-	
+
 	# Reconnect signals for Phase 2
 	if is_instance_valid(neuro_boss_node):
 		# Clean up any existing connections first to prevent duplicates
@@ -136,12 +99,12 @@ func _on_phase1_died(phase2_instance):
 
 		if neuro_boss_node.is_connected("monkey_released", Callable(self, "_on_monkey_released")):
 			neuro_boss_node.disconnect("monkey_released", Callable(self, "_on_monkey_released"))
-			
+
 		# Connect to Phase 2 death signal
 		if neuro_boss_node.has_signal("boss_died"):
 			if neuro_boss_node.is_connected("boss_died", Callable(self, "_on_boss_died")):
 				neuro_boss_node.disconnect("boss_died", Callable(self, "_on_boss_died"))
-			
+
 			neuro_boss_node.boss_died.connect(_on_boss_died)
 			print("Level 5: Connected to NeuroBoss Phase 2 death signal")
 		else:
@@ -157,31 +120,31 @@ func _on_phase1_died(phase2_instance):
 			print("Level 5: Connected monkey_released signal to Phase 2")
 	else:
 		printerr("Level 5: Phase 2 instance is not valid!")
-		
+
+
 # Handle monkey being controlled
 func _on_monkey_controlled(monkey: Node2D): # Add type hint for monkey
-	print("--- Level 5 _on_monkey_controlled Triggered ---")
 
 	# --- DETAILED PLAYER NODE DEBUGGING ---
-	print("  Current player_node reference: ", player_node)
-	print("  Is player_node instance valid? ", is_instance_valid(player_node))
+	print_debug("  Current player_node reference: ", player_node)
+	print_debug("  Is player_node instance valid? ", is_instance_valid(player_node))
 
 	if not is_instance_valid(player_node):
 		printerr("  ERROR: player_node is NOT valid at time of signal!")
 		return
 
 	# Check type and script *right now*
-	print("  player_node.get_class(): ", player_node.get_class())
-	print("  player_node.get_script(): ", player_node.get_script())
-	print("  player_node is Player? ", player_node is Player) # Check type again
-	print("  player_node.has_method('remove_monkey'): ", player_node.has_method("remove_monkey"))
+	print_debug("  player_node.get_class(): ", player_node.get_class())
+	print_debug("  player_node.get_script(): ", player_node.get_script())
+	print_debug("  player_node is Player? ", player_node is Player) # Check type again
+	print_debug("  player_node.has_method('remove_monkey'): ", player_node.has_method("remove_monkey"))
 	# --- END DETAILED DEBUGGING ---
 
 	# Now, attempt the call
 	if player_node.has_method("remove_monkey") and is_instance_valid(monkey):
-		print("  Attempting to call player_node.remove_monkey...")
+		print_debug("  Attempting to call player_node.remove_monkey...")
 		player_node.remove_monkey(monkey)
-		print("  Call to remove_monkey completed.")
+		print_debug("  Call to remove_monkey completed.")
 	else:
 		# If has_method check fails, print details
 		printerr("  ERROR: has_method('remove_monkey') returned false or monkey is invalid!")
@@ -313,13 +276,13 @@ var previous_scene : Node = null  # Store reference to the previous scene
 
 func _on_boss_died():
 	print("Level 5: NeuroBoss Phase 2 has died, transitioning to cutscene in 1 second")
-	
+
 	# Wait 1 second before transitioning
 	await get_tree().create_timer(2.0).timeout
-	
+
 	# Load and instantiate the post-boss cutscene
 	var cutscene_instance = post_boss_cutscene.instantiate()
-	
+
 	# Add to root and set as current scene
 	get_tree().root.add_child(cutscene_instance)
 	get_tree().current_scene.queue_free()

@@ -1054,7 +1054,7 @@ func take_control_of_monkey(monkey_node: Node2D):
 		monkey.remove_from_group("troop")
 
 	# SIGNAL-BASED APPROACH: Emit signal that monkey is being controlled
-	emit_signal("monkey_controlled", monkey)
+	monkey_controlled.emit(monkey)
 
 	# Get the monkey's current parent to check if removal is needed
 	var current_parent = monkey.get_parent()
@@ -1191,7 +1191,7 @@ func _on_controlled_monkey_died(monkey_node):
 			monkey.remove_meta("last_known_health")
 
 		# Emit signal that the monkey has been released
-		emit_signal("monkey_released", monkey)
+		monkey_released.emit(monkey)
 
 		# Queue_free after a short delay to allow animation to play
 		if monkey.get_parent() == self:

@@ -9,8 +9,6 @@ class CutsceneFrame:
 		image = img
 		text = txt
 
-
-
 # Time to switch to next slide if no user input (in seconds)
 @export var auto_advance_delay: float = 2.0
 
@@ -62,7 +60,7 @@ func run() -> void:
 		create_frame(load("res://assets/exposition/side-profiles/evil_monkey_speaking.png"), "No, George. The real mind behind\nall this was always a monkey."),
 		create_frame(load("res://assets/exposition/side-profiles/george_speaking.png"), "You... did this?\nTo your own kind?"),
 		create_frame(load("res://assets/exposition/side-profiles/george_speaking.png"), "How could you experiment on us?\nYou betrayed your species!"),
-		
+
 		create_frame(load("res://assets/exposition/side-profiles/evil_monkey_speaking.png"), "I didn't betray us\nI liberated us!"),
 		create_frame(load("res://assets/exposition/side-profiles/evil_monkey_speaking.png"), "We were just animals, waiting for\nhumans to capture and exploit us."),
 		create_frame(load("res://assets/exposition/side-profiles/evil_monkey_speaking.png"), "I made us more.\nThe humans will fear us!"),
@@ -73,11 +71,7 @@ func run() -> void:
 	]
 
 	initialize(frame_data)
-	
-	# get_tree().paused = false
-	
-	
-	
+
 
 ## Initializes the cutscene with the given frames data
 func initialize(frame_data: Array[CutsceneFrame]) -> void:

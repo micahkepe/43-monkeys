@@ -1,12 +1,11 @@
 extends CharacterBody2D
 # The BrainBoss is stationary and does not move.
 
-signal monkey_controlled(monkey)
-signal monkey_released(monkey)
 signal phase1_died(phase2_instance)
 
 # Reference to the AnimatedSprite2D for animations.
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 # Health bar node (assumed to have a method init_health() and a property 'value').
 @onready var health_bar = $HealthBar
 
@@ -21,7 +20,7 @@ signal phase1_died(phase2_instance)
 @export var aoe_proj_prob: float = 0.15
 
 # Health settings for the boss.
-@export var max_health: float = 10.0
+@export var max_health: float = 50.0
 var current_health: float
 
 # Timer for triggering random attacks.
@@ -288,7 +287,7 @@ func attack_shoot_projectiles_circle2() -> void:
 			projectile = aoe_projectile_scene.instantiate()
 		else:
 			projectile = default_projectile_scene.instantiate()
-			
+
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -313,14 +312,14 @@ func attack_shoot_projectiles_spiral() -> void:
 	var angle = 0.0
 	var angle_increment = PI / 7.5  # Adjust this for tighter or looser spirals.
 	for i in range(num_projectiles):
-		
+
 		var random_val = randf()  # random float from 0.0 to 1.0
 		var projectile: Node
 		if random_val < aoe_proj_prob:
 			projectile = aoe_projectile_scene.instantiate()
 		else:
 			projectile = default_projectile_scene.instantiate()
-			
+
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		projectile.global_position = global_position
@@ -346,14 +345,14 @@ func attack_shoot_bullet_wall_vertical() -> void:
 	var spawn_interval = 0.15     # Time between each bullet spawn.
 	var elapsed = 0.0
 	while elapsed < duration:
-		
+
 		var random_val = randf()  # random float from 0.0 to 1.0
 		var projectile: Node
 		if random_val < aoe_proj_prob:
 			projectile = aoe_projectile_scene.instantiate()
 		else:
 			projectile = default_projectile_scene.instantiate()
-			
+
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		var x_offset = randf_range(-800, 800)
@@ -383,14 +382,13 @@ func attack_shoot_bullet_wall_horizontal() -> void:
 	var spawn_interval = 0.15      # Time between bullet spawns.
 	var elapsed = 0.0
 	while elapsed < duration:
-		
 		var random_val = randf()  # random float from 0.0 to 1.0
 		var projectile: Node
 		if random_val < aoe_proj_prob:
 			projectile = aoe_projectile_scene.instantiate()
 		else:
 			projectile = default_projectile_scene.instantiate()
-			
+
 		projectile.scale = Vector2(bullet_scale, bullet_scale)
 		add_child(projectile)
 		var y_offset = randf_range(-800, 800)
@@ -477,7 +475,7 @@ func attack_brainbeam_diagonal() -> void:
 # Spawns a layer of fog over the brain, protecting it from all projectiles.
 func attack_brain_fog() -> void:
 	if not brainfog_scene:
-		print("Brain Fog Scene Not Set")
+		printerr("PHASE I BOSS: Brain Fog Scene Not Set; exiting")
 		return
 
 	var brainfog = brainfog_scene.instantiate()
@@ -487,9 +485,6 @@ func attack_brain_fog() -> void:
 	brainfog.scale = Vector2(22,22)
 
 	print("=== BRIAN FOG AT: ", brainfog.global_position)
-
-
-
 
 #########################################
 # HELPER ANIMATION FUNCTIONS
@@ -501,7 +496,6 @@ func play_animation(anim_name: String) -> void:
 		return
 	if _animated_sprite.animation != anim_name:
 		_animated_sprite.play(anim_name)
-
 
 #########################################
 # DAMAGE / DEATH LOGIC
@@ -544,10 +538,10 @@ func _spawn_phase2() -> void:
 	world_node.add_child(phase2)
 	phase2.global_position = global_position
 	phase2.scale = Vector2(1, 1)
-	
+
 	# Emit signal with the correct instance
-	emit_signal("phase1_died", phase2)
-	
+	phase1_died.emit(phase2)
+
 	# Queue free at the end
 	queue_free()
 

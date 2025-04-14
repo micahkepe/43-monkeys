@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=36 format=3 uid="uid://l7oimh82k7tw"]
 
 [ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/Bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/Bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
 [ext_resource type="PackedScene" uid="uid://dsy8p5naej4lb" path="res://entities/Bosses/NeuroBoss/neuro_boss.tscn" id="6_kxjtn"]
 [ext_resource type="Texture2D" uid="uid://q0ahto6kq27v" path="res://assets/sprites/attacks/explosion/brain_explosion.png" id="7_umkdd"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="11_k3e0t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yxoh8"]
 atlas = ExtResource("7_umkdd")
@@ -176,6 +177,12 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.9, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oua5j"]
+shader = ExtResource("11_k3e0t")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
+
 [node name="NeuroBossPhase1" type="CharacterBody2D" groups=["boids", "enemies"]]
 z_index = 1
 scale = Vector2(5, 5)
@@ -210,3 +217,21 @@ color = Color(0, 0, 0, 1)
 energy = 5.0
 range_z_max = -1
 texture = SubResource("GradientTexture2D_k3e0t")
+
+[node name="Shadow1" type="ColorRect" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_oua5j")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -6.4
+offset_right = 81.0
+offset_bottom = 83.6
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.85, 0.85)
+size_flags_horizontal = 4
+size_flags_vertical = 4
