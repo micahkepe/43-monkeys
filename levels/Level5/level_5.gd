@@ -119,6 +119,12 @@ func _ready():
 func _on_phase1_died(phase2_instance):
 	print("Level 5: NeuroBoss Phase 1 died, transitioning to Phase 2")
 	
+	# Play dialogue cutscene
+	if dialogue_cutscene_played:
+		return
+	dialogue_cutscene_played = true
+	Input.action_press("ui_end")
+	
 	# Update our reference to point to Phase 2 now
 	neuro_boss_node = phase2_instance
 	
@@ -305,20 +311,6 @@ func initialize_from_troop_data() -> void:
 
 var previous_scene : Node = null  # Store reference to the previous scene
 
-
-func _on_pre_boss_dialogue_trigger_body_entered(body: Node2D) -> void:
-	if dialogue_cutscene_played:
-		return
-
-	if body.is_in_group("player"):
-		dialogue_cutscene_played = true
-		Input.action_press("ui_end")
-		# level_5_dialogue.cutscene_completed.connect(_on_level_5_dialogue_finished)
-		# level_5_dialogue.initialize() # if needed to start the cutscene
-func _on_level_5_dialogue_finished():
-	# level_5_dialogue.visible = false
-	get_tree().paused = false
-		
 func _on_boss_died():
 	print("Level 5: NeuroBoss Phase 2 has died, transitioning to cutscene in 1 second")
 	
