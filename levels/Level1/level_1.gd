@@ -13,7 +13,7 @@ extends "res://levels/default_level.gd"
 
 # Level transition scenes
 @export var transition_scene: PackedScene = preload("res://cutscenes/LevelTransition/level_transition.tscn")
-@export var next_level_scene: PackedScene = preload("res://levels/Level2/level_2.tscn")
+@export var next_scene: PackedScene = preload("res://levels/Level2/level_2.tscn")
 
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
@@ -61,7 +61,7 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 			player.heal(player.max_health - player.health)
 
 		var transition_instance = transition_scene.instantiate()
-		transition_instance.next_level_scene = next_level_scene
+		transition_instance.next_scene = next_scene
 		transition_instance.level_number = 2
 		transition_instance.level_title = "Bioscience Center"
 		transition_instance.set_troop_data(troop_data)
