@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://dslihxqo30x7k"]
+[gd_scene load_steps=50 format=4 uid="uid://dslihxqo30x7k"]
 
 [ext_resource type="Script" uid="uid://beo8r1shlik02" path="res://levels/Level5/level_5.gd" id="1_tjie2"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_1hmkw"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bajh6w2h8fpwv" path="res://assets/sprites/tilesets/level_5_walls.png" id="5_5mjep"]
 [ext_resource type="Texture2D" uid="uid://sjp5i4j82u4m" path="res://assets/sprites/tilesets/shadow.png" id="5_cnoxu"]
 [ext_resource type="Texture2D" uid="uid://bxmr56m6k72mf" path="res://assets/sprites/tilesets/SplattersButtonsCracksBanana.png" id="5_fydb6"]
-[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/Player/player.tscn" id="6_cnoxu"]
+[ext_resource type="PackedScene" uid="uid://chsvjhv0uagub" path="res://entities/player/player.tscn" id="6_cnoxu"]
 [ext_resource type="Texture2D" uid="uid://bx8djeyomc0oy" path="res://assets/sprites/tilesets/shadows2.png" id="7_wqo2s"]
 [ext_resource type="Texture2D" uid="uid://cu8al1h2iiuq6" path="res://assets/sprites/tilesets/shadows3.png" id="8_kwp4u"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="8_ucg6s"]
@@ -17,20 +17,21 @@
 [ext_resource type="PackedScene" uid="uid://iw1ex7053soc" path="res://map-elements/Barrel/barrel.tscn" id="10_dc3yh"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="12_ct1e2"]
 [ext_resource type="PackedScene" uid="uid://bo8o2y5xink1l" path="res://map-elements/Turrets/gunner_turret.tscn" id="12_dc3yh"]
-[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/Boids/boid.tscn" id="13_8a8r1"]
-[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/Boids/ForemanBoid/foreman_boid.tscn" id="14_60km8"]
-[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/Boids/Heisenboid/heisenboid.tscn" id="15_wqo2s"]
-[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/Boids/HouseBoid/house_boid.tscn" id="16_kwp4u"]
-[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/Boids/Femoid1/femoid_1.tscn" id="17_8iqji"]
-[ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/Boids/Femoid2/femoid_2.tscn" id="18_ct1e2"]
-[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/Boids/BoidJoe/boid_joe.tscn" id="19_ig7p6"]
-[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/Boids/BoidRixner/boid_rixner.tscn" id="20_0cbrv"]
+[ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="13_8a8r1"]
+[ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/boids/ForemanBoid/foreman_boid.tscn" id="14_60km8"]
+[ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/boids/Heisenboid/heisenboid.tscn" id="15_wqo2s"]
+[ext_resource type="PackedScene" uid="uid://bfa1h2v2fi08b" path="res://entities/boids/HouseBoid/house_boid.tscn" id="16_kwp4u"]
+[ext_resource type="PackedScene" uid="uid://dqyd0yop0ww12" path="res://entities/boids/Femoid1/femoid_1.tscn" id="17_8iqji"]
+[ext_resource type="PackedScene" uid="uid://wkmeklrmgpb4" path="res://entities/boids/Femoid2/femoid_2.tscn" id="18_ct1e2"]
+[ext_resource type="PackedScene" uid="uid://c861smevaeaq6" path="res://entities/boids/BoidJoe/boid_joe.tscn" id="19_ig7p6"]
+[ext_resource type="PackedScene" uid="uid://b1rklqql28v4w" path="res://entities/boids/BoidRixner/boid_rixner.tscn" id="20_0cbrv"]
 [ext_resource type="AudioStream" uid="uid://dlw7hrf3shv5x" path="res://assets/music/neuro-lab/neuro-lab.wav" id="25_8iqji"]
 [ext_resource type="PackedScene" uid="uid://b58lxpspai3bw" path="res://map-elements/Box/box.tscn" id="25_ig7p6"]
 [ext_resource type="PackedScene" uid="uid://4umu3kvj8266" path="res://map-elements/Gear/gear.tscn" id="25_jw6l6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="26_0cbrv"]
-[ext_resource type="PackedScene" uid="uid://l7oimh82k7tw" path="res://entities/Bosses/NeuroBoss/neuro_boss_phase_1.tscn" id="28_grkab"]
+[ext_resource type="PackedScene" uid="uid://l7oimh82k7tw" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.tscn" id="28_grkab"]
 [ext_resource type="PackedScene" uid="uid://upspjmtpxcp7" path="res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.tscn" id="31_d87iv"]
+[ext_resource type="AudioStream" uid="uid://2s3hbte3dwl8" path="res://assets/music/boss-music/bosslevel5.mp3" id="32_a040y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fydb6"]
 texture = ExtResource("3_j13gj")
@@ -1001,3 +1002,8 @@ visible = false
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("25_8iqji")
 bus = &"Music"
+
+[node name="BossMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("32_a040y")
+bus = &"Music"
+parameters/looping = true

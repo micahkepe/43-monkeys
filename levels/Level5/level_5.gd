@@ -2,6 +2,7 @@ extends "res://levels/default_level.gd"
 
 @onready var post_boss_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PostBoss/level_5_post_boss.tscn")
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
+@onready var boss_music: AudioStreamPlayer = $BossMusic
 var dialogue_cutscene_played: bool = false
 
 # Store references obtained in _ready
@@ -120,6 +121,8 @@ func _on_phase1_died(phase2_instance):
 			print("Level 5: Connected monkey_released signal to Phase 2")
 	else:
 		printerr("Level 5: Phase 2 instance is not valid!")
+	background_music.stop()
+	boss_music.play()
 
 
 # Handle monkey being controlled
