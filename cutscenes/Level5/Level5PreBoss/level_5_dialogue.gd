@@ -1,4 +1,4 @@
-extends Control
+class_name Dialogue extends Control
 
 # Configuration for the cutscene
 class CutsceneFrame:

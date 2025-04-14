@@ -1,14 +1,22 @@
 extends CharacterBody2D
-## The NeuroBoss is a powerful enemy that can manipulate bananas and control monkeys.
+## The NeuroBoss is a powerful enemy that can manipulate bananas and control
+## monkeys.
 
 # Signals for monkey control - allows decoupling from Player
 signal monkey_controlled(monkey)
 signal monkey_released(monkey)
 signal boss_died
 
+## The health of the boss.
 @export var max_health: float = 75.0
+
+## How fast the boss moves in pixels
 @export var move_speed: float = 130.0
-@export var proximity_threshold: float = 50.0 # How close to target before picking new one
+
+## How close to target before picking new one
+@export var proximity_threshold: float = 50.0
+
+@export_group("Attack Configuration")
 @export var min_wait_time: float = 0.5
 @export var max_wait_time: float = 2.0
 @export var avoid_distance: float = 100.0
@@ -17,8 +25,8 @@ signal boss_died
 @export var max_attack_interval: float = 6.0
 @export var special_ability_cooldown: float = 12.0
 @export var max_caught_bananas: int = 5
-@export var banana_orbit_radius: float = 80.0
-@export var banana_orbit_speed: float = 2.0
+@export var caught_items_orbit_radius: float = 80.0
+@export var caught_orbit_speed: float = 2.0
 @export var mind_control_range: float = 250.0
 @export var max_controlled_monkeys: int = 3
 @export var mind_control_duration: float = 8.0
@@ -88,7 +96,6 @@ var phases_active = {
 @onready var taser_scene = preload("res://projectiles/BananaBoomerang/banana_boomerang.tscn")
 
 func _ready() -> void:
-	print("NeuroBoss: Initializing...")
 	current_health = max_health
 	if health_bar:
 		health_bar.max_value = max_health
@@ -183,15 +190,15 @@ func _draw() -> void:
 		# Draw orbit circle with a pulsing glow effect
 		var alpha = 0.5 + 0.2 * sin(Time.get_ticks_msec() / 200.0)
 		var color = Color(1.0, 0.7, 0.2, alpha)  # Golden glow
-		draw_circle(Vector2.ZERO, banana_orbit_radius, color)
+		draw_circle(Vector2.ZERO, caught_items_orbit_radius, color)
 
 		# Draw a slightly smaller inner circle for a ring effect
 		var inner_color = Color(1.0, 0.7, 0.2, alpha * 0.3)  # More transparent
-		draw_circle(Vector2.ZERO, banana_orbit_radius - 5, inner_color)
+		draw_circle(Vector2.ZERO, caught_items_orbit_radius - 5, inner_color)
 
 		# Draw orbit path
 		var orbit_color = Color(1.0, 0.8, 0.3, 0.3)  # Faint golden line
-		draw_arc(Vector2.ZERO, banana_orbit_radius, 0, TAU, 64, orbit_color, 2.0)
+		draw_arc(Vector2.ZERO, caught_items_orbit_radius, 0, TAU, 64, orbit_color, 2.0)
 
 # Setup timers properly
 func _setup_timers() -> void:
@@ -292,8 +299,6 @@ func validate_caught_bananas():
 		print("DEBUG: Force reset catch flag - was stuck")
 
 func _physics_process(delta: float) -> void:
-	print("=== PHASE 2 MONKEY AT: ", global_position)
-	
 	if is_dead:
 		return
 
@@ -1404,7 +1409,7 @@ func perform_banana_catching_special():
 # FIXED: Complete overhaul of banana orbit system to prevent disappearing
 func update_banana_orbit(delta: float):
 	# Increment the rotation
-	banana_rotation += banana_orbit_speed * delta
+	banana_rotation += caught_orbit_speed * delta
 
 	# Make a defensive copy of the array
 	var valid_bananas = []
@@ -1424,7 +1429,7 @@ func update_banana_orbit(delta: float):
 
 		# Calculate orbit position based on index and rotation
 		var angle = banana_rotation + (TAU * i / caught_bananas.size())
-		var target_offset = Vector2.RIGHT.rotated(angle) * banana_orbit_radius
+		var target_offset = Vector2.RIGHT.rotated(angle) * caught_items_orbit_radius
 		var target_position = global_position + target_offset
 
 		# Calculate lerp factor based on distance - slower lerp for far bananas
@@ -1493,41 +1498,6 @@ func _process_caught_banana(banana):
 	if not caught_bananas.has(banana):
 		caught_bananas.append(banana)
 
-	# IMPORTANT: Completely disable ALL collisions and physics interactions
-	if banana is CollisionObject2D:
-		# Disable all collisions, monitoring, and monitorable properties
-		banana.set_collision_layer_value(1, false)
-		banana.set_collision_layer_value(2, false)
-		banana.set_collision_layer_value(3, false)
-		banana.set_collision_layer_value(4, false)
-		banana.set_collision_layer_value(5, false)
-		banana.set_collision_layer_value(6, false)
-		banana.set_collision_layer_value(7, false)
-		banana.set_collision_layer_value(8, false)
-
-		banana.set_collision_mask_value(1, false)
-		banana.set_collision_mask_value(2, false)
-		banana.set_collision_mask_value(3, false)
-		banana.set_collision_mask_value(4, false)
-		banana.set_collision_mask_value(5, false)
-		banana.set_collision_mask_value(6, false)
-		banana.set_collision_mask_value(7, false)
-		banana.set_collision_mask_value(8, false)
-
-	var banana_collision = banana.get_node_or_null("CollisionShape2D")
-	if banana_collision:
-		banana_collision.set_deferred("disabled", true)
-
-	# Disable all Area2D nodes and their children
-	for child in banana.get_children():
-		if child is Area2D:
-			child.set_deferred("monitoring", false)
-			child.set_deferred("monitorable", false)
-
-			for grandchild in child.get_children():
-				if grandchild is CollisionShape2D or grandchild is CollisionPolygon2D:
-					grandchild.set_deferred("disabled", true)
-
 	# Reparent to boss
 	if banana.get_parent():
 		var original_parent = banana.get_parent()
@@ -1541,8 +1511,6 @@ func _process_caught_banana(banana):
 	# Reset appearance
 	banana.modulate = Color(1, 1, 1)
 
-	print("DEBUG: Banana successfully caught and processed")
-
 func sort_by_distance(a: Node2D, b: Node2D) -> bool:
 	if not is_instance_valid(a) or not is_instance_valid(b): return false
 	var dist_a = global_position.distance_squared_to(a.global_position)
@@ -1551,18 +1519,15 @@ func sort_by_distance(a: Node2D, b: Node2D) -> bool:
 
 func take_damage(amount: float):
 	if is_dead: return
-
 	current_health -= amount
-	print("NeuroBoss: Took %.1f damage. Health: %.1f / %.1f" % [amount, current_health, max_health])
-
 	if health_bar:
 		health_bar.value = current_health
-
 	if current_health <= 0:
 		_die()
 	else:
 		modulate = Color(2, 0.5, 0.5) # Flash red
 		get_tree().create_timer(0.1).timeout.connect(func(): modulate = Color(1, 1, 1))
+
 
 func _die():
 	if is_dead: return
@@ -1570,12 +1535,11 @@ func _die():
 	if Engine.get_frames_drawn() % 60 == 0:
 		clean_up_invalid_references()
 
-	print("NeuroBoss: Dying...")
 	is_dead = true
-	
+
 	# First play the fall_down animation
 	_animated_sprite.play("fall_down")
-	
+
 	# Stop everything
 	set_physics_process(false)
 	velocity = Vector2.ZERO
@@ -1595,7 +1559,7 @@ func _die():
 	for banana in caught_bananas:
 		if is_instance_valid(banana): banana.queue_free()
 	caught_bananas.clear()
-	
+
 	# Emit death signal before the boss is removed
 	emit_signal("boss_died")
 

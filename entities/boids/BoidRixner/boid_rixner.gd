@@ -1,2 +1,2 @@
-extends "res://entities/Boids/boid.gd"
+extends "res://entities/boids/projectile_boid.gd"
 

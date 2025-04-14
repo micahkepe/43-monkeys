@@ -1,6 +1,6 @@
 [gd_scene load_steps=85 format=3 uid="uid://2wxpnfpvm07k"]
 
-[ext_resource type="Script" uid="uid://xcybws2rl70w" path="res://entities/Boids/Heisenboid/heisenboid.gd" id="1_5q4rb"]
+[ext_resource type="Script" uid="uid://xcybws2rl70w" path="res://entities/boids/Heisenboid/heisenboid.gd" id="1_5q4rb"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="1_dbuad"]
 [ext_resource type="Texture2D" uid="uid://bodwmlsthyj68" path="res://assets/sprites/characters/people/scientist.png" id="2_ado6t"]
 [ext_resource type="AudioStream" uid="uid://dopqehyqshgip" path="res://assets/sfx/enemies/wilhelm-scream.ogg" id="3_6sy77"]

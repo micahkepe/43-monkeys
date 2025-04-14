@@ -1,8 +1,7 @@
-[gd_scene load_steps=40 format=3 uid="uid://dnq5yht1esfkt"]
+[gd_scene load_steps=39 format=3 uid="uid://dnq5yht1esfkt"]
 
 [ext_resource type="Texture2D" uid="uid://c4rqld3cc3pq4" path="res://assets/sprites/characters/bosses/neuro_boss_goon/final_boss_orb.png" id="1_nq5ke"]
-[ext_resource type="Script" uid="uid://cah7dyx88vqgr" path="res://entities/Boids/NeuroBossGoon/neuro_boss_goon.gd" id="1_tg647"]
-[ext_resource type="PackedScene" uid="uid://jpvp8dibwfw" path="res://projectiles/neuro_laser/neuro_laser.tscn" id="2_1vql5"]
+[ext_resource type="Script" uid="uid://cah7dyx88vqgr" path="res://entities/boids/NeuroBossGoon/neuro_boss_goon.gd" id="1_tg647"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_tg647"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_kyrrg"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="4_ooar5"]
@@ -240,9 +239,6 @@ shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_tg647")
-projectile_scene = ExtResource("2_1vql5")
-bullet_speed = 375.0
-view_radius = 350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hb0f4")

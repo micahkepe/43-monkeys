@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://x1fgp3dswcoj"]
 
-[ext_resource type="Script" uid="uid://bmp7qgg4apv7g" path="res://entities/Bosses/TaserBoss/electric_forcefield.gd" id="1_uhsbe"]
+[ext_resource type="Script" uid="uid://bmp7qgg4apv7g" path="res://entities/bosses/TaserBoss/electric_forcefield.gd" id="1_uhsbe"]
 [ext_resource type="Texture2D" uid="uid://c06bt17n0e67r" path="res://assets/sprites/attacks/shields/forcefield.png" id="1_w1bub"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5l8eq"]

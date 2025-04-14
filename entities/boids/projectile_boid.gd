@@ -1,4 +1,4 @@
-extends "res://entities/Boids/boid.gd"
+extends "res://entities/boids/boid.gd"
 
 @export var projectile_scene: PackedScene
 @export var bullet_speed: float

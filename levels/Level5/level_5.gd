@@ -125,25 +125,13 @@ func _on_phase1_died(phase2_instance):
 	boss_music.play()
 
 
-# Handle monkey being controlled
-func _on_monkey_controlled(monkey: Node2D): # Add type hint for monkey
-
-	# --- DETAILED PLAYER NODE DEBUGGING ---
-	print_debug("  Current player_node reference: ", player_node)
-	print_debug("  Is player_node instance valid? ", is_instance_valid(player_node))
-
+## Handle monkey being controlled
+## @param monkey: Node2D - the monkey being controlled
+func _on_monkey_controlled(monkey: Node2D):
 	if not is_instance_valid(player_node):
 		printerr("  ERROR: player_node is NOT valid at time of signal!")
 		return
 
-	# Check type and script *right now*
-	print_debug("  player_node.get_class(): ", player_node.get_class())
-	print_debug("  player_node.get_script(): ", player_node.get_script())
-	print_debug("  player_node is Player? ", player_node is Player) # Check type again
-	print_debug("  player_node.has_method('remove_monkey'): ", player_node.has_method("remove_monkey"))
-	# --- END DETAILED DEBUGGING ---
-
-	# Now, attempt the call
 	if player_node.has_method("remove_monkey") and is_instance_valid(monkey):
 		print_debug("  Attempting to call player_node.remove_monkey...")
 		player_node.remove_monkey(monkey)
@@ -155,10 +143,9 @@ func _on_monkey_controlled(monkey: Node2D): # Add type hint for monkey
 		printerr("    Node Script: ", player_node.get_script() if is_instance_valid(player_node) else "INVALID")
 
 
-# Handle monkey being released
-func _on_monkey_released(monkey: Node2D): # Add type hint for monkey
-	print("--- Level 5 _on_monkey_released Triggered ---")
-
+## Handle monkey being released
+## @param monkey: Node2D - the monkey being released
+func _on_monkey_released(monkey: Node2D):
 	# Skip if monkey is not valid anymore
 	if not is_instance_valid(monkey):
 		print("  Monkey is no longer valid, can't add it back")
@@ -168,34 +155,7 @@ func _on_monkey_released(monkey: Node2D): # Add type hint for monkey
 	if "health_bar" in monkey and is_instance_valid(monkey.health_bar):
 		monkey.health_bar.show()
 
-	# Ensure any collision is properly enabled
-	if monkey is CollisionObject2D:
-		monkey.collision_layer = 4 # Layer 3 - Assuming this is the troop layer
-		monkey.collision_mask = 1  # Layer 1 - Assuming this is the world layer
-
-	# Enable collision shapes
-	for child in monkey.get_children():
-		if not is_instance_valid(child):
-			continue
-
-		if child is CollisionShape2D:
-			child.disabled = false
-		elif child is Area2D:
-			child.monitoring = true
-			child.monitorable = true
-
-			for grandchild in child.get_children():
-				if not is_instance_valid(grandchild):
-					continue
-
-				if grandchild is CollisionShape2D:
-					grandchild.disabled = false
-
-	# Make sure the monkey is not marked as caged
-	if "is_caged" in monkey:
-		monkey.is_caged = false
-
-	# Remove from enemies group
+	# Remove from enemies group (flip sides)
 	if monkey.is_in_group("enemies"):
 		monkey.remove_from_group("enemies")
 
@@ -208,33 +168,25 @@ func _on_monkey_released(monkey: Node2D): # Add type hint for monkey
 
 	# Check if monkey and the stored player reference are still valid *after* the wait
 	if not is_instance_valid(monkey):
-		print("  Monkey became invalid before rejoining.")
+		print_debug("  Monkey became invalid before rejoining.")
 		return
-
-	print("  Checking player_node AFTER wait: ", player_node)
-	print("  Is player_node valid AFTER wait? ", is_instance_valid(player_node))
 
 	if not is_instance_valid(player_node):
 		printerr("  ERROR: Player node became invalid AFTER wait for monkey rejoin!")
 		return
 
-	# Check type and script *right now* after wait
-	print("  player_node.get_class() AFTER wait: ", player_node.get_class())
-	print("  player_node.get_script() AFTER wait: ", player_node.get_script())
-	print("  player_node is Player AFTER wait? ", player_node is Player) # Check type again
-	print("  player_node.has_method('add_monkey_to_swarm') AFTER wait: ", player_node.has_method("add_monkey_to_swarm"))
-
 	# Call the method on the stored player reference
 	if player_node.has_method("add_monkey_to_swarm"):
-		print("  Attempting to call player_node.add_monkey_to_swarm...")
 		player_node.add_monkey_to_swarm(monkey)
-		print("  Call to add_monkey_to_swarm completed.")
 	else:
 		printerr("  ERROR: has_method('add_monkey_to_swarm') returned false AFTER wait!")
 		printerr("    Node Path: ", player_node.get_path())
 		printerr("    Node Class: ", player_node.get_class())
 		printerr("    Node Script: ", player_node.get_script())
 
+
+## Called by transition scene to pass current game state.
+## @param data: Dictionary - current game state
 func set_troop_data(data: Dictionary) -> void:
 	_troop_data = data
 
@@ -275,12 +227,12 @@ func initialize_from_troop_data() -> void:
 
 					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
 
-var previous_scene : Node = null  # Store reference to the previous scene
-
+## Handle final boss death
 func _on_boss_died():
-	print("Level 5: NeuroBoss Phase 2 has died, transitioning to cutscene in 1 second")
+	# TODO: add some sort of animation or smooth transition sequence so there
+	# isn't just an immediate cut to the cutscene
 
-	# Wait 1 second before transitioning
+	# Wait 2 seconds before transitioning
 	await get_tree().create_timer(2.0).timeout
 
 	# Load and instantiate the post-boss cutscene

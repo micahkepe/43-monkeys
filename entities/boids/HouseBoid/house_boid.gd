@@ -1,2 +1,2 @@
-extends "res://entities/Boids/boid.gd"
+extends "res://entities/boids/boid.gd"
 

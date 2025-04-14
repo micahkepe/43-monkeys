@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://qo5g1h3qpgww"]
 
 [ext_resource type="Texture2D" uid="uid://bsrpm5xgnxp0j" path="res://assets/sprites/characters/bosses/taser_boss/electro_laser.png" id="1_idals"]
-[ext_resource type="Script" uid="uid://b0jresme15x5x" path="res://entities/Bosses/TaserBoss/electro_laser.gd" id="1_olds0"]
+[ext_resource type="Script" uid="uid://b0jresme15x5x" path="res://entities/bosses/TaserBoss/electro_laser.gd" id="1_olds0"]
 [ext_resource type="AudioStream" uid="uid://bn7ub0jkuhpi1" path="res://assets/sfx/items/electrical1.ogg" id="3_euvse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_esoew"]

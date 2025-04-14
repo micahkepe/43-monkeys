@@ -1,6 +1,6 @@
 [gd_scene load_steps=100 format=3 uid="uid://cp5du4n6j8tbm"]
 
-[ext_resource type="Script" uid="uid://bqwsf28i8p8o" path="res://entities/Bosses/PotionBoss/potion_boss.gd" id="1_6ahq3"]
+[ext_resource type="Script" uid="uid://bqwsf28i8p8o" path="res://entities/bosses/PotionBoss/potion_boss.gd" id="1_6ahq3"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="2_crlfk"]
 [ext_resource type="PackedScene" uid="uid://cmt0k5vghfm35" path="res://projectiles/Potions/DamagePotion/DamagePotion.tscn" id="2_ku1rs"]
 [ext_resource type="PackedScene" uid="uid://cm833e3rmrk2w" path="res://projectiles/Potions/HealPotion/HealPotion.tscn" id="3_ufr6h"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bmvejx3rl8xkc"]
 
-[ext_resource type="Script" uid="uid://pfqvh22ku5dl" path="res://entities/Bosses/NeuroBoss/brain_fog.gd" id="1_wb8hi"]
+[ext_resource type="Script" uid="uid://pfqvh22ku5dl" path="res://entities/bosses/NeuroBoss/brain_fog.gd" id="1_wb8hi"]
 [ext_resource type="Texture2D" uid="uid://gf38evhhdltr" path="res://assets/sprites/characters/bosses/evil_monkey/brainfog.png" id="2_5u1g8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wb8hi"]

@@ -763,7 +763,7 @@ position = Vector2(-4055, -4861)
 position = Vector2(-5174, -4364)
 
 [node name="Player" parent="World" instance=ExtResource("6_cnoxu")]
-position = Vector2(-1993, 2774)
+position = Vector2(-1982, 2763)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.008, 5.344)
@@ -995,9 +995,7 @@ position = Vector2(0, -6996)
 [node name="PauseMenu" parent="UI" instance=ExtResource("2_1hmkw")]
 visible = false
 
-[node name="UI2" type="CanvasLayer" parent="."]
-
-[node name="Level5Dialogue" parent="UI2" instance=ExtResource("31_d87iv")]
+[node name="Level5Dialogue" parent="UI" instance=ExtResource("31_d87iv")]
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("25_8iqji")

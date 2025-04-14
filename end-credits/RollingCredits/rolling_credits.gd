@@ -174,7 +174,6 @@ func _unhandled_input(event) -> void:
 	if event.is_action_released("ui_down"):
 		is_fast_scrolling = false
 
-# --- Credits Data Setup ---
 
 ## Setup all credit sections. Includes images and people.
 func _setup_credits() -> void:
@@ -200,7 +199,7 @@ func _setup_credits() -> void:
 		["Micah Kepe", "Project Lead", [["GitHub", "https://github.com/micahkepe"]]],
 		["Grant Thompson", "Game Architect", [["LinkedIn", "https://www.linkedin.com/in/grantwthompson/"]]],
 		["Kevin Lei", "Artistic Director", [["LinkedIn", "https://www.linkedin.com/in/lei-kevin/"]]],
-		["Zach Kepe", "Software Developer", [["GitHub", "https://github.com/zachkepe"]]]
+		["Zach Kepe", "Systems Developer", [["GitHub", "https://github.com/zachkepe"]]]
 	])
 
 	# Art section
