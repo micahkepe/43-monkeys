@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bo8o2y5xink1l"]
+[gd_scene load_steps=41 format=3 uid="uid://bo8o2y5xink1l"]
 
 [ext_resource type="Script" uid="uid://dukh43axgdcq6" path="res://map-elements/Turrets/gunner_turret.gd" id="1_y6i7i"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_5t4h7"]
@@ -272,6 +272,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ioyq"]
 radius = 38.0132
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kj5fu"]
+bg_color = Color(0.6, 0.160784, 0.305882, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_txf4j"]
 size = Vector2(103, 98.2084)
 
@@ -284,6 +287,7 @@ shader_parameter/glow_color = Color(0, 0, 0, 0.5)
 [node name="GunnerTurret" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
+scale = Vector2(1.5, 1.5)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_y6i7i")
@@ -301,10 +305,11 @@ position = Vector2(-2, 15)
 shape = SubResource("CircleShape2D_1ioyq")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_5t4h7")]
-offset_left = -14.3333
-offset_top = -24.0
-offset_right = 12.6667
-offset_bottom = -20.0
+offset_left = -26.0
+offset_top = 25.0
+offset_right = 27.0
+offset_bottom = 33.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_kj5fu")
 
 [node name="HitBox" type="Area2D" parent="."]
 y_sort_enabled = true

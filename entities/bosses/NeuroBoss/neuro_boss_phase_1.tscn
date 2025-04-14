@@ -1,14 +1,14 @@
-[gd_scene load_steps=32 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=34 format=3 uid="uid://l7oimh82k7tw"]
 
-[ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
+[ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/Bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
-[ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/boids/NeuroBossGoon/neuro_boss_goon.tscn" id="2_r0rvt"]
+[ext_resource type="PackedScene" uid="uid://dnq5yht1esfkt" path="res://entities/Boids/NeuroBossGoon/neuro_boss_goon.tscn" id="2_r0rvt"]
 [ext_resource type="PackedScene" uid="uid://hwti6j7ij16o" path="res://projectiles/BrainProjectile/brain_projectile.tscn" id="3_fk3qx"]
 [ext_resource type="Texture2D" uid="uid://b0gbmtvrbbot" path="res://assets/sprites/characters/bosses/evil_monkey/brain_animation.png" id="3_r0rvt"]
 [ext_resource type="PackedScene" uid="uid://c7lsxk47iv14o" path="res://projectiles/BrainAOEProjectile/BrainAOEProjectile.tscn" id="4_k533t"]
-[ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/bosses/NeuroBoss/BrainBrim.tscn" id="4_wjupm"]
-[ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
-[ext_resource type="PackedScene" uid="uid://dsy8p5naej4lb" path="res://entities/bosses/NeuroBoss/neuro_boss.tscn" id="6_kxjtn"]
+[ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/Bosses/NeuroBoss/BrainBrim.tscn" id="4_wjupm"]
+[ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/Bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
+[ext_resource type="PackedScene" uid="uid://dsy8p5naej4lb" path="res://entities/Bosses/NeuroBoss/neuro_boss.tscn" id="6_kxjtn"]
 [ext_resource type="Texture2D" uid="uid://q0ahto6kq27v" path="res://assets/sprites/attacks/explosion/brain_explosion.png" id="7_umkdd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yxoh8"]
@@ -166,8 +166,19 @@ animations = [{
 radius = 41.0
 height = 94.0
 
+[sub_resource type="Gradient" id="Gradient_rmx5p"]
+offsets = PackedFloat32Array(0.126623, 0.886364)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k3e0t"]
+gradient = SubResource("Gradient_rmx5p")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0)
+
 [node name="NeuroBossPhase1" type="CharacterBody2D" groups=["boids", "enemies"]]
 z_index = 1
+scale = Vector2(5, 5)
 collision_layer = 2
 collision_mask = 63
 script = ExtResource("1_814ll")
@@ -180,14 +191,22 @@ phase2_scene = ExtResource("6_kxjtn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
-animation = &"die"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
 shape = SubResource("CapsuleShape2D_5cc0r")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_814ll")]
-offset_left = -40.0
-offset_top = 45.0
-offset_right = 41.0
-offset_bottom = 49.0
+offset_left = -15.4
+offset_top = 39.2
+offset_right = 15.6
+offset_bottom = 46.2
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(3.8147e-06, 29)
+scale = Vector2(1.3125, 1.07812)
+color = Color(0, 0, 0, 1)
+energy = 5.0
+range_z_max = -1
+texture = SubResource("GradientTexture2D_k3e0t")
