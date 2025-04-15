@@ -13,6 +13,7 @@ colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_bk23i"]
 gradient = SubResource("Gradient_m68yb")
+use_hdr = true
 
 [sub_resource type="Gradient" id="Gradient_r7hny"]
 offsets = PackedFloat32Array(0.25, 1)
@@ -21,8 +22,8 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_spelt"]
 gradient = SubResource("Gradient_r7hny")
 fill = 1
-fill_from = Vector2(0.5, 1)
-fill_to = Vector2(0.5, 0.5)
+fill_from = Vector2(0.495413, 0.5)
+fill_to = Vector2(1, 0.5)
 
 [node name="Alarm" type="Sprite2D"]
 texture = SubResource("AtlasTexture_bk23i")
@@ -42,7 +43,6 @@ color = Color(0.82, 0, 0, 1)
 texture = SubResource("GradientTexture2D_bk23i")
 
 [node name="OutLighting" type="PointLight2D" parent="."]
-position = Vector2(0, -62)
 scale = Vector2(2.14062, 2.14062)
 color = Color(0.628744, 0.000841494, 0.000461574, 1)
 texture = SubResource("GradientTexture2D_spelt")
