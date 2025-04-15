@@ -15,6 +15,9 @@ var unlock_time: float = 3.0
 ## Reference to the progress bar node.
 @onready var _progress_bar: ProgressBar = get_node("ProgressBar")
 
+## Reference to the click player
+@onready var _click_player: AudioStreamPlayer = $ClickPlayer
+
 ## A flag for whether the gear has been fully spun.
 var _fully_spun: bool = false
 
@@ -75,11 +78,12 @@ func _process(delta: float) -> void:
 		_time_spun += delta
 		_progress_bar.value = _time_spun
 
+		# unlocked
 		if _time_spun >= unlock_time:
 			_fully_spun = true
 			_animated_sprite.play("default")
-			_progress_bar.visible = false
 			_is_spinning = false
+			_click_player.play()
 			print_debug(name, ": Emitting gear_complete")
 			gear_complete.emit(self)
 

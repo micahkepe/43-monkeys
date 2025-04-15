@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://dp2xn3of82vyp"]
+
+[ext_resource type="Texture2D" uid="uid://poebilaknivu" path="res://assets/sprites/items/beacon/beacon-light.png" id="1_m68yb"]
+[ext_resource type="AudioStream" uid="uid://d1ttiw72235eb" path="res://assets/sfx/alarms/Alarm1.ogg" id="2_bk23i"]
+[ext_resource type="Script" uid="uid://cs4kf3f0bhvbn" path="res://map-elements/Lights/Alarm/alarm.gd" id="2_r7hny"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bk23i"]
+atlas = ExtResource("1_m68yb")
+
+[sub_resource type="Gradient" id="Gradient_m68yb"]
+offsets = PackedFloat32Array(0.11039, 0.49026, 0.899351)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bk23i"]
+gradient = SubResource("Gradient_m68yb")
+
+[sub_resource type="Gradient" id="Gradient_r7hny"]
+offsets = PackedFloat32Array(0.25, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_spelt"]
+gradient = SubResource("Gradient_r7hny")
+fill = 1
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0.5)
+
+[node name="Alarm" type="Sprite2D"]
+texture = SubResource("AtlasTexture_bk23i")
+script = ExtResource("2_r7hny")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_bk23i")
+volume_db = -5.0
+autoplay = true
+bus = &"SFX"
+parameters/looping = true
+
+[node name="Beam" type="PointLight2D" parent="."]
+position = Vector2(1.43051e-06, -4)
+scale = Vector2(1.54167, 0.291667)
+color = Color(0.82, 0, 0, 1)
+texture = SubResource("GradientTexture2D_bk23i")
+
+[node name="OutLighting" type="PointLight2D" parent="."]
+position = Vector2(0, -62)
+scale = Vector2(2.14062, 2.14062)
+color = Color(0.628744, 0.000841494, 0.000461574, 1)
+texture = SubResource("GradientTexture2D_spelt")

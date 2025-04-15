@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
-## Represents a 2D pllayer character in the game.
+## Represents a 2D player character in the game.
 ##
-## The player character is contrjolled by the player and can move in four
+## The player character is controlled by the player and can move in four
 ## directions (up, down, left, right). The player's movement is controlled by
 ## input mappings defined in the project settings for the following actions:
 ## "ui_right" "ui_left" "ui_up" "ui_down"
@@ -318,7 +318,8 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 		"node": new_monkey,
 		"angle": new_angle,
 		"transitioning": true
-		# Removed health and max_health from here - they should be properties of the monkey instance itself
+		# Removed health and max_health from here - they should be properties
+		# of the monkey instance itself
 	})
 
 	# Recalculate angles for an even distribution.

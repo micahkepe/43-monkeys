@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=45 format=4 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" uid="uid://c84qq2gb5de8x" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bq1iptccykk36" path="res://assets/sprites/tilesets/level2_walls.png" id="5_sfd4i"]
 [ext_resource type="PackedScene" uid="uid://c1cqahrbs025d" path="res://map-elements/MonkeyCage/monkey_cage.tscn" id="9_137nh"]
 [ext_resource type="PackedScene" uid="uid://bosg5oeaw8eqj" path="res://entities/boids/BroccoliBoid/broccoli_boid.tscn" id="9_rjxle"]
+[ext_resource type="PackedScene" uid="uid://dp2xn3of82vyp" path="res://map-elements/Lights/Alarm/alarm.tscn" id="10_8mf4q"]
 [ext_resource type="PackedScene" uid="uid://magcl27gfs7r" path="res://map-elements/Vat/vat.tscn" id="10_g8bd1"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="10_hs6h0"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="11_gn2fk"]
@@ -523,6 +524,53 @@ scale = Vector2(1.16667, 1.16667)
 range_z_max = -1
 texture = SubResource("GradientTexture2D_peyil")
 
+[node name="Alarms" type="Node2D" parent="ForegroundTiles"]
+y_sort_enabled = true
+
+[node name="Alarm" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(-808, 1218)
+rotation = 3.14159
+
+[node name="Alarm2" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(-678.667, 1218)
+rotation = 3.14159
+
+[node name="Alarm3" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(-551.333, 1217.33)
+rotation = 3.14159
+
+[node name="Alarm4" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(280, 1217.33)
+rotation = 3.14159
+
+[node name="Alarm5" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(408.667, 1221.33)
+rotation = 3.14159
+
+[node name="Alarm6" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(1083.33, 1024.67)
+rotation = 1.5708
+
+[node name="Alarm7" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(1082, 898.667)
+rotation = 1.5708
+
+[node name="Alarm8" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(1077.33, 1152)
+rotation = 1.5708
+
+[node name="Alarm9" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(1498.67, 1154)
+rotation = 4.71239
+
+[node name="Alarm10" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(1498.67, 1018.67)
+rotation = 4.71239
+
+[node name="Alarm11" parent="ForegroundTiles/Alarms" instance=ExtResource("10_8mf4q")]
+position = Vector2(1495.33, 896)
+rotation = 4.71239
+
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -742,7 +790,7 @@ scale = Vector2(0.8, 0.8)
 position = Vector2(-1113, 552)
 
 [node name="Box2" parent="World/Boxes" instance=ExtResource("19_i8wmo")]
-position = Vector2(-1079, 715)
+position = Vector2(-1103.75, 682.5)
 
 [node name="Box3" parent="World/Boxes" instance=ExtResource("19_i8wmo")]
 position = Vector2(-2029, 334)

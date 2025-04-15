@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://dslihxqo30x7k"]
+[gd_scene load_steps=51 format=4 uid="uid://dslihxqo30x7k"]
 
 [ext_resource type="Script" uid="uid://beo8r1shlik02" path="res://levels/Level5/level_5.gd" id="1_tjie2"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_1hmkw"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://iw1ex7053soc" path="res://map-elements/Barrel/barrel.tscn" id="10_dc3yh"]
 [ext_resource type="PackedScene" uid="uid://d0jfylax23b4g" path="res://map-elements/Laser/laser.tscn" id="12_ct1e2"]
 [ext_resource type="PackedScene" uid="uid://bo8o2y5xink1l" path="res://map-elements/Turrets/gunner_turret.tscn" id="12_dc3yh"]
+[ext_resource type="PackedScene" uid="uid://dp2xn3of82vyp" path="res://map-elements/Lights/Alarm/alarm.tscn" id="12_ukiho"]
 [ext_resource type="PackedScene" uid="uid://dd8b8qu4e6jme" path="res://entities/boids/boid.tscn" id="13_8a8r1"]
 [ext_resource type="PackedScene" uid="uid://rv57qx2kxxrq" path="res://entities/boids/ForemanBoid/foreman_boid.tscn" id="14_60km8"]
 [ext_resource type="PackedScene" uid="uid://2wxpnfpvm07k" path="res://entities/boids/Heisenboid/heisenboid.tscn" id="15_wqo2s"]
@@ -533,6 +534,37 @@ position = Vector2(-3208, -2844.67)
 
 [node name="MonkeyCage6" parent="ForegroundTiles/Cages" instance=ExtResource("8_ucg6s")]
 position = Vector2(3358, -2828.67)
+
+[node name="Alarms" type="Node2D" parent="ForegroundTiles"]
+y_sort_enabled = true
+
+[node name="Alarm" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(-584, -1205.33)
+rotation = 3.14159
+
+[node name="Alarm2" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(-392, -1202.67)
+rotation = 3.14159
+
+[node name="Alarm3" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(-845.333, -1203.33)
+rotation = 3.14159
+
+[node name="Alarm5" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(-456.667, -1844.67)
+rotation = 3.14159
+
+[node name="Alarm6" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(-652, -1842)
+rotation = 3.14159
+
+[node name="Alarm7" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(266.667, -1838)
+rotation = 3.14159
+
+[node name="Alarm4" parent="ForegroundTiles/Alarms" instance=ExtResource("12_ukiho")]
+position = Vector2(-1038.67, -1203.33)
+rotation = 3.14159
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true

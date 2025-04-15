@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=75 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" uid="uid://bghxxvemydn31" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://magcl27gfs7r" path="res://map-elements/Vat/vat.tscn" id="33_ixw8n"]
 [ext_resource type="PackedScene" uid="uid://iw1ex7053soc" path="res://map-elements/Barrel/barrel.tscn" id="34_u1ukr"]
 [ext_resource type="AudioStream" uid="uid://b7bkgvrk1c1i7" path="res://assets/music/boss-music/bosslevel1.mp3" id="37_374ec"]
+[ext_resource type="PackedScene" uid="uid://dp2xn3of82vyp" path="res://map-elements/Lights/Alarm/alarm.tscn" id="38_njlbt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
@@ -1278,6 +1279,40 @@ color = Color(0.917647, 0.917647, 0.996078, 1)
 
 [node name="FlickeringScreen4" parent="ForegroundTiles/Lights/ScreenLights" instance=ExtResource("32_w40f5")]
 position = Vector2(6036, -1226)
+
+[node name="Alarms" type="Node2D" parent="ForegroundTiles"]
+
+[node name="Alarm" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(1415.33, -3022)
+rotation = 3.14159
+
+[node name="Alarm7" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(1192, -3018.67)
+rotation = 3.14159
+
+[node name="Alarm8" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(998.667, -3016.67)
+rotation = 3.14159
+
+[node name="Alarm2" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(1607.33, -3021.33)
+rotation = 3.14159
+
+[node name="Alarm3" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(1832, -3020)
+rotation = 3.14159
+
+[node name="Alarm4" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(2153.33, -3017.33)
+rotation = 3.14159
+
+[node name="Alarm5" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(2696.67, -3010)
+rotation = 3.14159
+
+[node name="Alarm6" parent="ForegroundTiles/Alarms" instance=ExtResource("38_njlbt")]
+position = Vector2(2858.67, -3012)
+rotation = 3.14159
 
 [node name="World" type="Node2D" parent="."]
 y_sort_enabled = true

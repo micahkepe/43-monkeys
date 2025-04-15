@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://4umu3kvj8266"]
+[gd_scene load_steps=13 format=3 uid="uid://4umu3kvj8266"]
 
 [ext_resource type="Script" uid="uid://s2kjd3ni3twl" path="res://map-elements/Gear/gear.gd" id="1_586tf"]
 [ext_resource type="Texture2D" uid="uid://bl27m5rk4c0kh" path="res://assets/sprites/tilesets/gear.png" id="1_ourqy"]
+[ext_resource type="AudioStream" uid="uid://cks22iq2ybo2t" path="res://assets/sfx/items/gear/gear-unlock-click.ogg" id="3_ha5el"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ha5el"]
 atlas = ExtResource("1_ourqy")
@@ -108,3 +109,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ha5el")
 value = 10.0
 rounded = true
 show_percentage = false
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ha5el")
+bus = &"SFX"
