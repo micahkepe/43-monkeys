@@ -1,0 +1,295 @@
+[gd_scene load_steps=29 format=3 uid="uid://ce2bojip5ohp1"]
+
+[ext_resource type="Texture2D" uid="uid://c0dr14u623m4y" path="res://assets/sprites/attacks/pirate_rum.png" id="2_tax1t"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="3_1wmdg"]
+
+[sub_resource type="GDScript" id="GDScript_7ltka"]
+script/source = "extends \"res://projectiles/projectiles_script.gd\"
+
+var is_pool: bool = false
+
+func _ready() -> void:
+	# Override default values for the banana projectile.
+	animation_name = \"spin\"
+	use_shadow = true
+
+	# Call the parent _ready() to run the default projectile logic.
+	scale = Vector2(2.5,2.5)
+	super._ready()
+
+# When the banana collides with a body, check if it's an enemy.
+func _on_body_entered(body: Node) -> void:
+	# World elements
+	if body.name in [\"BackgroundTiles\", \"ForegroundTiles\"]:
+		if not is_pool:
+			explode_and_free()
+	elif body.is_in_group(\"enemies\") or body.is_in_group(\"boids\"):
+		# Immediately apply damage to the enemy hit.
+		if body.has_method(\"take_damage\"):
+			body.take_damage(damage)
+		if not is_pool:
+			explode_and_free()
+	else:
+		# Fallback case
+		if not is_pool:
+			explode_and_free()
+
+func _on_area_entered(area: Area2D) -> void:
+	var enemy = area.get_parent()
+	if enemy.is_in_group(\"enemies\") or enemy.is_in_group(\"boids\"):
+		if enemy.has_method(\"take_damage\"):
+			enemy.take_damage(damage)
+		if not is_pool:
+			explode_and_free()
+	else:
+		if not is_pool:
+			explode_and_free()
+
+# Play explode, then pool_idle; randomize scale; wait 4s; free.
+func explode_and_free() -> void:
+	is_pool = true
+	velocity = Vector2.ZERO
+	$ShadowContainer.visible = false
+	$AnimatedSprite2D.play(\"explode\")
+	await $AnimatedSprite2D.animation_finished
+	z_index = -1
+	# Switch to pool_idle
+	$AnimatedSprite2D.play(\"pool_idle\")
+
+	# Randomize scale.x and scale.y between 1.0 and 3.0
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	scale = Vector2(rng.randf_range(2.5, 5.0), rng.randf_range(2.5, 5.0))
+
+	# Deal damage once per second for 4 seconds
+	var elapsed := 0.0
+	var interval := 1.0
+	while elapsed < 4.0:
+		for body in get_overlapping_bodies():
+			if (body.is_in_group(\"enemies\") or body.is_in_group(\"boids\")) and body.has_method(\"take_damage\"):
+				body.take_damage(damage)
+		await get_tree().create_timer(interval).timeout
+		elapsed += interval
+
+	queue_free()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfmhn"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gl6e"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40jia"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tax1t"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wmdg"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s88eq"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1ath"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aw7mu"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(416, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl23h"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(448, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yx6b7"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(480, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apnub"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(512, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntrvk"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(544, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsjjw"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(576, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lbnr"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(608, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4jod"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg2t0"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb4hi"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6otpl"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8veup"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clnvo"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4b3ks"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_taxkd"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xox4d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfmhn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gl6e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40jia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tax1t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wmdg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s88eq")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1ath")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aw7mu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl23h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yx6b7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apnub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntrvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsjjw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lbnr")
+}],
+"loop": true,
+"name": &"pool_idle",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4jod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg2t0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb4hi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6otpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8veup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clnvo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4b3ks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_taxkd")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d7wpg"]
+size = Vector2(29, 27.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7gl6e"]
+shader = ExtResource("3_1wmdg")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
+
+[node name="RumBottle" type="Area2D" groups=["projectiles"]]
+collision_layer = 4
+collision_mask = 35
+script = SubResource("GDScript_7ltka")
+damage = 0.5
+lifetime = 4.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xox4d")
+animation = &"spin"
+frame_progress = 0.481579
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_d7wpg")
+
+[node name="ShadowContainer" type="Node2D" parent="."]
+top_level = true
+
+[node name="Shadow" type="ColorRect" parent="ShadowContainer"]
+material = SubResource("ShaderMaterial_7gl6e")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 7.0
+offset_right = 20.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

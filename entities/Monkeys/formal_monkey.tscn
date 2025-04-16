@@ -1124,6 +1124,7 @@ collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_44641")
 default_projectile_scene = ExtResource("2_hsbry")
+attack_cooldown = 1.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

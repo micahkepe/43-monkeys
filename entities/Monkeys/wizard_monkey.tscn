@@ -1129,6 +1129,7 @@ collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_xsyrx")
 default_projectile_scene = ExtResource("2_m7k48")
+max_health = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
