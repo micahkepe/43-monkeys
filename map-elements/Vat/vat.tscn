@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://magcl27gfs7r"]
+[gd_scene load_steps=12 format=3 uid="uid://magcl27gfs7r"]
 
 [ext_resource type="Texture2D" uid="uid://mqs573ufvs7m" path="res://assets/sprites/tilesets/foreground.png" id="1_g2b7w"]
+[ext_resource type="AudioStream" uid="uid://bqs57ku8okjdc" path="res://assets/sfx/ambient/geiger-counter.ogg" id="2_avumc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mmkos"]
 radius = 18.0
@@ -94,3 +95,11 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileBlock"]
 position = Vector2(-2, 2)
 shape = SubResource("CapsuleShape2D_uuoan")
+
+[node name="Geiger" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-1, 15)
+stream = ExtResource("2_avumc")
+autoplay = true
+max_distance = 300.0
+bus = &"SFX"
+parameters/looping = true

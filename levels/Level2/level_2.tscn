@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://csn51rpfa4db3"]
+[gd_scene load_steps=46 format=4 uid="uid://csn51rpfa4db3"]
 
 [ext_resource type="Script" uid="uid://c84qq2gb5de8x" path="res://levels/Level2/level_2.gd" id="1_e5bne"]
 [ext_resource type="Texture2D" uid="uid://bq1tx6584x2ay" path="res://assets/sprites/tilesets/level_2_bgtiles.png" id="2_jhhqm"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://4umu3kvj8266" path="res://map-elements/Gear/gear.tscn" id="21_i8wmo"]
 [ext_resource type="PackedScene" uid="uid://cnb3ai5pql4is" path="res://map-elements/Door/door.tscn" id="22_25a24"]
 [ext_resource type="PackedScene" uid="uid://bdmuj5y2xhj1j" path="res://map-elements/Stairs/stairs.tscn" id="23_peyil"]
+[ext_resource type="AudioStream" uid="uid://bf3pfeubehv20" path="res://assets/sfx/ambient/deep-echo.mp3" id="28_q6hvh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8si7"]
 texture = ExtResource("2_jhhqm")
@@ -843,6 +844,15 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextSceneTrigger"]
 position = Vector2(3902.5, -3199.5)
 shape = SubResource("RectangleShape2D_peyil")
+
+[node name="SFX" type="Node2D" parent="."]
+position = Vector2(75, -122)
+scale = Vector2(1.5, 1.5)
+
+[node name="DeepBoom" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("28_q6hvh")
+autoplay = true
+bus = &"SFX"
 
 [connection signal="body_entered" from="World/BossTrigger" to="." method="_on_boss_spawn_trigger_body_entered"]
 [connection signal="body_entered" from="NextSceneTrigger" to="." method="_on_next_scene_trigger_body_entered"]

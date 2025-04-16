@@ -22,7 +22,7 @@ class CutsceneFrame:
 @export var next_scene: PackedScene = null
 
 ## Configurable Level Number
-@export var transition_level_number: int = 1
+@export var transition_level_number: int;
 
 ## Configurable Level Title to pass to optional transition scene.
 @export var transition_level_title: String = ""

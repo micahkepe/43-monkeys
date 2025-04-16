@@ -1,44 +1,44 @@
 [gd_scene load_steps=14 format=3 uid="uid://cywybedmwyxf3"]
 
-[ext_resource type="Script" uid="uid://no588hruyx8e" path="res://projectiles/Snowball/snowball.gd" id="1_2600i"]
-[ext_resource type="Texture2D" uid="uid://cxrm80h3lcuru" path="res://assets/sprites/attacks/snowball/snowball.png" id="1_lrq6g"]
+[ext_resource type="Script" uid="uid://no588hruyx8e" path="res://projectiles/Snowball/snowball.gd" id="1_pdqgq"]
+[ext_resource type="Texture2D" uid="uid://cxrm80h3lcuru" path="res://assets/sprites/attacks/snowball/snowball.png" id="2_mjhmj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2600i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2600i"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lsg78"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a20cv"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4uuu8"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3m6a2"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yg3n1"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hfbxw"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4kvu3"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i58cr"]
-atlas = ExtResource("1_lrq6g")
+atlas = ExtResource("2_mjhmj")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lsg78"]
@@ -84,7 +84,7 @@ animations = [{
 [node name="Snowball" type="Area2D" groups=["projectiles"]]
 collision_layer = 4
 collision_mask = 35
-script = ExtResource("1_2600i")
+script = ExtResource("1_pdqgq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2600i")

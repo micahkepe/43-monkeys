@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=4 uid="uid://d25xs3fryq7ka"]
+[gd_scene load_steps=77 format=4 uid="uid://d25xs3fryq7ka"]
 
 [ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="1_3rsmv"]
 [ext_resource type="Script" uid="uid://bghxxvemydn31" path="res://levels/Level1/level_1.gd" id="1_bim7o"]
@@ -38,6 +38,8 @@
 [ext_resource type="PackedScene" uid="uid://iw1ex7053soc" path="res://map-elements/Barrel/barrel.tscn" id="34_u1ukr"]
 [ext_resource type="AudioStream" uid="uid://b7bkgvrk1c1i7" path="res://assets/music/boss-music/bosslevel1.mp3" id="37_374ec"]
 [ext_resource type="PackedScene" uid="uid://dp2xn3of82vyp" path="res://map-elements/Lights/Alarm/alarm.tscn" id="38_njlbt"]
+[ext_resource type="AudioStream" uid="uid://bf3pfeubehv20" path="res://assets/sfx/ambient/deep-echo.mp3" id="39_4kudi"]
+[ext_resource type="AudioStream" uid="uid://bak26i12eyw3m" path="res://assets/sfx/ambient/computer-sounds.ogg" id="39_51fhv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wyfp"]
 resource_name = "blank-tiles"
@@ -1652,6 +1654,42 @@ parameters/looping = true
 visible = false
 size_flags_horizontal = 6
 size_flags_vertical = 6
+
+[node name="SFX" type="Node2D" parent="."]
+position = Vector2(75, -122)
+scale = Vector2(1.5, 1.5)
+
+[node name="DeepBoom" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("39_4kudi")
+autoplay = true
+bus = &"SFX"
+
+[node name="Computer" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-412, -1628.67)
+stream = ExtResource("39_51fhv")
+volume_db = -10.0
+autoplay = true
+max_distance = 300.0
+bus = &"SFX"
+parameters/looping = true
+
+[node name="Computer2" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(-556, -570)
+stream = ExtResource("39_51fhv")
+volume_db = -10.0
+autoplay = true
+max_distance = 300.0
+bus = &"SFX"
+parameters/looping = true
+
+[node name="Computer3" type="AudioStreamPlayer2D" parent="SFX"]
+position = Vector2(3984, -2496)
+stream = ExtResource("39_51fhv")
+volume_db = -10.0
+autoplay = true
+max_distance = 300.0
+bus = &"SFX"
+parameters/looping = true
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
 position = Vector2(640, 1038)

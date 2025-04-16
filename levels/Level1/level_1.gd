@@ -62,7 +62,7 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 
 		var transition_instance = transition_scene.instantiate()
 		transition_instance.next_scene = next_scene
-		transition_instance.level_number = 2
+		# transition_instance.level_number = 2
 		transition_instance.level_title = "Bioscience Center"
 		transition_instance.set_troop_data(troop_data)
 		get_tree().root.add_child(transition_instance)

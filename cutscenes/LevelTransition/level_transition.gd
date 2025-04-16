@@ -40,7 +40,11 @@ func _ready():
 	# Start fade-in
 	fade_rect.modulate.a = 1.0
 	label.text = ""
-	_target_text = "Level %d: %s" % [level_number, level_title]
+	if level_number:
+		_target_text = "Level %d: %s" % [level_number, level_title]
+	else:
+		_target_text = "%s" % [level_title]
+
 	_is_typing = true
 
 	fade_in()

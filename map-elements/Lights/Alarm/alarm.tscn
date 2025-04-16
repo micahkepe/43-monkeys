@@ -33,6 +33,7 @@ script = ExtResource("2_r7hny")
 stream = ExtResource("2_bk23i")
 volume_db = -5.0
 autoplay = true
+max_distance = 1500.0
 bus = &"SFX"
 parameters/looping = true
 

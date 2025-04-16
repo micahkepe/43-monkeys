@@ -171,7 +171,6 @@ func _physics_process(_delta: float) -> void:
 			# Obstacle detected, adjust direction
 			var normal = result.normal
 			direction = direction.slide(normal).normalized()
-			print("Adjusting direction to avoid obstacle: ", direction)
 
 		velocity = direction * move_speed
 		if is_slowed:
