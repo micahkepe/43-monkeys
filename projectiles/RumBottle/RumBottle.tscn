@@ -1,0 +1,218 @@
+[gd_scene load_steps=28 format=3 uid="uid://donmlal2t7rc1"]
+
+[ext_resource type="Script" uid="uid://sqrf8o0mnv43" path="res://projectiles/RumBottle/rum_bottle.gd" id="1_40jia"]
+[ext_resource type="Texture2D" uid="uid://c5ym4djq41umy" path="res://assets/sprites/attacks/pirate_rum.png" id="2_tax1t"]
+[ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="3_1wmdg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s88eq"]
+size = Vector2(29, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1ath"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aw7mu"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl23h"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yx6b7"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apnub"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntrvk"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(384, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsjjw"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(416, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lbnr"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(448, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4jod"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(480, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg2t0"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(512, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb4hi"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(544, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6otpl"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(576, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8veup"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(608, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clnvo"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4b3ks"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_taxkd"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7wpg"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t30yp"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnsj6"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cg3y8"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e54w1"]
+atlas = ExtResource("2_tax1t")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_60nm6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1ath")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aw7mu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl23h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yx6b7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apnub")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntrvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsjjw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lbnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4jod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg2t0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb4hi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6otpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8veup")
+}],
+"loop": true,
+"name": &"pool_idle",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clnvo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4b3ks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_taxkd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7wpg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t30yp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnsj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cg3y8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e54w1")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 15.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hjc1v"]
+shader = ExtResource("3_1wmdg")
+shader_parameter/glow_spread = 0.5
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(0.059, 0.059, 0, 0.5)
+
+[node name="RumBottle" type="Area2D" groups=["projectiles"]]
+z_index = 1
+collision_layer = 4
+collision_mask = 35
+script = ExtResource("1_40jia")
+damage = 0.5
+lifetime = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s88eq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_60nm6")
+animation = &"pool_idle"
+frame_progress = 0.866416
+
+[node name="ShadowContainer" type="Node2D" parent="."]
+top_level = true
+
+[node name="Shadow" type="ColorRect" parent="ShadowContainer"]
+material = SubResource("ShaderMaterial_hjc1v")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 7.0
+offset_right = 20.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1128,7 +1128,8 @@ y_sort_enabled = true
 collision_layer = 8
 collision_mask = 31
 script = ExtResource("1_iok2g")
-default_projectile_scene = ExtResource("2_npjc1")
+default_projectile_scene = ExtResource("2_q4ies")
+attack_range = 500.0
 attack_damage = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["troop"]]

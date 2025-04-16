@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cys15peufgn36" path="res://entities/player/player.gd" id="1_ieec4"]
 [ext_resource type="Texture2D" uid="uid://0c563soaoi5m" path="res://assets/sprites/characters/monkeys/base-monkey.png" id="2_3oa06"]
-[ext_resource type="PackedScene" uid="uid://c6hqssagt75up" path="res://projectiles/BananaBoomerang/banana_boomerang.tscn" id="2_yc2po"]
+[ext_resource type="PackedScene" uid="uid://donmlal2t7rc1" path="res://projectiles/RumBottle/RumBottle.tscn" id="2_we0b7"]
 [ext_resource type="PackedScene" uid="uid://3kyps6qs6oo3" path="res://overlays/BlindnessOverlay/blindness_overlay.tscn" id="3_0k4ps"]
 [ext_resource type="PackedScene" uid="uid://cdbs8ve7uh1wk" path="res://entities/Monkeys/roid_monkey.tscn" id="4_we0b7"]
 [ext_resource type="PackedScene" uid="uid://b8v4eyt7ey3dn" path="res://entities/Monkeys/roman_monkey.tscn" id="5_mtric"]
@@ -788,7 +788,7 @@ collision_layer = 16
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_ieec4")
-default_projectile_scene = ExtResource("2_yc2po")
+default_projectile_scene = ExtResource("2_we0b7")
 blindness_overlay_scene = ExtResource("3_0k4ps")
 monkey_scenes = Array[PackedScene]([ExtResource("4_we0b7"), ExtResource("5_mtric"), ExtResource("6_eyb6c"), ExtResource("7_221hk"), ExtResource("8_ghoj8"), ExtResource("9_t1t22")])
 
