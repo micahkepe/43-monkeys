@@ -269,7 +269,7 @@ func _physics_process(_delta: float) -> void:
 ## ellipse
 ## @param existing_monkey: Node2D - The existing monkey to add to the swarm.
 ## If null, a new monkey will be instantiated.
-func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
+func add_monkey_to_swarm(existing_monkey: Node2D = null, type_index: int = -1) -> void:
 	var new_monkey: Node2D
 
 	if existing_monkey:
@@ -292,9 +292,20 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null) -> void:
 			print_debug("No monkey scenes available!")
 			return
 
-		var new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
+		var new_monkey_scene
+		if type_index >= 0 && type_index < monkey_scenes.size():
+			# Use the specified type if valid
+			new_monkey_scene = monkey_scenes[type_index]
+		else:
+			# Otherwise random selection as before
+			new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
+			
 		new_monkey = new_monkey_scene.instantiate()
-		print_debug("Spawning a new monkey for the swarm!")
+		
+		# Store the type index on the monkey for future reference
+		if "monkey_type_id" in new_monkey:
+			new_monkey.monkey_type_id = type_index if type_index >= 0 else monkey_scenes.find(new_monkey_scene)
+			
 		_swarm_monkeys_root.add_child(new_monkey)
 		# new_monkey will be positioned based on its scene settings.
 

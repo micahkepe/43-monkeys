@@ -75,10 +75,12 @@ func initialize_from_troop_data() -> void:
 	var player = $World/Player
 	if player and not _troop_data.is_empty():
 		player.health = _troop_data["player_health"]
+		
 		# Recreate troop
 		var current_count = player.get_troop_count()
 		var target_count = _troop_data["count"]
 		var monkey_health = _troop_data.get("monkey_health", [])
+		var monkey_types = _troop_data.get("monkey_types", [])  # Get the types array
 
 		# Remove excess monkeys if any
 		while current_count > target_count:
@@ -87,9 +89,13 @@ func initialize_from_troop_data() -> void:
 				monkey.queue_free()
 			current_count -= 1
 
-		# Add missing monkeys
+		# Add missing monkeys with specific types
 		while current_count < target_count:
-			player.add_monkey_to_swarm()
+			var type_index = 0
+			if monkey_types.size() > current_count:
+				type_index = monkey_types[current_count]
+				
+			player.add_monkey_to_swarm(null, type_index)  # Pass the type index
 			current_count += 1
 
 		# Restore monkey health if tracked
@@ -98,14 +104,12 @@ func initialize_from_troop_data() -> void:
 				var monkey = player._swarm_monkeys[i]["node"]
 				if "current_health" in monkey and "health_bar" in monkey:
 					monkey.current_health = monkey_health[i]
-
+					
 					# Ensure the health bar is properly initialized and visible
 					if monkey.health_bar:
 						monkey.health_bar.value = monkey.current_health
 						monkey.health_bar.health = monkey.current_health
-						monkey.health_bar.show()  # Always show health bar, regardless of health value
-
-					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
+						monkey.health_bar.show()
 
 ## Called every frame. '_delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -167,19 +171,27 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 		var player = $World/Player
 		var troop_count = player.get_troop_count() if player else 6
 		var monkey_health = []
+		var monkey_types = [] # New array to track monkey types
+		
 		if player:
 			for monkey in player.get_troop():
 				# Use current_health instead of health
 				monkey_health.append(monkey.current_health if "current_health" in monkey else 6.0)
+				
+				# Get the monkey type - either a resource path or some identifier
+				var monkey_type = monkey.get_path_to_scene() if "get_path_to_scene" in monkey else 0
+				monkey_types.append(monkey_type)
 
 		var troop_data = {
 			"count": troop_count,
 			"player_health": player.health if player else 6.0,
-			"monkey_health": monkey_health
+			"monkey_health": monkey_health,
+			"monkey_types": monkey_types # Add the types to the data
 		}
 
 		if player:
 			player.heal(player.max_health - player.health)
+
 
 		var transition_instance = transition_scene.instantiate()
 		transition_instance.next_scene = next_scene

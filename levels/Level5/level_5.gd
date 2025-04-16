@@ -195,10 +195,12 @@ func initialize_from_troop_data() -> void:
 	var player = $World/Player
 	if player and not _troop_data.is_empty():
 		player.health = _troop_data["player_health"]
+		
 		# Recreate troop
 		var current_count = player.get_troop_count()
 		var target_count = _troop_data["count"]
 		var monkey_health = _troop_data.get("monkey_health", [])
+		var monkey_types = _troop_data.get("monkey_types", [])  # Get the types array
 
 		# Remove excess monkeys if any
 		while current_count > target_count:
@@ -207,9 +209,13 @@ func initialize_from_troop_data() -> void:
 				monkey.queue_free()
 			current_count -= 1
 
-		# Add missing monkeys
+		# Add missing monkeys with specific types
 		while current_count < target_count:
-			player.add_monkey_to_swarm()
+			var type_index = 0
+			if monkey_types.size() > current_count:
+				type_index = monkey_types[current_count]
+				
+			player.add_monkey_to_swarm(null, type_index)  # Pass the type index
 			current_count += 1
 
 		# Restore monkey health if tracked
@@ -218,14 +224,12 @@ func initialize_from_troop_data() -> void:
 				var monkey = player._swarm_monkeys[i]["node"]
 				if "current_health" in monkey and "health_bar" in monkey:
 					monkey.current_health = monkey_health[i]
-
+					
 					# Ensure the health bar is properly initialized and visible
 					if monkey.health_bar:
 						monkey.health_bar.value = monkey.current_health
 						monkey.health_bar.health = monkey.current_health
-						monkey.health_bar.show()  # Always show health bar, regardless of health value
-
-					print_debug("Restored monkey #", i, " health to: ", monkey.current_health)
+						monkey.health_bar.show()
 
 ## Handle final boss death
 func _on_boss_died():

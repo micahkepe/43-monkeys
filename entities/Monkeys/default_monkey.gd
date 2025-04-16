@@ -50,6 +50,8 @@ var attack_timer: float = 0.0
 ## Whether the monkey is currently detecting an enemy
 var _enemy_in_sight: bool = false
 
+var monkey_type_id: int = 0
+
 ## The detected enemy, if any
 var _current_enemy = null
 
@@ -600,3 +602,8 @@ func _on_animation_tree_animation_finished(anim_name):
 		print_debug("Slash animation finished, resetting is_attacking for monkey: ", self.name)
 		is_attacking = false
 
+func get_path_to_scene() -> int:
+	# Return an identifier for this monkey type
+	# This could be a resource path, filename, or an index
+	# For simplicity, let's say each monkey knows its own type ID
+	return monkey_type_id  # Add this property to your monkey class
