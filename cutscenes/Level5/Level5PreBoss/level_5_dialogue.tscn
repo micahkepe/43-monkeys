@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://upspjmtpxcp7"]
+[gd_scene load_steps=8 format=3 uid="uid://upspjmtpxcp7"]
 
 [ext_resource type="Script" uid="uid://dc1evtyhkhmm2" path="res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.gd" id="1_7jdpd"]
 [ext_resource type="AudioStream" uid="uid://dt2nsn3imsfkq" path="res://assets/music/danger/danger.ogg" id="1_sqxwh"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_5owx1"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_7jdpd"]
 [ext_resource type="AudioStream" uid="uid://bs6qmv3rbpa1j" path="res://assets/sfx/ui/type.wav" id="3_5owx1"]
 
@@ -19,6 +20,13 @@ cache/0/40/0/descent = 0.0
 cache/0/40/0/underline_position = 0.0
 cache/0/40/0/underline_thickness = 0.0
 cache/0/40/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_npg70"]
+font = ExtResource("2_5owx1")
+font_size = 55
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Level5Dialogue" type="Control"]
 process_mode = 3
@@ -38,23 +46,25 @@ script = ExtResource("1_7jdpd")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 245.0
-offset_right = 1.0
-offset_bottom = 295.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -341.0
+offset_top = 184.0
+offset_right = 341.0
+offset_bottom = 320.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 10
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = SubResource("FontFile_npg70")
 theme_override_font_sizes/font_size = 40
+label_settings = SubResource("LabelSettings_npg70")
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
