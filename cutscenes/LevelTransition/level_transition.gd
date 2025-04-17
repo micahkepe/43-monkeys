@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var level_number: int = 1
+@export var level_number: int
 @export var level_title: String = ""
 @export var next_scene: PackedScene = null  # Scene to load after transition
 @export var display_duration: float = 2.0         # Time the full text stays visible

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://l7oimh82k7tw"]
+[gd_scene load_steps=36 format=3 uid="uid://l7oimh82k7tw"]
 
 [ext_resource type="Script" uid="uid://knrs65scsytr" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.gd" id="1_814ll"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="2_814ll"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://c7lsxk47iv14o" path="res://projectiles/BrainAOEProjectile/BrainAOEProjectile.tscn" id="4_k533t"]
 [ext_resource type="PackedScene" uid="uid://iupuomebaeuv" path="res://entities/bosses/NeuroBoss/BrainBrim.tscn" id="4_wjupm"]
 [ext_resource type="PackedScene" uid="uid://bmvejx3rl8xkc" path="res://entities/bosses/NeuroBoss/BrainFog.tscn" id="5_5cc0r"]
-[ext_resource type="PackedScene" uid="uid://dsy8p5naej4lb" path="res://entities/bosses/NeuroBoss/neuro_boss.tscn" id="6_kxjtn"]
 [ext_resource type="Texture2D" uid="uid://q0ahto6kq27v" path="res://assets/sprites/attacks/explosion/brain_explosion.png" id="7_umkdd"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="11_k3e0t"]
 [ext_resource type="AudioStream" uid="uid://dfvlw6ksnh1sq" path="res://assets/sfx/booms/explosion.wav" id="12_hkmuc"]
@@ -116,7 +115,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0iaec")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 12.0
 }, {
@@ -168,12 +167,12 @@ animations = [{
 radius = 41.0
 height = 94.0
 
-[sub_resource type="Gradient" id="Gradient_rmx5p"]
+[sub_resource type="Gradient" id="Gradient_k533t"]
 offsets = PackedFloat32Array(0.126623, 0.886364)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_k3e0t"]
-gradient = SubResource("Gradient_rmx5p")
+gradient = SubResource("Gradient_k533t")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.9, 0)
@@ -195,11 +194,12 @@ default_projectile_scene = ExtResource("3_fk3qx")
 aoe_projectile_scene = ExtResource("4_k533t")
 brainbrim_scene = ExtResource("4_wjupm")
 brainfog_scene = ExtResource("5_5cc0r")
-phase2_scene = ExtResource("6_kxjtn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
-animation = &"idle"
+animation = &"die"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
@@ -240,3 +240,5 @@ size_flags_vertical = 4
 [node name="ExplosionPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_hkmuc")
 bus = &"SFX"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

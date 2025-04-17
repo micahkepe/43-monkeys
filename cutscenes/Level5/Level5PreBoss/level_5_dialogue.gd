@@ -39,18 +39,11 @@ var _can_advance: bool = false
 @onready var type_timer: Timer = Timer.new()
 @onready var frame_timer: Timer = Timer.new()
 
-# Signal for the end of the cutscene.
-signal cutscene_completed
-
-func _process(_delta):
-	if Input.is_action_just_pressed("ui_end"): # Escape key is "ui_cancel" by default
-		show()
-		# Pause the game
-		get_tree().paused = true
-		run()
+# Signal for the end of the dialogue
+signal dialogue_complete
 
 ## Called when the node enters the scene tree.
-func run() -> void:
+func _ready() -> void:
 	_setup_timers()
 
 	# Load images directly as Textures
@@ -155,12 +148,11 @@ func _complete_typing() -> void:
 ## Ends the cutscene and triggers either a transition or level load
 func _end_cutscene() -> void:
 	_is_cutscene_active = false
-	cutscene_completed.emit()
+	dialogue_complete.emit()
 
 # Function to create each CutsceneFrame
 func create_frame(image: Texture2D, text: String) -> CutsceneFrame:
 	return CutsceneFrame.new(image, text)
 
-func _on_cutscene_completed() -> void:
+func _on_dialogue_complete() -> void:
 	queue_free()
-	get_tree().paused = false

@@ -1,9 +1,11 @@
 extends "res://levels/default_level.gd"
+## Level 5: Neuroscience Lab
 
 @onready var post_boss_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PostBoss/level_5_post_boss.tscn")
+@onready var phase2_instance: PackedScene = preload("res://entities/bosses/NeuroBoss/neuro_boss.tscn")
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 @onready var boss_music: AudioStreamPlayer = $BossMusic
-var dialogue_cutscene_played: bool = false
+@onready var post_phase_1_dialogue: PackedScene = preload("res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.tscn")
 
 # Store references obtained in _ready
 var player_node: Player # Type hint helps with autocompletion and type safety
@@ -38,6 +40,7 @@ func _ready():
 	# Get references using get_node_or_null for safety
 	var potential_player = $World.get_node_or_null("Player")
 	neuro_boss_node = $World.get_node_or_null("NeuroBossPhase1")
+	assert(neuro_boss_node != null)
 
 	# --- Player Node Verification ---
 	if not is_instance_valid(potential_player):
@@ -79,18 +82,38 @@ func _ready():
 			neuro_boss_node.monkey_released.connect(_on_monkey_released)
 
 
-func _on_phase1_died(phase2_instance):
+func _on_phase1_died():
 	print("Level 5: NeuroBoss Phase 1 died, transitioning to Phase 2")
 
-	# Play dialogue cutscene
-	if dialogue_cutscene_played:
-		return
-	dialogue_cutscene_played = true
+	# Add the new boss to the scene
+	var final_boss_node = phase2_instance.instantiate()
+	$World.add_child(final_boss_node)
+	final_boss_node.global_position = neuro_boss_node.global_position
+	# Free the Phase 1 boss
+	if is_instance_valid(neuro_boss_node):
+		neuro_boss_node.queue_free()
 
-	Input.action_press("ui_end")
+	# Update reference
+	neuro_boss_node = final_boss_node
 
-	# Update our reference to point to Phase 2 now
-	neuro_boss_node = phase2_instance
+	# Timeout for a second
+	await get_tree().create_timer(1.0).timeout
+
+	# Add in the dialogue scene
+	var dialogue_instance = post_phase_1_dialogue.instantiate()
+	$UI.add_child(dialogue_instance)
+
+	# Pause game in background
+	get_tree().paused = true
+	print_debug("pause state: ", get_tree().paused)
+
+	# Keep the background paused (player/ boss still frozen)
+	$UI/PauseMenu.bg_remain_paused = true
+
+	await dialogue_instance.dialogue_complete
+	get_tree().paused = false
+
+	$UI/PauseMenu.bg_remain_paused = false
 
 	# Reconnect signals for Phase 2
 	if is_instance_valid(neuro_boss_node):
@@ -121,6 +144,7 @@ func _on_phase1_died(phase2_instance):
 			print("Level 5: Connected monkey_released signal to Phase 2")
 	else:
 		printerr("Level 5: Phase 2 instance is not valid!")
+
 	background_music.stop()
 	boss_music.play()
 
@@ -195,7 +219,7 @@ func initialize_from_troop_data() -> void:
 	var player = $World/Player
 	if player and not _troop_data.is_empty():
 		player.health = _troop_data["player_health"]
-		
+
 		# Recreate troop
 		var current_count = player.get_troop_count()
 		var target_count = _troop_data["count"]
@@ -214,7 +238,7 @@ func initialize_from_troop_data() -> void:
 			var type_index = 0
 			if monkey_types.size() > current_count:
 				type_index = monkey_types[current_count]
-				
+
 			player.add_monkey_to_swarm(null, type_index)  # Pass the type index
 			current_count += 1
 
@@ -224,7 +248,7 @@ func initialize_from_troop_data() -> void:
 				var monkey = player._swarm_monkeys[i]["node"]
 				if "current_health" in monkey and "health_bar" in monkey:
 					monkey.current_health = monkey_health[i]
-					
+
 					# Ensure the health bar is properly initialized and visible
 					if monkey.health_bar:
 						monkey.health_bar.value = monkey.current_health

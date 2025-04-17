@@ -7,8 +7,6 @@
 [node name="LevelTransition" type="Node2D"]
 modulate = Color(1, 1, 1, 0)
 script = ExtResource("1_we6ay")
-level_number = -1
-level_title = "Debugging"
 
 [node name="FadeRect" type="ColorRect" parent="."]
 modulate = Color(0, 0, 0, 1)

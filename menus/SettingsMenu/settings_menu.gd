@@ -52,22 +52,15 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_pressed():
 		var focused_slider = get_viewport().gui_get_focus_owner()
 		if focused_slider is HSlider:
-			if event.is_action_pressed("ui_left") or event.is_action_pressed("a"):
+			if event.is_action_pressed("ui_left"):
 				focused_slider.value -= SLIDER_STEP
 				get_viewport().set_input_as_handled()
-			elif event.is_action_pressed("ui_right") or event.is_action_pressed("d"):
+			elif event.is_action_pressed("ui_right"):
 				focused_slider.value += SLIDER_STEP
 				get_viewport().set_input_as_handled()
 
 ## Show the settings menu.
 func show_settings() -> void:
-	# Reset position and ensure full size
-	position = Vector2.ZERO
-	size = get_viewport_rect().size
-
-	# Ensure proper anchoring
-	anchor_right = 1.0
-	anchor_bottom = 1.0
 	visible = true
 
 	# Set initial focus to music slider
@@ -78,14 +71,12 @@ func show_settings() -> void:
 func hide_settings() -> void:
 	visible = false
 
-
 ## Hide settings when the Back button is pressed.
 func _on_back_pressed() -> void:
 	if select_sfx_player:
 		select_sfx_player.play()
 	await select_sfx_player.finished
 	hide_settings()
-
 
 ## Change music volume when the slider changes.
 func _on_music_volume_value_changed(value: float) -> void:
@@ -97,7 +88,3 @@ func _on_music_volume_value_changed(value: float) -> void:
 func _on_sfx_volume_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(SFX_BUS, linear_to_db(value))
 
-## Hide setttings if 'esc' is pressed.
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		_on_back_pressed()

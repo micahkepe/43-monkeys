@@ -26,13 +26,17 @@ var _pause_menu_visible: bool = false
 ## playing the navigate sound effect when the scene is first loaded.
 var _is_first_focus: bool = true
 
+## Whether the game should remain in a paused state. This patches certain
+## instances where you need control over the game paused state.
+@export
+var bg_remain_paused: bool = false
+
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	if !settings_menu:
 		# Create settings menu if it doesn't exist
 		settings_menu = SettingsScene.instantiate()
 		add_child(settings_menu)
-
 	hide()
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,7 +51,6 @@ func toggle_pause_menu() -> void:
 		resume_game()
 	else:
 		pause_game()
-
 
 ## Show the pause menu.
 func pause_game() -> void:
@@ -69,7 +72,8 @@ func pause_game() -> void:
 func resume_game() -> void:
 	_pause_menu_visible = false
 	hide()
-	get_tree().paused = false # Unpause the game
+	if !bg_remain_paused:
+		get_tree().paused = false # Unpause the game
 	_is_first_focus = true # Reset first focus flag
 
 

@@ -1474,7 +1474,8 @@ animations = [{
 }]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghvu7"]
-bg_color = Color(0.822257, 0.322625, 0.292501, 1)
+bg_color = Color(0.417699, 0.133784, 0.116897, 1)
+border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1rfga"]
 size = Vector2(52, 103)
@@ -1509,10 +1510,19 @@ sprite_frames = SubResource("SpriteFrames_47ep4")
 animation = &"attack_down"
 
 [node name="HealthBar" parent="." instance=ExtResource("3_1rfga")]
-offset_left = -42.0
-offset_top = -67.0
-offset_right = 40.0
-offset_bottom = -44.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.5
+offset_top = -70.0
+offset_right = 59.5
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/fill = SubResource("StyleBoxFlat_ghvu7")
 
 [node name="Hitbox" type="Area2D" parent="."]

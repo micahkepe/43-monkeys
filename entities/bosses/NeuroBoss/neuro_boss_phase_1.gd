@@ -1,7 +1,8 @@
 extends CharacterBody2D
 # The BrainBoss is stationary and does not move.
 
-signal phase1_died(phase2_instance)
+## Phase 1 boss died
+signal phase1_died()
 
 # Reference to the AnimatedSprite2D for animations.
 @onready var _animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -15,7 +16,6 @@ signal phase1_died(phase2_instance)
 @export var aoe_projectile_scene: PackedScene
 @export var brainbrim_scene: PackedScene
 @export var brainfog_scene: PackedScene
-@export var phase2_scene: PackedScene
 
 @export var aoe_proj_prob: float = 0.15
 
@@ -37,7 +37,6 @@ var attack_timer: Timer
 # Track if the boss is currently attacking or is dead.
 var is_attacking: bool = false
 var is_dead: bool = false
-var phase2_spawned = false
 
 @export var minion_scale: float = 0.5
 @export var bullet_scale: float = 0.5
@@ -515,38 +514,31 @@ func take_damage(amount: float) -> void:
 		await get_tree().create_timer(0.5).timeout
 		_animated_sprite.modulate = Color(1, 1, 1, 1)
 
+
 # Called when the boss's health reaches zero.
 func _die() -> void:
-	if is_dead || phase2_spawned:
+	if is_dead:
 		return
 	is_dead = true
-	phase2_spawned = true
 	health_bar.hide()
 	set_process(false)
+	collision_mask = KEY_NONE
+
 	# Use set_deferred for physics properties instead of direct assignment
 	set_deferred("physics_process", false)
+
+	# Start the die animation and SFX
 	_animated_sprite.play("die")
-	print("BrainBoss died!")
+	$ExplosionPlayer.play()
 
-	# Use call_deferred to create the phase2 boss to avoid physics issues
-	call_deferred("_spawn_phase2")
-
-# New function to handle spawning Phase 2
-func _spawn_phase2() -> void:
-	var world_node = get_parent()
-	var phase2 = phase2_scene.instantiate()
-	world_node.add_child(phase2)
-	phase2.global_position = global_position
-	phase2.scale = Vector2(1, 1)
-
-	# Emit signal with the correct instance
-	phase1_died.emit(phase2)
-
-	# Queue free at the end
-	queue_free()
-
-# This function handles any actions needed when an animation finishes.
-# For example, after finishing the death animation, the boss is removed.
-func _on_animated_sprite_animation_finished() -> void:
+func _on_animated_sprite_2d_animation_finished() -> void:
 	if _animated_sprite.animation == "die":
-		queue_free()
+		# Await the sound effect if it is playing
+		if $ExplosionPlayer.playing:
+			await $ExplosionPlayer.finished
+
+		# Emit signal with the correct instance
+		print_debug("NeuroBossPhase1: Emitting phase1_died signal")
+		phase1_died.emit()
+
+		# NOTE: no queue free yet

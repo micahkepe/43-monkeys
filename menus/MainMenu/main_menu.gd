@@ -31,11 +31,6 @@ var _is_first_focus: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().root.ready
-
-	if !settings_menu:
-		# Create settings menu if it doesn't exist
-		settings_menu = SettingsScene.instantiate()
-		add_child(settings_menu)
 	$VBoxContainer/StartButton.grab_focus()
 	await get_tree().process_frame
 	_is_first_focus = false
@@ -47,10 +42,12 @@ func _input(event):
 		var focused_node = get_viewport().gui_get_focus_owner()
 		if focused_node == $VBoxContainer/StartButton:
 			theme_player.stop()
-			get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
+			get_tree().change_scene_to_file("res://cutscenes/intro/intro_cutscene.tscn")
 		elif focused_node == $VBoxContainer/SettingsButton:
-			if settings_menu:
-				settings_menu.show_settings()
+			if !settings_menu:
+				settings_menu = SettingsScene.instantiate()
+				add_child(settings_menu)
+			settings_menu.show_settings()
 		elif focused_node == $VBoxContainer/QuitButton:
 			get_tree().quit()
 
@@ -60,7 +57,7 @@ func _input(event):
 ## Handles the press event for the start button. Navigates to scene "tutorial".
 func _on_start_button_pressed() -> void:
 	theme_player.stop()
-	get_tree().change_scene_to_file("res://cutscenes/Intro/intro_cutscene.tscn")
+	get_tree().change_scene_to_file("res://cutscenes/intro/intro_cutscene.tscn")
 
 
 ## Handle the press event on the settings button. Currently does nothing.

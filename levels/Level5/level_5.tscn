@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=4 uid="uid://dslihxqo30x7k"]
+[gd_scene load_steps=53 format=4 uid="uid://dslihxqo30x7k"]
 
 [ext_resource type="Script" uid="uid://beo8r1shlik02" path="res://levels/Level5/level_5.gd" id="1_tjie2"]
 [ext_resource type="PackedScene" uid="uid://bpeefxov26jc1" path="res://menus/PauseMenu/pause_menu.tscn" id="2_1hmkw"]
@@ -31,7 +31,6 @@
 [ext_resource type="PackedScene" uid="uid://4umu3kvj8266" path="res://map-elements/Gear/gear.tscn" id="25_jw6l6"]
 [ext_resource type="PackedScene" uid="uid://4t4db1lpm8w4" path="res://map-elements/Button/button.tscn" id="26_0cbrv"]
 [ext_resource type="PackedScene" uid="uid://l7oimh82k7tw" path="res://entities/bosses/NeuroBoss/neuro_boss_phase_1.tscn" id="28_grkab"]
-[ext_resource type="PackedScene" uid="uid://upspjmtpxcp7" path="res://cutscenes/Level5/Level5PreBoss/level_5_dialogue.tscn" id="31_d87iv"]
 [ext_resource type="AudioStream" uid="uid://2s3hbte3dwl8" path="res://assets/music/boss-music/bosslevel5.mp3" id="32_a040y"]
 [ext_resource type="AudioStream" uid="uid://bf3pfeubehv20" path="res://assets/sfx/ambient/deep-echo.mp3" id="34_omqa5"]
 
@@ -184,6 +183,16 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_p4ov3")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_rmx5p"]
+offsets = PackedFloat32Array(0.126623, 0.886364)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_omqa5"]
+gradient = SubResource("Gradient_rmx5p")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cnoxu"]
 texture = ExtResource("5_5mjep")
@@ -507,6 +516,14 @@ range_z_max = -1
 texture = SubResource("GradientTexture2D_grkab")
 offset = Vector2(1280, 1644.37)
 
+[node name="Shadow19" type="PointLight2D" parent="BackgroundTiles"]
+position = Vector2(78, -5916)
+scale = Vector2(1.3125, 1.07812)
+color = Color(0, 0, 0, 1)
+energy = 5.0
+range_z_max = -1
+texture = SubResource("GradientTexture2D_omqa5")
+
 [node name="ForegroundTiles" type="TileMapLayer" parent="."]
 z_index = 1
 y_sort_enabled = true
@@ -796,7 +813,7 @@ position = Vector2(-4055, -4861)
 position = Vector2(-5174, -4364)
 
 [node name="Player" parent="World" instance=ExtResource("6_cnoxu")]
-position = Vector2(-1982, 2763)
+position = Vector2(-2008, 2861)
 
 [node name="Camera2D" type="Camera2D" parent="World/Player"]
 position = Vector2(4.008, 5.344)
@@ -1027,8 +1044,6 @@ position = Vector2(0, -6996)
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("2_1hmkw")]
 visible = false
-
-[node name="Level5Dialogue" parent="UI" instance=ExtResource("31_d87iv")]
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("25_8iqji")
