@@ -11,8 +11,11 @@ config_version=5
 [application]
 
 config/name="43 Monkeys"
+config/description="A 2D topdown rogue with bullet hell, puzzles, swarm control, and more."
 run/main_scene="res://menus/MainMenu/main_menu.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://hr1aa7728i3r"
+config/icon="uid://hr1aa7728i3r"
 
 [display]
 
@@ -193,5 +196,6 @@ toggle_full_screen={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 viewport/hdr_2d=true
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
