@@ -47,12 +47,12 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 		var troop_count = player.get_troop_count() if player else 6
 		var monkey_health = []
 		var monkey_types = [] # New array to track monkey types
-		
+
 		if player:
 			for monkey in player.get_troop():
 				# Use current_health instead of health
 				monkey_health.append(monkey.current_health if "current_health" in monkey else 6.0)
-				
+
 				# Get the monkey type - either a resource path or some identifier
 				var monkey_type = monkey.get_path_to_scene() if "get_path_to_scene" in monkey else 0
 				monkey_types.append(monkey_type)
@@ -69,7 +69,7 @@ func _on_next_scene_trigger_body_entered(body: Node2D) -> void:
 
 		var transition_instance = transition_scene.instantiate()
 		transition_instance.next_scene = next_scene
-		transition_instance.level_number = 2
+		# transition_instance.level_number = 2
 		transition_instance.level_title = "Bioscience Center"
 		transition_instance.set_troop_data(troop_data)
 		get_tree().root.add_child(transition_instance)
