@@ -30,12 +30,14 @@ signal boss_died
 @export var mind_control_range: float = 250.0
 @export var max_controlled_monkeys: int = 3
 @export var mind_control_duration: float = 8.0
-@export var melee_attack_chance: float = 0.3
-@export var banana_throw_chance: float = 0.4
+@export var melee_attack_chance: float = 0.1
+@export var banana_throw_chance: float = 0.2
 @export var mind_control_chance: float = 0.2
 @export var psychic_push_chance: float = 0.1
+@export var shoot_chance: float = 0.4
 @export var psychic_push_force: float = 500.0
 @export var psychic_push_range: float = 200.0
+@export var shoot_range: float = 400.0
 
 # Attack settings for controlled monkeys
 @export var controlled_monkey_attack_range: float = 100.0
@@ -51,6 +53,8 @@ const BANANA_THROW_SPEED: float = 550.0 # Speed for thrown bananas
 @onready var health_bar = $HealthBar
 @onready var banana_detection_area: Area2D = $BananaDetectionArea
 @onready var hitbox: Area2D = $Hitbox
+
+@export var wizard_orb_scene: PackedScene
 
 # Visual orbit ring
 var orbit_ring: Node2D
@@ -90,7 +94,8 @@ var phases_active = {
 	"mind_control": true,
 	"melee_attack": true,
 	"psychic_push": true,
-	"throw_bananas": true
+	"throw_bananas": true,
+	"shoot": true
 }
 
 @onready var taser_scene = preload("res://projectiles/BananaBoomerang/banana_boomerang.tscn")
@@ -280,6 +285,7 @@ func _on_debug_timer_timeout():
 
 # Validate and fix caught bananas
 func validate_caught_bananas():
+
 	var valid_bananas = []
 	var needs_cleanup = false
 
@@ -508,7 +514,7 @@ func move_to_next_waypoint() -> void:
 
 	# Choose new waypoint
 	current_target = choose_next_waypoint()
-	print("NeuroBoss: New waypoint set:", current_target)
+	#print("NeuroBoss: New waypoint set:", current_target)
 
 func choose_next_waypoint() -> Vector2:
 	var player = find_player_node(get_tree().root)
@@ -576,6 +582,7 @@ func _choose_and_execute_attack():
 	# Melee attack
 	cumulative_chance += melee_attack_chance
 	if phases_active["melee_attack"] and distance_to_player < proximity_threshold * 1.8 and rand_val <= cumulative_chance:
+		print("===ATTACK MELEE")
 		print("NeuroBoss: Choosing Melee Attack.")
 		perform_melee_attack()
 		chosen_attack = true
@@ -583,27 +590,38 @@ func _choose_and_execute_attack():
 	# Banana Throw
 	cumulative_chance += banana_throw_chance
 	if not chosen_attack and phases_active["throw_bananas"] and caught_bananas.size() > 0 and banana_throw_cooldown <= 0 and rand_val <= cumulative_chance:
-		print("NeuroBoss: Choosing Banana Throw Attack.")
+		print("===ATTACK BANANANA")
+		#print("NeuroBoss: Choosing Banana Throw Attack.")
 		throw_caught_bananas()
 		chosen_attack = true
 
 	# Mind Control
 	cumulative_chance += mind_control_chance
 	if not chosen_attack and phases_active["mind_control"] and rand_val <= cumulative_chance:
-		print("NeuroBoss: Choosing Mind Control Attack.")
+		print("===ATTACK MIND CONTROl")
+		#print("NeuroBoss: Choosing Mind Control Attack.")
 		perform_mind_control()
 		chosen_attack = true
 
 	# Psychic Push
 	cumulative_chance += psychic_push_chance
 	if not chosen_attack and phases_active["psychic_push"] and distance_to_player < psychic_push_range and rand_val <= cumulative_chance:
-		print("NeuroBoss: Choosing Psychic Push Attack.")
+		print("===ATTACK PSHYSIC PUSH")
+		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		perform_psychic_push()
+		chosen_attack = true
+		
+		# Psychic Push
+	cumulative_chance += shoot_chance
+	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
+		print("===ATTACK SHOOT")
+		#print("NeuroBoss: Choosing Psychic Push Attack.")
+		attack_shoot_projectiles_circle()
 		chosen_attack = true
 
 	# Default action if no attack chosen: Move towards player
 	if not chosen_attack:
-		print("NeuroBoss: No attack chosen, moving towards player.")
+		#print("NeuroBoss: No attack chosen, moving towards player.")
 		current_target = player.global_position
 
 	_start_random_attack_timer()
@@ -648,7 +666,7 @@ func _apply_melee_damage():
 
 func throw_caught_bananas():
 	if caught_bananas.is_empty():
-		print("DEBUG: No bananas to throw!")
+		#print("DEBUG: No bananas to throw!")
 		return
 
 	is_attacking = true
@@ -680,18 +698,18 @@ func _execute_banana_throw():
 	if targets.is_empty():
 		targets = get_tree().get_nodes_in_group("troop")
 
-	print("DEBUG: Found targets:", targets.size())
-	print("DEBUG: Current caught bananas:", caught_bananas.size())
+	#print("DEBUG: Found targets:", targets.size())
+	#print("DEBUG: Current caught bananas:", caught_bananas.size())
 
 	# IMPORTANT FIX: Only create a copy but DON'T clear the original array yet!
 	var bananas_to_throw_copy = caught_bananas.duplicate()
 	var bananas_to_remove = [] # Track which bananas to remove after successful throws
 
-	print("DEBUG: Bananas to throw:", bananas_to_throw_copy.size())
+	#print("DEBUG: Bananas to throw:", bananas_to_throw_copy.size())
 
 	# If we have no bananas or no targets, exit early
 	if bananas_to_throw_copy.size() == 0 or targets.size() == 0:
-		print("DEBUG: No bananas or targets available for throw")
+		#print("DEBUG: No bananas or targets available for throw")
 		is_attacking = false
 		in_special_ability = false
 		return
@@ -774,7 +792,7 @@ func _execute_banana_throw():
 				caught_bananas.erase(banana)
 			banana.queue_free()
 
-	print("DEBUG: Finished throwing all bananas")
+	#print("DEBUG: Finished throwing all bananas")
 
 	# Reset the catching flag after completion with a delay
 	await get_tree().create_timer(0.5).timeout
@@ -1417,7 +1435,7 @@ func update_banana_orbit(delta: float):
 	for i in range(caught_bananas.size()):
 		var banana = caught_bananas[i]
 
-		# First validate the banana
+		## First validate the banana
 		if not is_instance_valid(banana):
 			continue
 
@@ -1446,7 +1464,7 @@ func update_banana_orbit(delta: float):
 	# Only update the bananas array if sizes don't match
 	if valid_bananas.size() != caught_bananas.size():
 		caught_bananas = valid_bananas
-		print("DEBUG: Cleaned up invalid orbiting bananas, now have", caught_bananas.size())
+		#print("DEBUG: Cleaned up invalid orbiting bananas, now have", caught_bananas.size())
 
 	# Double-check all caught bananas for collision settings
 	for banana in caught_bananas:
@@ -1463,25 +1481,25 @@ func catch_banana(banana):
 
 	# Skip if in throw mode
 	if not debug_can_catch_bananas:
-		print("DEBUG: Not catching - boss is in throw mode")
+		#print("DEBUG: Not catching - boss is in throw mode")
 		return
 
 	# Skip if already caught
 	if banana.has_meta("caught_by_boss"):
-		print("DEBUG: Ignoring already caught banana in catch_banana")
+		#print("DEBUG: Ignoring already caught banana in catch_banana")
 		return
 
 	# Skip boss-thrown bananas
 	if banana.has_meta("thrown_by_boss"):
-		print("DEBUG: Ignoring boss-thrown banana in catch_banana")
+		#print("DEBUG: Ignoring boss-thrown banana in catch_banana")
 		return
 
 	# Skip if maximum bananas reached
 	if caught_bananas.size() >= max_caught_bananas:
-		print("DEBUG: Maximum bananas reached, cannot catch more")
+		#print("DEBUG: Maximum bananas reached, cannot catch more")
 		return
 
-	print("NeuroBoss: Catching banana:" + banana.name)
+	#print("NeuroBoss: Catching banana:" + banana.name)
 	# Set metadata immediately to prevent double-catching
 	banana.set_meta("caught_by_boss", true)
 	call_deferred("_process_caught_banana", banana)
@@ -1490,7 +1508,7 @@ func _process_caught_banana(banana):
 	if banana == null or not is_instance_valid(banana):
 		return
 
-	print("DEBUG: Processing caught banana:", banana.name)
+	#print("DEBUG: Processing caught banana:", banana.name)
 
 	var original_position = banana.global_position
 
@@ -1591,7 +1609,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		return
 
 	var animation_name = _animated_sprite.animation
-	print("NeuroBoss: Animation finished:", animation_name)
+	#print("NeuroBoss: Animation finished:", animation_name)
 
 	if animation_name == "fall_down":
 		# After fall_down completes, play die animation
@@ -1633,27 +1651,27 @@ func _on_hitbox_area_entered(area: Area2D):
 	if not area.is_in_group("projectiles"):
 		return
 
-	print("DEBUG: Hitbox detected area:", area.name)
-	print("DEBUG: Area collision layer:", area.collision_layer)
+	#print("DEBUG: Hitbox detected area:", area.name)
+	#print("DEBUG: Area collision layer:", area.collision_layer)
 
 	# Skip our own thrown bananas
 	if area.has_meta("thrown_by_boss"):
-		print("DEBUG: Ignoring boss-thrown banana in hitbox")
+		#print("DEBUG: Ignoring boss-thrown banana in hitbox")
 		return
 
 	# Skip already caught bananas
 	if area.has_meta("caught_by_boss"):
-		print("DEBUG: Ignoring already caught banana in hitbox")
+		#print("DEBUG: Ignoring already caught banana in hitbox")
 		return
 
 	# Handle friendly (player-thrown) bananas
 	if area.has_meta("friendly"):
 		# Try to catch if conditions are right
 		if (in_special_ability or randf() < 0.4) and debug_can_catch_bananas:
-			print("DEBUG: Attempting to catch banana (Hitbox)")
+			#print("DEBUG: Attempting to catch banana (Hitbox)")
 			catch_banana(area)
 		else: # Take damage if not caught
-			print("DEBUG: Taking damage from friendly banana")
+			#print("DEBUG: Taking damage from friendly banana")
 			var damage = 1.0 # Default
 			if "damage" in area:
 				damage = float(area.get("damage"))
@@ -1661,7 +1679,7 @@ func _on_hitbox_area_entered(area: Area2D):
 			take_damage(damage)
 			if area.has_method("queue_free"):
 				area.queue_free()
-				print("DEBUG: Destroyed banana after damage")
+				#print("DEBUG: Destroyed banana after damage")
 
 func _on_banana_detection_area_area_entered(area: Area2D):
 	if is_dead: return
@@ -1670,29 +1688,29 @@ func _on_banana_detection_area_area_entered(area: Area2D):
 	if not area.is_in_group("projectiles"):
 		return
 
-	print("DEBUG: BananaDetectionArea detected area:", area.name)
-	print("DEBUG: Area collision layer:", area.collision_layer)
+	#print("DEBUG: BananaDetectionArea detected area:", area.name)
+	#print("DEBUG: Area collision layer:", area.collision_layer)
 
 	# Skip already caught bananas
 	if area.has_meta("caught_by_boss"):
-		print("DEBUG: Ignoring already caught banana")
+		#print("DEBUG: Ignoring already caught banana")
 		return
 
 	# Skip boss-thrown bananas
 	if area.has_meta("thrown_by_boss"):
-		print("DEBUG: Ignoring boss-thrown banana in detection area")
+		#print("DEBUG: Ignoring boss-thrown banana in detection area")
 		return
 
 	# Only catch player/friendly bananas
 	if area.has_meta("friendly"):
 		# Can only catch if not currently throwing
 		if not debug_can_catch_bananas:
-			print("DEBUG: Not catching - boss is in throw mode")
+			#print("DEBUG: Not catching - boss is in throw mode")
 			return
 
 		# Higher chance to catch in detection area
 		if in_special_ability or randf() < 0.6:
-			print("DEBUG: Attempting to catch banana (Detection Area)")
+			#print("DEBUG: Attempting to catch banana (Detection Area)")
 			catch_banana(area)
 	else:
 		print("DEBUG: Skipping non-friendly projectile:", area.name)
@@ -1745,3 +1763,61 @@ func _disconnect_monkey_signals(monkey):
 	if is_instance_valid(anim_tree) and anim_tree.has_signal("animation_finished"):
 		if anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
 			anim_tree.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished"))
+			
+
+func attack_shoot_projectiles_circle() -> void:
+	if not wizard_orb_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var num_projectiles = 12
+	var angle_step = (PI * 2) / num_projectiles
+	for i in range(num_projectiles):
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		projectile = wizard_orb_scene.instantiate()
+
+		add_child(projectile)
+		projectile.global_position = global_position
+		# Set the projectile velocity so that it moves outward.
+		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+
+	await get_tree().create_timer(0.8).timeout
+	angle_step = (PI / 12)
+	for i in range(24):
+		if i % 2 == 0:
+			continue
+
+		var projectile = wizard_orb_scene.instantiate()
+		add_child(projectile)
+		projectile.global_position = global_position
+		# Set the projectile velocity so that it moves outward.
+		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+
+	await _animated_sprite.animation_finished
+	is_attacking = false
+
+func attack_shoot_projectiles_circle2() -> void:
+	if not wizard_orb_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var _num_projectiles = 12
+	var angle_step = (PI / 12)
+	for i in range(24):
+		if i % 2 == 0:
+			continue
+
+		var random_val = randf()  # random float from 0.0 to 1.0
+		var projectile: Node
+		projectile = wizard_orb_scene.instantiate()
+
+		add_child(projectile)
+		projectile.global_position = global_position
+		# Set the projectile velocity so that it moves outward.
+		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+
+	await _animated_sprite.animation_finished
+	is_attacking = false
