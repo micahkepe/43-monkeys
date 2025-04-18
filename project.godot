@@ -14,8 +14,7 @@ config/name="43 Monkeys"
 config/description="A 2D topdown rogue with bullet hell, puzzles, swarm control, and more."
 run/main_scene="res://menus/MainMenu/main_menu.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/image="uid://hr1aa7728i3r"
-config/icon="uid://hr1aa7728i3r"
+config/icon="uid://b2lda8ewltcie"
 
 [display]
 
