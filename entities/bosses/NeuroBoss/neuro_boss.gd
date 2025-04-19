@@ -610,8 +610,8 @@ func _choose_and_execute_attack():
 		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		perform_psychic_push()
 		chosen_attack = true
-		
-		# Psychic Push
+
+	# Psychic Push
 	cumulative_chance += shoot_chance
 	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
 		print("===ATTACK SHOOT")
@@ -1348,6 +1348,7 @@ func release_all_controlled_monkeys():
 
 	print("NeuroBoss: Released", released_count, "monkeys")
 
+
 func perform_psychic_push():
 	is_attacking = true
 	velocity = Vector2.ZERO
@@ -1357,6 +1358,7 @@ func perform_psychic_push():
 
 	# Schedule psychic push effect
 	get_tree().create_timer(0.2).timeout.connect(Callable(self, "_execute_psychic_push"))
+
 
 func _execute_psychic_push():
 	var bodies_to_push = get_tree().get_nodes_in_group("player") + get_tree().get_nodes_in_group("troop")
@@ -1474,7 +1476,8 @@ func update_banana_orbit(delta: float):
 				banana.set_deferred("collision_layer", 0)
 				banana.set_deferred("collision_mask", 0)
 
-# FIXED: Completely revamped banana catching to prevent collisions
+
+# Handle banana/projectile catching to prevent collisions
 func catch_banana(banana):
 	if banana == null or not is_instance_valid(banana):
 		return
@@ -1504,6 +1507,7 @@ func catch_banana(banana):
 	banana.set_meta("caught_by_boss", true)
 	call_deferred("_process_caught_banana", banana)
 
+
 func _process_caught_banana(banana):
 	if banana == null or not is_instance_valid(banana):
 		return
@@ -1529,13 +1533,21 @@ func _process_caught_banana(banana):
 	# Reset appearance
 	banana.modulate = Color(1, 1, 1)
 
+
+## Helper comparator function between nodes a and b.
+## @param a: Node2D the first node
+## @param b: Node2D the second node
+## @returns bool True if a is closer than b, False otherwise
 func sort_by_distance(a: Node2D, b: Node2D) -> bool:
 	if not is_instance_valid(a) or not is_instance_valid(b): return false
 	var dist_a = global_position.distance_squared_to(a.global_position)
 	var dist_b = global_position.distance_squared_to(b.global_position)
 	return dist_a < dist_b
 
-func take_damage(amount: float):
+
+## Define the behavior for taking damage.
+## @param amount: float the amount of damage to incur
+func take_damage(amount: float) -> void:
 	if is_dead: return
 	current_health -= amount
 	if health_bar:
@@ -1547,6 +1559,8 @@ func take_damage(amount: float):
 		get_tree().create_timer(0.1).timeout.connect(func(): modulate = Color(1, 1, 1))
 
 
+## Handle any cleanup, animations, or sounds associated with the NeuroBoss's
+## death.
 func _die():
 	if is_dead: return
 
@@ -1644,6 +1658,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		else:
 			play_idle_animation()
 
+
+## Handle the hit box entered signal.
+## @param area: Area2D the area that entered the hitbox
 func _on_hitbox_area_entered(area: Area2D):
 	if is_dead: return
 
@@ -1681,6 +1698,8 @@ func _on_hitbox_area_entered(area: Area2D):
 				area.queue_free()
 				#print("DEBUG: Destroyed banana after damage")
 
+
+## Handle the area entered signal.
 func _on_banana_detection_area_area_entered(area: Area2D):
 	if is_dead: return
 
@@ -1688,17 +1707,14 @@ func _on_banana_detection_area_area_entered(area: Area2D):
 	if not area.is_in_group("projectiles"):
 		return
 
-	#print("DEBUG: BananaDetectionArea detected area:", area.name)
-	#print("DEBUG: Area collision layer:", area.collision_layer)
-
 	# Skip already caught bananas
 	if area.has_meta("caught_by_boss"):
-		#print("DEBUG: Ignoring already caught banana")
+		print_debug("DEBUG: Ignoring already caught banana")
 		return
 
 	# Skip boss-thrown bananas
 	if area.has_meta("thrown_by_boss"):
-		#print("DEBUG: Ignoring boss-thrown banana in detection area")
+		print_debug("DEBUG: Ignoring boss-thrown banana in detection area")
 		return
 
 	# Only catch player/friendly bananas
@@ -1745,6 +1761,7 @@ func _on_hitbox_body_exited(body: Node2D):
 						play_idle_animation()
 			)
 
+
 func _disconnect_monkey_signals(monkey):
 	if not is_instance_valid(monkey):
 		return
@@ -1763,7 +1780,7 @@ func _disconnect_monkey_signals(monkey):
 	if is_instance_valid(anim_tree) and anim_tree.has_signal("animation_finished"):
 		if anim_tree.is_connected("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished")):
 			anim_tree.disconnect("animation_finished", Callable(self, "_on_controlled_monkey_animation_tree_finished"))
-			
+
 
 func attack_shoot_projectiles_circle() -> void:
 	if not wizard_orb_scene:
@@ -1774,7 +1791,6 @@ func attack_shoot_projectiles_circle() -> void:
 	var num_projectiles = 12
 	var angle_step = (PI * 2) / num_projectiles
 	for i in range(num_projectiles):
-		var random_val = randf()  # random float from 0.0 to 1.0
 		var projectile: Node
 		projectile = wizard_orb_scene.instantiate()
 
@@ -1810,12 +1826,12 @@ func attack_shoot_projectiles_circle2() -> void:
 		if i % 2 == 0:
 			continue
 
-		var random_val = randf()  # random float from 0.0 to 1.0
 		var projectile: Node
 		projectile = wizard_orb_scene.instantiate()
 
 		add_child(projectile)
 		projectile.global_position = global_position
+
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
 
