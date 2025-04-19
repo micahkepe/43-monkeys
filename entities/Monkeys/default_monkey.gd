@@ -604,6 +604,6 @@ func _on_animation_tree_animation_finished(anim_name):
 
 func get_path_to_scene() -> int:
 	# Return an identifier for this monkey type
-	# This could be a resource path, filename, or an index
-	# For simplicity, let's say each monkey knows its own type ID
-	return monkey_type_id  # Add this property to your monkey class
+	if monkey_type_id != null:
+		return monkey_type_id
+	return 0  # Return a default if monkey_type_id not set

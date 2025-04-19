@@ -278,15 +278,48 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null, type_index: int = -1) -
 		new_monkey = existing_monkey
 		print_debug("Adding existing monkey to swarm!")
 
+		# Set the monkey_type_id for existing monkeys too!
+		if "monkey_type_id" in new_monkey and type_index >= 0:
+			new_monkey.monkey_type_id = type_index
+		# If type wasn't explicitly specified, try to determine it from the monkey's class name or scene
+		elif "monkey_type_id" in new_monkey:
+			# Try to determine type from monkey scenes
+			var monkey_name = new_monkey.name.to_lower()
+			for i in range(monkey_scenes.size()):
+				var scene_path = monkey_scenes[i].resource_path.to_lower()
+				# Check if the monkey's name gives us a hint about its type
+				if monkey_name.contains("formal") and scene_path.contains("formal"):
+					new_monkey.monkey_type_id = i
+					break
+				elif monkey_name.contains("pirate") and scene_path.contains("pirate"):
+					new_monkey.monkey_type_id = i
+					break
+				elif monkey_name.contains("roid") and scene_path.contains("roid"):
+					new_monkey.monkey_type_id = i
+					break
+				elif monkey_name.contains("roman") and scene_path.contains("roman"):
+					new_monkey.monkey_type_id = i
+					break
+				elif monkey_name.contains("santa") and scene_path.contains("santa"):
+					new_monkey.monkey_type_id = i
+					break
+				elif monkey_name.contains("wizard") and scene_path.contains("wizard"):
+					new_monkey.monkey_type_id = i
+					break
+		
 		# Remove from the old parent safely.
 		if new_monkey.get_parent():
 			new_monkey.get_parent().remove_child(new_monkey)
-
+		
 		# Add to the swarm root.
 		_swarm_monkeys_root.add_child(new_monkey)
-
+		
 		# Reapply the stored global transform to preserve its world position.
 		new_monkey.global_position = curr_global_pos
+		
+		# Print for debugging
+		if "monkey_type_id" in new_monkey:
+			print_debug("Monkey added with type_id:", new_monkey.monkey_type_id)
 	else:
 		if monkey_scenes.is_empty():
 			print_debug("No monkey scenes available!")
