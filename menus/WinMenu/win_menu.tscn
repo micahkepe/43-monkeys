@@ -1,0 +1,111 @@
+[gd_scene load_steps=16 format=3 uid="uid://cok7cglfjml1l"]
+
+[ext_resource type="Texture2D" uid="uid://c42pmv1k33wps" path="res://assets/sprites/menus/YouWonScreen.png" id="1_fq6lu"]
+[ext_resource type="Script" uid="uid://bmt0dvfwc67dd" path="res://menus/WinMenu/win_menu.gd" id="1_r8p8g"]
+[ext_resource type="FontFile" uid="uid://b1urfel7egtmu" path="res://assets/fonts/VT323-Regular.ttf" id="2_vsxb5"]
+[ext_resource type="AudioStream" uid="uid://ct1rtntxcwq5u" path="res://assets/sfx/ui/click.wav" id="4_ju4qt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r8p8g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ju4qt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejexi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tc51k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4kr0x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4icsl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_20s46"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bwl1o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2upkd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4pm60"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ry1bm"]
+
+[node name="WinMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r8p8g")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1277.0
+offset_bottom = 745.0
+texture = ExtResource("1_fq6lu")
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.621
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -117.0
+offset_top = 118.88
+offset_right = 123.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_color = Color(0.623529, 0.176471, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.894118, 1)
+theme_override_colors/font_focus_color = Color(0.858824, 0.254902, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("2_vsxb5")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r8p8g")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_ju4qt")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ejexi")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tc51k")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4kr0x")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4icsl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_20s46")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_bwl1o")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_2upkd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_4pm60")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ry1bm")
+text = "Continue
+"
+
+[node name="SelectSFXPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ju4qt")
+bus = &"SFX"
+
+[node name="WinMessage" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = 74.0
+offset_right = 300.0
+offset_bottom = 208.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.993024, 0.882645, 0.161254, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.121139, 0.264827, 0.0899833, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 20
+theme_override_fonts/font = ExtResource("2_vsxb5")
+theme_override_font_sizes/font_size = 50
+text = "This will be changed programmatically."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+uppercase = true
+
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]

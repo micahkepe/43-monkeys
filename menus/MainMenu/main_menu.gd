@@ -35,7 +35,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_is_first_focus = false
 
-func _input(event):
+## Handle user input.
+func _input(event) -> void:
 	if event.is_action_pressed("ui_accept") and visible:
 		select_sfx_player.play()
 		await select_sfx_player.finished

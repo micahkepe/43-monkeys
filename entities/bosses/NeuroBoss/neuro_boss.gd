@@ -628,28 +628,28 @@ func _choose_and_execute_attack():
 		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		attack_shoot_projectiles_circle()
 		chosen_attack = true
-		
+
 	cumulative_chance += spiral_burst_chance
 	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
 		print("===ATTACK SHOOT")
 		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		attack_spiral_burst()
 		chosen_attack = true
-		
+
 	cumulative_chance += flower_ring_chance
 	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
 		print("===ATTACK SHOOT")
 		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		attack_flower_ring()
 		chosen_attack = true
-		
+
 	cumulative_chance += spiral_vortex_chance
 	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
 		print("===ATTACK SHOOT")
 		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		attack_dual_spiral_vortex()
 		chosen_attack = true
-		
+
 	cumulative_chance += random_rain_chance
 	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
 		print("===ATTACK SHOOT")
@@ -1824,7 +1824,7 @@ func _disconnect_monkey_signals(monkey):
 
 func attack_shoot_projectiles_circle() -> void:
 	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
-	
+
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
@@ -1857,12 +1857,12 @@ func attack_shoot_projectiles_circle() -> void:
 
 	await _animated_sprite.animation_finished
 	is_attacking = false
-	
-	
+
+
 # 1. Spiral Burst
 func attack_spiral_burst() -> void:
 	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
-	
+
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
@@ -1893,7 +1893,7 @@ func attack_spiral_burst() -> void:
 # 2. Flower Ring
 func attack_flower_ring() -> void:
 	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
-	
+
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
@@ -1925,7 +1925,7 @@ func attack_flower_ring() -> void:
 # 3. Dual‑Spiral Vortex
 func attack_dual_spiral_vortex() -> void:
 	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
-	
+
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
@@ -1959,14 +1959,15 @@ func attack_dual_spiral_vortex() -> void:
 # 4. Random Rain
 func attack_random_rain() -> void:
 	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
-	
+
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
 
 	is_attacking = true
-	var count = 20
-	var width = 600
+	var count = 20.0
+	var width = 600.0
+
 	for i in range(count):
 		var projectile = wizard_orb_scene.instantiate()
 		projectiles_node.add_child(projectile)

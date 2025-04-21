@@ -1,7 +1,10 @@
 extends "res://levels/default_level.gd"
 ## Level 5: Neuroscience Lab
+##
+## The player and troop battle out against the NeuroBoss, a two-phase boss with
+## a plot twist (gasp).
 
-@onready var post_boss_cutscene: PackedScene = preload("res://cutscenes/Level5/Level5PostBoss/level_5_post_boss.tscn")
+@onready var win_screen_packed: PackedScene = preload("res://menus/WinMenu/win_menu.tscn")
 @onready var phase2_instance: PackedScene = preload("res://entities/bosses/NeuroBoss/neuro_boss.tscn")
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 @onready var boss_music: AudioStreamPlayer = $BossMusic
@@ -257,16 +260,15 @@ func initialize_from_troop_data() -> void:
 
 ## Handle final boss death
 func _on_boss_died():
-	# TODO: add some sort of animation or smooth transition sequence so there
-	# isn't just an immediate cut to the cutscene
-
 	# Wait 2 seconds before transitioning
 	await get_tree().create_timer(2.0).timeout
 
-	# Load and instantiate the post-boss cutscene
-	var cutscene_instance = post_boss_cutscene.instantiate()
+	# Load and instantiate the win window
+	var win_menu_instance = win_screen_packed.instantiate()
+	win_menu_instance.final_troop_count = player_node.get_troop_count()
 
-	# Add to root and set as current scene
-	get_tree().root.add_child(cutscene_instance)
+	# Perform the scene swapsie
+	get_tree().root.add_child(win_menu_instance)
 	get_tree().current_scene.queue_free()
-	get_tree().current_scene = cutscene_instance
+	get_tree().current_scene = win_menu_instance
+

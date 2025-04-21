@@ -306,17 +306,17 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null, type_index: int = -1) -
 				elif monkey_name.contains("wizard") and scene_path.contains("wizard"):
 					new_monkey.monkey_type_id = i
 					break
-		
+
 		# Remove from the old parent safely.
 		if new_monkey.get_parent():
 			new_monkey.get_parent().remove_child(new_monkey)
-		
+
 		# Add to the swarm root.
 		_swarm_monkeys_root.add_child(new_monkey)
-		
+
 		# Reapply the stored global transform to preserve its world position.
 		new_monkey.global_position = curr_global_pos
-		
+
 		# Print for debugging
 		if "monkey_type_id" in new_monkey:
 			print_debug("Monkey added with type_id:", new_monkey.monkey_type_id)
@@ -332,13 +332,13 @@ func add_monkey_to_swarm(existing_monkey: Node2D = null, type_index: int = -1) -
 		else:
 			# Otherwise random selection as before
 			new_monkey_scene = monkey_scenes[randi() % monkey_scenes.size()]
-			
+
 		new_monkey = new_monkey_scene.instantiate()
-		
+
 		# Store the type index on the monkey for future reference
 		if "monkey_type_id" in new_monkey:
 			new_monkey.monkey_type_id = type_index if type_index >= 0 else monkey_scenes.find(new_monkey_scene)
-			
+
 		_swarm_monkeys_root.add_child(new_monkey)
 		# new_monkey will be positioned based on its scene settings.
 

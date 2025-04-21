@@ -1,4 +1,6 @@
 class_name Dialogue extends Control
+## Side profile dialogue scene between the final boss and the protagonist
+## monkey.
 
 # Configuration for the cutscene
 class CutsceneFrame:
