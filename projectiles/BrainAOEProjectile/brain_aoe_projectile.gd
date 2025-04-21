@@ -49,7 +49,12 @@ func explode_and_free() -> void:
 	velocity = Vector2(0, 0)
 
 	# Randomly scale the projectile along the x and y axes and randomly rotate it.
-	scale = Vector2(randf_range(0.5, 1.5), randf_range(0.5, 1.5))
+	var x_scale = randf_range(0.5, 1.75)
+	var y_scale = randf_range(0.5, 1.75)
+	
+	scale.x = scale.x * x_scale
+	scale.y = scale.y * y_scale
+	
 	rotation_degrees = randf_range(0, 360)
 
 	var bodies = $AOE.get_overlapping_bodies()

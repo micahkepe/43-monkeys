@@ -1,7 +1,8 @@
-[gd_scene load_steps=203 format=3 uid="uid://dsy8p5naej4lb"]
+[gd_scene load_steps=204 format=3 uid="uid://dsy8p5naej4lb"]
 
 [ext_resource type="Script" uid="uid://bcqf2ny3ukcvn" path="res://entities/bosses/NeuroBoss/neuro_boss.gd" id="1_2h7en"]
 [ext_resource type="Texture2D" uid="uid://pwk3wbio8tft" path="res://assets/sprites/characters/monkeys/evil-brain-monkey.png" id="2_8nxvu"]
+[ext_resource type="PackedScene" uid="uid://c7lsxk47iv14o" path="res://projectiles/BrainAOEProjectile/BrainAOEProjectile.tscn" id="2_wj7jt"]
 [ext_resource type="PackedScene" uid="uid://cfqffrmv32wct" path="res://ui/HealthBar/health_bar.tscn" id="3_1rfga"]
 [ext_resource type="Texture2D" uid="uid://cga7gmr45ukhy" path="res://assets/sprites/attacks/explosion/blood_explosion.png" id="3_ghvu7"]
 [ext_resource type="Shader" uid="uid://2wjdt5jon1o6" path="res://shaders/halo_glow_shader.gdshader" id="5_5ovqa"]
@@ -1494,9 +1495,11 @@ shader_parameter/glow_color = Color(0.901961, 0.192157, 0.286275, 1)
 [node name="NeuroBoss" type="CharacterBody2D" groups=["enemies"]]
 z_index = 1
 y_sort_enabled = true
+scale = Vector2(1.15, 1.15)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_2h7en")
+wizard_orb_scene = ExtResource("2_wj7jt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(7.27596e-12, 52)

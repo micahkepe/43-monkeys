@@ -215,6 +215,7 @@ collision_layer = 4
 collision_mask = 24
 script = ExtResource("1_dqu5k")
 speed = 700.0
+damage = 1.5
 lifetime = 11.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -18,7 +18,7 @@ signal boss_died
 
 @export_group("Attack Configuration")
 @export var min_wait_time: float = 0.5
-@export var max_wait_time: float = 2.0
+@export var max_wait_time: float = 1.5
 @export var avoid_distance: float = 100.0
 @export var melee_damage: int = 2
 @export var min_attack_interval: float = 3.0
@@ -30,11 +30,21 @@ signal boss_died
 @export var mind_control_range: float = 250.0
 @export var max_controlled_monkeys: int = 3
 @export var mind_control_duration: float = 8.0
-@export var melee_attack_chance: float = 0.1
-@export var banana_throw_chance: float = 0.2
+@export var melee_attack_chance: float = 0.05
+@export var banana_throw_chance: float = 0.1
 @export var mind_control_chance: float = 0.2
-@export var psychic_push_chance: float = 0.1
-@export var shoot_chance: float = 0.4
+@export var psychic_push_chance: float = 0.05
+@export var shoot_chance: float = 0.2
+@export var spiral_burst_chance: float = 0.1
+@export var flower_ring_chance: float = 0.1
+@export var spiral_vortex_chance: float=  0.1
+@export var random_rain_chance: float = 0.1
+
+
+
+
+
+
 @export var psychic_push_force: float = 500.0
 @export var psychic_push_range: float = 200.0
 @export var shoot_range: float = 400.0
@@ -617,6 +627,34 @@ func _choose_and_execute_attack():
 		print("===ATTACK SHOOT")
 		#print("NeuroBoss: Choosing Psychic Push Attack.")
 		attack_shoot_projectiles_circle()
+		chosen_attack = true
+		
+	cumulative_chance += spiral_burst_chance
+	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
+		print("===ATTACK SHOOT")
+		#print("NeuroBoss: Choosing Psychic Push Attack.")
+		attack_spiral_burst()
+		chosen_attack = true
+		
+	cumulative_chance += flower_ring_chance
+	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
+		print("===ATTACK SHOOT")
+		#print("NeuroBoss: Choosing Psychic Push Attack.")
+		attack_flower_ring()
+		chosen_attack = true
+		
+	cumulative_chance += spiral_vortex_chance
+	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
+		print("===ATTACK SHOOT")
+		#print("NeuroBoss: Choosing Psychic Push Attack.")
+		attack_dual_spiral_vortex()
+		chosen_attack = true
+		
+	cumulative_chance += random_rain_chance
+	if not chosen_attack and phases_active["shoot"] and distance_to_player < shoot_range and rand_val <= cumulative_chance:
+		print("===ATTACK SHOOT")
+		#print("NeuroBoss: Choosing Psychic Push Attack.")
+		attack_random_rain()
 		chosen_attack = true
 
 	# Default action if no attack chosen: Move towards player
@@ -1783,6 +1821,8 @@ func _disconnect_monkey_signals(monkey):
 
 
 func attack_shoot_projectiles_circle() -> void:
+	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
+	
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
@@ -1794,7 +1834,8 @@ func attack_shoot_projectiles_circle() -> void:
 		var projectile: Node
 		projectile = wizard_orb_scene.instantiate()
 
-		add_child(projectile)
+		projectiles_node.add_child(projectile)
+		#projectile.scale = Vector2(2.0,2.0)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
@@ -1807,33 +1848,137 @@ func attack_shoot_projectiles_circle() -> void:
 
 		var projectile = wizard_orb_scene.instantiate()
 		add_child(projectile)
+		projectile.scale = Vector2(2.0,2.0)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
 
 	await _animated_sprite.animation_finished
 	is_attacking = false
-
-func attack_shoot_projectiles_circle2() -> void:
+	
+	
+# 1. Spiral Burst
+func attack_spiral_burst() -> void:
+	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
+	
 	if not wizard_orb_scene:
 		print("Projectile scene not set!")
 		return
 
 	is_attacking = true
-	var _num_projectiles = 12
-	var angle_step = (PI / 12)
-	for i in range(24):
-		if i % 2 == 0:
-			continue
+	var steps = 20
+	var base_speed = 200
+	var angle_increment = TAU / 6.0
 
-		var projectile: Node
-		projectile = wizard_orb_scene.instantiate()
-
-		add_child(projectile)
+	for i in range(steps):
+		var projectile = wizard_orb_scene.instantiate()
+		projectiles_node.add_child(projectile)
+		projectile.scale = Vector2(2.0, 2.0)
 		projectile.global_position = global_position
 
-		# Set the projectile velocity so that it moves outward.
-		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
+		# Spiral out: angle and speed both ramp up
+		var angle = i * angle_increment
+		var speed = base_speed + i * 10
+		projectile.velocity = Vector2.RIGHT.rotated(angle) * speed
 
-	await _animated_sprite.animation_finished
+		# small delay between each slice of the spiral
+		await get_tree().create_timer(0.05).timeout
+
+	# let them clear a bit before resuming
+	await get_tree().create_timer(0.5).timeout
+	is_attacking = false
+
+# 2. Flower Ring
+func attack_flower_ring() -> void:
+	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
+	
+	if not wizard_orb_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var rings = [100, 200, 300]  # radii
+	for radius in rings:
+		var count = 12
+		var angle_step = TAU / count
+		for i in range(count):
+			var projectile = wizard_orb_scene.instantiate()
+			projectiles_node.add_child(projectile)
+			projectile.scale = Vector2(2.0, 2.0)
+			projectile.global_position = global_position
+
+			# start just offset from boss, shoot outward
+			var angle = i * angle_step
+			projectile.position += Vector2.RIGHT.rotated(angle) * radius * 0.2
+			projectile.velocity = Vector2.RIGHT.rotated(angle) * (radius * 0.8)
+
+		# pulse between rings
+		await get_tree().create_timer(0.2).timeout
+
+	# cooldown before next action
+	await get_tree().create_timer(0.6).timeout
+	is_attacking = false
+
+
+# 3. Dual‑Spiral Vortex
+func attack_dual_spiral_vortex() -> void:
+	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
+	
+	if not wizard_orb_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var total = 24
+	for i in range(total):
+		# clockwise spiral
+		var p1 = wizard_orb_scene.instantiate()
+		projectiles_node.add_child(p1)
+		p1.scale = Vector2(2.0, 2.0)
+		p1.global_position = global_position
+		var angle1 = TAU * i / total
+		p1.velocity = Vector2.RIGHT.rotated(angle1) * 250
+
+		# counter‑clockwise mirror
+		var p2 = wizard_orb_scene.instantiate()
+		projectiles_node.add_child(p2)
+		p2.scale = Vector2(2.0, 2.0)
+		p2.global_position = global_position
+		var angle2 = -angle1
+		p2.velocity = Vector2.RIGHT.rotated(angle2) * 250
+
+		# slight pacing so it feels like two interleaved streams
+		await get_tree().create_timer(0.03).timeout
+
+	await get_tree().create_timer(0.5).timeout
+	is_attacking = false
+
+
+# 4. Random Rain
+func attack_random_rain() -> void:
+	var projectiles_node = get_parent().get_parent().get_node("Projectiles")
+	
+	if not wizard_orb_scene:
+		print("Projectile scene not set!")
+		return
+
+	is_attacking = true
+	var count = 20
+	var width = 600
+	for i in range(count):
+		var projectile = wizard_orb_scene.instantiate()
+		projectiles_node.add_child(projectile)
+		projectile.scale = Vector2(2.0, 2.0)
+
+		# spawn somewhere above the boss, within width
+		var x_off = randf_range(-width/2, width/2)
+		projectile.global_position = global_position + Vector2(x_off, -300)
+
+		# drop straight down at random speed
+		projectile.velocity = Vector2(0, randf_range(150, 300))
+
+		await get_tree().create_timer(0.1).timeout
+
+	# give it a moment before the boss can act again
+	await get_tree().create_timer(0.5).timeout
 	is_attacking = false

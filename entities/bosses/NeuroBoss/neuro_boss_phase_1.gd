@@ -20,7 +20,7 @@ signal phase1_died()
 @export var aoe_proj_prob: float = 0.15
 
 # Health settings for the boss.
-@export var max_health: float = 50.0
+@export var max_health: float = 150.0
 var current_health: float
 
 # Timer for triggering random attacks.

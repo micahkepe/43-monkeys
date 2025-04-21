@@ -194,6 +194,7 @@ default_projectile_scene = ExtResource("3_fk3qx")
 aoe_projectile_scene = ExtResource("4_k533t")
 brainbrim_scene = ExtResource("4_wjupm")
 brainfog_scene = ExtResource("5_5cc0r")
+max_health = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fk3qx")
