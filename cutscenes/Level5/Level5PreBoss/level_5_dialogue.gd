@@ -48,7 +48,7 @@ func _ready() -> void:
 
 	# Load images directly as Textures
 	var frame_data: Array[CutsceneFrame] = [
-		create_frame(load("res://assets/exposition/side-profiles/george_speaking.png"), "Wait... No. It can't be.\nDr.Simian... you're one of us?"),
+		create_frame(load("res://assets/exposition/side-profiles/george_speaking.png"), "Wait... No. It can't be.\nDr. Simian... you're one of us?"),
 		create_frame(load("res://assets/exposition/side-profiles/evil_monkey_speaking.png"), "You really expected some human\npulling the strings?"),
 		create_frame(load("res://assets/exposition/side-profiles/evil_monkey_speaking.png"), "No, George. The real mind behind\nall this was always a monkey."),
 		create_frame(load("res://assets/exposition/side-profiles/george_speaking.png"), "You... did this?\nTo your own kind?"),

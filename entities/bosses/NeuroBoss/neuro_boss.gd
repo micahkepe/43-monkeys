@@ -1621,7 +1621,9 @@ func _die():
 	if health_bar: health_bar.hide()
 	collision_layer = 0
 	collision_mask = 0
-	if hitbox: hitbox.monitoring = false
+	if $Hitbox:
+		$Hitbox.set_deferred("monitoring", false)
+
 	if banana_detection_area: banana_detection_area.monitoring = false
 
 	# Release resources
