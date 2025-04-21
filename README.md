@@ -1,5 +1,13 @@
 # 43 Monkeys
 
+<div align="center">
+  <p>
+    <img src="https://img.shields.io/badge/Godot-4.4-blue?logo=godot-engine&logoColor=white&style=for-the-badge" alt="Godot Version">
+    <img src="https://img.shields.io/github/contributors/micahkepe/43-monkeys?style=for-the-badge" alt="Contributors">
+    <img src="https://img.shields.io/github/license/micahkepe/43-monkeys?style=for-the-badge" alt="License">
+  </p>
+</div>
+
 A 2D pixel art rogue-like game made with the
 [Godot Engine](https://godotengine.org/) for <em>COMP 460: Video Game
 Design</em> at Rice University. The game blends strategic squad-building with
@@ -74,3 +82,10 @@ To run **43 Monkeys** locally:
 
 This repository is licensed under a GPL-3.0 license, see [LICENSE](./LICENSE)
 for details.
+
+## Primary Contributors
+
+<a href="https://github.com/GrantWT16"><img src="https://avatars.githubusercontent.com/u/142844271?v=4" title="Grant Thompson" width="50" height="50"></a>
+<a href="https://github.com/zachkepe"><img src="https://avatars.githubusercontent.com/u/112597714?v=4" title="Zach Kepe" width="50" height="50"></a>
+<a href="https://github.com/klei04"><img src="https://avatars.githubusercontent.com/u/78943760?v=4" title="Kevin Lei" width="50" height="50"></a>
+<a href="https://github.com/micahkepe"><img src="https://avatars.githubusercontent.com/u/112597765?v=4" title="Micah Kepe" width="50" height="50"></a>
