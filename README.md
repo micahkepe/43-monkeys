@@ -24,6 +24,32 @@ trade-offs.
 
 ## Installation
 
+To run **43 Monkeys** locally:
+
+### Requirements
+
+- [Godot Engine 4.4](https://godotengine.org/download)
+- Git (optional but recommended)
+
+### Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/micahkepe/43-monkeys.git
+   cd 43-monkeys
+   ```
+
+2. **Open in Godot**
+
+- Launch the Godot editor.
+- Click “Import Project”.
+- Navigate to the project directory and select.
+
+3. **Run the game**:
+
+- In the open project, hit "Run Project" in the top left corner of the editor.
+
 ## 🔮 Roadmap/ Future Features
 
 - [ ] Player inventory/ability pickups
