@@ -1,11 +1,14 @@
 # [43 Monkeys](https://alpha-prime-studios.itch.io/43-monkeys)
 
 <div align="center">
-  <p>
-    <img src="https://img.shields.io/badge/Godot-4.4-blue?logo=godot-engine&logoColor=white&style=for-the-badge" alt="Godot Version">
-    <img src="https://img.shields.io/github/contributors/micahkepe/43-monkeys?style=for-the-badge" alt="Contributors">
-    <img src="https://img.shields.io/github/license/micahkepe/43-monkeys?style=for-the-badge" alt="License">
-  </p>
+    <p>
+        <img src="https://img.shields.io/badge/Godot-4.4-blue?logo=godot-engine&logoColor=white&style=for-the-badge" alt="Godot Version">
+        <img src="https://img.shields.io/github/contributors/micahkepe/43-monkeys?style=for-the-badge" alt="Contributors">
+        <img src="https://img.shields.io/github/license/micahkepe/43-monkeys?style=for-the-badge" alt="License">
+        <a href="https://alpha-prime-studios.itch.io/43-monkeys" target="_blank" rel="noopener noreferrer">
+            <img src="https://img.shields.io/badge/Play_on_Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Play on Itch.io">
+        </a>
+    </p>
 </div>
 
 A 2D pixel art rogue-like game made with the
