@@ -18,6 +18,12 @@ science facility.
   <img src="./assets/images/start-menu.png" alt="43 Monkeys Start Menu" width="100%">
 </div>
 
+<br/>
+
+<div align="center">
+    <iframe frameborder="0" src="https://itch.io/embed/3482305?dark=true" width="552" height="167"><a href="https://alpha-prime-studios.itch.io/43-monkeys">43 Monkeys by alpha prime studios | ⍺'</a></iframe>
+</div>
+
 ## Overview
 
 In **43 Monkeys**, players begin as a single experimental monkey breaking out of
