@@ -523,7 +523,7 @@ func move_to_next_waypoint() -> void:
 	#print("NeuroBoss: New waypoint set:", current_target)
 
 func choose_next_waypoint() -> Vector2:
-	var player = find_player_node(get_tree().root)
+	var player = find_player_node()
 	var target_pos = global_position # Default to current pos
 
 	# Prioritize moving towards the player
@@ -567,7 +567,7 @@ func _choose_and_execute_attack():
 		_start_random_attack_timer()
 		return
 
-	var player = find_player_node(get_tree().root)
+	var player = find_player_node()
 	if not player:
 		print("NeuroBoss: No player found, skipping attack.")
 		_start_random_attack_timer()
@@ -661,7 +661,7 @@ func _choose_and_execute_attack():
 	_start_random_attack_timer()
 
 func perform_melee_attack():
-	var player = find_player_node(get_tree().root)
+	var player = find_player_node()
 	if not player: return
 
 	is_attacking = true
@@ -680,7 +680,7 @@ func perform_melee_attack():
 
 func _apply_melee_damage():
 	var targets = []
-	var player = find_player_node(get_tree().root)
+	var player = find_player_node()
 
 	# Add player if in range
 	if player and global_position.distance_to(player.global_position) < proximity_threshold * 2.0:
@@ -698,7 +698,9 @@ func _apply_melee_damage():
 			print("NeuroBoss: Applying melee damage to", target.name)
 			target.take_damage(melee_damage)
 
-func throw_caught_bananas():
+
+## Throw the caught projectiles orbiting.
+func throw_caught_bananas() -> void:
 	if caught_bananas.is_empty():
 		#print("DEBUG: No bananas to throw!")
 		return
@@ -709,7 +711,7 @@ func throw_caught_bananas():
 	debug_can_catch_bananas = false # Stop catching during throw animation
 	banana_throw_cooldown = 2.0 # Prevent immediate re-throw
 
-	var player = find_player_node(get_tree().root)
+	var player = find_player_node()
 	var target_dir = Vector2.ZERO
 	if player:
 		target_dir = (player.global_position - global_position).normalized()
@@ -838,7 +840,7 @@ func _execute_banana_throw():
 
 # FIXED: Improved function for controlled monkey behavior
 func update_controlled_monkeys(delta: float) -> void:
-	var player = find_player_node(get_tree().root)
+	var player = find_player_node()
 	if not player or controlled_monkeys.is_empty():
 		return
 
@@ -1632,18 +1634,8 @@ func _die():
 	# Emit death signal before the boss is removed
 	emit_signal("boss_died")
 
-func find_player_node(root: Node) -> Node:
-	# Use get_nodes_in_group for efficiency
-	var players = get_tree().get_nodes_in_group("player")
-	if not players.is_empty():
-		return players[0]
-
-	# Fallback search
-	if root.name == "Player" or root.is_in_group("player"): return root
-	for child in root.get_children():
-		var result = find_player_node(child)
-		if result: return result
-	return null
+func find_player_node() -> Node:
+	return get_tree().get_first_node_in_group("player")
 
 func find_or_create_projectiles_node() -> Node:
 	var proj_node = get_tree().root.find_child("Projectiles", true, false)

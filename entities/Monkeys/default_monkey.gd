@@ -233,7 +233,7 @@ func _physics_process(_delta: float) -> void:
 		attack_timer -= _delta
 
 	# Handle attack logic
-	if not locked and not is_attacking and attack_timer <= 0:
+	if $Hitbox.monitoring and not locked and not is_attacking and attack_timer <= 0:
 		var overlapping_bodies = $Hitbox.get_overlapping_bodies()
 		var targets = []
 		for body in overlapping_bodies:
