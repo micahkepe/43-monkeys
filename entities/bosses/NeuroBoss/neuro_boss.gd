@@ -1839,7 +1839,7 @@ func attack_shoot_projectiles_circle() -> void:
 		projectile = wizard_orb_scene.instantiate()
 
 		projectiles_node.add_child(projectile)
-		#projectile.scale = Vector2(2.0,2.0)
+		projectile.scale = Vector2(2.0,2.0)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
 		projectile.velocity = Vector2.RIGHT.rotated(i * angle_step) * 300
