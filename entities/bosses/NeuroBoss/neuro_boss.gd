@@ -1562,8 +1562,9 @@ func _process_caught_banana(banana):
 	if banana.get_parent():
 		var original_parent = banana.get_parent()
 		original_parent.remove_child(banana)
-
-	add_child(banana)
+	
+	var proj_node = get_tree().root.find_child("Projectiles", true, false)
+	proj_node.add_child(banana)
 
 	# Restore position
 	banana.global_position = original_position
@@ -1849,7 +1850,8 @@ func attack_shoot_projectiles_circle() -> void:
 			continue
 
 		var projectile = wizard_orb_scene.instantiate()
-		add_child(projectile)
+		var proj_node = get_tree().root.find_child("Projectiles", true, false)
+		proj_node.add_child(projectile)
 		projectile.scale = Vector2(2.0,2.0)
 		projectile.global_position = global_position
 		# Set the projectile velocity so that it moves outward.
