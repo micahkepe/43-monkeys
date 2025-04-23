@@ -395,7 +395,10 @@ func attack_shoot_bullet_wall_horizontal() -> void:
 		projectile.global_position = Vector2(global_position.x - 1700.0, global_position.y + y_offset)
 		# Set the projectile to move rightward.
 		projectile.velocity = Vector2(450, 0)
-		await get_tree().create_timer(spawn_interval).timeout
+
+		if get_tree():
+			await get_tree().create_timer(spawn_interval).timeout
+
 		elapsed += spawn_interval
 	await _animated_sprite.animation_finished
 	is_attacking = false

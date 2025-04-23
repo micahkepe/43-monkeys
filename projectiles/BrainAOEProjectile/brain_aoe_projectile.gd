@@ -9,7 +9,6 @@ func _ready() -> void:
 
 	# Call the parent _ready() to run the default projectile logic.
 	super._ready()
-	
 	scale = Vector2(0.5, 0.5)
 
 # When the orb collides with a body, check if it's a valid target.
@@ -51,10 +50,10 @@ func explode_and_free() -> void:
 	# Randomly scale the projectile along the x and y axes and randomly rotate it.
 	var x_scale = randf_range(0.5, 1.75)
 	var y_scale = randf_range(0.5, 1.75)
-	
+
 	scale.x = scale.x * x_scale
 	scale.y = scale.y * y_scale
-	
+
 	rotation_degrees = randf_range(0, 360)
 
 	var bodies = $AOE.get_overlapping_bodies()

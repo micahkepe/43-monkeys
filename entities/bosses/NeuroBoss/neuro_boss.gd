@@ -40,11 +40,6 @@ signal boss_died
 @export var spiral_vortex_chance: float=  0.1
 @export var random_rain_chance: float = 0.1
 
-
-
-
-
-
 @export var psychic_push_force: float = 500.0
 @export var psychic_push_range: float = 200.0
 @export var shoot_range: float = 400.0
@@ -1670,6 +1665,11 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		# After fall_down completes, play die animation
 		print("NeuroBoss: Fall down animation finished, playing die animation")
 		_animated_sprite.play("die")
+
+		# Play the explosion sound
+		$BoomPlayer.play()
+		await $BoomPlayer.finished
+
 	elif animation_name.begins_with("die") or animation_name == "die":
 		print("NeuroBoss: Die animation finished, queueing free")
 		queue_free()
