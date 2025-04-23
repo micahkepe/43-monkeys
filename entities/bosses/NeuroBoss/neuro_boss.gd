@@ -30,12 +30,13 @@ signal boss_died
 @export var mind_control_range: float = 250.0
 @export var max_controlled_monkeys: int = 3
 @export var mind_control_duration: float = 8.0
+
 @export var melee_attack_chance: float = 0.05
-@export var banana_throw_chance: float = 0.1
+@export var banana_throw_chance: float = 0.025
 @export var mind_control_chance: float = 0.2
 @export var psychic_push_chance: float = 0.05
 @export var shoot_chance: float = 0.2
-@export var spiral_burst_chance: float = 0.1
+@export var spiral_burst_chance: float = 0.175
 @export var flower_ring_chance: float = 0.1
 @export var spiral_vortex_chance: float=  0.1
 @export var random_rain_chance: float = 0.1
