@@ -24,9 +24,9 @@ science facility.
 ## Overview
 
 In **43 Monkeys**, players begin as a single experimental monkey breaking out of
-a high-security laboratory. As the game progresses, players explore
-procedurally-curated floors, liberate other genetically-enhanced monkeys with
-unique abilities, and battle scientists, mutants, and facility defenses.
+a high-security laboratory. As the game progresses, players explore curated
+floors, liberate other genetically-enhanced monkeys with unique abilities,
+and battle scientists, mutants, and facility defenses.
 
 The gameplay combines real-time combat, permadeath, and squad management in a
 linear progression of themed environments. Each run presents meaningful
@@ -80,6 +80,20 @@ To run **43 Monkeys** locally:
   - Internal corporate notes
 
 - [ ] Door mechanics
+
+## Contributing
+
+We welcome contributions! See our [Contributing Guidelines](./CONTRIBUTING.md) for setup instructions, code standards, and the review process.
+
+## 📦 Download Latest Build
+
+Get the latest Windows, macOS, Linux, and HTML5 builds from the [latest
+release page](https://github.com/micahkepe/43-monkeys/releases/latest).
+
+> [!NOTE]
+> By default, macOS will run only applications that are signed and notarized.
+> This means that you might have to follow the steps outlined [here](https://docs.godotengine.org/en/latest/tutorials/export/running_on_macos.html)
+> to be able to open the application for the first time.
 
 ## License
 
